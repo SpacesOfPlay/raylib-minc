@@ -4,9 +4,6 @@ A [minc](https://minc.dev)-language port of
 [raylib](https://github.com/raysan5/raylib), transpiled from
 raylib's C source.
 
-> **Status: experimental, v0.x.** Windows + Linux. macOS in
-> progress. No audio yet — see [What works](#what-works--doesnt).
-
 ## Quickstart (Windows)
 
 ```powershell
@@ -53,7 +50,7 @@ cd raylib-minc
 - **GLFW 3.x** — Windows + macOS run `tools/get_glfw.{ps1,sh}`.
   Linux installs via package manager.
 
-## What works / doesn't
+## What works
 
 | Module       | State |
 |--------------|-------|
@@ -127,7 +124,7 @@ hand. Snapshot sources are listed in [`VERSION`](VERSION).
 
 ## Credits
 
-raylib © Ramon Santamaria (@raysan5) and contributors. GLFW
-© Marcus Geelnard and Camilla Löwy. stb_* © Sean Barrett. Port
-by Mattias Ljungström, Spaces of Play UG (hb). All upstream
-projects are zlib/libpng licensed; this port inherits that license.
+raylib (c) Ramon Santamaria (@raysan5) and contributors. GLFW
+(c) Marcus Geelnard and Camilla Löwy. stb_* (c) Sean Barrett. Port
+by Mattias Ljungström, Spaces of Play UG. All upstream projects are 
+zlib/libpng licensed; this port inherits that license, see LICENSE.md.
