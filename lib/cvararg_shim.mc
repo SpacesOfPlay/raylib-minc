@@ -1,7 +1,7 @@
 // Imports added on export so this module resolves standalone (LSP).
 import cstdlib_shim;
 
-// cvararg_shim.mc — printf-family in pure minc, used by TextFormat
+// cvararg_shim — printf-family in pure minc. Used by TextFormat
 // and TraceLog. Supports %d %i %u %x %X %c %s %f %p %%, l/ll/z
 // length modifiers, field width, zero-pad, float precision.
 
@@ -119,7 +119,7 @@ i32 __minc_vfmt(u8* buf, u64 cap, u8* fmt, &... ap) {
 }
 
 i32 vsnprintf(u8* buf, u64 size, u8* fmt, &... ap) { return __minc_vfmt(buf, size, fmt, ap); }
-// snprintf is minc-native because msvcrt.dll only ships _snprintf.
+// snprintf is minc-native (msvcrt.dll only ships _snprintf).
 i32 snprintf(u8* buf, u64 size, u8* fmt, ...) { return __minc_vfmt(buf, size, fmt, &...); }
 i32 vsprintf(u8* buf, u8* fmt, &... ap) { return __minc_vfmt(buf, cast(u64, 2147483647), fmt, ap); }
 i32 vprintf(u8* fmt, &... ap) {

@@ -1,7 +1,7 @@
 // Imports added on export so this module resolves standalone (LSP).
 import gl_core33;
 
-// glad_compat.mc — routes glad's loader API to gl_core33.
+// glad_compat — glad's loader API on top of gl_core33.
 
 // Returns nonzero on success.
 i32 gladLoadGL(GLADloadfunc load) {

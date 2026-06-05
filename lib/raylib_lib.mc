@@ -1655,6 +1655,7 @@ type LPUNKNOWN = void*;
 type WNDPROC = fn(HWND, UINT, WPARAM, LPARAM): LRESULT;
 type LPRECT = RECT*;
 type errno_t = i32;
+type handle_type = i64;
 type DPI_AWARENESS_CONTEXT_T = void*;
 type GLADloadfunc = fn(u8*): void*;
 // Quaternion, 4 components (Vector4 alias)
@@ -8234,7 +8235,8 @@ u8* rlGetPixelFormatName(u32 format_var) {
 // Load default shader (just vertex positioning and texture coloring)
 // NOTE: This shader program is used for internal buffers
 // NOTE: Loaded: RLGL.State.defaultShaderId, RLGL.State.defaultShaderLocs
-private { void rlLoadShaderDefault() {
+private {
+void rlLoadShaderDefault() {
     RLGL.State.defaultShaderLocs = new(i32[32]);
     for i32 i = 0; i < 32; i++ {
         RLGL.State.defaultShaderLocs[i] = -1;
@@ -8253,10 +8255,12 @@ private { void rlLoadShaderDefault() {
         RLGL.State.defaultShaderLocs[RL_SHADER_LOC_MAP_ALBEDO] = glGetUniformLocation(RLGL.State.defaultShaderId, "texture0");
     } else {
             }
-}}
+}
+}
 // Unload default shader
 // NOTE: Unloads: RLGL.State.defaultShaderId, RLGL.State.defaultShaderLocs
-private { void rlUnloadShaderDefault() {
+private {
+void rlUnloadShaderDefault() {
     glUseProgram(0);
     glDetachShader(RLGL.State.defaultShaderId, RLGL.State.defaultVShaderId);
     glDetachShader(RLGL.State.defaultShaderId, RLGL.State.defaultFShaderId);
@@ -8264,10 +8268,12 @@ private { void rlUnloadShaderDefault() {
     glDeleteShader(RLGL.State.defaultFShaderId);
     glDeleteProgram(RLGL.State.defaultShaderId);
     free(RLGL.State.defaultShaderLocs);
-    }}
+    }
+}
 // Get pixel data size in bytes (image or texture)
 // NOTE: Size depends on pixel format
-private { i32 rlGetPixelDataSize(i32 width, i32 height, i32 format_var) {
+private {
+i32 rlGetPixelDataSize(i32 width, i32 height, i32 format_var) {
     i32 dataSize = 0;
     i32 bpp = 0;
     switch format_var {
@@ -8330,21 +8336,25 @@ private { i32 rlGetPixelDataSize(i32 width, i32 height, i32 format_var) {
         dataSize = cast(i32, bytesPerPixel * cast(f64, width) * cast(f64, height));
     }
     return dataSize;
-}}
+}
+}
 // Auxiliar math functions
 //-------------------------------------------------------------------------------
 // Get identity matrix
-private { Matrix rlMatrixIdentity() {
+private {
+Matrix rlMatrixIdentity() {
     Matrix matIdentity;
     matIdentity.m0 = 1.0f;
     matIdentity.m5 = 1.0f;
     matIdentity.m10 = 1.0f;
     matIdentity.m15 = 1.0f;
     return matIdentity;
-}}
+}
+}
 // Get float array of matrix data
 // Explicit conversion to column-major memory layout
-private { rl_float16 rlMatrixToFloatV(Matrix mat) {
+private {
+rl_float16 rlMatrixToFloatV(Matrix mat) {
     rl_float16 result;
     result.v[0] = mat.m0;
     result.v[1] = mat.m1;
@@ -8363,10 +8373,12 @@ private { rl_float16 rlMatrixToFloatV(Matrix mat) {
     result.v[14] = mat.m14;
     result.v[15] = mat.m15;
     return result;
-}}
+}
+}
 // Get two matrix multiplication
 // NOTE: When multiplying matrices... the order matters!
-private { Matrix rlMatrixMultiply(Matrix left, Matrix right) {
+private {
+Matrix rlMatrixMultiply(Matrix left, Matrix right) {
     Matrix result;
     result.m0 = left.m0 * right.m0 + left.m1 * right.m4 + left.m2 * right.m8 + left.m3 * right.m12;
     result.m1 = left.m0 * right.m1 + left.m1 * right.m5 + left.m2 * right.m9 + left.m3 * right.m13;
@@ -8385,9 +8397,11 @@ private { Matrix rlMatrixMultiply(Matrix left, Matrix right) {
     result.m14 = left.m12 * right.m2 + left.m13 * right.m6 + left.m14 * right.m10 + left.m15 * right.m14;
     result.m15 = left.m12 * right.m3 + left.m13 * right.m7 + left.m14 * right.m11 + left.m15 * right.m15;
     return result;
-}}
+}
+}
 // Transposes provided matrix
-private { Matrix rlMatrixTranspose(Matrix mat) {
+private {
+Matrix rlMatrixTranspose(Matrix mat) {
     Matrix result;
     result.m0 = mat.m0;
     result.m1 = mat.m4;
@@ -8406,9 +8420,11 @@ private { Matrix rlMatrixTranspose(Matrix mat) {
     result.m14 = mat.m11;
     result.m15 = mat.m15;
     return result;
-}}
+}
+}
 // Invert provided matrix
-private { Matrix rlMatrixInvert(Matrix mat) {
+private {
+Matrix rlMatrixInvert(Matrix mat) {
     Matrix result;
     f32 a00 = mat.m0;
     f32 a01 = mat.m1;
@@ -8456,7 +8472,8 @@ private { Matrix rlMatrixInvert(Matrix mat) {
     result.m14 = (-a30 * b03 + a31 * b01 - a32 * b00) * invDet;
     result.m15 = (a20 * b03 - a21 * b01 + a22 * b00) * invDet;
     return result;
-}}
+}
+}
 // OpenGL abstraction layer to OpenGL 1.1, 3.3+ or ES2
 /**********************************************************************************************
 *
@@ -10225,7 +10242,7 @@ void MatrixDecompose(Matrix mat, Vector3* translation, Quaternion* rotation, Vec
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-private { GesturesData GESTURES = GesturesData{.current = cast(u32, GESTURE_NONE), .Touch.firstId = -1, .enabledFlags = 1023}; }
+private { GesturesData GESTURES = GesturesData{.current = cast(u32, GESTURE_NONE), .Touch = {.firstId = -1}, .enabledFlags = 1023}; }
 //----------------------------------------------------------------------------------
 // Module Functions Definition
 //----------------------------------------------------------------------------------
@@ -10383,27 +10400,33 @@ f32 GetGesturePinchAngle() {
 // Module Internal Functions Definition
 //----------------------------------------------------------------------------------
 // Get angle from two-points vector with X-axis
-private { f32 rgVector2Angle(Vector2 v1, Vector2 v2) {
+private {
+f32 rgVector2Angle(Vector2 v1, Vector2 v2) {
     f32 angle = atan2f(v2.y - v1.y, v2.x - v1.x) * (180.0f / 3.141592f);
     if angle < 0.0f {
         angle += 360.0f;
     }
     return angle;
-}}
+}
+}
 // Calculate distance between two Vector2
-private { f32 rgVector2Distance(Vector2 v1, Vector2 v2) {
+private {
+f32 rgVector2Distance(Vector2 v1, Vector2 v2) {
     f32 result;
     f32 dx = v2.x - v1.x;
     f32 dy = v2.y - v1.y;
     result = cast(f32, sqrt(dx * dx + dy * dy));
     return result;
-}}
+}
+}
 // Time measure returned are seconds
-private { f64 rgGetCurrentTime() {
+private {
+f64 rgGetCurrentTime() {
     f64 time = 0.0;
     time = GetTime();
     return time;
-}}
+}
+}
 // Gestures detection functionality
 /*******************************************************************************************
 *
@@ -10808,7 +10831,8 @@ void UpdateCameraPro(Camera* camera, Vector3 movement, Vector3 rotation, f32 zoo
     CameraMoveUp(camera, movement.z);
     CameraMoveToTarget(camera, zoom);
 }
-private { i32 sinfl_bsr(u32 n) {
+private {
+i32 sinfl_bsr(u32 n) {
     when os(windows) {
         u64 uln = 0;
         rl_BitScanReverse_u64(&uln, n);
@@ -10816,22 +10840,30 @@ private { i32 sinfl_bsr(u32 n) {
     } else {
         return 31 - __builtin_clz(n);
     }
-}}
-private { u64 sinfl_read64(void* p) {
+}
+}
+private {
+u64 sinfl_read64(void* p) {
     u64 n;
     memcpy(&n, p, cast(u64, 8));
     return n;
-}}
-private { void sinfl_copy64(u8** dst, u8** src) {
+}
+}
+private {
+void sinfl_copy64(u8** dst, u8** src) {
     memcpy(*dst, *src, cast(u64, 8));
     *dst += 8;
     *src += 8;
-}}
-private { u8* sinfl_write64(u8* dst, u64 w) {
+}
+}
+private {
+u8* sinfl_write64(u8* dst, u64 w) {
     memcpy(dst, &w, cast(u64, 8));
     return dst + 8;
-}}
-private { void sinfl_refill(sinfl* s) {
+}
+}
+private {
+void sinfl_refill(sinfl* s) {
     if cast(i64, s.bitend - s.bitptr) >= 8 {
         s.bitbuf |= sinfl_read64(s.bitptr) << cast(u64, s.bitcnt);
         s.bitptr += 63 - s.bitcnt >> 3;
@@ -10846,24 +10878,34 @@ private { void sinfl_refill(sinfl* s) {
         s.bitptr += bytesuse;
         s.bitcnt += bytesuse << 3;
     }
-}}
-private { i32 sinfl_peek(sinfl* s, i32 cnt) {
+}
+}
+private {
+i32 sinfl_peek(sinfl* s, i32 cnt) {
     return cast(i32, s.bitbuf & cast(u64, (1 << cnt) - 1));
-}}
-private { void sinfl_eat(sinfl* s, i32 cnt) {
+}
+}
+private {
+void sinfl_eat(sinfl* s, i32 cnt) {
     s.bitbuf >>= cast(u64, cnt);
     s.bitcnt -= cnt;
-}}
-private { i32 sinfl__get(sinfl* s, i32 cnt) {
+}
+}
+private {
+i32 sinfl__get(sinfl* s, i32 cnt) {
     i32 res = sinfl_peek(s, cnt);
     sinfl_eat(s, cnt);
     return res;
-}}
-private { i32 sinfl_get(sinfl* s, i32 cnt) {
+}
+}
+private {
+i32 sinfl_get(sinfl* s, i32 cnt) {
     sinfl_refill(s);
     return sinfl__get(s, cnt);
-}}
-private { i32 sinfl_build_tbl(sinfl_gen* gen, u32* tbl, i32 tbl_bits, i32* cnt) {
+}
+}
+private {
+i32 sinfl_build_tbl(sinfl_gen* gen, u32* tbl, i32 tbl_bits, i32* cnt) {
     i32 tbl_end = 0;
     while true {
         gen.cnt = cnt[gen.len];
@@ -10899,8 +10941,10 @@ private { i32 sinfl_build_tbl(sinfl_gen* gen, u32* tbl, i32 tbl_bits, i32* cnt) 
         }
     }
     return 0;
-}}
-private { void sinfl_build_subtbl(sinfl_gen* gen, u32* tbl, i32 tbl_bits, i32* cnt) {
+}
+}
+private {
+void sinfl_build_subtbl(sinfl_gen* gen, u32* tbl, i32 tbl_bits, i32* cnt) {
     i32 sub_bits = 0;
     i32 sub_start = 0;
     i32 sub_prefix = -1;
@@ -10943,8 +10987,10 @@ private { void sinfl_build_subtbl(sinfl_gen* gen, u32* tbl, i32 tbl_bits, i32* c
             gen.cnt = cnt[++gen.len];
         }
     }
-}}
-private { void sinfl_build(u32* tbl, u8* lens, i32 tbl_bits, i32 maxlen, i32 symcnt) {
+}
+}
+private {
+void sinfl_build(u32* tbl, u8* lens, i32 tbl_bits, i32 maxlen, i32 symcnt) {
     i32 i;
     i32 used = 0;
     i16[288] sort;
@@ -10975,8 +11021,10 @@ private { void sinfl_build(u32* tbl, u8* lens, i32 tbl_bits, i32 maxlen, i32 sym
     if sinfl_build_tbl(&gen, tbl, tbl_bits, cnt) == 0 {
         sinfl_build_subtbl(&gen, tbl, tbl_bits, cnt);
     }
-}}
-private { i32 sinfl_decode(sinfl* s, u32* tbl, i32 bit_len) {
+}
+}
+private {
+i32 sinfl_decode(sinfl* s, u32* tbl, i32 bit_len) {
     i32 idx = sinfl_peek(s, bit_len);
     u32 key = tbl[idx];
     if (key & 16) != 0 {
@@ -10987,8 +11035,10 @@ private { i32 sinfl_decode(sinfl* s, u32* tbl, i32 bit_len) {
     }
     sinfl_eat(s, cast(i32, key & 15));
     return cast(i32, key >> 16 & 4095);
-}}
-private { i32 sinfl_decompress(u8* out, i32 cap, u8* in, i32 size) {
+}
+}
+private {
+i32 sinfl_decompress(u8* out, i32 cap, u8* in, i32 size) {
     u8* oe = out + cap;
     u8* e = in + size;
     u8* o = out;
@@ -11200,11 +11250,13 @@ private { i32 sinfl_decompress(u8* out, i32 cap, u8* in, i32 size) {
         }
     }
     return cast(i32, cast(i64, out - o));
-}}
+}
+}
 i32 sinflate(void* out, i32 cap, void* in, i32 size) {
     return sinfl_decompress(cast(u8*, out), cap, cast(u8*, in), size);
 }
-private { u32 sinfl_adler32(u32 adler32, u8* in, i32 in_len) {
+private {
+u32 sinfl_adler32(u32 adler32, u8* in, i32 in_len) {
     u32 ADLER_MOD = 65521;
     u32 s1 = adler32 & 65535;
     u32 s2 = adler32 >> 16;
@@ -11241,7 +11293,8 @@ private { u32 sinfl_adler32(u32 adler32, u8* in, i32 in_len) {
         blk_len = 5552;
     }
     return (s2 << 16) + s1;
-}}
+}
+}
 i32 zsinflate(void* out, i32 cap, void* mem, i32 size) {
     var in = cast(u8*, mem);
     if size >= 6 {
@@ -11254,22 +11307,29 @@ i32 zsinflate(void* out, i32 cap, void* mem, i32 size) {
         return -1;
     }
 }
-private { i32 sdefl_ilog2(i32 n) {
+private {
+i32 sdefl_ilog2(i32 n) {
     if n == 0 {
         return 0;
     }
     return cast(i32, sizeof(u64)) * CHAR_BIT - 1 - __builtin_clzl(cast(u64, n));
-}}
-private { u32 sdefl_uload32(void* p) {
+}
+}
+private {
+u32 sdefl_uload32(void* p) {
     u32 n = 0;
     memcpy(&n, p, cast(u64, sizeof(n)));
     return n;
-}}
-private { u32 sdefl_hash32(void* p) {
+}
+}
+private {
+u32 sdefl_hash32(void* p) {
     u32 n = sdefl_uload32(p);
     return n * 2654435721 >> cast(u32, 32 - 15);
-}}
-private { void sdefl_put(u8** dst, sdefl* s, i32 code, i32 bitcnt) {
+}
+}
+private {
+void sdefl_put(u8** dst, sdefl* s, i32 code, i32 bitcnt) {
     s.bits |= code << s.bitcnt;
     s.bitcnt += bitcnt;
     while s.bitcnt >= 8 {
@@ -11279,8 +11339,10 @@ private { void sdefl_put(u8** dst, sdefl* s, i32 code, i32 bitcnt) {
         s.bitcnt -= 8;
         *dst = *dst + 1;
     }
-}}
-private { void sdefl_heap_sub(u32* A, u32 len, u32 sub) {
+}
+}
+private {
+void sdefl_heap_sub(u32* A, u32 len, u32 sub) {
     u32 c;
     u32 p = sub;
     u32 v = A[sub];
@@ -11299,14 +11361,18 @@ private { void sdefl_heap_sub(u32* A, u32 len, u32 sub) {
         p = c;
     }
     A[p] = v;
-}}
-private { void sdefl_heap_array(u32* A, u32 len) {
+}
+}
+private {
+void sdefl_heap_array(u32* A, u32 len) {
     u32 sub;
     for sub = len >> 1; sub >= 1; sub-- {
         sdefl_heap_sub(A, len, sub);
     }
-}}
-private { void sdefl_heap_sort(u32* A, u32 n) {
+}
+}
+private {
+void sdefl_heap_sort(u32* A, u32 n) {
     A--;
     sdefl_heap_array(A, n);
     while n >= 2 {
@@ -11315,8 +11381,10 @@ private { void sdefl_heap_sort(u32* A, u32 n) {
         A[1] = tmp;
         sdefl_heap_sub(A, n, 1);
     }
-}}
-private { u32 sdefl_sort_sym(u32 sym_cnt, u32* freqs, u8* lens, u32* sym_out) {
+}
+}
+private {
+u32 sdefl_sort_sym(u32 sym_cnt, u32* freqs, u8* lens, u32* sym_out) {
     u32[288] cnts;
     u32 cnt_num = sym_cnt + cast(u32, 3 / 4) + 3 & cast(u32, ~3);
     u32 used_sym = 0;
@@ -11341,8 +11409,10 @@ private { u32 sdefl_sort_sym(u32 sym_cnt, u32* freqs, u8* lens, u32* sym_out) {
     }
     sdefl_heap_sort(sym_out + cnts[cnt_num - 2], cnts[cnt_num - 1] - cnts[cnt_num - 2]);
     return used_sym;
-}}
-private { void sdefl_build_tree(u32* A, u32 sym_cnt) {
+}
+}
+private {
+void sdefl_build_tree(u32* A, u32 sym_cnt) {
     u32 i = 0;
     u32 b = 0;
     u32 e = 0;
@@ -11366,8 +11436,10 @@ private { void sdefl_build_tree(u32* A, u32 sym_cnt) {
         A[e] = A[e] & cast(u32, (1 << 10) - 1) | freq_shift;
         if !(sym_cnt - ++e > 1) { break; }
     }
-}}
-private { void sdefl_gen_len_cnt(u32* A, u32 root, u32* len_cnt, u32 max_code_len) {
+}
+}
+private {
+void sdefl_gen_len_cnt(u32* A, u32 root, u32* len_cnt, u32 max_code_len) {
     i32 n;
     u32 i;
     for i = 0; i <= max_code_len; i++ {
@@ -11391,8 +11463,10 @@ private { void sdefl_gen_len_cnt(u32* A, u32 root, u32* len_cnt, u32 max_code_le
         len_cnt[len]--;
         len_cnt[len + 1] += 2;
     }
-}}
-private { void sdefl_gen_codes(u32* A, u8* lens, u32* len_cnt, u32 max_code_word_len, u32 sym_cnt) {
+}
+}
+private {
+void sdefl_gen_codes(u32* A, u8* lens, u32* len_cnt, u32 max_code_word_len, u32 sym_cnt) {
     u32 i;
     u32 sym;
     u32 len;
@@ -11414,15 +11488,19 @@ private { void sdefl_gen_codes(u32* A, u8* lens, u32* len_cnt, u32 max_code_word
     for sym = 0; sym < sym_cnt; sym++ {
         A[sym] = nxt[lens[sym]]++;
     }
-}}
-private { u32 sdefl_rev(u32 c, u8 n) {
+}
+}
+private {
+u32 sdefl_rev(u32 c, u8 n) {
     c = (c & 21845) << 1 | (c & 43690) >> 1;
     c = (c & 13107) << 2 | (c & 52428) >> 2;
     c = (c & 3855) << 4 | (c & 61680) >> 4;
     c = (c & 255) << 8 | (c & 65280) >> 8;
     return c >> 16 - n;
-}}
-private { void sdefl_huff(u8* lens, u32* codes, u32* freqs, u32 num_syms, u32 max_code_len) {
+}
+}
+private {
+void sdefl_huff(u8* lens, u32* codes, u32* freqs, u32 num_syms, u32 max_code_len) {
     u32 c;
     u32* A = codes;
     u32[16] len_cnt;
@@ -11445,8 +11523,10 @@ private { void sdefl_huff(u8* lens, u32* codes, u32* freqs, u32 num_syms, u32 ma
     for c = 0; c < num_syms; c++ {
         codes[c] = sdefl_rev(codes[c], lens[c]);
     }
-}}
-private { void sdefl_precode(sdefl_symcnt* cnt, u32* freqs, u32* items, u8* litlen, u8* offlen) {
+}
+}
+private {
+void sdefl_precode(sdefl_symcnt* cnt, u32* freqs, u32* items, u8* litlen, u8* offlen) {
     u32* at = items;
     u32 run_start = 0;
     u32 total = 0;
@@ -11507,8 +11587,10 @@ private { void sdefl_precode(sdefl_symcnt* cnt, u32* freqs, u32* items, u8* litl
         if !(run_start != total) { break; }
     }
     cnt.items = cast(i32, cast(i64, at - items));
-}}
-private { void sdefl_match_codes(sdefl_match_codest* cod, i32 dist, i32 len) {
+}
+}
+private {
+void sdefl_match_codes(sdefl_match_codest* cod, i32 dist, i32 len) {
     assert(len <= 258);
     assert(dist <= 32768);
     cod.ls = cast(i32, sdefl_match_codes__lslot[len]);
@@ -11516,8 +11598,10 @@ private { void sdefl_match_codes(sdefl_match_codest* cod, i32 dist, i32 len) {
     assert(cod.lc <= 285);
     cod.dx = sdefl_ilog2(1 << sdefl_ilog2(dist - 1) + 1 >> 2);
     cod.dc = cod.dx != 0 ? (cod.dx + 1 << 1) + (dist > sdefl_match_codes__dxmax[cod.dx]) : dist - 1;
-}}
-private { sdefl_blk_type sdefl_blk_type_v(sdefl* s, i32 blk_len, i32 pre_item_len, u32* pre_freq, u8* pre_len) {
+}
+}
+private {
+sdefl_blk_type sdefl_blk_type_v(sdefl* s, i32 blk_len, i32 pre_item_len, u32* pre_freq, u8* pre_len) {
     i32 dyn_cost = 0;
     i32 fix_cost = 0;
     i32 sym = 0;
@@ -11537,22 +11621,28 @@ private { sdefl_blk_type sdefl_blk_type_v(sdefl* s, i32 blk_len, i32 pre_item_le
     }
     fix_cost += 8 * (5 * ((blk_len + (65535 - 1)) / 65535) + blk_len + 1 + 2);
     return dyn_cost < fix_cost ? SDEFL_BLK_DYN : SDEFL_BLK_UCOMPR;
-}}
-private { void sdefl_put16(u8** dst, u16 x) {
+}
+}
+private {
+void sdefl_put16(u8** dst, u16 x) {
     u8* val = *dst;
     val[0] = cast(u8, x & 255);
     val[1] = cast(u8, cast(i32, x) >> 8);
     *dst = val + 2;
-}}
-private { void sdefl_match_v(u8** dst, sdefl* s, i32 dist, i32 len) {
+}
+}
+private {
+void sdefl_match_v(u8** dst, sdefl* s, i32 dist, i32 len) {
     sdefl_match_codest cod;
     sdefl_match_codes(&cod, dist, len);
     sdefl_put(dst, s, cast(i32, s.cod.word.lit[cod.lc]), cast(i32, s.cod.len.lit[cod.lc]));
     sdefl_put(dst, s, len - sdefl_match_v__lmin[cod.ls], sdefl_match_v__lxn[cod.ls]);
     sdefl_put(dst, s, cast(i32, s.cod.word.off[cod.dc]), cast(i32, s.cod.len.off[cod.dc]));
     sdefl_put(dst, s, dist - sdefl_match_v__dmin[cod.dc], cod.dx);
-}}
-private { void sdefl_flush(u8** dst, sdefl* s, i32 is_last, u8* in, i32 blk_begin, i32 blk_end) {
+}
+}
+private {
+void sdefl_flush(u8** dst, sdefl* s, i32 is_last, u8* in, i32 blk_begin, i32 blk_end) {
     i32 blk_len = blk_end - blk_begin;
     i32 j;
     i32 i = 0;
@@ -11633,22 +11723,28 @@ private { void sdefl_flush(u8** dst, sdefl* s, i32 is_last, u8* in, i32 blk_begi
     }
     memset(&s.freq, 0, cast(u64, sizeof(s.freq)));
     s.seq_cnt = 0;
-}}
-private { void sdefl_seq(sdefl* s, i32 off, i32 len) {
+}
+}
+private {
+void sdefl_seq(sdefl* s, i32 off, i32 len) {
     assert(s.seq_cnt + 2 < (256 * 1024 + 2) / 3);
     s.seq[s.seq_cnt].off = off;
     s.seq[s.seq_cnt].len = len;
     s.seq_cnt++;
-}}
-private { void sdefl_reg_match(sdefl* s, i32 off, i32 len) {
+}
+}
+private {
+void sdefl_reg_match(sdefl* s, i32 off, i32 len) {
     sdefl_match_codest cod;
     sdefl_match_codes(&cod, off, len);
     assert(cod.lc < 288);
     assert(cod.dc < 32);
     s.freq.lit[cod.lc]++;
     s.freq.off[cod.dc]++;
-}}
-private { void sdefl_fnd(sdefl_match* m, sdefl* s, i32 chain_len, i32 max_match, u8* in, i32 p, i32 e) {
+}
+}
+private {
+void sdefl_fnd(sdefl_match* m, sdefl* s, i32 chain_len, i32 max_match, u8* in, i32 p, i32 e) {
     i32 i = s.tbl[sdefl_hash32(in + p)];
     i32 limit = p - (1 << 15) < -1 ? -1 : p - (1 << 15);
     assert(p < e);
@@ -11678,8 +11774,10 @@ private { void sdefl_fnd(sdefl_match* m, sdefl* s, i32 chain_len, i32 max_match,
         }
         i = s.prv[i & (1 << 15) - 1];
     }
-}}
-private { i32 sdefl_compr(sdefl* s, u8* out, u8* in, i32 in_len, i32 lvl) {
+}
+}
+private {
+i32 sdefl_compr(sdefl* s, u8* out, u8* in, i32 in_len, i32 lvl) {
     u8* q = out;
     i32 max_chain = lvl < 8 ? 1 << lvl + 1 : 1 << 13;
     i32 n;
@@ -11749,13 +11847,15 @@ private { i32 sdefl_compr(sdefl* s, u8* out, u8* in, i32 in_len, i32 lvl) {
     }
     assert(s.bitcnt == 0);
     return cast(i32, cast(i64, q - out));
-}}
+}
+}
 i32 sdeflate(sdefl* s, void* out, void* in, i32 n, i32 lvl) {
     s.bitcnt = 0;
     s.bits = s.bitcnt;
     return sdefl_compr(s, cast(u8*, out), cast(u8*, in), n, lvl);
 }
-private { u32 sdefl_adler32(u32 adler32, u8* in, i32 in_len) {
+private {
+u32 sdefl_adler32(u32 adler32, u8* in, i32 in_len) {
     u32 ADLER_MOD = 65521;
     u32 s1 = adler32 & 65535;
     u32 s2 = adler32 >> 16;
@@ -11792,7 +11892,8 @@ private { u32 sdefl_adler32(u32 adler32, u8* in, i32 in_len) {
         blk_len = 5552;
     }
     return (s2 << 16) + s1;
-}}
+}
+}
 i32 zsdeflate(sdefl* s, void* out, void* in, i32 n, i32 lvl) {
     i32 p = 0;
     u32 a = 0;
@@ -11964,9 +12065,11 @@ void rprand_unload_sequence(i32* sequence) {
 //----------------------------------------------------------------------------------
 // Module Internal Functions Definition
 //----------------------------------------------------------------------------------
-private { u32 rprand_rotate_left(u32 x, i32 k) {
+private {
+u32 rprand_rotate_left(u32 x, i32 k) {
     return x << cast(u32, k) | x >> cast(u32, 32 - k);
-}}
+}
+}
 // Xoshiro128** generator info:
 //
 //   Written in 2018 by David Blackman and Sebastiano Vigna (vigna@acm.org)
@@ -13407,18 +13510,24 @@ void PollInputEvents() {
 // Function wrappers around RL_*ALLOC macros, used by glfwInitAllocator() inside of InitPlatform()
 // GLFWallocator expects function pointers with specific signatures to be provided
 // REF: https://www.glfw.org/docs/latest/intro_guide.html#init_allocator
-private { void* AllocateWrapper(u64 size, void* user) {
+private {
+void* AllocateWrapper(u64 size, void* user) {
     ignore user;
     return calloc(size, cast(u64, 1));
-}}
-private { void* ReallocateWrapper(void* block, u64 size, void* user) {
+}
+}
+private {
+void* ReallocateWrapper(void* block, u64 size, void* user) {
     ignore user;
     return realloc(block, size);
-}}
-private { void DeallocateWrapper(void* block, void* user) {
+}
+}
+private {
+void DeallocateWrapper(void* block, void* user) {
     ignore user;
     free(block);
-}}
+}
+}
 // Initialize platform: graphics, inputs and more
 i32 InitPlatform() {
     glfwSetErrorCallback(ErrorCallback);
@@ -13704,15 +13813,20 @@ void ClosePlatform() {
 // NOTE: Those functions are only required for current platform
 //----------------------------------------------------------------------------------
 // GLFW3: Error callback, runs on GLFW3 error
-private { void ErrorCallback(i32 error, u8* description) {
-    }}
+private {
+void ErrorCallback(i32 error, u8* description) {
+    }
+}
 // GLFW3: Window size change callback, runs when window is resized
 // NOTE: Window resizing not enabled by default, use SetConfigFlags()
-private { void WindowSizeCallback(GLFWwindow* window, i32 width, i32 height) {
-}}
+private {
+void WindowSizeCallback(GLFWwindow* window, i32 width, i32 height) {
+}
+}
 // GLFW3: Framebuffer size change callback, runs when framebuffer is resized
 // WARNING: If FLAG_WINDOW_HIGHDPI is set, WindowContentScaleCallback() is called before this function
-private { void FramebufferSizeCallback(GLFWwindow* window, i32 width, i32 height) {
+private {
+void FramebufferSizeCallback(GLFWwindow* window, i32 width, i32 height) {
     if width == 0 || height == 0 {
         return;
     }
@@ -13738,47 +13852,59 @@ private { void FramebufferSizeCallback(GLFWwindow* window, i32 width, i32 height
             CORE.Window.screen.height = cast(u32, height);
         }
     }
-}}
+}
+}
 // GLFW3: Window content scale callback, runs on monitor content scale change detected
 // WARNING: If FLAG_WINDOW_HIGHDPI is not set, this function is not called
-private { void WindowContentScaleCallback(GLFWwindow* window, f32 scalex, f32 scaley) {
+private {
+void WindowContentScaleCallback(GLFWwindow* window, f32 scalex, f32 scaley) {
     CORE.Window.render.width = cast(u32, cast(i32, cast(f32, CORE.Window.screen.width) * scalex));
     CORE.Window.render.height = cast(u32, cast(i32, cast(f32, CORE.Window.screen.height) * scaley));
     CORE.Window.currentFbo = CORE.Window.render;
     CORE.Window.screenScale = MatrixScale(scalex, scaley, 1.0f);
     SetMouseScale(1.0f / scalex, 1.0f / scaley);
-}}
+}
+}
 // GLFW3: Window position callback, runs when window position changes
-private { void WindowPosCallback(GLFWwindow* window, i32 x, i32 y) {
+private {
+void WindowPosCallback(GLFWwindow* window, i32 x, i32 y) {
     CORE.Window.position.x = x;
     CORE.Window.position.y = y;
-}}
+}
+}
 // GLFW3: Window iconify callback, runs when window is minimized/restored
-private { void WindowIconifyCallback(GLFWwindow* window, i32 iconified) {
+private {
+void WindowIconifyCallback(GLFWwindow* window, i32 iconified) {
     if iconified != 0 {
         CORE.Window.flags |= cast(u32, FLAG_WINDOW_MINIMIZED);
     } else {
         CORE.Window.flags &= cast(u32, ~FLAG_WINDOW_MINIMIZED);
     }
-}}
+}
+}
 // GLFW3: Window maximize callback, runs when window is maximized/restored
-private { void WindowMaximizeCallback(GLFWwindow* window, i32 maximized) {
+private {
+void WindowMaximizeCallback(GLFWwindow* window, i32 maximized) {
     if maximized != 0 {
         CORE.Window.flags |= cast(u32, FLAG_WINDOW_MAXIMIZED);
     } else {
         CORE.Window.flags &= cast(u32, ~FLAG_WINDOW_MAXIMIZED);
     }
-}}
+}
+}
 // GLFW3: Window focus callback, runs when window get/lose focus
-private { void WindowFocusCallback(GLFWwindow* window, i32 focused) {
+private {
+void WindowFocusCallback(GLFWwindow* window, i32 focused) {
     if focused != 0 {
         CORE.Window.flags &= cast(u32, ~FLAG_WINDOW_UNFOCUSED);
     } else {
         CORE.Window.flags |= cast(u32, FLAG_WINDOW_UNFOCUSED);
     }
-}}
+}
+}
 // GLFW3: Window drop callback, runs when files are dropped into window
-private { void WindowDropCallback(GLFWwindow* window, i32 count, u8** paths) {
+private {
+void WindowDropCallback(GLFWwindow* window, i32 count, u8** paths) {
     if count > 0 {
         if CORE.Window.dropFileCount > 0 {
             for u32 i = 0; i < CORE.Window.dropFileCount; i++ {
@@ -13795,9 +13921,11 @@ private { void WindowDropCallback(GLFWwindow* window, i32 count, u8** paths) {
             strncpy(CORE.Window.dropFilepaths[i], paths[i], cast(u64, 4096 - 1));
         }
     }
-}}
+}
+}
 // GLFW3: Keyboard callback, runs on key pressed
-private { void KeyCallback(GLFWwindow* window, i32 key, i32 scancode, i32 action, i32 mods) {
+private {
+void KeyCallback(GLFWwindow* window, i32 key, i32 scancode, i32 action, i32 mods) {
     if key < 0 {
         return;
     }
@@ -13818,16 +13946,20 @@ private { void KeyCallback(GLFWwindow* window, i32 key, i32 scancode, i32 action
     if key == CORE.Input.Keyboard.exitKey && action == 1 {
         glfwSetWindowShouldClose(platform.handle, 1);
     }
-}}
+}
+}
 // GLFW3: Char callback, runs on key pressed to get unicode codepoint value
-private { void CharCallback(GLFWwindow* window, u32 codepoint) {
+private {
+void CharCallback(GLFWwindow* window, u32 codepoint) {
     if CORE.Input.Keyboard.charPressedQueueCount < 16 {
         CORE.Input.Keyboard.charPressedQueue[CORE.Input.Keyboard.charPressedQueueCount] = cast(i32, codepoint);
         CORE.Input.Keyboard.charPressedQueueCount++;
     }
-}}
+}
+}
 // GLFW3: Mouse button callback, runs on mouse button pressed
-private { void MouseButtonCallback(GLFWwindow* window, i32 button, i32 action, i32 mods) {
+private {
+void MouseButtonCallback(GLFWwindow* window, i32 button, i32 action, i32 mods) {
     CORE.Input.Mouse.currentButtonState[button] = cast(u8, action);
     CORE.Input.Touch.currentTouchState[button] = cast(u8, action);
     GestureEvent gestureEvent;
@@ -13842,9 +13974,11 @@ private { void MouseButtonCallback(GLFWwindow* window, i32 button, i32 action, i
     gestureEvent.position[0].x /= cast(f32, GetScreenWidth());
     gestureEvent.position[0].y /= cast(f32, GetScreenHeight());
     ProcessGestureEvent(gestureEvent);
-}}
+}
+}
 // GLFW3: Cursor position callback, runs on mouse movement
-private { void MouseCursorPosCallback(GLFWwindow* window, f64 x, f64 y) {
+private {
+void MouseCursorPosCallback(GLFWwindow* window, f64 x, f64 y) {
     CORE.Input.Mouse.currentPosition.x = cast(f32, x);
     CORE.Input.Mouse.currentPosition.y = cast(f32, y);
     CORE.Input.Touch.position[0] = CORE.Input.Mouse.currentPosition;
@@ -13856,21 +13990,27 @@ private { void MouseCursorPosCallback(GLFWwindow* window, f64 x, f64 y) {
     gestureEvent.position[0].x /= cast(f32, GetScreenWidth());
     gestureEvent.position[0].y /= cast(f32, GetScreenHeight());
     ProcessGestureEvent(gestureEvent);
-}}
+}
+}
 // GLFW3: Mouse wheel scroll callback, runs on mouse wheel changes
-private { void MouseScrollCallback(GLFWwindow* window, f64 xoffset, f64 yoffset) {
+private {
+void MouseScrollCallback(GLFWwindow* window, f64 xoffset, f64 yoffset) {
     CORE.Input.Mouse.currentWheelMove = Vector2{cast(f32, xoffset), cast(f32, yoffset)};
-}}
+}
+}
 // GLFW3: Cursor ennter callback, when cursor enters the window
-private { void CursorEnterCallback(GLFWwindow* window, i32 enter) {
+private {
+void CursorEnterCallback(GLFWwindow* window, i32 enter) {
     if enter != 0 {
         CORE.Input.Mouse.cursorOnScreen = true;
     } else {
         CORE.Input.Mouse.cursorOnScreen = false;
     }
-}}
+}
+}
 // GLFW3: Joystick connected/disconnected callback
-private { void JoystickCallback(i32 jid, i32 event) {
+private {
+void JoystickCallback(i32 jid, i32 event) {
     if jid < 4 {
         if event == 262145 {
             memset(CORE.Input.Gamepad.name[jid], 0, cast(u64, 128));
@@ -13879,7 +14019,8 @@ private { void JoystickCallback(i32 jid, i32 event) {
             memset(CORE.Input.Gamepad.name[jid], 0, cast(u64, 128));
         }
     }
-}}
+}
+}
 when os(windows) {
 }
 // EOF
@@ -14971,7 +15112,8 @@ u8* GetFileExtension(u8* fileName) {
     return dot;
 }
 // String pointer reverse break: returns right-most occurrence of charset in s
-private { u8* strprbrk(u8* text, u8* charset) {
+private {
+u8* strprbrk(u8* text, u8* charset) {
     u8* latestMatch = null;
     for ; text != null; latestMatch = text++ {
         text = strpbrk(text, charset);
@@ -14980,12 +15122,13 @@ private { u8* strprbrk(u8* text, u8* charset) {
         }
     }
     return latestMatch;
-}}
+}
+}
 // Get pointer to filename for a path string
 u8* GetFileName(u8* filePath) {
     u8* fileName = null;
     if filePath != null {
-        fileName = strprbrk(filePath, "\\/");
+        fileName = strprbrk(filePath, "\\\/");
     }
     if fileName == null {
         return filePath;
@@ -15015,7 +15158,7 @@ u8* GetDirectoryPath(u8* filePath) {
         GetDirectoryPath__dirPath[0] = 46;
         GetDirectoryPath__dirPath[1] = 47;
     }
-    lastSlash = strprbrk(filePath, "\\/");
+    lastSlash = strprbrk(filePath, "\\\/");
     if lastSlash != null {
         if lastSlash == filePath {
             GetDirectoryPath__dirPath[0] = filePath[0];
@@ -16092,7 +16235,8 @@ void SetupViewport(i32 width, i32 height) {
 // Scan all files and directories in a base path
 // WARNING: files.paths[] must be previously allocated and
 // contain enough space to store all required paths
-private { void ScanDirectoryFiles(u8* basePath, FilePathList* files, u8* filter, u32 expectedFileCount, bool scanSubdirs) {
+private {
+void ScanDirectoryFiles(u8* basePath, FilePathList* files, u8* filter, u32 expectedFileCount, bool scanSubdirs) {
     u8[4096] path;
     memset(path, 0, cast(u64, 4096));
     dirent* dp = null;
@@ -16128,11 +16272,13 @@ private { void ScanDirectoryFiles(u8* basePath, FilePathList* files, u8* filter,
         closedir(dir);
     } else {
             }
-}}
+}
+}
 // Automation event recording
 // Checking events in current frame and save them into currentEventList
 // NOTE: Recording is by default done at EndDrawing(), before PollInputEvents()
-private { void RecordAutomationEvent() {
+private {
+void RecordAutomationEvent() {
     if currentEventList.count == currentEventList.capacity {
         return;
     }
@@ -16292,7 +16438,8 @@ private { void RecordAutomationEvent() {
             return;
         }
     }
-}}
+}
+}
 // OpenGL abstraction layer to OpenGL 1.1, 2.1, 3.3+ or ES2
 //----------------------------------------------------------------------------------
 // Defines and Macros
@@ -17729,7 +17876,8 @@ Rectangle GetCollisionRec(Rectangle rec1, Rectangle rec2) {
 //----------------------------------------------------------------------------------
 // Cubic easing in-out
 // NOTE: Used by DrawLineBezier() only
-private { f32 EaseCubicInOut(f32 t, f32 b, f32 c, f32 d) {
+private {
+f32 EaseCubicInOut(f32 t, f32 b, f32 c, f32 d) {
     f32 result = 0.0f;
     t /= 0.500000f * d;
     if t < 1.0f {
@@ -17739,7 +17887,8 @@ private { f32 EaseCubicInOut(f32 t, f32 b, f32 c, f32 d) {
         result = 0.500000f * c * (t * t * t + 2.0f) + b;
     }
     return result;
-}}
+}
+}
 when !(defined(STBIDEF)) {
 when defined(STB_IMAGE_STATIC) {
     } else {
@@ -17820,7 +17969,8 @@ when os(windows) {
 when !(defined(STBI_SIMD_ALIGN)) {
 }
 // initialize a memory-decode context
-private { void stbi__start_mem(stbi__context* s, stbi_uc* buffer, i32 len) {
+private {
+void stbi__start_mem(stbi__context* s, stbi_uc* buffer, i32 len) {
     s.io.read = null;
     s.read_from_callbacks = 0;
     s.callback_already_read = 0;
@@ -17828,9 +17978,11 @@ private { void stbi__start_mem(stbi__context* s, stbi_uc* buffer, i32 len) {
     s.img_buffer = s.img_buffer_original;
     s.img_buffer_original_end = buffer + len;
     s.img_buffer_end = s.img_buffer_original_end;
-}}
+}
+}
 // initialize a callback-based context
-private { void stbi__start_callbacks(stbi__context* s, stbi_io_callbacks* c, void* user) {
+private {
+void stbi__start_callbacks(stbi__context* s, stbi_io_callbacks* c, void* user) {
     s.io = *c;
     s.io_user_data = user;
     s.buflen = cast(i32, sizeof(s.buffer_start));
@@ -17840,11 +17992,14 @@ private { void stbi__start_callbacks(stbi__context* s, stbi_io_callbacks* c, voi
     s.img_buffer = s.img_buffer_original;
     stbi__refill_buffer(s);
     s.img_buffer_original_end = s.img_buffer_end;
-}}
-private { void stbi__rewind(stbi__context* s) {
+}
+}
+private {
+void stbi__rewind(stbi__context* s) {
     s.img_buffer = s.img_buffer_original;
     s.img_buffer_end = s.img_buffer_original_end;
-}}
+}
+}
 when !(defined(STBI_NO_PNG)) {
 }
 // transminc-minc patch: original had `static` and `const char *` on
@@ -17856,14 +18011,18 @@ u8* stbi_failure_reason() {
     return stbi__g_failure_reason;
 }
 when !(defined(STBI_NO_FAILURE_STRINGS)) {
-private { i32 stbi__err(u8* str_var) {
+private {
+i32 stbi__err(u8* str_var) {
         stbi__g_failure_reason = str_var;
         return 0;
-    }}
+    }
 }
-private { void* stbi__malloc(u64 size) {
+}
+private {
+void* stbi__malloc(u64 size) {
     return malloc(size);
-}}
+}
+}
 // stb_image uses ints pervasively, including for offset calculations.
 // therefore the largest decoded image size we can support with the
 // current code, even on 64-bit targets, is INT_MAX. this is not a
@@ -17875,15 +18034,18 @@ private { void* stbi__malloc(u64 size) {
 // and no overflow occurs.
 // return 1 if the sum is valid, 0 on overflow.
 // negative terms are considered invalid.
-private { i32 stbi__addsizes_valid(i32 a, i32 b) {
+private {
+i32 stbi__addsizes_valid(i32 a, i32 b) {
     if b < 0 {
         return 0;
     }
     return a <= INT_MAX - b;
-}}
+}
+}
 // returns 1 if the product is valid, 0 on overflow.
 // negative factors are considered invalid.
-private { i32 stbi__mul2sizes_valid(i32 a, i32 b) {
+private {
+i32 stbi__mul2sizes_valid(i32 a, i32 b) {
     if a < 0 || b < 0 {
         return 0;
     }
@@ -17891,40 +18053,54 @@ private { i32 stbi__mul2sizes_valid(i32 a, i32 b) {
         return 1;
     }
     return a <= INT_MAX / b;
-}}
+}
+}
 // returns 1 if "a*b + add" has no negative terms/factors and doesn't overflow
-private { i32 stbi__mad2sizes_valid(i32 a, i32 b, i32 add) {
+private {
+i32 stbi__mad2sizes_valid(i32 a, i32 b, i32 add) {
     return stbi__mul2sizes_valid(a, b) && stbi__addsizes_valid(a * b, add);
-}}
+}
+}
 // returns 1 if "a*b*c + add" has no negative terms/factors and doesn't overflow
-private { i32 stbi__mad3sizes_valid(i32 a, i32 b, i32 c, i32 add) {
+private {
+i32 stbi__mad3sizes_valid(i32 a, i32 b, i32 c, i32 add) {
     return stbi__mul2sizes_valid(a, b) && stbi__mul2sizes_valid(a * b, c) && stbi__addsizes_valid(a * b * c, add);
-}}
+}
+}
 // returns 1 if "a*b*c*d + add" has no negative terms/factors and doesn't overflow
-private { i32 stbi__mad4sizes_valid(i32 a, i32 b, i32 c, i32 d, i32 add) {
+private {
+i32 stbi__mad4sizes_valid(i32 a, i32 b, i32 c, i32 d, i32 add) {
     return stbi__mul2sizes_valid(a, b) && stbi__mul2sizes_valid(a * b, c) && stbi__mul2sizes_valid(a * b * c, d) && stbi__addsizes_valid(a * b * c * d, add);
-}}
+}
+}
 // mallocs with size overflow checking
-private { void* stbi__malloc_mad2(i32 a, i32 b, i32 add) {
+private {
+void* stbi__malloc_mad2(i32 a, i32 b, i32 add) {
     if stbi__mad2sizes_valid(a, b, add) == 0 {
         return null;
     }
     return stbi__malloc(cast(u64, a * b + add));
-}}
-private { void* stbi__malloc_mad3(i32 a, i32 b, i32 c, i32 add) {
+}
+}
+private {
+void* stbi__malloc_mad3(i32 a, i32 b, i32 c, i32 add) {
     if stbi__mad3sizes_valid(a, b, c, add) == 0 {
         return null;
     }
     return stbi__malloc(cast(u64, a * b * c + add));
-}}
-private { void* stbi__malloc_mad4(i32 a, i32 b, i32 c, i32 d, i32 add) {
+}
+}
+private {
+void* stbi__malloc_mad4(i32 a, i32 b, i32 c, i32 d, i32 add) {
     if stbi__mad4sizes_valid(a, b, c, d, add) == 0 {
         return null;
     }
     return stbi__malloc(cast(u64, a * b * c * d + add));
-}}
+}
+}
 // returns 1 if the sum of two signed ints is valid (between -2^31 and 2^31-1 inclusive), 0 on overflow.
-private { i32 stbi__addints_valid(i32 a, i32 b) {
+private {
+i32 stbi__addints_valid(i32 a, i32 b) {
     if a >= 0 != b >= 0 {
         return 1;
     }
@@ -17932,9 +18108,11 @@ private { i32 stbi__addints_valid(i32 a, i32 b) {
         return a >= INT_MIN - b;
     }
     return a <= INT_MAX - b;
-}}
+}
+}
 // returns 1 if the product of two ints fits in a signed short, 0 on overflow.
-private { i32 stbi__mul2shorts_valid(i32 a, i32 b) {
+private {
+i32 stbi__mul2shorts_valid(i32 a, i32 b) {
     if b == 0 || b == -1 {
         return 1;
     }
@@ -17945,7 +18123,8 @@ private { i32 stbi__mul2shorts_valid(i32 a, i32 b) {
         return a <= SHRT_MIN / b;
     }
     return a >= SHRT_MIN / b;
-}}
+}
+}
 // stbi__err - error
 // stbi__errpf - error returning pointer to float
 // stbi__errpuc - error returning pointer to unsigned char
@@ -17962,7 +18141,8 @@ private { i32 stbi__vertically_flip_on_load_global = 0; }
 void stbi_set_flip_vertically_on_load(i32 flag_true_if_should_flip) {
     stbi__vertically_flip_on_load_global = flag_true_if_should_flip;
 }
-private { void* stbi__load_main(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp, stbi__result_info* ri, i32 bpc) {
+private {
+void* stbi__load_main(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp, stbi__result_info* ri, i32 bpc) {
     memset(ri, 0, cast(u64, sizeof(*ri)));
     ri.bits_per_channel = 8;
     ri.channel_order = STBI_ORDER_RGB;
@@ -17974,8 +18154,10 @@ private { void* stbi__load_main(stbi__context* s, i32* x, i32* y, i32* comp, i32
     }
     ignore sizeof(bpc);
     return cast(u8*, cast(u64, stbi__err("unknown image type") != 0 ? null : null));
-}}
-private { stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, i32 w, i32 h, i32 channels) {
+}
+}
+private {
+stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, i32 w, i32 h, i32 channels) {
     i32 i;
     i32 img_len = w * h * channels;
     stbi_uc* reduced;
@@ -17988,8 +18170,10 @@ private { stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, i32 w, i32 h, i32 c
     }
     free(orig);
     return reduced;
-}}
-private { stbi__uint16* stbi__convert_8_to_16(stbi_uc* orig, i32 w, i32 h, i32 channels) {
+}
+}
+private {
+stbi__uint16* stbi__convert_8_to_16(stbi_uc* orig, i32 w, i32 h, i32 channels) {
     i32 i;
     i32 img_len = w * h * channels;
     stbi__uint16* enlarged;
@@ -18002,8 +18186,10 @@ private { stbi__uint16* stbi__convert_8_to_16(stbi_uc* orig, i32 w, i32 h, i32 c
     }
     free(orig);
     return enlarged;
-}}
-private { void stbi__vertical_flip(void* image, i32 w, i32 h, i32 bytes_per_pixel) {
+}
+}
+private {
+void stbi__vertical_flip(void* image, i32 w, i32 h, i32 bytes_per_pixel) {
     i32 row;
     u64 bytes_per_row = cast(u64, w) * cast(u64, bytes_per_pixel);
     stbi_uc[2048] temp;
@@ -18022,8 +18208,10 @@ private { void stbi__vertical_flip(void* image, i32 w, i32 h, i32 bytes_per_pixe
             bytes_left -= bytes_copy;
         }
     }
-}}
-private { u8* stbi__load_and_postprocess_8bit(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp) {
+}
+}
+private {
+u8* stbi__load_and_postprocess_8bit(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp) {
     stbi__result_info ri;
     void* result = stbi__load_main(s, x, y, comp, req_comp, &ri, 8);
     if result == null {
@@ -18039,8 +18227,10 @@ private { u8* stbi__load_and_postprocess_8bit(stbi__context* s, i32* x, i32* y, 
         stbi__vertical_flip(result, *x, *y, cast(i32, channels * sizeof(stbi_uc)));
     }
     return cast(u8*, result);
-}}
-private { stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp) {
+}
+}
+private {
+stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp) {
     stbi__result_info ri;
     void* result = stbi__load_main(s, x, y, comp, req_comp, &ri, 16);
     if result == null {
@@ -18056,7 +18246,8 @@ private { stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, i32* 
         stbi__vertical_flip(result, *x, *y, cast(i32, channels * sizeof(stbi__uint16)));
     }
     return cast(stbi__uint16*, result);
-}}
+}
+}
 stbi_us* stbi_load_16_from_memory(stbi_uc* buffer, i32 len, i32* x, i32* y, i32* channels_in_file, i32 desired_channels) {
     stbi__context s;
     stbi__start_mem(&s, buffer, len);
@@ -18078,14 +18269,16 @@ stbi_uc* stbi_load_from_callbacks(stbi_io_callbacks* clbk, void* user, i32* x, i
     return stbi__load_and_postprocess_8bit(&s, x, y, comp, req_comp);
 }
 when !(defined(STBI_NO_LINEAR)) {
-private { f32* stbi__loadf_main(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp) {
+private {
+f32* stbi__loadf_main(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp) {
         u8* data;
         data = stbi__load_and_postprocess_8bit(s, x, y, comp, req_comp);
         if data != null {
             return stbi__ldr_to_hdr(data, *x, *y, req_comp != 0 ? req_comp : *comp);
         }
         return cast(f32*, cast(u64, stbi__err("unknown image type") != 0 ? null : null));
-    }}
+    }
+}
 f32* stbi_loadf_from_memory(stbi_uc* buffer, i32 len, i32* x, i32* y, i32* comp, i32 req_comp) {
         stbi__context s;
         stbi__start_mem(&s, buffer, len);
@@ -18128,7 +18321,8 @@ void stbi_hdr_to_ldr_gamma(f32 gamma) {
 void stbi_hdr_to_ldr_scale(f32 scale) {
     stbi__h2l_scale_i = 1.0f / scale;
 }
-private { void stbi__refill_buffer(stbi__context* s) {
+private {
+void stbi__refill_buffer(stbi__context* s) {
     i32 n = s.io.read(s.io_user_data, cast(u8*, s.buffer_start), s.buflen);
     s.callback_already_read += cast(i32, cast(i64, s.img_buffer - s.img_buffer_original));
     if n == 0 {
@@ -18140,8 +18334,10 @@ private { void stbi__refill_buffer(stbi__context* s) {
         s.img_buffer = s.buffer_start;
         s.img_buffer_end = s.buffer_start + n;
     }
-}}
-private { stbi_uc stbi__get8(stbi__context* s) {
+}
+}
+private {
+stbi_uc stbi__get8(stbi__context* s) {
     if s.img_buffer < s.img_buffer_end {
         return *s.img_buffer++;
     }
@@ -18150,11 +18346,13 @@ private { stbi_uc stbi__get8(stbi__context* s) {
         return *s.img_buffer++;
     }
     return 0;
-}}
+}
+}
 // nothing
 when defined(STBI_NO_PNG) {
 } else {
-private { void stbi__skip(stbi__context* s, i32 n) {
+private {
+void stbi__skip(stbi__context* s, i32 n) {
         if n == 0 {
             return;
         }
@@ -18171,11 +18369,13 @@ private { void stbi__skip(stbi__context* s, i32 n) {
             }
         }
         s.img_buffer += n;
-    }}
+    }
+}
 }
 when defined(STBI_NO_PNG) {
 } else {
-private { i32 stbi__getn(stbi__context* s, stbi_uc* buffer, i32 n) {
+private {
+i32 stbi__getn(stbi__context* s, stbi_uc* buffer, i32 n) {
         if s.io.read != null {
             var blen = cast(i32, cast(i64, s.img_buffer_end - s.img_buffer));
             if blen < n {
@@ -18195,21 +18395,26 @@ private { i32 stbi__getn(stbi__context* s, stbi_uc* buffer, i32 n) {
         } else {
             return 0;
         }
-    }}
+    }
+}
 }
 when defined(STBI_NO_PNG) {
 } else {
-private { i32 stbi__get16be(stbi__context* s) {
+private {
+i32 stbi__get16be(stbi__context* s) {
         var z = cast(i32, stbi__get8(s));
         return cast(i32, (z << 8) + stbi__get8(s));
-    }}
+    }
+}
 }
 when defined(STBI_NO_PNG) {
 } else {
-private { stbi__uint32 stbi__get32be(stbi__context* s) {
+private {
+stbi__uint32 stbi__get32be(stbi__context* s) {
         var z = cast(stbi__uint32, stbi__get16be(s));
         return (z << 16) + cast(u32, stbi__get16be(s));
-    }}
+    }
+}
 }
 // nothing
 when defined(STBI_NO_PNG) {
@@ -18224,13 +18429,16 @@ when defined(STBI_NO_PNG) {
     //
     //  assume data buffer is malloced, so malloc a new one and free that one
     //  only failure mode is malloc failing
-private { stbi_uc stbi__compute_y(i32 r, i32 g, i32 b) {
+private {
+stbi_uc stbi__compute_y(i32 r, i32 g, i32 b) {
         return cast(stbi_uc, r * 77 + g * 150 + 29 * b >> 8);
-    }}
+    }
+}
 }
 when defined(STBI_NO_PNG) {
 } else {
-private { u8* stbi__convert_format(u8* data, i32 img_n, i32 req_comp, u32 x, u32 y) {
+private {
+u8* stbi__convert_format(u8* data, i32 img_n, i32 req_comp, u32 x, u32 y) {
         i32 i;
         i32 j;
         u8* good;
@@ -18359,17 +18567,21 @@ private { u8* stbi__convert_format(u8* data, i32 img_n, i32 req_comp, u32 x, u32
         }
         free(data);
         return good;
-    }}
+    }
+}
 }
 when defined(STBI_NO_PNG) {
 } else {
-private { stbi__uint16 stbi__compute_y_16(i32 r, i32 g, i32 b) {
+private {
+stbi__uint16 stbi__compute_y_16(i32 r, i32 g, i32 b) {
         return cast(stbi__uint16, r * 77 + g * 150 + 29 * b >> 8);
-    }}
+    }
+}
 }
 when defined(STBI_NO_PNG) {
 } else {
-private { stbi__uint16* stbi__convert_format16(stbi__uint16* data, i32 img_n, i32 req_comp, u32 x, u32 y) {
+private {
+stbi__uint16* stbi__convert_format16(stbi__uint16* data, i32 img_n, i32 req_comp, u32 x, u32 y) {
         i32 i;
         i32 j;
         stbi__uint16* good;
@@ -18498,10 +18710,12 @@ private { stbi__uint16* stbi__convert_format16(stbi__uint16* data, i32 img_n, i3
         }
         free(data);
         return good;
-    }}
+    }
+}
 }
 when !(defined(STBI_NO_LINEAR)) {
-private { f32* stbi__ldr_to_hdr(stbi_uc* data, i32 x, i32 y, i32 comp) {
+private {
+f32* stbi__ldr_to_hdr(stbi_uc* data, i32 x, i32 y, i32 comp) {
         i32 i;
         i32 k;
         i32 n;
@@ -18531,7 +18745,8 @@ private { f32* stbi__ldr_to_hdr(stbi_uc* data, i32 x, i32 y, i32 comp) {
         }
         free(data);
         return output;
-    }}
+    }
+}
 }
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -18560,18 +18775,23 @@ private { f32* stbi__ldr_to_hdr(stbi_uc* data, i32 x, i32 y, i32 comp) {
 //    performance
 //      - fast huffman
 when !(defined(STBI_NO_ZLIB)) {
-private { i32 stbi__bitreverse16(i32 n) {
+private {
+i32 stbi__bitreverse16(i32 n) {
         n = (n & 43690) >> 1 | (n & 21845) << 1;
         n = (n & 52428) >> 2 | (n & 13107) << 2;
         n = (n & 61680) >> 4 | (n & 3855) << 4;
         n = (n & 65280) >> 8 | (n & 255) << 8;
         return n;
-    }}
-private { i32 stbi__bit_reverse(i32 v, i32 bits) {
+    }
+}
+private {
+i32 stbi__bit_reverse(i32 v, i32 bits) {
         assert(bits <= 16);
         return stbi__bitreverse16(v) >> 16 - bits;
-    }}
-private { i32 stbi__zbuild_huffman(stbi__zhuffman* z, stbi_uc* sizelist, i32 num) {
+    }
+}
+private {
+i32 stbi__zbuild_huffman(stbi__zhuffman* z, stbi_uc* sizelist, i32 num) {
         i32 i;
         i32 k = 0;
         i32 code;
@@ -18622,14 +18842,20 @@ private { i32 stbi__zbuild_huffman(stbi__zhuffman* z, stbi_uc* sizelist, i32 num
             }
         }
         return 1;
-    }}
-private { i32 stbi__zeof(stbi__zbuf* z) {
+    }
+}
+private {
+i32 stbi__zeof(stbi__zbuf* z) {
         return z.zbuffer >= z.zbuffer_end;
-    }}
-private { stbi_uc stbi__zget8(stbi__zbuf* z) {
+    }
+}
+private {
+stbi_uc stbi__zget8(stbi__zbuf* z) {
         return cast(stbi_uc, stbi__zeof(z) != 0 ? 0 : *z.zbuffer++);
-    }}
-private { void stbi__fill_bits(stbi__zbuf* z) {
+    }
+}
+private {
+void stbi__fill_bits(stbi__zbuf* z) {
         while true {
             if z.code_buffer >= cast(u32, 1 << z.num_bits) {
                 z.zbuffer = z.zbuffer_end;
@@ -18639,8 +18865,10 @@ private { void stbi__fill_bits(stbi__zbuf* z) {
             z.num_bits += 8;
             if !(z.num_bits <= 24) { break; }
         }
-    }}
-private { u32 stbi__zreceive(stbi__zbuf* z, i32 n) {
+    }
+}
+private {
+u32 stbi__zreceive(stbi__zbuf* z, i32 n) {
         u32 k;
         if z.num_bits < n {
             stbi__fill_bits(z);
@@ -18649,8 +18877,10 @@ private { u32 stbi__zreceive(stbi__zbuf* z, i32 n) {
         z.code_buffer >>= cast(stbi__uint32, n);
         z.num_bits -= n;
         return k;
-    }}
-private { i32 stbi__zhuffman_decode_slowpath(stbi__zbuf* a, stbi__zhuffman* z) {
+    }
+}
+private {
+i32 stbi__zhuffman_decode_slowpath(stbi__zbuf* a, stbi__zhuffman* z) {
         i32 b;
         i32 s;
         i32 k;
@@ -18673,8 +18903,10 @@ private { i32 stbi__zhuffman_decode_slowpath(stbi__zbuf* a, stbi__zhuffman* z) {
         a.code_buffer >>= cast(stbi__uint32, s);
         a.num_bits -= s;
         return cast(i32, z.value[b]);
-    }}
-private { i32 stbi__zhuffman_decode(stbi__zbuf* a, stbi__zhuffman* z) {
+    }
+}
+private {
+i32 stbi__zhuffman_decode(stbi__zbuf* a, stbi__zhuffman* z) {
         i32 b;
         i32 s;
         if a.num_bits < 16 {
@@ -18697,8 +18929,10 @@ private { i32 stbi__zhuffman_decode(stbi__zbuf* a, stbi__zhuffman* z) {
             return b & 511;
         }
         return stbi__zhuffman_decode_slowpath(a, z);
-    }}
-private { i32 stbi__zexpand(stbi__zbuf* z, u8* zout, i32 n) {
+    }
+}
+private {
+i32 stbi__zexpand(stbi__zbuf* z, u8* zout, i32 n) {
         u8* q;
         u32 cur;
         u32 limit;
@@ -18728,12 +18962,14 @@ private { i32 stbi__zexpand(stbi__zbuf* z, u8* zout, i32 n) {
         z.zout = q + cur;
         z.zout_end = q + limit;
         return 1;
-    }}
+    }
+}
 private { i32[31] stbi__zlength_base = {3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0}; }
 private { i32[31] stbi__zlength_extra = {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 0, 0}; }
 private { i32[32] stbi__zdist_base = {1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577, 0, 0}; }
 private { i32[32] stbi__zdist_extra = {0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 0, 0}; }
-private { i32 stbi__parse_huffman_block(stbi__zbuf* a) {
+private {
+i32 stbi__parse_huffman_block(stbi__zbuf* a) {
         u8* zout = a.zout;
         while true {
             i32 z = stbi__zhuffman_decode(a, &a.z_length);
@@ -18803,8 +19039,10 @@ private { i32 stbi__parse_huffman_block(stbi__zbuf* a) {
                 }
             }
         }
-    }}
-private { i32 stbi__compute_huffman_codes(stbi__zbuf* a) {
+    }
+}
+private {
+i32 stbi__compute_huffman_codes(stbi__zbuf* a) {
         stbi__zhuffman z_codelength;
         stbi_uc[455] lencodes;
         stbi_uc[19] codelength_sizes;
@@ -18862,8 +19100,10 @@ private { i32 stbi__compute_huffman_codes(stbi__zbuf* a) {
             return 0;
         }
         return 1;
-    }}
-private { i32 stbi__parse_uncompressed_block(stbi__zbuf* a) {
+    }
+}
+private {
+i32 stbi__parse_uncompressed_block(stbi__zbuf* a) {
         stbi_uc[4] header;
         i32 len;
         i32 nlen;
@@ -18900,8 +19140,10 @@ private { i32 stbi__parse_uncompressed_block(stbi__zbuf* a) {
         a.zbuffer += len;
         a.zout += len;
         return 1;
-    }}
-private { i32 stbi__parse_zlib_header(stbi__zbuf* a) {
+    }
+}
+private {
+i32 stbi__parse_zlib_header(stbi__zbuf* a) {
         var cmf = cast(i32, stbi__zget8(a));
         i32 cm = cmf & 15;
         var flg = cast(i32, stbi__zget8(a));
@@ -18918,7 +19160,8 @@ private { i32 stbi__parse_zlib_header(stbi__zbuf* a) {
             return stbi__err("bad compression");
         }
         return 1;
-    }}
+    }
+}
 private { stbi_uc[288] stbi__zdefault_length = {8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8}; }
 private { stbi_uc[32] stbi__zdefault_distance = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5}; }
     /*
@@ -18933,7 +19176,8 @@ Init algorithm:
    for (i=0; i <=  31; ++i)     stbi__zdefault_distance[i] = 5;
 }
 */
-private { i32 stbi__parse_zlib(stbi__zbuf* a, i32 parse_header) {
+private {
+i32 stbi__parse_zlib(stbi__zbuf* a, i32 parse_header) {
         i32 final;
         i32 type;
         if parse_header != 0 {
@@ -18973,14 +19217,17 @@ private { i32 stbi__parse_zlib(stbi__zbuf* a, i32 parse_header) {
             if !(final == 0) { break; }
         }
         return 1;
-    }}
-private { i32 stbi__do_zlib(stbi__zbuf* a, u8* obuf, i32 olen, i32 exp, i32 parse_header) {
+    }
+}
+private {
+i32 stbi__do_zlib(stbi__zbuf* a, u8* obuf, i32 olen, i32 exp, i32 parse_header) {
         a.zout_start = obuf;
         a.zout = obuf;
         a.zout_end = obuf + olen;
         a.z_expandable = exp;
         return stbi__parse_zlib(a, parse_header);
-    }}
+    }
+}
 u8* stbi_zlib_decode_malloc_guesssize(u8* buffer, i32 len, i32 initial_size, i32* outlen) {
         stbi__zbuf a;
         var p = cast(u8*, stbi__malloc(cast(u64, initial_size)));
@@ -19069,13 +19316,16 @@ i32 stbi_zlib_decode_noheader_buffer(u8* obuffer, i32 olen, u8* ibuffer, i32 ile
 //    performance
 //      - uses stb_zlib, a PD zlib implementation with fast huffman decoding
 when !(defined(STBI_NO_PNG)) {
-private { stbi__pngchunk stbi__get_chunk_header(stbi__context* s) {
+private {
+stbi__pngchunk stbi__get_chunk_header(stbi__context* s) {
         stbi__pngchunk c;
         c.length = stbi__get32be(s);
         c.type = stbi__get32be(s);
         return c;
-    }}
-private { i32 stbi__check_png_header(stbi__context* s) {
+    }
+}
+private {
+i32 stbi__check_png_header(stbi__context* s) {
         i32 i;
         for i = 0; i < 8; ++i {
             if stbi__get8(s) != stbi__check_png_header__png_sig[i] {
@@ -19083,21 +19333,25 @@ private { i32 stbi__check_png_header(stbi__context* s) {
             }
         }
         return 1;
-    }}
+    }
+}
 private { stbi_uc[5] first_row_filter = {STBI__F_none, STBI__F_sub, STBI__F_none, STBI__F_avg_first, STBI__F_sub}; }
-private { i32 stbi__paeth(i32 a, i32 b, i32 c) {
+private {
+i32 stbi__paeth(i32 a, i32 b, i32 c) {
         i32 thresh = c * 3 - (a + b);
         i32 lo = a < b ? a : b;
         i32 hi = a < b ? b : a;
         i32 t0 = hi <= thresh ? lo : c;
         i32 t1 = thresh <= lo ? hi : t0;
         return t1;
-    }}
+    }
+}
 private { stbi_uc[9] stbi__depth_scale_table = {0, 255, 85, 0, 17, 0, 0, 0, 1}; }
     // adds an extra all-255 alpha channel
     // dest == src is legal
     // img_n must be 1 or 3
-private { void stbi__create_png_alpha_expand8(stbi_uc* dest, stbi_uc* src, stbi__uint32 x, i32 img_n) {
+private {
+void stbi__create_png_alpha_expand8(stbi_uc* dest, stbi_uc* src, stbi__uint32 x, i32 img_n) {
         i32 i;
         if img_n == 1 {
             for i = cast(i32, x - 1); i >= 0; --i {
@@ -19113,9 +19367,11 @@ private { void stbi__create_png_alpha_expand8(stbi_uc* dest, stbi_uc* src, stbi_
                 dest[i * 4 + 0] = src[i * 3 + 0];
             }
         }
-    }}
+    }
+}
     // create the png data from post-deflated data
-private { i32 stbi__create_png_image_raw(stbi__png* a, stbi_uc* raw, stbi__uint32 raw_len, i32 out_n, stbi__uint32 x, stbi__uint32 y, i32 depth, i32 color) {
+private {
+i32 stbi__create_png_image_raw(stbi__png* a, stbi_uc* raw, stbi__uint32 raw_len, i32 out_n, stbi__uint32 x, stbi__uint32 y, i32 depth, i32 color) {
         i32 bytes = depth == 16 ? 2 : 1;
         stbi__context* s = a.s;
         stbi__uint32 i;
@@ -19284,8 +19540,10 @@ private { i32 stbi__create_png_image_raw(stbi__png* a, stbi_uc* raw, stbi__uint3
             return 0;
         }
         return 1;
-    }}
-private { i32 stbi__create_png_image(stbi__png* a, stbi_uc* image_data, stbi__uint32 image_data_len, i32 out_n, i32 depth, i32 color, i32 interlaced) {
+    }
+}
+private {
+i32 stbi__create_png_image(stbi__png* a, stbi_uc* image_data, stbi__uint32 image_data_len, i32 out_n, i32 depth, i32 color, i32 interlaced) {
         i32 bytes = depth == 16 ? 2 : 1;
         i32 out_bytes = out_n * bytes;
         stbi_uc* final;
@@ -19328,8 +19586,10 @@ private { i32 stbi__create_png_image(stbi__png* a, stbi_uc* image_data, stbi__ui
         }
         a.out = final;
         return 1;
-    }}
-private { i32 stbi__compute_transparency(stbi__png* z, stbi_uc* tc, i32 out_n) {
+    }
+}
+private {
+i32 stbi__compute_transparency(stbi__png* z, stbi_uc* tc, i32 out_n) {
         stbi__context* s = z.s;
         stbi__uint32 i;
         stbi__uint32 pixel_count = s.img_x * s.img_y;
@@ -19349,8 +19609,10 @@ private { i32 stbi__compute_transparency(stbi__png* z, stbi_uc* tc, i32 out_n) {
             }
         }
         return 1;
-    }}
-private { i32 stbi__compute_transparency16(stbi__png* z, stbi__uint16* tc, i32 out_n) {
+    }
+}
+private {
+i32 stbi__compute_transparency16(stbi__png* z, stbi__uint16* tc, i32 out_n) {
         stbi__context* s = z.s;
         stbi__uint32 i;
         stbi__uint32 pixel_count = s.img_x * s.img_y;
@@ -19370,8 +19632,10 @@ private { i32 stbi__compute_transparency16(stbi__png* z, stbi__uint16* tc, i32 o
             }
         }
         return 1;
-    }}
-private { i32 stbi__expand_png_palette(stbi__png* a, stbi_uc* palette, i32 len, i32 pal_img_n) {
+    }
+}
+private {
+i32 stbi__expand_png_palette(stbi__png* a, stbi_uc* palette, i32 len, i32 pal_img_n) {
         stbi__uint32 i;
         stbi__uint32 pixel_count = a.s.img_x * a.s.img_y;
         stbi_uc* p;
@@ -19404,7 +19668,8 @@ private { i32 stbi__expand_png_palette(stbi__png* a, stbi_uc* palette, i32 len, 
         a.out = temp_out;
         ignore sizeof(len);
         return 1;
-    }}
+    }
+}
 private { i32 stbi__unpremultiply_on_load_global = 0; }
 private { i32 stbi__de_iphone_flag_global = 0; }
 void stbi_set_unpremultiply_on_load(i32 flag_true_if_should_unpremultiply) {
@@ -19417,7 +19682,8 @@ when !(defined(STBI_THREAD_LOCAL)) {
     } else {
         // TODO transminc: untranslatable platform branch
     }
-private { void stbi__de_iphone(stbi__png* z) {
+private {
+void stbi__de_iphone(stbi__png* z) {
         stbi__context* s = z.s;
         stbi__uint32 i;
         stbi__uint32 pixel_count = s.img_x * s.img_y;
@@ -19455,8 +19721,10 @@ private { void stbi__de_iphone(stbi__png* z) {
                 }
             }
         }
-    }}
-private { i32 stbi__parse_png_file(stbi__png* z, i32 scan, i32 req_comp) {
+    }
+}
+private {
+i32 stbi__parse_png_file(stbi__png* z, i32 scan, i32 req_comp) {
         stbi_uc[1024] palette;
         stbi_uc pal_img_n = 0;
         stbi_uc has_trans = 0;
@@ -19743,8 +20011,10 @@ private { i32 stbi__parse_png_file(stbi__png* z, i32 scan, i32 req_comp) {
             }
             stbi__get32be(s);
         }
-    }}
-private { void* stbi__do_png(stbi__png* p, i32* x, i32* y, i32* n, i32 req_comp, stbi__result_info* ri) {
+    }
+}
+private {
+void* stbi__do_png(stbi__png* p, i32* x, i32* y, i32* n, i32 req_comp, stbi__result_info* ri) {
         void* result = null;
         if req_comp < 0 || req_comp > 4 {
             return cast(u8*, cast(u64, stbi__err("bad req_comp") != 0 ? null : null));
@@ -19783,19 +20053,25 @@ private { void* stbi__do_png(stbi__png* p, i32* x, i32* y, i32* n, i32 req_comp,
         free(p.idata);
         p.idata = null;
         return result;
-    }}
-private { void* stbi__png_load(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp, stbi__result_info* ri) {
+    }
+}
+private {
+void* stbi__png_load(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp, stbi__result_info* ri) {
         stbi__png p;
         p.s = s;
         return stbi__do_png(&p, x, y, comp, req_comp, ri);
-    }}
-private { i32 stbi__png_test(stbi__context* s) {
+    }
+}
+private {
+i32 stbi__png_test(stbi__context* s) {
         i32 r;
         r = stbi__check_png_header(s);
         stbi__rewind(s);
         return r;
-    }}
-private { i32 stbi__png_info_raw(stbi__png* p, i32* x, i32* y, i32* comp) {
+    }
+}
+private {
+i32 stbi__png_info_raw(stbi__png* p, i32* x, i32* y, i32* comp) {
         if stbi__parse_png_file(p, STBI__SCAN_header, 0) == 0 {
             stbi__rewind(p.s);
             return 0;
@@ -19810,13 +20086,17 @@ private { i32 stbi__png_info_raw(stbi__png* p, i32* x, i32* y, i32* comp) {
             *comp = p.s.img_n;
         }
         return 1;
-    }}
-private { i32 stbi__png_info(stbi__context* s, i32* x, i32* y, i32* comp) {
+    }
+}
+private {
+i32 stbi__png_info(stbi__context* s, i32* x, i32* y, i32* comp) {
         stbi__png p;
         p.s = s;
         return stbi__png_info_raw(&p, x, y, comp);
-    }}
-private { i32 stbi__png_is16(stbi__context* s) {
+    }
+}
+private {
+i32 stbi__png_is16(stbi__context* s) {
         stbi__png p;
         p.s = s;
         if stbi__png_info_raw(&p, null, null, null) == 0 {
@@ -19827,7 +20107,8 @@ private { i32 stbi__png_is16(stbi__context* s) {
             return 0;
         }
         return 1;
-    }}
+    }
+}
 }
 // Microsoft/Windows BMP image
 // Targa Truevision - TGA
@@ -19855,22 +20136,26 @@ private { i32 stbi__png_is16(stbi__context* s) {
 // Known limitations:
 //    Does not support comments in the header section
 //    Does not support ASCII image data (formats P2 and P3)
-private { i32 stbi__info_main(stbi__context* s, i32* x, i32* y, i32* comp) {
+private {
+i32 stbi__info_main(stbi__context* s, i32* x, i32* y, i32* comp) {
     when !(defined(STBI_NO_PNG)) {
         if stbi__png_info(s, x, y, comp) != 0 {
             return 1;
         }
     }
     return stbi__err("unknown image type");
-}}
-private { i32 stbi__is_16_main(stbi__context* s) {
+}
+}
+private {
+i32 stbi__is_16_main(stbi__context* s) {
     when !(defined(STBI_NO_PNG)) {
         if stbi__png_is16(s) != 0 {
             return 1;
         }
     }
     return 0;
-}}
+}
+}
 i32 stbi_info_from_memory(stbi_uc* buffer, i32 len, i32* x, i32* y, i32* comp) {
     stbi__context s;
     stbi__start_mem(&s, buffer, len);
@@ -19891,9 +20176,11 @@ i32 stbi_is_16_bit_from_callbacks(stbi_io_callbacks* c, void* user) {
     stbi__start_callbacks(&s, c, user);
     return stbi__is_16_main(&s);
 }
-private { u8* stbir_resize_uint8_linear(u8* input_pixels, i32 input_w, i32 input_h, i32 input_stride, u8* output_pixels, i32 output_w, i32 output_h, i32 output_stride, stbir_pixel_layout pixel_layout) {
+private {
+u8* stbir_resize_uint8_linear(u8* input_pixels, i32 input_w, i32 input_h, i32 input_stride, u8* output_pixels, i32 output_w, i32 output_h, i32 output_stride, stbir_pixel_layout pixel_layout) {
     return output_pixels;
-}}
+}
+}
 // Load pixel data from image as Vector4 array (float normalized)
 //----------------------------------------------------------------------------------
 // Module Functions Definition
@@ -23607,7 +23894,8 @@ i32 GetPixelDataSize(i32 width, i32 height, i32 format_var) {
 //----------------------------------------------------------------------------------
 // Convert half-float (stored as unsigned short) to float
 // REF: https://stackoverflow.com/questions/1659440/32-bit-to-16-bit-floating-point-conversion/60047308#60047308
-private { f32 HalfToFloat(u16 x) {
+private {
+f32 HalfToFloat(u16 x) {
     f32 result = 0.0f;
     __anon_struct_54 uni;
     var e = cast(u32, cast(i32, x & 31744) >> 10);
@@ -23617,9 +23905,11 @@ private { f32 HalfToFloat(u16 x) {
     uni.ui = cast(u32, cast(u32, cast(u32, cast(i32, x & 32768) << 16) | cast(u32, e != 0) * (e + 112 << 23 | m)) | cast(u32, e == 0 & m != 0) * (v - 37 << 23 | m << 150 - v & 8380416));
     result = uni.fm;
     return result;
-}}
+}
+}
 // Convert float to half-float (stored as unsigned short)
-private { u16 FloatToHalf(f32 x) {
+private {
+u16 FloatToHalf(f32 x) {
     u16 result = 0;
     __anon_struct_55 uni;
     uni.fm = x;
@@ -23628,9 +23918,11 @@ private { u16 FloatToHalf(f32 x) {
     u32 m = b & 8388607;
     result = cast(u16, (b & 2147483648) >> 16 | cast(u32, e > 112) * (e - 112 << 10 & 31744 | m >> 13) | cast(u32, e < 113 & e > 101) * ((8384512 + m >> 125 - e) + 1 >> 1) | cast(u32, cast(i32, e > 143) * 32767));
     return result;
-}}
+}
+}
 // Get pixel data from image as Vector4 array (float normalized)
-private { Vector4* LoadImageDataNormalized(Image image) {
+private {
+Vector4* LoadImageDataNormalized(Image image) {
     var pixels = new(Vector4[image.width * image.height]);
     if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
             } else {
@@ -23762,7 +24054,8 @@ private { Vector4* LoadImageDataNormalized(Image image) {
         }
     }
     return pixels;
-}}
+}
+}
 // e.g. #define your own STBTT_ifloor/STBTT_iceil() to avoid math.h
 when !(defined(STBTT_ifloor)) {
 }
@@ -23800,26 +24093,35 @@ when os(windows) {
 //
 // stbtt__buf helpers to parse data from file
 //
-private { stbtt_uint8 stbtt__buf_get8(stbtt__buf* b) {
+private {
+stbtt_uint8 stbtt__buf_get8(stbtt__buf* b) {
     if b.cursor >= b.size {
         return 0;
     }
     return b.data[b.cursor++];
-}}
-private { stbtt_uint8 stbtt__buf_peek8(stbtt__buf* b) {
+}
+}
+private {
+stbtt_uint8 stbtt__buf_peek8(stbtt__buf* b) {
     if b.cursor >= b.size {
         return 0;
     }
     return b.data[b.cursor];
-}}
-private { void stbtt__buf_seek(stbtt__buf* b, i32 o) {
+}
+}
+private {
+void stbtt__buf_seek(stbtt__buf* b, i32 o) {
     assert(cast(i64, !(o > b.size || o < 0)));
     b.cursor = o > b.size || o < 0 ? b.size : o;
-}}
-private { void stbtt__buf_skip(stbtt__buf* b, i32 o) {
+}
+}
+private {
+void stbtt__buf_skip(stbtt__buf* b, i32 o) {
     stbtt__buf_seek(b, b.cursor + o);
-}}
-private { stbtt_uint32 stbtt__buf_get(stbtt__buf* b, i32 n) {
+}
+}
+private {
+stbtt_uint32 stbtt__buf_get(stbtt__buf* b, i32 n) {
     stbtt_uint32 v = 0;
     i32 i;
     assert(n >= 1 && n <= 4);
@@ -23827,16 +24129,20 @@ private { stbtt_uint32 stbtt__buf_get(stbtt__buf* b, i32 n) {
         v = v << 8 | stbtt__buf_get8(b);
     }
     return v;
-}}
-private { stbtt__buf stbtt__new_buf(void* p, u64 size) {
+}
+}
+private {
+stbtt__buf stbtt__new_buf(void* p, u64 size) {
     stbtt__buf r;
     assert(size < 1073741824);
     r.data = cast(stbtt_uint8*, p);
     r.size = cast(i32, size);
     r.cursor = 0;
     return r;
-}}
-private { stbtt__buf stbtt__buf_range(stbtt__buf* b, i32 o, i32 s) {
+}
+}
+private {
+stbtt__buf stbtt__buf_range(stbtt__buf* b, i32 o, i32 s) {
     stbtt__buf r = stbtt__new_buf(null, 0);
     if o < 0 || s < 0 || o > b.size || s > b.size - o {
         return r;
@@ -23844,8 +24150,10 @@ private { stbtt__buf stbtt__buf_range(stbtt__buf* b, i32 o, i32 s) {
     r.data = b.data + o;
     r.size = s;
     return r;
-}}
-private { stbtt__buf stbtt__cff_get_index(stbtt__buf* b) {
+}
+}
+private {
+stbtt__buf stbtt__cff_get_index(stbtt__buf* b) {
     i32 count;
     i32 start;
     i32 offsize;
@@ -23858,8 +24166,10 @@ private { stbtt__buf stbtt__cff_get_index(stbtt__buf* b) {
         stbtt__buf_skip(b, cast(i32, stbtt__buf_get(b, offsize) - 1));
     }
     return stbtt__buf_range(b, start, b.cursor - start);
-}}
-private { stbtt_uint32 stbtt__cff_int(stbtt__buf* b) {
+}
+}
+private {
+stbtt_uint32 stbtt__cff_int(stbtt__buf* b) {
     var b0 = cast(i32, stbtt__buf_get8(b));
     if b0 >= 32 && b0 <= 246 {
         return cast(stbtt_uint32, b0 - 139);
@@ -23874,8 +24184,10 @@ private { stbtt_uint32 stbtt__cff_int(stbtt__buf* b) {
     }
     assert(0);
     return 0;
-}}
-private { void stbtt__cff_skip_operand(stbtt__buf* b) {
+}
+}
+private {
+void stbtt__cff_skip_operand(stbtt__buf* b) {
     i32 v;
     var b0 = cast(i32, stbtt__buf_peek8(b));
     assert(b0 >= 28);
@@ -23890,8 +24202,10 @@ private { void stbtt__cff_skip_operand(stbtt__buf* b) {
     } else {
         stbtt__cff_int(b);
     }
-}}
-private { stbtt__buf stbtt__dict_get(stbtt__buf* b, i32 key) {
+}
+}
+private {
+stbtt__buf stbtt__dict_get(stbtt__buf* b, i32 key) {
     stbtt__buf_seek(b, 0);
     while b.cursor < b.size {
         i32 start = b.cursor;
@@ -23910,19 +24224,25 @@ private { stbtt__buf stbtt__dict_get(stbtt__buf* b, i32 key) {
         }
     }
     return stbtt__buf_range(b, 0, 0);
-}}
-private { void stbtt__dict_get_ints(stbtt__buf* b, i32 key, i32 outcount, stbtt_uint32* out) {
+}
+}
+private {
+void stbtt__dict_get_ints(stbtt__buf* b, i32 key, i32 outcount, stbtt_uint32* out) {
     i32 i;
     stbtt__buf operands = stbtt__dict_get(b, key);
     for i = 0; i < outcount && operands.cursor < operands.size; i++ {
         out[i] = stbtt__cff_int(&operands);
     }
-}}
-private { i32 stbtt__cff_index_count(stbtt__buf* b) {
+}
+}
+private {
+i32 stbtt__cff_index_count(stbtt__buf* b) {
     stbtt__buf_seek(b, 0);
     return cast(i32, stbtt__buf_get(b, 2));
-}}
-private { stbtt__buf stbtt__cff_index_get(stbtt__buf b, i32 i) {
+}
+}
+private {
+stbtt__buf stbtt__cff_index_get(stbtt__buf b, i32 i) {
     i32 count;
     i32 offsize;
     i32 start;
@@ -23936,26 +24256,36 @@ private { stbtt__buf stbtt__cff_index_get(stbtt__buf b, i32 i) {
     start = cast(i32, stbtt__buf_get(&b, offsize));
     end = cast(i32, stbtt__buf_get(&b, offsize));
     return stbtt__buf_range(&b, 2 + (count + 1) * offsize + start, end - start);
-}}
+}
+}
 //////////////////////////////////////////////////////////////////////////
 //
 // accessors to parse data from file
 //
 // on platforms that don't allow misaligned reads, if we want to allow
 // truetype fonts that aren't padded to alignment, define ALLOW_UNALIGNED_TRUETYPE
-private { stbtt_uint16 ttUSHORT(stbtt_uint8* p) {
+private {
+stbtt_uint16 ttUSHORT(stbtt_uint8* p) {
     return cast(stbtt_uint16, cast(i32, p[0]) * 256 + p[1]);
-}}
-private { stbtt_int16 ttSHORT(stbtt_uint8* p) {
+}
+}
+private {
+stbtt_int16 ttSHORT(stbtt_uint8* p) {
     return cast(stbtt_int16, cast(i32, p[0]) * 256 + p[1]);
-}}
-private { stbtt_uint32 ttULONG(stbtt_uint8* p) {
+}
+}
+private {
+stbtt_uint32 ttULONG(stbtt_uint8* p) {
     return (cast(i32, p[0]) << 24) + (cast(i32, p[1]) << 16) + (cast(i32, p[2]) << 8) + p[3];
-}}
-private { stbtt_int32 ttLONG(stbtt_uint8* p) {
+}
+}
+private {
+stbtt_int32 ttLONG(stbtt_uint8* p) {
     return cast(stbtt_int32, (cast(i32, p[0]) << 24) + (cast(i32, p[1]) << 16) + (cast(i32, p[2]) << 8) + p[3]);
-}}
-private { i32 stbtt__isfont(stbtt_uint8* font) {
+}
+}
+private {
+i32 stbtt__isfont(stbtt_uint8* font) {
     if font[0] == 49 && font[1] == 0 && font[2] == 0 && font[3] == 0 {
         return 1;
     }
@@ -23972,9 +24302,11 @@ private { i32 stbtt__isfont(stbtt_uint8* font) {
         return 1;
     }
     return 0;
-}}
+}
+}
 // @OPTIMIZE: binary search
-private { stbtt_uint32 stbtt__find_table(stbtt_uint8* data, stbtt_uint32 fontstart, u8* tag) {
+private {
+stbtt_uint32 stbtt__find_table(stbtt_uint8* data, stbtt_uint32 fontstart, u8* tag) {
     var num_tables = cast(stbtt_int32, ttUSHORT(data + fontstart + 4));
     stbtt_uint32 tabledir = fontstart + 12;
     stbtt_int32 i;
@@ -23985,8 +24317,10 @@ private { stbtt_uint32 stbtt__find_table(stbtt_uint8* data, stbtt_uint32 fontsta
         }
     }
     return 0;
-}}
-private { i32 stbtt_GetFontOffsetForIndex_internal(u8* font_collection, i32 index) {
+}
+}
+private {
+i32 stbtt_GetFontOffsetForIndex_internal(u8* font_collection, i32 index) {
     if stbtt__isfont(font_collection) != 0 {
         return index == 0 ? 0 : -1;
     }
@@ -24000,8 +24334,10 @@ private { i32 stbtt_GetFontOffsetForIndex_internal(u8* font_collection, i32 inde
         }
     }
     return -1;
-}}
-private { i32 stbtt_GetNumberOfFonts_internal(u8* font_collection) {
+}
+}
+private {
+i32 stbtt_GetNumberOfFonts_internal(u8* font_collection) {
     if stbtt__isfont(font_collection) != 0 {
         return 1;
     }
@@ -24011,8 +24347,10 @@ private { i32 stbtt_GetNumberOfFonts_internal(u8* font_collection) {
         }
     }
     return 0;
-}}
-private { stbtt__buf stbtt__get_subrs(stbtt__buf cff, stbtt__buf fontdict) {
+}
+}
+private {
+stbtt__buf stbtt__get_subrs(stbtt__buf cff, stbtt__buf fontdict) {
     stbtt_uint32 subrsoff = 0;
     stbtt_uint32[2] private_loc = {0, 0};
     stbtt__buf pdict;
@@ -24027,9 +24365,11 @@ private { stbtt__buf stbtt__get_subrs(stbtt__buf cff, stbtt__buf fontdict) {
     }
     stbtt__buf_seek(&cff, cast(i32, private_loc[1] + subrsoff));
     return stbtt__cff_get_index(&cff);
-}}
+}
+}
 // since most people won't use this, find this table the first time it's needed
-private { i32 stbtt__get_svg(stbtt_fontinfo* info) {
+private {
+i32 stbtt__get_svg(stbtt_fontinfo* info) {
     stbtt_uint32 t;
     if info.svg < 0 {
         t = stbtt__find_table(info.data, cast(stbtt_uint32, info.fontstart), "SVG ");
@@ -24041,8 +24381,10 @@ private { i32 stbtt__get_svg(stbtt_fontinfo* info) {
         }
     }
     return info.svg;
-}}
-private { i32 stbtt_InitFont_internal(stbtt_fontinfo* info, u8* data, i32 fontstart) {
+}
+}
+private {
+i32 stbtt_InitFont_internal(stbtt_fontinfo* info, u8* data, i32 fontstart) {
     stbtt_uint32 cmap;
     stbtt_uint32 t;
     stbtt_int32 i;
@@ -24140,8 +24482,10 @@ private { i32 stbtt_InitFont_internal(stbtt_fontinfo* info, u8* data, i32 fontst
     }
     info.indexToLocFormat = cast(i32, ttUSHORT(data + info.head + 50));
     return 1;
-}}
-private { i32 stbtt_FindGlyphIndex(stbtt_fontinfo* info, i32 unicode_codepoint) {
+}
+}
+private {
+i32 stbtt_FindGlyphIndex(stbtt_fontinfo* info, i32 unicode_codepoint) {
     stbtt_uint8* data = info.data;
     var index_map = cast(stbtt_uint32, info.index_map);
     stbtt_uint16 format_var = ttUSHORT(data + index_map + 0);  // renamed from: format
@@ -24228,18 +24572,24 @@ private { i32 stbtt_FindGlyphIndex(stbtt_fontinfo* info, i32 unicode_codepoint) 
     }
     assert(0);
     return 0;
-}}
-private { i32 stbtt_GetCodepointShape(stbtt_fontinfo* info, i32 unicode_codepoint, stbtt_vertex** vertices) {
+}
+}
+private {
+i32 stbtt_GetCodepointShape(stbtt_fontinfo* info, i32 unicode_codepoint, stbtt_vertex** vertices) {
     return stbtt_GetGlyphShape(info, stbtt_FindGlyphIndex(info, unicode_codepoint), vertices);
-}}
-private { void stbtt_setvertex(stbtt_vertex* v, stbtt_uint8 type, stbtt_int32 x, stbtt_int32 y, stbtt_int32 cx, stbtt_int32 cy) {
+}
+}
+private {
+void stbtt_setvertex(stbtt_vertex* v, stbtt_uint8 type, stbtt_int32 x, stbtt_int32 y, stbtt_int32 cx, stbtt_int32 cy) {
     v.type = type;
     v.x = cast(stbtt_int16, x);
     v.y = cast(stbtt_int16, y);
     v.cx = cast(stbtt_int16, cx);
     v.cy = cast(stbtt_int16, cy);
-}}
-private { i32 stbtt__GetGlyfOffset(stbtt_fontinfo* info, i32 glyph_index) {
+}
+}
+private {
+i32 stbtt__GetGlyfOffset(stbtt_fontinfo* info, i32 glyph_index) {
     i32 g1;
     i32 g2;
     assert(cast(i64, !info.cff.size));
@@ -24257,8 +24607,10 @@ private { i32 stbtt__GetGlyfOffset(stbtt_fontinfo* info, i32 glyph_index) {
         g2 = cast(i32, cast(u32, info.glyf) + ttULONG(info.data + info.loca + glyph_index * 4 + 4));
     }
     return g1 == g2 ? -1 : g1;
-}}
-private { i32 stbtt_GetGlyphBox(stbtt_fontinfo* info, i32 glyph_index, i32* x0, i32* y0, i32* x1, i32* y1) {
+}
+}
+private {
+i32 stbtt_GetGlyphBox(stbtt_fontinfo* info, i32 glyph_index, i32* x0, i32* y0, i32* x1, i32* y1) {
     if info.cff.size != 0 {
         stbtt__GetGlyphInfoT2(info, glyph_index, x0, y0, x1, y1);
     } else {
@@ -24280,11 +24632,15 @@ private { i32 stbtt_GetGlyphBox(stbtt_fontinfo* info, i32 glyph_index, i32* x0, 
         }
     }
     return 1;
-}}
-private { i32 stbtt_GetCodepointBox(stbtt_fontinfo* info, i32 codepoint, i32* x0, i32* y0, i32* x1, i32* y1) {
+}
+}
+private {
+i32 stbtt_GetCodepointBox(stbtt_fontinfo* info, i32 codepoint, i32* x0, i32* y0, i32* x1, i32* y1) {
     return stbtt_GetGlyphBox(info, stbtt_FindGlyphIndex(info, codepoint), x0, y0, x1, y1);
-}}
-private { i32 stbtt_IsGlyphEmpty(stbtt_fontinfo* info, i32 glyph_index) {
+}
+}
+private {
+i32 stbtt_IsGlyphEmpty(stbtt_fontinfo* info, i32 glyph_index) {
     stbtt_int16 numberOfContours;
     i32 g;
     if info.cff.size != 0 {
@@ -24296,8 +24652,10 @@ private { i32 stbtt_IsGlyphEmpty(stbtt_fontinfo* info, i32 glyph_index) {
     }
     numberOfContours = ttSHORT(info.data + g);
     return numberOfContours == 0;
-}}
-private { i32 stbtt__close_shape(stbtt_vertex* vertices, i32 num_vertices, i32 was_off, i32 start_off, stbtt_int32 sx, stbtt_int32 sy, stbtt_int32 scx, stbtt_int32 scy, stbtt_int32 cx, stbtt_int32 cy) {
+}
+}
+private {
+i32 stbtt__close_shape(stbtt_vertex* vertices, i32 num_vertices, i32 was_off, i32 start_off, stbtt_int32 sx, stbtt_int32 sy, stbtt_int32 scx, stbtt_int32 scy, stbtt_int32 cx, stbtt_int32 cy) {
     if start_off != 0 {
         if was_off != 0 {
             stbtt_setvertex(&vertices[num_vertices++], cast(stbtt_uint8, STBTT_vcurve), cx + scx >> 1, cy + scy >> 1, cx, cy);
@@ -24311,8 +24669,10 @@ private { i32 stbtt__close_shape(stbtt_vertex* vertices, i32 num_vertices, i32 w
         }
     }
     return num_vertices;
-}}
-private { i32 stbtt__GetGlyphShapeTT(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex** pvertices) {
+}
+}
+private {
+i32 stbtt__GetGlyphShapeTT(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex** pvertices) {
     stbtt_int16 numberOfContours;
     stbtt_uint8* endPtsOfContours;
     stbtt_uint8* data = info.data;
@@ -24557,8 +24917,10 @@ private { i32 stbtt__GetGlyphShapeTT(stbtt_fontinfo* info, i32 glyph_index, stbt
     }
     *pvertices = vertices;
     return num_vertices;
-}}
-private { void stbtt__track_vertex(stbtt__csctx* c, stbtt_int32 x, stbtt_int32 y) {
+}
+}
+private {
+void stbtt__track_vertex(stbtt__csctx* c, stbtt_int32 x, stbtt_int32 y) {
     if x > c.max_x || !c.started {
         c.max_x = x;
     }
@@ -24572,8 +24934,10 @@ private { void stbtt__track_vertex(stbtt__csctx* c, stbtt_int32 x, stbtt_int32 y
         c.min_y = y;
     }
     c.started = 1;
-}}
-private { void stbtt__csctx_v(stbtt__csctx* c, stbtt_uint8 type, stbtt_int32 x, stbtt_int32 y, stbtt_int32 cx, stbtt_int32 cy, stbtt_int32 cx1, stbtt_int32 cy1) {
+}
+}
+private {
+void stbtt__csctx_v(stbtt__csctx* c, stbtt_uint8 type, stbtt_int32 x, stbtt_int32 y, stbtt_int32 cx, stbtt_int32 cy, stbtt_int32 cx1, stbtt_int32 cy1) {
     if c.bounds != 0 {
         stbtt__track_vertex(c, x, y);
         if cast(i32, type) == STBTT_vcubic {
@@ -24586,26 +24950,34 @@ private { void stbtt__csctx_v(stbtt__csctx* c, stbtt_uint8 type, stbtt_int32 x, 
         c.pvertices[c.num_vertices].cy1 = cast(stbtt_int16, cy1);
     }
     c.num_vertices++;
-}}
-private { void stbtt__csctx_close_shape(stbtt__csctx* ctx) {
+}
+}
+private {
+void stbtt__csctx_close_shape(stbtt__csctx* ctx) {
     if ctx.first_x != ctx.x || ctx.first_y != ctx.y {
         stbtt__csctx_v(ctx, cast(stbtt_uint8, STBTT_vline), cast(i32, ctx.first_x), cast(i32, ctx.first_y), 0, 0, 0, 0);
     }
-}}
-private { void stbtt__csctx_rmove_to(stbtt__csctx* ctx, f32 dx, f32 dy) {
+}
+}
+private {
+void stbtt__csctx_rmove_to(stbtt__csctx* ctx, f32 dx, f32 dy) {
     stbtt__csctx_close_shape(ctx);
     ctx.x = ctx.x + dx;
     ctx.first_x = ctx.x;
     ctx.y = ctx.y + dy;
     ctx.first_y = ctx.y;
     stbtt__csctx_v(ctx, cast(stbtt_uint8, STBTT_vmove), cast(i32, ctx.x), cast(i32, ctx.y), 0, 0, 0, 0);
-}}
-private { void stbtt__csctx_rline_to(stbtt__csctx* ctx, f32 dx, f32 dy) {
+}
+}
+private {
+void stbtt__csctx_rline_to(stbtt__csctx* ctx, f32 dx, f32 dy) {
     ctx.x += dx;
     ctx.y += dy;
     stbtt__csctx_v(ctx, cast(stbtt_uint8, STBTT_vline), cast(i32, ctx.x), cast(i32, ctx.y), 0, 0, 0, 0);
-}}
-private { void stbtt__csctx_rccurve_to(stbtt__csctx* ctx, f32 dx1, f32 dy1, f32 dx2, f32 dy2, f32 dx3, f32 dy3) {
+}
+}
+private {
+void stbtt__csctx_rccurve_to(stbtt__csctx* ctx, f32 dx1, f32 dy1, f32 dx2, f32 dy2, f32 dx3, f32 dy3) {
     f32 cx1 = ctx.x + dx1;
     f32 cy1 = ctx.y + dy1;
     f32 cx2 = cx1 + dx2;
@@ -24613,8 +24985,10 @@ private { void stbtt__csctx_rccurve_to(stbtt__csctx* ctx, f32 dx1, f32 dy1, f32 
     ctx.x = cx2 + dx3;
     ctx.y = cy2 + dy3;
     stbtt__csctx_v(ctx, cast(stbtt_uint8, STBTT_vcubic), cast(i32, ctx.x), cast(i32, ctx.y), cast(i32, cx1), cast(i32, cy1), cast(i32, cx2), cast(i32, cy2));
-}}
-private { stbtt__buf stbtt__get_subr(stbtt__buf idx, i32 n) {
+}
+}
+private {
+stbtt__buf stbtt__get_subr(stbtt__buf idx, i32 n) {
     i32 count = stbtt__cff_index_count(&idx);
     i32 bias = 107;
     if count >= 33900 {
@@ -24627,8 +25001,10 @@ private { stbtt__buf stbtt__get_subr(stbtt__buf idx, i32 n) {
         return stbtt__new_buf(null, 0);
     }
     return stbtt__cff_index_get(idx, n);
-}}
-private { stbtt__buf stbtt__cid_get_glyph_subrs(stbtt_fontinfo* info, i32 glyph_index) {
+}
+}
+private {
+stbtt__buf stbtt__cid_get_glyph_subrs(stbtt_fontinfo* info, i32 glyph_index) {
     stbtt__buf fdselect = info.fdselect;
     i32 nranges;
     i32 start;
@@ -24659,8 +25035,10 @@ private { stbtt__buf stbtt__cid_get_glyph_subrs(stbtt_fontinfo* info, i32 glyph_
         stbtt__new_buf(null, 0);
     }
     return stbtt__get_subrs(info.cff, stbtt__cff_index_get(info.fontdicts, fdselector));
-}}
-private { i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c) {
+}
+}
+private {
+i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c) {
     i32 in_header = 1;
     i32 maskbits = 0;
     i32 subr_stack_height = 0;
@@ -24975,8 +25353,10 @@ private { i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt
         }
     }
     return 0;
-}}
-private { i32 stbtt__GetGlyphShapeT2(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex** pvertices) {
+}
+}
+private {
+i32 stbtt__GetGlyphShapeT2(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex** pvertices) {
     var count_ctx = stbtt__csctx{1, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0, null, 0};
     var output_ctx = stbtt__csctx{0, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0, null, 0};
     if stbtt__run_charstring(info, glyph_index, &count_ctx) != 0 {
@@ -24990,8 +25370,10 @@ private { i32 stbtt__GetGlyphShapeT2(stbtt_fontinfo* info, i32 glyph_index, stbt
     }
     *pvertices = null;
     return 0;
-}}
-private { i32 stbtt__GetGlyphInfoT2(stbtt_fontinfo* info, i32 glyph_index, i32* x0, i32* y0, i32* x1, i32* y1) {
+}
+}
+private {
+i32 stbtt__GetGlyphInfoT2(stbtt_fontinfo* info, i32 glyph_index, i32* x0, i32* y0, i32* x1, i32* y1) {
     var c = stbtt__csctx{1, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0, null, 0};
     i32 r = stbtt__run_charstring(info, glyph_index, &c);
     if x0 != null {
@@ -25007,15 +25389,19 @@ private { i32 stbtt__GetGlyphInfoT2(stbtt_fontinfo* info, i32 glyph_index, i32* 
         *y1 = r != 0 ? c.max_y : 0;
     }
     return r != 0 ? c.num_vertices : 0;
-}}
-private { i32 stbtt_GetGlyphShape(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex** pvertices) {
+}
+}
+private {
+i32 stbtt_GetGlyphShape(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex** pvertices) {
     if info.cff.size == 0 {
         return stbtt__GetGlyphShapeTT(info, glyph_index, pvertices);
     } else {
         return stbtt__GetGlyphShapeT2(info, glyph_index, pvertices);
     }
-}}
-private { void stbtt_GetGlyphHMetrics(stbtt_fontinfo* info, i32 glyph_index, i32* advanceWidth, i32* leftSideBearing) {
+}
+}
+private {
+void stbtt_GetGlyphHMetrics(stbtt_fontinfo* info, i32 glyph_index, i32* advanceWidth, i32* leftSideBearing) {
     stbtt_uint16 numOfLongHorMetrics = ttUSHORT(info.data + info.hhea + 34);
     if glyph_index < cast(i32, numOfLongHorMetrics) {
         if advanceWidth != null {
@@ -25032,8 +25418,10 @@ private { void stbtt_GetGlyphHMetrics(stbtt_fontinfo* info, i32 glyph_index, i32
             *leftSideBearing = ttSHORT(info.data + info.hmtx + 4 * numOfLongHorMetrics + 2 * (glyph_index - numOfLongHorMetrics));
         }
     }
-}}
-private { i32 stbtt_GetKerningTableLength(stbtt_fontinfo* info) {
+}
+}
+private {
+i32 stbtt_GetKerningTableLength(stbtt_fontinfo* info) {
     stbtt_uint8* data = info.data + info.kern;
     if info.kern == 0 {
         return 0;
@@ -25045,8 +25433,10 @@ private { i32 stbtt_GetKerningTableLength(stbtt_fontinfo* info) {
         return 0;
     }
     return cast(i32, ttUSHORT(data + 10));
-}}
-private { i32 stbtt_GetKerningTable(stbtt_fontinfo* info, stbtt_kerningentry* table, i32 table_length) {
+}
+}
+private {
+i32 stbtt_GetKerningTable(stbtt_fontinfo* info, stbtt_kerningentry* table, i32 table_length) {
     stbtt_uint8* data = info.data + info.kern;
     i32 k;
     i32 length;
@@ -25069,8 +25459,10 @@ private { i32 stbtt_GetKerningTable(stbtt_fontinfo* info, stbtt_kerningentry* ta
         table[k].advance = ttSHORT(data + 22 + k * 6);
     }
     return length;
-}}
-private { i32 stbtt__GetGlyphKernInfoAdvance(stbtt_fontinfo* info, i32 glyph1, i32 glyph2) {
+}
+}
+private {
+i32 stbtt__GetGlyphKernInfoAdvance(stbtt_fontinfo* info, i32 glyph1, i32 glyph2) {
     stbtt_uint8* data = info.data + info.kern;
     stbtt_uint32 needle;
     stbtt_uint32 straw;
@@ -25101,8 +25493,10 @@ private { i32 stbtt__GetGlyphKernInfoAdvance(stbtt_fontinfo* info, i32 glyph1, i
         }
     }
     return 0;
-}}
-private { stbtt_int32 stbtt__GetCoverageIndex(stbtt_uint8* coverageTable, i32 glyph) {
+}
+}
+private {
+stbtt_int32 stbtt__GetCoverageIndex(stbtt_uint8* coverageTable, i32 glyph) {
     stbtt_uint16 coverageFormat = ttUSHORT(coverageTable);
     switch coverageFormat {
         case 1: {
@@ -25163,8 +25557,10 @@ private { stbtt_int32 stbtt__GetCoverageIndex(stbtt_uint8* coverageTable, i32 gl
         }
     }
     return -1;
-}}
-private { stbtt_int32 stbtt__GetGlyphClass(stbtt_uint8* classDefTable, i32 glyph) {
+}
+}
+private {
+stbtt_int32 stbtt__GetGlyphClass(stbtt_uint8* classDefTable, i32 glyph) {
     stbtt_uint16 classDefFormat = ttUSHORT(classDefTable);
     switch classDefFormat {
         case 1: {
@@ -25210,9 +25606,11 @@ private { stbtt_int32 stbtt__GetGlyphClass(stbtt_uint8* classDefTable, i32 glyph
         }
     }
     return 0;
-}}
+}
+}
 // Define to STBTT_assert(x) if you want to break on unimplemented formats.
-private { stbtt_int32 stbtt__GetGlyphGPOSInfoAdvance(stbtt_fontinfo* info, i32 glyph1, i32 glyph2) {
+private {
+stbtt_int32 stbtt__GetGlyphGPOSInfoAdvance(stbtt_fontinfo* info, i32 glyph1, i32 glyph2) {
     stbtt_uint16 lookupListOffset;
     stbtt_uint8* lookupList;
     stbtt_uint16 lookupCount;
@@ -25332,8 +25730,10 @@ private { stbtt_int32 stbtt__GetGlyphGPOSInfoAdvance(stbtt_fontinfo* info, i32 g
         }
     }
     return 0;
-}}
-private { i32 stbtt_GetGlyphKernAdvance(stbtt_fontinfo* info, i32 g1, i32 g2) {
+}
+}
+private {
+i32 stbtt_GetGlyphKernAdvance(stbtt_fontinfo* info, i32 g1, i32 g2) {
     i32 xAdvance = 0;
     if info.gpos != 0 {
         xAdvance += stbtt__GetGlyphGPOSInfoAdvance(info, g1, g2);
@@ -25341,17 +25741,23 @@ private { i32 stbtt_GetGlyphKernAdvance(stbtt_fontinfo* info, i32 g1, i32 g2) {
         xAdvance += stbtt__GetGlyphKernInfoAdvance(info, g1, g2);
     }
     return xAdvance;
-}}
-private { i32 stbtt_GetCodepointKernAdvance(stbtt_fontinfo* info, i32 ch1, i32 ch2) {
+}
+}
+private {
+i32 stbtt_GetCodepointKernAdvance(stbtt_fontinfo* info, i32 ch1, i32 ch2) {
     if !info.kern && !info.gpos {
         return 0;
     }
     return stbtt_GetGlyphKernAdvance(info, stbtt_FindGlyphIndex(info, ch1), stbtt_FindGlyphIndex(info, ch2));
-}}
-private { void stbtt_GetCodepointHMetrics(stbtt_fontinfo* info, i32 codepoint, i32* advanceWidth, i32* leftSideBearing) {
+}
+}
+private {
+void stbtt_GetCodepointHMetrics(stbtt_fontinfo* info, i32 codepoint, i32* advanceWidth, i32* leftSideBearing) {
     stbtt_GetGlyphHMetrics(info, stbtt_FindGlyphIndex(info, codepoint), advanceWidth, leftSideBearing);
-}}
-private { void stbtt_GetFontVMetrics(stbtt_fontinfo* info, i32* ascent, i32* descent, i32* lineGap) {
+}
+}
+private {
+void stbtt_GetFontVMetrics(stbtt_fontinfo* info, i32* ascent, i32* descent, i32* lineGap) {
     if ascent != null {
         *ascent = ttSHORT(info.data + info.hhea + 4);
     }
@@ -25361,8 +25767,10 @@ private { void stbtt_GetFontVMetrics(stbtt_fontinfo* info, i32* ascent, i32* des
     if lineGap != null {
         *lineGap = ttSHORT(info.data + info.hhea + 8);
     }
-}}
-private { i32 stbtt_GetFontVMetricsOS2(stbtt_fontinfo* info, i32* typoAscent, i32* typoDescent, i32* typoLineGap) {
+}
+}
+private {
+i32 stbtt_GetFontVMetricsOS2(stbtt_fontinfo* info, i32* typoAscent, i32* typoDescent, i32* typoLineGap) {
     var tab = cast(i32, stbtt__find_table(info.data, cast(stbtt_uint32, info.fontstart), "OS/2"));
     if tab == 0 {
         return 0;
@@ -25377,26 +25785,36 @@ private { i32 stbtt_GetFontVMetricsOS2(stbtt_fontinfo* info, i32* typoAscent, i3
         *typoLineGap = ttSHORT(info.data + tab + 72);
     }
     return 1;
-}}
-private { void stbtt_GetFontBoundingBox(stbtt_fontinfo* info, i32* x0, i32* y0, i32* x1, i32* y1) {
+}
+}
+private {
+void stbtt_GetFontBoundingBox(stbtt_fontinfo* info, i32* x0, i32* y0, i32* x1, i32* y1) {
     *x0 = ttSHORT(info.data + info.head + 36);
     *y0 = ttSHORT(info.data + info.head + 38);
     *x1 = ttSHORT(info.data + info.head + 40);
     *y1 = ttSHORT(info.data + info.head + 42);
-}}
-private { f32 stbtt_ScaleForPixelHeight(stbtt_fontinfo* info, f32 height) {
+}
+}
+private {
+f32 stbtt_ScaleForPixelHeight(stbtt_fontinfo* info, f32 height) {
     i32 fheight = ttSHORT(info.data + info.hhea + 4) - ttSHORT(info.data + info.hhea + 6);
     return height / cast(f32, fheight);
-}}
-private { f32 stbtt_ScaleForMappingEmToPixels(stbtt_fontinfo* info, f32 pixels) {
+}
+}
+private {
+f32 stbtt_ScaleForMappingEmToPixels(stbtt_fontinfo* info, f32 pixels) {
     var unitsPerEm = cast(i32, ttUSHORT(info.data + info.head + 18));
     return pixels / cast(f32, unitsPerEm);
-}}
-private { void stbtt_FreeShape(stbtt_fontinfo* info, stbtt_vertex* v) {
+}
+}
+private {
+void stbtt_FreeShape(stbtt_fontinfo* info, stbtt_vertex* v) {
     ignore info.userdata;
     free(v);
-}}
-private { stbtt_uint8* stbtt_FindSVGDoc(stbtt_fontinfo* info, i32 gl) {
+}
+}
+private {
+stbtt_uint8* stbtt_FindSVGDoc(stbtt_fontinfo* info, i32 gl) {
     i32 i;
     stbtt_uint8* data = info.data;
     stbtt_uint8* svg_doc_list = data + stbtt__get_svg(info);
@@ -25409,8 +25827,10 @@ private { stbtt_uint8* stbtt_FindSVGDoc(stbtt_fontinfo* info, i32 gl) {
         }
     }
     return null;
-}}
-private { i32 stbtt_GetGlyphSVG(stbtt_fontinfo* info, i32 gl, u8** svg) {
+}
+}
+private {
+i32 stbtt_GetGlyphSVG(stbtt_fontinfo* info, i32 gl, u8** svg) {
     stbtt_uint8* data = info.data;
     stbtt_uint8* svg_doc;
     if info.svg == 0 {
@@ -25423,15 +25843,19 @@ private { i32 stbtt_GetGlyphSVG(stbtt_fontinfo* info, i32 gl, u8** svg) {
     } else {
         return 0;
     }
-}}
-private { i32 stbtt_GetCodepointSVG(stbtt_fontinfo* info, i32 unicode_codepoint, u8** svg) {
+}
+}
+private {
+i32 stbtt_GetCodepointSVG(stbtt_fontinfo* info, i32 unicode_codepoint, u8** svg) {
     return stbtt_GetGlyphSVG(info, stbtt_FindGlyphIndex(info, unicode_codepoint), svg);
-}}
+}
+}
 //////////////////////////////////////////////////////////////////////////////
 //
 // antialiasing software rasterizer
 //
-private { void stbtt_GetGlyphBitmapBoxSubpixel(stbtt_fontinfo* font, i32 glyph, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
+private {
+void stbtt_GetGlyphBitmapBoxSubpixel(stbtt_fontinfo* font, i32 glyph, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
     i32 x0 = 0;
     i32 y0 = 0;
     i32 x1;
@@ -25463,17 +25887,25 @@ private { void stbtt_GetGlyphBitmapBoxSubpixel(stbtt_fontinfo* font, i32 glyph, 
             *iy1 = cast(i32, ceil(cast(f32, -y0) * scale_y + shift_y));
         }
     }
-}}
-private { void stbtt_GetGlyphBitmapBox(stbtt_fontinfo* font, i32 glyph, f32 scale_x, f32 scale_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
+}
+}
+private {
+void stbtt_GetGlyphBitmapBox(stbtt_fontinfo* font, i32 glyph, f32 scale_x, f32 scale_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
     stbtt_GetGlyphBitmapBoxSubpixel(font, glyph, scale_x, scale_y, 0.0f, 0.0f, ix0, iy0, ix1, iy1);
-}}
-private { void stbtt_GetCodepointBitmapBoxSubpixel(stbtt_fontinfo* font, i32 codepoint, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
+}
+}
+private {
+void stbtt_GetCodepointBitmapBoxSubpixel(stbtt_fontinfo* font, i32 codepoint, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
     stbtt_GetGlyphBitmapBoxSubpixel(font, stbtt_FindGlyphIndex(font, codepoint), scale_x, scale_y, shift_x, shift_y, ix0, iy0, ix1, iy1);
-}}
-private { void stbtt_GetCodepointBitmapBox(stbtt_fontinfo* font, i32 codepoint, f32 scale_x, f32 scale_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
+}
+}
+private {
+void stbtt_GetCodepointBitmapBox(stbtt_fontinfo* font, i32 codepoint, f32 scale_x, f32 scale_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
     stbtt_GetCodepointBitmapBoxSubpixel(font, codepoint, scale_x, scale_y, 0.0f, 0.0f, ix0, iy0, ix1, iy1);
-}}
-private { void* stbtt__hheap_alloc(stbtt__hheap* hh, u64 size, void* userdata) {
+}
+}
+private {
+void* stbtt__hheap_alloc(stbtt__hheap* hh, u64 size, void* userdata) {
     if hh.first_free != null {
         void* p = hh.first_free;
         hh.first_free = *cast(void**, p);
@@ -25493,12 +25925,16 @@ private { void* stbtt__hheap_alloc(stbtt__hheap* hh, u64 size, void* userdata) {
         --hh.num_remaining_in_head_chunk;
         return cast(u8*, hh.head) + sizeof(stbtt__hheap_chunk) + size * cast(u64, hh.num_remaining_in_head_chunk);
     }
-}}
-private { void stbtt__hheap_free(stbtt__hheap* hh, void* p) {
+}
+}
+private {
+void stbtt__hheap_free(stbtt__hheap* hh, void* p) {
     *cast(void**, p) = hh.first_free;
     hh.first_free = p;
-}}
-private { void stbtt__hheap_cleanup(stbtt__hheap* hh, void* userdata) {
+}
+}
+private {
+void stbtt__hheap_cleanup(stbtt__hheap* hh, void* userdata) {
     stbtt__hheap_chunk* c = hh.head;
     while c != null {
         stbtt__hheap_chunk* n = c.next;
@@ -25506,8 +25942,10 @@ private { void stbtt__hheap_cleanup(stbtt__hheap* hh, void* userdata) {
         free(c);
         c = n;
     }
-}}
-private { stbtt__active_edge* stbtt__new_active(stbtt__hheap* hh, stbtt__edge* e, i32 off_x, f32 start_point, void* userdata) {
+}
+}
+private {
+stbtt__active_edge* stbtt__new_active(stbtt__hheap* hh, stbtt__edge* e, i32 off_x, f32 start_point, void* userdata) {
     var z = cast(stbtt__active_edge*, stbtt__hheap_alloc(hh, cast(u64, sizeof(stbtt__active_edge)), userdata));
     f32 dxdy = (e.x1 - e.x0) / (e.y1 - e.y0);
     assert(z != null);
@@ -25523,10 +25961,12 @@ private { stbtt__active_edge* stbtt__new_active(stbtt__hheap* hh, stbtt__edge* e
     z.ey = e.y1;
     z.next = null;
     return z;
-}}
+}
+}
 // the edge passed in here does not cross the vertical line at x or the vertical line at x+1
 // (i.e. it has already been clipped to those)
-private { void stbtt__handle_clipped_edge(f32* scanline, i32 x, stbtt__active_edge* e, f32 x0, f32 y0, f32 x1, f32 y1) {
+private {
+void stbtt__handle_clipped_edge(f32* scanline, i32 x, stbtt__active_edge* e, f32 x0, f32 y0, f32 x1, f32 y1) {
     if y0 == y1 {
         return;
     }
@@ -25564,19 +26004,27 @@ private { void stbtt__handle_clipped_edge(f32* scanline, i32 x, stbtt__active_ed
         assert(x0 >= cast(f32, x) && x0 <= cast(f32, x + 1) && x1 >= cast(f32, x) && x1 <= cast(f32, x + 1));
         scanline[x] += e.direction * (y1 - y0) * (1.0f - (x0 - cast(f32, x) + (x1 - cast(f32, x))) / 2.0f);
     }
-}}
-private { f32 stbtt__sized_trapezoid_area(f32 height, f32 top_width, f32 bottom_width) {
+}
+}
+private {
+f32 stbtt__sized_trapezoid_area(f32 height, f32 top_width, f32 bottom_width) {
     assert(top_width >= 0.0f);
     assert(bottom_width >= 0.0f);
     return (top_width + bottom_width) / 2.0f * height;
-}}
-private { f32 stbtt__position_trapezoid_area(f32 height, f32 tx0, f32 tx1, f32 bx0, f32 bx1) {
+}
+}
+private {
+f32 stbtt__position_trapezoid_area(f32 height, f32 tx0, f32 tx1, f32 bx0, f32 bx1) {
     return stbtt__sized_trapezoid_area(height, tx1 - tx0, bx1 - bx0);
-}}
-private { f32 stbtt__sized_triangle_area(f32 height, f32 width) {
+}
+}
+private {
+f32 stbtt__sized_triangle_area(f32 height, f32 width) {
     return height * width / 2.0f;
-}}
-private { void stbtt__fill_active_edges_new(f32* scanline, f32* scanline_fill, i32 len, stbtt__active_edge* e, f32 y_top) {
+}
+}
+private {
+void stbtt__fill_active_edges_new(f32* scanline, f32* scanline_fill, i32 len, stbtt__active_edge* e, f32 y_top) {
     f32 y_bottom = y_top + 1.0f;
     while e != null {
         assert(e.ey >= y_top);
@@ -25711,9 +26159,11 @@ private { void stbtt__fill_active_edges_new(f32* scanline, f32* scanline_fill, i
         }
         e = e.next;
     }
-}}
+}
+}
 // directly AA rasterize edges w/o supersampling
-private { void stbtt__rasterize_sorted_edges(stbtt__bitmap* result, stbtt__edge* e, i32 n, i32 vsubsample, i32 off_x, i32 off_y, void* userdata) {
+private {
+void stbtt__rasterize_sorted_edges(stbtt__bitmap* result, stbtt__edge* e, i32 n, i32 vsubsample, i32 off_x, i32 off_y, void* userdata) {
     stbtt__hheap hh;
     stbtt__active_edge* active = null;
     i32 y;
@@ -25797,8 +26247,10 @@ private { void stbtt__rasterize_sorted_edges(stbtt__bitmap* result, stbtt__edge*
         ignore userdata;
         free(scanline);
     }
-}}
-private { void stbtt__sort_edges_ins_sort(stbtt__edge* p, i32 n) {
+}
+}
+private {
+void stbtt__sort_edges_ins_sort(stbtt__edge* p, i32 n) {
     i32 i;
     i32 j;
     for i = 1; i < n; ++i {
@@ -25818,8 +26270,10 @@ private { void stbtt__sort_edges_ins_sort(stbtt__edge* p, i32 n) {
             p[j] = t;
         }
     }
-}}
-private { void stbtt__sort_edges_quicksort(stbtt__edge* p, i32 n) {
+}
+}
+private {
+void stbtt__sort_edges_quicksort(stbtt__edge* p, i32 n) {
     while n > 12 {
         stbtt__edge t;
         i32 c01;
@@ -25873,12 +26327,16 @@ private { void stbtt__sort_edges_quicksort(stbtt__edge* p, i32 n) {
             n = j;
         }
     }
-}}
-private { void stbtt__sort_edges(stbtt__edge* p, i32 n) {
+}
+}
+private {
+void stbtt__sort_edges(stbtt__edge* p, i32 n) {
     stbtt__sort_edges_quicksort(p, n);
     stbtt__sort_edges_ins_sort(p, n);
-}}
-private { void stbtt__rasterize(stbtt__bitmap* result, stbtt__point* pts, i32* wcount, i32 windings, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 off_x, i32 off_y, i32 invert, void* userdata) {
+}
+}
+private {
+void stbtt__rasterize(stbtt__bitmap* result, stbtt__point* pts, i32* wcount, i32 windings, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 off_x, i32 off_y, i32 invert, void* userdata) {
     f32 y_scale_inv = invert != 0 ? -scale_y : scale_y;
     stbtt__edge* e;
     i32 n;
@@ -25925,16 +26383,20 @@ private { void stbtt__rasterize(stbtt__bitmap* result, stbtt__point* pts, i32* w
     stbtt__rasterize_sorted_edges(result, e, n, vsubsample, off_x, off_y, userdata);
     ignore userdata;
     free(e);
-}}
-private { void stbtt__add_point(stbtt__point* points, i32 n, f32 x, f32 y) {
+}
+}
+private {
+void stbtt__add_point(stbtt__point* points, i32 n, f32 x, f32 y) {
     if points == null {
         return;
     }
     points[n].x = x;
     points[n].y = y;
-}}
+}
+}
 // tessellate until threshold p is happy... @TODO warped to compensate for non-linear stretching
-private { i32 stbtt__tesselate_curve(stbtt__point* points, i32* num_points, f32 x0, f32 y0, f32 x1, f32 y1, f32 x2, f32 y2, f32 objspace_flatness_squared, i32 n) {
+private {
+i32 stbtt__tesselate_curve(stbtt__point* points, i32* num_points, f32 x0, f32 y0, f32 x1, f32 y1, f32 x2, f32 y2, f32 objspace_flatness_squared, i32 n) {
     f32 mx = (x0 + 2.0f * x1 + x2) / 4.0f;
     f32 my = (y0 + 2.0f * y1 + y2) / 4.0f;
     f32 dx = (x0 + x2) / 2.0f - mx;
@@ -25950,8 +26412,10 @@ private { i32 stbtt__tesselate_curve(stbtt__point* points, i32* num_points, f32 
         *num_points = *num_points + 1;
     }
     return 1;
-}}
-private { void stbtt__tesselate_cubic(stbtt__point* points, i32* num_points, f32 x0, f32 y0, f32 x1, f32 y1, f32 x2, f32 y2, f32 x3, f32 y3, f32 objspace_flatness_squared, i32 n) {
+}
+}
+private {
+void stbtt__tesselate_cubic(stbtt__point* points, i32* num_points, f32 x0, f32 y0, f32 x1, f32 y1, f32 x2, f32 y2, f32 x3, f32 y3, f32 objspace_flatness_squared, i32 n) {
     f32 dx0 = x1 - x0;
     f32 dy0 = y1 - y0;
     f32 dx1 = x2 - x1;
@@ -25985,9 +26449,11 @@ private { void stbtt__tesselate_cubic(stbtt__point* points, i32* num_points, f32
         stbtt__add_point(points, *num_points, x3, y3);
         *num_points = *num_points + 1;
     }
-}}
+}
+}
 // returns number of contours
-private { stbtt__point* stbtt_FlattenCurves(stbtt_vertex* vertices, i32 num_verts, f32 objspace_flatness, i32** contour_lengths, i32* num_contours, void* userdata) {
+private {
+stbtt__point* stbtt_FlattenCurves(stbtt_vertex* vertices, i32 num_verts, f32 objspace_flatness, i32** contour_lengths, i32* num_contours, void* userdata) {
     stbtt__point* points = null;
     i32 num_points = 0;
     f32 objspace_flatness_squared = objspace_flatness * objspace_flatness;
@@ -26060,8 +26526,10 @@ private { stbtt__point* stbtt_FlattenCurves(stbtt_vertex* vertices, i32 num_vert
         (*contour_lengths)[n] = num_points - start;
     }
     return points;
-}}
-private { void stbtt_Rasterize(stbtt__bitmap* result, f32 flatness_in_pixels, stbtt_vertex* vertices, i32 num_verts, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 x_off, i32 y_off, i32 invert, void* userdata) {
+}
+}
+private {
+void stbtt_Rasterize(stbtt__bitmap* result, f32 flatness_in_pixels, stbtt_vertex* vertices, i32 num_verts, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 x_off, i32 y_off, i32 invert, void* userdata) {
     f32 scale = scale_x > scale_y ? scale_y : scale_x;
     i32 winding_count = 0;
     i32* winding_lengths = null;
@@ -26073,12 +26541,16 @@ private { void stbtt_Rasterize(stbtt__bitmap* result, f32 flatness_in_pixels, st
         ignore userdata;
         free(windings);
     }
-}}
-private { void stbtt_FreeBitmap(u8* bitmap, void* userdata) {
+}
+}
+private {
+void stbtt_FreeBitmap(u8* bitmap, void* userdata) {
     ignore userdata;
     free(bitmap);
-}}
-private { u8* stbtt_GetGlyphBitmapSubpixel(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 glyph, i32* width, i32* height, i32* xoff, i32* yoff) {
+}
+}
+private {
+u8* stbtt_GetGlyphBitmapSubpixel(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 glyph, i32* width, i32* height, i32* xoff, i32* yoff) {
     i32 ix0;
     i32 iy0;
     i32 ix1;
@@ -26124,11 +26596,15 @@ private { u8* stbtt_GetGlyphBitmapSubpixel(stbtt_fontinfo* info, f32 scale_x, f3
     ignore info.userdata;
     free(vertices);
     return gbm.pixels;
-}}
-private { u8* stbtt_GetGlyphBitmap(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, i32 glyph, i32* width, i32* height, i32* xoff, i32* yoff) {
+}
+}
+private {
+u8* stbtt_GetGlyphBitmap(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, i32 glyph, i32* width, i32* height, i32* xoff, i32* yoff) {
     return stbtt_GetGlyphBitmapSubpixel(info, scale_x, scale_y, 0.0f, 0.0f, glyph, width, height, xoff, yoff);
-}}
-private { void stbtt_MakeGlyphBitmapSubpixel(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 glyph) {
+}
+}
+private {
+void stbtt_MakeGlyphBitmapSubpixel(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 glyph) {
     i32 ix0;
     i32 iy0;
     stbtt_vertex* vertices;
@@ -26144,31 +26620,45 @@ private { void stbtt_MakeGlyphBitmapSubpixel(stbtt_fontinfo* info, u8* output, i
     }
     ignore info.userdata;
     free(vertices);
-}}
-private { void stbtt_MakeGlyphBitmap(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, i32 glyph) {
+}
+}
+private {
+void stbtt_MakeGlyphBitmap(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, i32 glyph) {
     stbtt_MakeGlyphBitmapSubpixel(info, output, out_w, out_h, out_stride, scale_x, scale_y, 0.0f, 0.0f, glyph);
-}}
-private { u8* stbtt_GetCodepointBitmapSubpixel(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 codepoint, i32* width, i32* height, i32* xoff, i32* yoff) {
+}
+}
+private {
+u8* stbtt_GetCodepointBitmapSubpixel(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 codepoint, i32* width, i32* height, i32* xoff, i32* yoff) {
     return stbtt_GetGlyphBitmapSubpixel(info, scale_x, scale_y, shift_x, shift_y, stbtt_FindGlyphIndex(info, codepoint), width, height, xoff, yoff);
-}}
-private { void stbtt_MakeCodepointBitmapSubpixelPrefilter(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 oversample_x, i32 oversample_y, f32* sub_x, f32* sub_y, i32 codepoint) {
+}
+}
+private {
+void stbtt_MakeCodepointBitmapSubpixelPrefilter(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 oversample_x, i32 oversample_y, f32* sub_x, f32* sub_y, i32 codepoint) {
     stbtt_MakeGlyphBitmapSubpixelPrefilter(info, output, out_w, out_h, out_stride, scale_x, scale_y, shift_x, shift_y, oversample_x, oversample_y, sub_x, sub_y, stbtt_FindGlyphIndex(info, codepoint));
-}}
-private { void stbtt_MakeCodepointBitmapSubpixel(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 codepoint) {
+}
+}
+private {
+void stbtt_MakeCodepointBitmapSubpixel(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 codepoint) {
     stbtt_MakeGlyphBitmapSubpixel(info, output, out_w, out_h, out_stride, scale_x, scale_y, shift_x, shift_y, stbtt_FindGlyphIndex(info, codepoint));
-}}
-private { u8* stbtt_GetCodepointBitmap(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, i32 codepoint, i32* width, i32* height, i32* xoff, i32* yoff) {
+}
+}
+private {
+u8* stbtt_GetCodepointBitmap(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, i32 codepoint, i32* width, i32* height, i32* xoff, i32* yoff) {
     return stbtt_GetCodepointBitmapSubpixel(info, scale_x, scale_y, 0.0f, 0.0f, codepoint, width, height, xoff, yoff);
-}}
-private { void stbtt_MakeCodepointBitmap(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, i32 codepoint) {
+}
+}
+private {
+void stbtt_MakeCodepointBitmap(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, i32 codepoint) {
     stbtt_MakeCodepointBitmapSubpixel(info, output, out_w, out_h, out_stride, scale_x, scale_y, 0.0f, 0.0f, codepoint);
-}}
+}
+}
 //////////////////////////////////////////////////////////////////////////////
 //
 // bitmap baking
 //
 // This is SUPER-CRAPPY packing to keep source code small
-private { i32 stbtt_BakeFontBitmap_internal(u8* data, i32 offset, f32 pixel_height, u8* pixels, i32 pw, i32 ph, i32 first_char, i32 num_chars, stbtt_bakedchar* chardata) {
+private {
+i32 stbtt_BakeFontBitmap_internal(u8* data, i32 offset, f32 pixel_height, u8* pixels, i32 pw, i32 ph, i32 first_char, i32 num_chars, stbtt_bakedchar* chardata) {
     f32 scale;
     i32 x;
     i32 y;
@@ -26221,8 +26711,10 @@ private { i32 stbtt_BakeFontBitmap_internal(u8* data, i32 offset, f32 pixel_heig
         }
     }
     return bottom_y;
-}}
-private { void stbtt_GetBakedQuad(stbtt_bakedchar* chardata, i32 pw, i32 ph, i32 char_index, f32* xpos, f32* ypos, stbtt_aligned_quad* q, i32 opengl_fillrule) {
+}
+}
+private {
+void stbtt_GetBakedQuad(stbtt_bakedchar* chardata, i32 pw, i32 ph, i32 char_index, f32* xpos, f32* ypos, stbtt_aligned_quad* q, i32 opengl_fillrule) {
     var d3d_bias = cast(f32, opengl_fillrule != 0 ? 0.0f : -0.500000f);
     f32 ipw = 1.0f / cast(f32, pw);
     f32 iph = 1.0f / cast(f32, ph);
@@ -26238,13 +26730,15 @@ private { void stbtt_GetBakedQuad(stbtt_bakedchar* chardata, i32 pw, i32 ph, i32
     q.s1 = cast(f32, b.x1) * ipw;
     q.t1 = cast(f32, b.y1) * iph;
     *xpos += b.xadvance;
-}}
+}
+}
 //////////////////////////////////////////////////////////////////////////////
 //
 // rectangle packing replacement routines if you don't have stb_rect_pack.h
 //
 when !(defined(STB_RECT_PACK_VERSION)) {
-private { void stbrp_init_target(stbrp_context* con, i32 pw, i32 ph, stbrp_node* nodes, i32 num_nodes) {
+private {
+void stbrp_init_target(stbrp_context* con, i32 pw, i32 ph, stbrp_node* nodes, i32 num_nodes) {
         con.width = pw;
         con.height = ph;
         con.x = 0;
@@ -26252,8 +26746,10 @@ private { void stbrp_init_target(stbrp_context* con, i32 pw, i32 ph, stbrp_node*
         con.bottom_y = 0;
         ignore sizeof(nodes);
         ignore sizeof(num_nodes);
-    }}
-private { void stbrp_pack_rects(stbrp_context* con, stbrp_rect* rects, i32 num_rects) {
+    }
+}
+private {
+void stbrp_pack_rects(stbrp_context* con, stbrp_rect* rects, i32 num_rects) {
         i32 i;
         for i = 0; i < num_rects; ++i {
             if con.x + rects[i].w > con.width {
@@ -26274,7 +26770,8 @@ private { void stbrp_pack_rects(stbrp_context* con, stbrp_rect* rects, i32 num_r
         for ; i < num_rects; ++i {
             rects[i].was_packed = 0;
         }
-    }}
+    }
+}
 }
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -26282,7 +26779,8 @@ private { void stbrp_pack_rects(stbrp_context* con, stbrp_rect* rects, i32 num_r
 //
 // This is SUPER-AWESOME (tm Ryan Gordon) packing using stb_rect_pack.h. If
 // stb_rect_pack.h isn't available, it uses the BakeFontBitmap strategy.
-private { i32 stbtt_PackBegin(stbtt_pack_context* spc, u8* pixels, i32 pw, i32 ph, i32 stride_in_bytes, i32 padding, void* alloc_context) {
+private {
+i32 stbtt_PackBegin(stbtt_pack_context* spc, u8* pixels, i32 pw, i32 ph, i32 stride_in_bytes, i32 padding, void* alloc_context) {
     ignore alloc_context;
     var context = cast(stbrp_context*, new(stbrp_context));
     i32 num_nodes = pw - padding;
@@ -26315,14 +26813,18 @@ private { i32 stbtt_PackBegin(stbtt_pack_context* spc, u8* pixels, i32 pw, i32 p
         memset(pixels, 0, cast(u64, pw * ph));
     }
     return 1;
-}}
-private { void stbtt_PackEnd(stbtt_pack_context* spc) {
+}
+}
+private {
+void stbtt_PackEnd(stbtt_pack_context* spc) {
     ignore spc.user_allocator_context;
     free(spc.nodes);
     ignore spc.user_allocator_context;
     free(spc.pack_info);
-}}
-private { void stbtt_PackSetOversampling(stbtt_pack_context* spc, u32 h_oversample, u32 v_oversample) {
+}
+}
+private {
+void stbtt_PackSetOversampling(stbtt_pack_context* spc, u32 h_oversample, u32 v_oversample) {
     assert(h_oversample <= 8);
     assert(v_oversample <= 8);
     if h_oversample <= 8 {
@@ -26331,11 +26833,15 @@ private { void stbtt_PackSetOversampling(stbtt_pack_context* spc, u32 h_oversamp
     if v_oversample <= 8 {
         spc.v_oversample = v_oversample;
     }
-}}
-private { void stbtt_PackSetSkipMissingCodepoints(stbtt_pack_context* spc, i32 skip) {
+}
+}
+private {
+void stbtt_PackSetSkipMissingCodepoints(stbtt_pack_context* spc, i32 skip) {
     spc.skip_missing = skip;
-}}
-private { void stbtt__h_prefilter(u8* pixels, i32 w, i32 h, i32 stride_in_bytes, u32 kernel_width) {
+}
+}
+private {
+void stbtt__h_prefilter(u8* pixels, i32 w, i32 h, i32 stride_in_bytes, u32 kernel_width) {
     u8[8] buffer;
     var safe_w = cast(i32, cast(u32, w) - kernel_width);
     i32 j;
@@ -26389,8 +26895,10 @@ private { void stbtt__h_prefilter(u8* pixels, i32 w, i32 h, i32 stride_in_bytes,
         }
         pixels += stride_in_bytes;
     }
-}}
-private { void stbtt__v_prefilter(u8* pixels, i32 w, i32 h, i32 stride_in_bytes, u32 kernel_width) {
+}
+}
+private {
+void stbtt__v_prefilter(u8* pixels, i32 w, i32 h, i32 stride_in_bytes, u32 kernel_width) {
     u8[8] buffer;
     var safe_h = cast(i32, cast(u32, h) - kernel_width);
     i32 j;
@@ -26444,15 +26952,19 @@ private { void stbtt__v_prefilter(u8* pixels, i32 w, i32 h, i32 stride_in_bytes,
         }
         pixels += 1;
     }
-}}
-private { f32 stbtt__oversample_shift(i32 oversample) {
+}
+}
+private {
+f32 stbtt__oversample_shift(i32 oversample) {
     if oversample == 0 {
         return 0.0f;
     }
     return cast(f32, -(oversample - 1)) / (2.0f * cast(f32, oversample));
-}}
+}
+}
 // rects array must be big enough to accommodate all characters in the given ranges
-private { i32 stbtt_PackFontRangesGatherRects(stbtt_pack_context* spc, stbtt_fontinfo* info, stbtt_pack_range* ranges, i32 num_ranges, stbrp_rect* rects) {
+private {
+i32 stbtt_PackFontRangesGatherRects(stbtt_pack_context* spc, stbtt_fontinfo* info, stbtt_pack_range* ranges, i32 num_ranges, stbrp_rect* rects) {
     i32 i;
     i32 j;
     i32 k;
@@ -26485,8 +26997,10 @@ private { i32 stbtt_PackFontRangesGatherRects(stbtt_pack_context* spc, stbtt_fon
         }
     }
     return k;
-}}
-private { void stbtt_MakeGlyphBitmapSubpixelPrefilter(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 prefilter_x, i32 prefilter_y, f32* sub_x, f32* sub_y, i32 glyph) {
+}
+}
+private {
+void stbtt_MakeGlyphBitmapSubpixelPrefilter(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 prefilter_x, i32 prefilter_y, f32* sub_x, f32* sub_y, i32 glyph) {
     stbtt_MakeGlyphBitmapSubpixel(info, output, out_w - (prefilter_x - 1), out_h - (prefilter_y - 1), out_stride, scale_x, scale_y, shift_x, shift_y, glyph);
     if prefilter_x > 1 {
         stbtt__h_prefilter(output, out_w, out_h, out_stride, cast(u32, prefilter_x));
@@ -26496,9 +27010,11 @@ private { void stbtt_MakeGlyphBitmapSubpixelPrefilter(stbtt_fontinfo* info, u8* 
     }
     *sub_x = stbtt__oversample_shift(prefilter_x);
     *sub_y = stbtt__oversample_shift(prefilter_y);
-}}
+}
+}
 // rects array must be big enough to accommodate all characters in the given ranges
-private { i32 stbtt_PackFontRangesRenderIntoRects(stbtt_pack_context* spc, stbtt_fontinfo* info, stbtt_pack_range* ranges, i32 num_ranges, stbrp_rect* rects) {
+private {
+i32 stbtt_PackFontRangesRenderIntoRects(stbtt_pack_context* spc, stbtt_fontinfo* info, stbtt_pack_range* ranges, i32 num_ranges, stbrp_rect* rects) {
     i32 i;
     i32 j;
     i32 k;
@@ -26571,11 +27087,15 @@ private { i32 stbtt_PackFontRangesRenderIntoRects(stbtt_pack_context* spc, stbtt
     spc.h_oversample = cast(u32, old_h_over);
     spc.v_oversample = cast(u32, old_v_over);
     return return_value;
-}}
-private { void stbtt_PackFontRangesPackRects(stbtt_pack_context* spc, stbrp_rect* rects, i32 num_rects) {
+}
+}
+private {
+void stbtt_PackFontRangesPackRects(stbtt_pack_context* spc, stbrp_rect* rects, i32 num_rects) {
     stbrp_pack_rects(cast(stbrp_context*, spc.pack_info), rects, num_rects);
-}}
-private { i32 stbtt_PackFontRanges(stbtt_pack_context* spc, u8* fontdata, i32 font_index, stbtt_pack_range* ranges, i32 num_ranges) {
+}
+}
+private {
+i32 stbtt_PackFontRanges(stbtt_pack_context* spc, u8* fontdata, i32 font_index, stbtt_pack_range* ranges, i32 num_ranges) {
     stbtt_fontinfo info;
     i32 i;
     i32 j;
@@ -26607,8 +27127,10 @@ private { i32 stbtt_PackFontRanges(stbtt_pack_context* spc, u8* fontdata, i32 fo
     ignore spc.user_allocator_context;
     free(rects);
     return return_value;
-}}
-private { i32 stbtt_PackFontRange(stbtt_pack_context* spc, u8* fontdata, i32 font_index, f32 font_size, i32 first_unicode_codepoint_in_range, i32 num_chars_in_range, stbtt_packedchar* chardata_for_range) {
+}
+}
+private {
+i32 stbtt_PackFontRange(stbtt_pack_context* spc, u8* fontdata, i32 font_index, f32 font_size, i32 first_unicode_codepoint_in_range, i32 num_chars_in_range, stbtt_packedchar* chardata_for_range) {
     stbtt_pack_range range;
     range.first_unicode_codepoint_in_range = first_unicode_codepoint_in_range;
     range.array_of_unicode_codepoints = null;
@@ -26616,8 +27138,10 @@ private { i32 stbtt_PackFontRange(stbtt_pack_context* spc, u8* fontdata, i32 fon
     range.chardata_for_range = chardata_for_range;
     range.font_size = font_size;
     return stbtt_PackFontRanges(spc, fontdata, font_index, &range, 1);
-}}
-private { void stbtt_GetScaledFontVMetrics(u8* fontdata, i32 index, f32 size, f32* ascent, f32* descent, f32* lineGap) {
+}
+}
+private {
+void stbtt_GetScaledFontVMetrics(u8* fontdata, i32 index, f32 size, f32* ascent, f32* descent, f32* lineGap) {
     i32 i_ascent;
     i32 i_descent;
     i32 i_lineGap;
@@ -26629,8 +27153,10 @@ private { void stbtt_GetScaledFontVMetrics(u8* fontdata, i32 index, f32 size, f3
     *ascent = cast(f32, i_ascent) * scale;
     *descent = cast(f32, i_descent) * scale;
     *lineGap = cast(f32, i_lineGap) * scale;
-}}
-private { void stbtt_GetPackedQuad(stbtt_packedchar* chardata, i32 pw, i32 ph, i32 char_index, f32* xpos, f32* ypos, stbtt_aligned_quad* q, i32 align_to_integer) {
+}
+}
+private {
+void stbtt_GetPackedQuad(stbtt_packedchar* chardata, i32 pw, i32 ph, i32 char_index, f32* xpos, f32* ypos, stbtt_aligned_quad* q, i32 align_to_integer) {
     f32 ipw = 1.0f / cast(f32, pw);
     f32 iph = 1.0f / cast(f32, ph);
     stbtt_packedchar* b = chardata + char_index;
@@ -26652,7 +27178,8 @@ private { void stbtt_GetPackedQuad(stbtt_packedchar* chardata, i32 pw, i32 ph, i
     q.s1 = cast(f32, b.x1) * ipw;
     q.t1 = cast(f32, b.y1) * iph;
     *xpos += b.xadvance;
-}}
+}
+}
 //////////////////////////////////////////////////////////////////////////////
 //
 // sdf computation
@@ -26661,7 +27188,8 @@ private { void stbtt_GetPackedQuad(stbtt_packedchar* chardata, i32 pw, i32 ph, i
    `f32[2]* hits` in transminc's emit, which minc's parser doesn't
    accept. Flattened to `float *hits` (length 4) + index arithmetic at
    each access. The one caller passes `(float *)hits`. */
-private { i32 stbtt__ray_intersect_bezier(f32* orig, f32* ray, f32* q0, f32* q1, f32* q2, f32* hits) {
+private {
+i32 stbtt__ray_intersect_bezier(f32* orig, f32* ray, f32* q0, f32* q1, f32* q2, f32* hits) {
     f32 q0perp = q0[1] * ray[0] - q0[0] * ray[1];
     f32 q1perp = q1[1] * ray[0] - q1[0] * ray[1];
     f32 q2perp = q2[1] * ray[0] - q2[0] * ray[1];
@@ -26718,11 +27246,15 @@ private { i32 stbtt__ray_intersect_bezier(f32* orig, f32* ray, f32* q0, f32* q1,
             return 1;
         }
     }
-}}
-private { i32 equal(f32* a, f32* b) {
+}
+}
+private {
+i32 equal(f32* a, f32* b) {
     return a[0] == b[0] && a[1] == b[1];
-}}
-private { i32 stbtt__compute_crossings_x(f32 x, f32 y, i32 nverts, stbtt_vertex* verts) {
+}
+}
+private {
+i32 stbtt__compute_crossings_x(f32 x, f32 y, i32 nverts, stbtt_vertex* verts) {
     i32 i;
     f32[2] orig;
     f32[2] ray = {1, 0};
@@ -26798,16 +27330,20 @@ private { i32 stbtt__compute_crossings_x(f32 x, f32 y, i32 nverts, stbtt_vertex*
         }
     }
     return winding;
-}}
-private { f32 stbtt__cuberoot(f32 x) {
+}
+}
+private {
+f32 stbtt__cuberoot(f32 x) {
     if x < 0.0f {
         return -cast(f32, pow(-x, 1.0f / 3.0f));
     } else {
         return cast(f32, pow(x, 1.0f / 3.0f));
     }
-}}
+}
+}
 // x^3 + a*x^2 + b*x + c = 0
-private { i32 stbtt__solve_cubic(f32 a, f32 b, f32 c, f32* r) {
+private {
+i32 stbtt__solve_cubic(f32 a, f32 b, f32 c, f32* r) {
     f32 s = -a / 3.0f;
     f32 p = b - a * a / 3.0f;
     f32 q = a * (2.0f * a * a - 9.0f * b) / 27.0f + c;
@@ -26831,8 +27367,10 @@ private { i32 stbtt__solve_cubic(f32 a, f32 b, f32 c, f32* r) {
         r[2] = s - u * (m - n);
         return 3;
     }
-}}
-private { u8* stbtt_GetGlyphSDF(stbtt_fontinfo* info, f32 scale, i32 glyph, i32 padding, u8 onedge_value, f32 pixel_dist_scale, i32* width, i32* height, i32* xoff, i32* yoff) {
+}
+}
+private {
+u8* stbtt_GetGlyphSDF(stbtt_fontinfo* info, f32 scale, i32 glyph, i32 padding, u8 onedge_value, f32 pixel_dist_scale, i32* width, i32* height, i32* xoff, i32* yoff) {
     f32 scale_x = scale;
     f32 scale_y = scale;
     i32 ix0;
@@ -27048,20 +27586,26 @@ private { u8* stbtt_GetGlyphSDF(stbtt_fontinfo* info, f32 scale, i32 glyph, i32 
         free(verts);
     }
     return data;
-}}
-private { u8* stbtt_GetCodepointSDF(stbtt_fontinfo* info, f32 scale, i32 codepoint, i32 padding, u8 onedge_value, f32 pixel_dist_scale, i32* width, i32* height, i32* xoff, i32* yoff) {
+}
+}
+private {
+u8* stbtt_GetCodepointSDF(stbtt_fontinfo* info, f32 scale, i32 codepoint, i32 padding, u8 onedge_value, f32 pixel_dist_scale, i32* width, i32* height, i32* xoff, i32* yoff) {
     return stbtt_GetGlyphSDF(info, scale, stbtt_FindGlyphIndex(info, codepoint), padding, onedge_value, pixel_dist_scale, width, height, xoff, yoff);
-}}
-private { void stbtt_FreeSDF(u8* bitmap, void* userdata) {
+}
+}
+private {
+void stbtt_FreeSDF(u8* bitmap, void* userdata) {
     ignore userdata;
     free(bitmap);
-}}
+}
+}
 //////////////////////////////////////////////////////////////////////////////
 //
 // font name matching -- recommended not to use this
 //
 // check if a utf8 string contains a prefix which is the utf16 string; if so return length of matching utf8 string
-private { stbtt_int32 stbtt__CompareUTF8toUTF16_bigendian_prefix(stbtt_uint8* s1, stbtt_int32 len1, stbtt_uint8* s2, stbtt_int32 len2) {
+private {
+stbtt_int32 stbtt__CompareUTF8toUTF16_bigendian_prefix(stbtt_uint8* s1, stbtt_int32 len1, stbtt_uint8* s2, stbtt_int32 len2) {
     stbtt_int32 i = 0;
     while len2 != 0 {
         var ch = cast(stbtt_uint16, cast(i32, s2[0]) * 256 + s2[1]);
@@ -27123,13 +27667,17 @@ private { stbtt_int32 stbtt__CompareUTF8toUTF16_bigendian_prefix(stbtt_uint8* s1
         len2 -= 2;
     }
     return i;
-}}
-private { i32 stbtt_CompareUTF8toUTF16_bigendian_internal(u8* s1, i32 len1, u8* s2, i32 len2) {
+}
+}
+private {
+i32 stbtt_CompareUTF8toUTF16_bigendian_internal(u8* s1, i32 len1, u8* s2, i32 len2) {
     return len1 == stbtt__CompareUTF8toUTF16_bigendian_prefix(cast(stbtt_uint8*, s1), len1, cast(stbtt_uint8*, s2), len2);
-}}
+}
+}
 // returns results in whatever encoding you request... but note that 2-byte encodings
 // will be BIG-ENDIAN... use stbtt_CompareUTF8toUTF16_bigendian() to compare
-private { u8* stbtt_GetFontNameString(stbtt_fontinfo* font, i32* length, i32 platformID, i32 encodingID, i32 languageID, i32 nameID) {
+private {
+u8* stbtt_GetFontNameString(stbtt_fontinfo* font, i32* length, i32 platformID, i32 encodingID, i32 languageID, i32 nameID) {
     stbtt_int32 i;
     stbtt_int32 count;
     stbtt_int32 stringOffset;
@@ -27149,8 +27697,10 @@ private { u8* stbtt_GetFontNameString(stbtt_fontinfo* font, i32* length, i32 pla
         }
     }
     return null;
-}}
-private { i32 stbtt__matchpair(stbtt_uint8* fc, stbtt_uint32 nm, stbtt_uint8* name, stbtt_int32 nlen, stbtt_int32 target_id, stbtt_int32 next_id) {
+}
+}
+private {
+i32 stbtt__matchpair(stbtt_uint8* fc, stbtt_uint32 nm, stbtt_uint8* name, stbtt_int32 nlen, stbtt_int32 target_id, stbtt_int32 next_id) {
     stbtt_int32 i;
     var count = cast(stbtt_int32, ttUSHORT(fc + nm + 2));
     var stringOffset = cast(stbtt_int32, nm + ttUSHORT(fc + nm + 4));
@@ -27189,8 +27739,10 @@ private { i32 stbtt__matchpair(stbtt_uint8* fc, stbtt_uint32 nm, stbtt_uint8* na
         }
     }
     return 0;
-}}
-private { i32 stbtt__matches(stbtt_uint8* fc, stbtt_uint32 offset, stbtt_uint8* name, stbtt_int32 flags) {
+}
+}
+private {
+i32 stbtt__matches(stbtt_uint8* fc, stbtt_uint32 offset, stbtt_uint8* name, stbtt_int32 flags) {
     var nlen = cast(stbtt_int32, strlen(cast(u8*, name)));
     stbtt_uint32 nm;
     stbtt_uint32 hd;
@@ -27229,8 +27781,10 @@ private { i32 stbtt__matches(stbtt_uint8* fc, stbtt_uint32 offset, stbtt_uint8* 
         }
     }
     return 0;
-}}
-private { i32 stbtt_FindMatchingFont_internal(u8* font_collection, u8* name_utf8, stbtt_int32 flags) {
+}
+}
+private {
+i32 stbtt_FindMatchingFont_internal(u8* font_collection, u8* name_utf8, stbtt_int32 flags) {
     stbtt_int32 i;
     for i = 0; true; ++i {
         stbtt_int32 off = stbtt_GetFontOffsetForIndex(font_collection, i);
@@ -27241,25 +27795,38 @@ private { i32 stbtt_FindMatchingFont_internal(u8* font_collection, u8* name_utf8
             return off;
         }
     }
-}}
-private { i32 stbtt_BakeFontBitmap(u8* data, i32 offset, f32 pixel_height, u8* pixels, i32 pw, i32 ph, i32 first_char, i32 num_chars, stbtt_bakedchar* chardata) {
+}
+}
+private {
+i32 stbtt_BakeFontBitmap(u8* data, i32 offset, f32 pixel_height, u8* pixels, i32 pw, i32 ph, i32 first_char, i32 num_chars, stbtt_bakedchar* chardata) {
     return stbtt_BakeFontBitmap_internal(data, offset, pixel_height, pixels, pw, ph, first_char, num_chars, chardata);
-}}
-private { i32 stbtt_GetFontOffsetForIndex(u8* data, i32 index) {
+}
+}
+private {
+i32 stbtt_GetFontOffsetForIndex(u8* data, i32 index) {
     return stbtt_GetFontOffsetForIndex_internal(data, index);
-}}
-private { i32 stbtt_GetNumberOfFonts(u8* data) {
+}
+}
+private {
+i32 stbtt_GetNumberOfFonts(u8* data) {
     return stbtt_GetNumberOfFonts_internal(data);
-}}
-private { i32 stbtt_InitFont(stbtt_fontinfo* info, u8* data, i32 offset) {
+}
+}
+private {
+i32 stbtt_InitFont(stbtt_fontinfo* info, u8* data, i32 offset) {
     return stbtt_InitFont_internal(info, data, offset);
-}}
-private { i32 stbtt_FindMatchingFont(u8* fontdata, u8* name, i32 flags) {
+}
+}
+private {
+i32 stbtt_FindMatchingFont(u8* fontdata, u8* name, i32 flags) {
     return stbtt_FindMatchingFont_internal(fontdata, name, flags);
-}}
-private { i32 stbtt_CompareUTF8toUTF16_bigendian(u8* s1, i32 len1, u8* s2, i32 len2) {
+}
+}
+private {
+i32 stbtt_CompareUTF8toUTF16_bigendian(u8* s1, i32 len1, u8* s2, i32 len2) {
     return stbtt_CompareUTF8toUTF16_bigendian_internal(s1, len1, s2, len2);
-}}
+}
+}
 // FULL VERSION HISTORY
 //
 //   1.25 (2021-07-11) many fixes
@@ -28987,7 +29554,8 @@ i32 GetCodepointPrevious(u8* text, i32* codepointSize) {
 // Read a line from memory
 // REQUIRES: memcpy()
 // NOTE: Returns the number of bytes read
-private { i32 GetLine(u8* origin, u8* buffer, i32 maxLength) {
+private {
+i32 GetLine(u8* origin, u8* buffer, i32 maxLength) {
     i32 count = 0;
     for ; count < maxLength - 1; count++ {
         if origin[count] == 10 {
@@ -28997,10 +29565,12 @@ private { i32 GetLine(u8* origin, u8* buffer, i32 maxLength) {
     memcpy(buffer, origin, cast(u64, count));
     buffer[count] = 0;
     return count;
-}}
+}
+}
 // Load a BMFont file (AngelCode font file)
 // REQUIRES: strstr(), sscanf(), strrchr(), memcpy()
-private { Font LoadBMFont(u8* fileName) {
+private {
+Font LoadBMFont(u8* fileName) {
     Font font;
     u8[256] buffer;
     u8* searchPoint = null;
@@ -29118,7 +29688,8 @@ private { Font LoadBMFont(u8* fileName) {
             } else {
             }
     return font;
-}}
+}
+}
 // OpenGL abstraction layer to OpenGL 1.1, 2.1, 3.3+ or ES2
 /**********************************************************************************************
 *
@@ -30540,7 +31111,8 @@ void UpdateModelAnimationEx(Model model, ModelAnimation animA, f32 frameA, Model
 }
 // Update model vertex animation buffers (positions and normals)
 // NOTE: Required for CPU skinning, uploads animated vertex buffers to GPU
-private { void UpdateModelAnimationVertexBuffers(Model model) {
+private {
+void UpdateModelAnimationVertexBuffers(Model model) {
     for i32 m = 0; m < model.meshCount; m++ {
         Mesh mesh = model.meshes[m];
         Vector3 animVertex;
@@ -30591,7 +31163,8 @@ private { void UpdateModelAnimationVertexBuffers(Model model) {
             }
         }
     }
-}}
+}
+}
 // Unload animation array data
 void UnloadModelAnimations(ModelAnimation* animations, i32 animCount) {
     for i32 a = 0; a < animCount; a++ {

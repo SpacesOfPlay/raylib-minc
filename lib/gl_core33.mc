@@ -1,6 +1,6 @@
-// gl_core33.mc — cross-platform GL 3.3-core binding.
+// gl_core33 — cross-platform GL 3.3-core binding.
 // Call gl_load_all_fns() once after the GL context is current.
-// raylib's rlgl handles this in InitWindow.
+// raylib's rlgl does this in InitWindow.
 
 // --- constants ----------------------------------------------
 const u32 GL_ALWAYS = 519;

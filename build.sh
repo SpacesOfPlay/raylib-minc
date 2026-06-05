@@ -11,7 +11,7 @@
 #   import raylib;
 #   i32 main() { InitWindow(...); ... }
 #
-# The binary is named after the .mc file's stem. If the .mc lives
+# The binary is named after the .mc file's stem. If the .mc sits
 # next to a `resources/` subdir, that subdir is mirrored into
 # `build/` so relative `LoadImage("resources/...")` calls resolve.
 # GLFW resolves from the system package (`libglfw.so.3` / `libglfw.3.dylib`).

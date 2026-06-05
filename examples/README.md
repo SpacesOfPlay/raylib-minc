@@ -4,7 +4,7 @@ Mirrors [upstream raylib's
 `examples/`](https://github.com/raysan5/raylib/tree/master/examples)
 tree — same folders, same filenames (`.c` → `.mc`).
 
-Each `.mc` is a single-file program. Assets live in the category's
+Each `.mc` is a single-file program. Assets sit in the category's
 `resources/` subdir.
 
 ## Ported

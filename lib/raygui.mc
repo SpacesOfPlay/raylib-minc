@@ -10,9 +10,6 @@ const i32 SEEK_CUR = 1;
 const i32 SEEK_END = 2;
 
 // transminc: C #define values surfaced as compile-time configuration
-@define "RAYLIB_VERSION_MAJOR" 6
-@define "RAYLIB_VERSION_MINOR" 1
-@define "RAYLIB_VERSION_PATCH" 0
 @define "RAYGUI_VERSION_MAJOR" 5
 @define "RAYGUI_VERSION_MINOR" 0
 @define "RAYGUI_VERSION_PATCH" 0
@@ -49,6 +46,9 @@ const i32 SEEK_END = 2;
 @define "RAYGUI_MAX_TEXT_LINES" 128
 @define "RAYGUI_TEXTSPLIT_MAX_ITEMS" 128
 @define "RAYGUI_TEXTSPLIT_MAX_TEXT_SIZE" 1024
+@define "RAYLIB_VERSION_MAJOR" 6
+@define "RAYLIB_VERSION_MINOR" 1
+@define "RAYLIB_VERSION_PATCH" 0
 
 when os(windows) {
     type c_long = i32;
@@ -3384,7 +3384,8 @@ i32 GuiGetTextWidth(u8* text) {
 // Module Internal Functions Definition
 //----------------------------------------------------------------------------------
 // Get text bounds considering control bounds
-private { Rectangle GetTextBounds(i32 control, Rectangle bounds) {
+private {
+Rectangle GetTextBounds(i32 control, Rectangle bounds) {
     Rectangle textBounds = bounds;
     textBounds.x = bounds.x + cast(f32, GuiGetStyle(control, BORDER_WIDTH));
     textBounds.y = bounds.y + cast(f32, GuiGetStyle(control, BORDER_WIDTH)) + cast(f32, GuiGetStyle(control, TEXT_PADDING));
@@ -3404,10 +3405,12 @@ private { Rectangle GetTextBounds(i32 control, Rectangle bounds) {
         }
     }
     return textBounds;
-}}
+}
+}
 // Get text icon if provided and move text cursor
 // NOTE: Up to RAYGUI_ICON_MAX_ICONS supported for iconId
-private { u8* GetTextIcon(u8* text, i32* iconId) {
+private {
+u8* GetTextIcon(u8* text, i32* iconId) {
     *iconId = -1;
     if text[0] == 35 {
         u8[4] iconValue;
@@ -3427,10 +3430,12 @@ private { u8* GetTextIcon(u8* text, i32* iconId) {
         }
     }
     return text;
-}}
+}
+}
 // Get text divided into lines (by line-breaks '\n')
 // WARNING: It returns pointers to new lines but it does not add NULL ('\0') terminator!
-private { u8** GetTextLines(u8* text, i32* count) {
+private {
+u8** GetTextLines(u8* text, i32* count) {
     for i32 i = 0; i < 128; i++ {
         GetTextLines__lines[i] = null;
     }
@@ -3444,9 +3449,11 @@ private { u8** GetTextLines(u8* text, i32* count) {
         }
     }
     return GetTextLines__lines;
-}}
+}
+}
 // Get text width to next space for provided string
-private { f32 GetNextSpaceWidth(u8* text, i32* nextSpaceIndex) {
+private {
+f32 GetNextSpaceWidth(u8* text, i32* nextSpaceIndex) {
     f32 width = 0.0f;
     i32 codepointByteCount = 0;
     i32 codepoint = 0;
@@ -3465,9 +3472,11 @@ private { f32 GetNextSpaceWidth(u8* text, i32* nextSpaceIndex) {
         }
     }
     return width;
-}}
+}
+}
 // Gui draw text using default font
-private { void GuiDrawText(u8* text, Rectangle textBounds, i32 alignment, Color tint) {
+private {
+void GuiDrawText(u8* text, Rectangle textBounds, i32 alignment, Color tint) {
     if text == null || text[0] == 0 {
         return;
     }
@@ -3613,9 +3622,11 @@ private { void GuiDrawText(u8* text, Rectangle textBounds, i32 alignment, Color 
             posOffsetY += cast(f32, textOffsetY + GuiGetStyle(DEFAULT, TEXT_SIZE));
         }
     }
-}}
+}
+}
 // Gui draw rectangle using default raygui plain style with borders
-private { void GuiDrawRectangle(Rectangle rec, i32 borderWidth, Color borderColor, Color color) {
+private {
+void GuiDrawRectangle(Rectangle rec, i32 borderWidth, Color borderColor, Color color) {
     if color.a > 0 {
         DrawRectangle(cast(i32, rec.x), cast(i32, rec.y), cast(i32, rec.width), cast(i32, rec.height), GuiFade(color, guiAlpha));
     }
@@ -3625,9 +3636,11 @@ private { void GuiDrawRectangle(Rectangle rec, i32 borderWidth, Color borderColo
         DrawRectangle(cast(i32, rec.x) + cast(i32, rec.width) - borderWidth, cast(i32, rec.y) + borderWidth, borderWidth, cast(i32, rec.height) - 2 * borderWidth, GuiFade(borderColor, guiAlpha));
         DrawRectangle(cast(i32, rec.x), cast(i32, rec.y) + cast(i32, rec.height) - borderWidth, cast(i32, rec.width), borderWidth, GuiFade(borderColor, guiAlpha));
     }
-}}
+}
+}
 // Draw tooltip using control bounds
-private { void GuiTooltip(Rectangle controlRec) {
+private {
+void GuiTooltip(Rectangle controlRec) {
     if !guiLocked && guiTooltip && guiTooltipPtr != null && !guiControlExclusiveMode {
         Vector2 textSize = MeasureTextEx(GuiGetFont(), guiTooltipPtr, cast(f32, GuiGetStyle(DEFAULT, TEXT_SIZE)), cast(f32, GuiGetStyle(DEFAULT, TEXT_SPACING)));
         if controlRec.x + textSize.x + 16.0f > cast(f32, GetScreenWidth()) {
@@ -3647,10 +3660,12 @@ private { void GuiTooltip(Rectangle controlRec) {
         GuiSetStyle(LABEL, TEXT_ALIGNMENT, textAlignment);
         GuiSetStyle(LABEL, TEXT_PADDING, textPadding);
     }
-}}
+}
+}
 // Split controls text into multiple strings
 // Also check for multiple columns (required by GuiToggleGroup())
-private { u8** GuiTextSplit(u8* text, u8 delimiter, i32* count, i32* textRow) {
+private {
+u8** GuiTextSplit(u8* text, u8 delimiter, i32* count, i32* textRow) {
     memset(GuiTextSplit__buffer, 0, cast(u64, 1024));
     GuiTextSplit__result[0] = GuiTextSplit__buffer;
     i32 counter = 1;
@@ -3679,10 +3694,12 @@ private { u8** GuiTextSplit(u8* text, u8 delimiter, i32* count, i32* textRow) {
     }
     *count = counter;
     return GuiTextSplit__result;
-}}
+}
+}
 // Convert color data from RGB to HSV
 // NOTE: Color data should be passed normalized
-private { Vector3 ConvertRGBtoHSV(Vector3 rgb) {
+private {
+Vector3 ConvertRGBtoHSV(Vector3 rgb) {
     Vector3 hsv;
     f32 min = 0.0f;
     f32 max = 0.0f;
@@ -3719,10 +3736,12 @@ private { Vector3 ConvertRGBtoHSV(Vector3 rgb) {
         hsv.x += 360.0f;
     }
     return hsv;
-}}
+}
+}
 // Convert color data from HSV to RGB
 // NOTE: Color data should be passed normalized
-private { Vector3 ConvertHSVtoRGB(Vector3 hsv) {
+private {
+Vector3 ConvertHSVtoRGB(Vector3 hsv) {
     Vector3 rgb;
     f32 hh = 0.0f;
     f32 p = 0.0f;
@@ -3793,9 +3812,11 @@ private { Vector3 ConvertHSVtoRGB(Vector3 hsv) {
         }
     }
     return rgb;
-}}
+}
+}
 // Scroll bar control (used by GuiScrollPanel())
-private { i32 GuiScrollBar(Rectangle bounds, i32 value, i32 minValue, i32 maxValue) {
+private {
+i32 GuiScrollBar(Rectangle bounds, i32 value, i32 minValue, i32 maxValue) {
     GuiState state = guiState;
     bool isVertical = (bounds.width > bounds.height ? false : true) != 0;
     i32 spinnerSize = GuiGetStyle(SCROLLBAR, ARROWS_VISIBLE) != 0 ? isVertical != 0 ? cast(i32, bounds.width) - 2 * GuiGetStyle(SCROLLBAR, BORDER_WIDTH) : cast(i32, bounds.height) - 2 * GuiGetStyle(SCROLLBAR, BORDER_WIDTH) : 0;
@@ -3883,10 +3904,12 @@ private { i32 GuiScrollBar(Rectangle bounds, i32 value, i32 minValue, i32 maxVal
         GuiDrawText(isVertical != 0 ? GuiIconText(ICON_ARROW_DOWN_FILL, null) : GuiIconText(ICON_ARROW_RIGHT_FILL, null), Rectangle{arrowDownRight.x, arrowDownRight.y, isVertical != 0 ? bounds.width : bounds.height, isVertical != 0 ? bounds.width : bounds.height}, TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(SCROLLBAR, TEXT + state * 3))));
     }
     return value;
-}}
+}
+}
 // Color fade-in or fade-out, alpha goes from 0.0f to 1.0f
 // WARNING: It multiplies current alpha by alpha scale factor
-private { Color GuiFade(Color color, f32 alpha) {
+private {
+Color GuiFade(Color color, f32 alpha) {
     if alpha < 0.0f {
         alpha = 0.0f;
     } else if alpha > 1.0f {
@@ -3894,7 +3917,8 @@ private { Color GuiFade(Color color, f32 alpha) {
     }
     var result = Color{color.r, color.g, color.b, cast(u8, cast(f32, color.a) * alpha)};
     return result;
-}}
+}
+}
 private { bool GuiTextInputBox__textEditMode = false; }
 private { u8* GuiTextInputBox__stars = "****************"; }
 private { u8[1024] GuiIconText__buffer; }

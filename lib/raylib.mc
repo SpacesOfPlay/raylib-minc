@@ -1,6 +1,5 @@
-// raylib.mc — public entry point. `import raylib;` pulls in the
-// shims, the composed raylib library, and the GL bindings.
-// See `README.md` for the build flow.
+// raylib — main module. Imports the shims, the composed raylib
+// library, and the GL bindings. See README.md for the build flow.
 
 @gui    // no console window alongside the app
 
