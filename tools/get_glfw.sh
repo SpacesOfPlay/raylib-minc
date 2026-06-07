@@ -16,9 +16,24 @@ here="$(cd "$(dirname "$0")" && pwd)"
 
 case "$(uname -s)" in
     Linux*)
-        if pkg-config --exists glfw3 2>/dev/null; then
-            v=$(pkg-config --modversion glfw3)
-            echo "GLFW $v found via pkg-config."
+        # GLFW is present if the runtime shared object resolves — that's
+        # what minc links by soname and what the loader needs. Probe the
+        # dynamic-linker cache and the standard libdirs directly; pkg-config
+        # is only a fallback, never the gate (it lives in dev tooling and is
+        # not a documented prerequisite, so its absence must not fail us).
+        if ldconfig -p 2>/dev/null | grep -q 'libglfw\.so\.3'; then
+            echo "GLFW found (libglfw.so.3 via ldconfig)."
+            exit 0
+        fi
+        for d in /usr/lib /usr/lib/x86_64-linux-gnu /usr/lib64 \
+                 /lib /lib/x86_64-linux-gnu /usr/local/lib; do
+            if [ -e "$d/libglfw.so.3" ]; then
+                echo "GLFW found ($d/libglfw.so.3)."
+                exit 0
+            fi
+        done
+        if command -v pkg-config >/dev/null 2>&1 && pkg-config --exists glfw3 2>/dev/null; then
+            echo "GLFW $(pkg-config --modversion glfw3) found via pkg-config."
             exit 0
         fi
         echo "GLFW not detected. Install via your package manager, e.g.:"
