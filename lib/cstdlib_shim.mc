@@ -1,44 +1,29 @@
-// cstdlib_shim — libc externs for <stdio.h>/<ctype.h>/<math.h>/
-// <string.h>/<stdlib.h>, per OS.
+
 
 when os(windows) {
     extern "msvcrt.dll" {
-        i32 tolower(i32 c);
-        i32 toupper(i32 c);
-        i32 isalpha(i32 c);
-        i32 isdigit(i32 c);
         i32 isspace(i32 c);
         i32 ispunct(i32 c);
-        i32 isalnum(i32 c);
         i32 printf(u8* fmt, ...);
         i32 sprintf(u8* buf, u8* fmt, ...);
+        i32 fprintf(void* stream, u8* fmt, ...);
+        // i32 _snprintf(u8* buf, u64 size, u8* fmt, ...);
         i32 sscanf(u8* s, u8* fmt, ...);
+        i64 clock();
         i32 strcmp(u8* a, u8* b);
-        i32 strncmp(u8* a, u8* b, u64 n);
-        i32 memcmp(void* a, void* b, u64 n);
-        void* memchr(void* s, i32 c, u64 n);
         u64 strlen(u8* s);
         u8* strcpy(u8* dst, u8* src);
         u8* strncpy(u8* dst, u8* src, u64 n);
-        i32 strncpy_s(u8* dst, i32 dst_size, u8* src, i32 count);
         u8* strchr(u8* s, i32 c);
         u8* strrchr(u8* s, i32 c);
         u8* strstr(u8* haystack, u8* needle);
         u8* strpbrk(u8* s, u8* accept);
         u8* strcat(u8* dst, u8* src);
         i32 puts(u8* s);
-        i32 atoi(u8* s);
         i32 abs(i32 x);
-        void srand(u32 seed);
-        i32 rand();
-        f64 atof(u8* s);
-        f64 strtod(u8* s, u8** endptr);
-        i64 strtol(u8* s, u8** endptr, i32 base);
-        u64 strtoul(u8* s, u8** endptr, i32 base);
-        f64 fabs(f64 x);
+        // fabs, sqrt: provided by the runtime.
         f64 floor(f64 x);
         f64 ceil(f64 x);
-        f64 sqrt(f64 x);
         f64 pow(f64 b, f64 e);
         f64 sin(f64 x);
         f64 cos(f64 x);
@@ -48,23 +33,12 @@ when os(windows) {
         f64 tan(f64 x);
         f64 log(f64 x);
         f64 exp(f64 x);
-        @must_use void* malloc(u64 size);
-        void free(void* ptr);
-        @must_use void* realloc(void* ptr, u64 size);
-        @must_use void* calloc(u64 nmemb, u64 size);
-        // Windows aligned-alloc pair (POSIX uses posix_memalign + free).
-        @must_use void* _aligned_malloc(u64 size, u64 alignment);
-        void _aligned_free(void* ptr);
-        void abort();
         @must_use void* fopen(u8* path, u8* mode);
         i32 fclose(void* file);
         @must_use u8* fgets(u8* buf, i32 n, void* stream);
-        i32 atexit(void* func);
     }
     // C99 math (round/log2/f32 variants) is in UCRT, not msvcrt.
     extern "ucrtbase.dll" {
-        i32 _isnan(f64 x);
-        i32 _finite(f64 x);
         f64 round(f64 x);
         f64 log2(f64 x);
         f32 sinf(f32 x);
@@ -74,19 +48,10 @@ when os(windows) {
         f32 acosf(f32 x);
         f32 atanf(f32 x);
         f32 atan2f(f32 y, f32 x);
-        f32 sqrtf(f32 x);
+        // sqrtf: provided by the runtime.
         f32 powf(f32 b, f32 e);
         f32 expf(f32 x);
         f32 logf(f32 x);
-        f32 ldexpf(f32 x, i32 exp);
-        f32 frexpf(f32 x, i32* exp);
-        f32 copysignf(f32 x, f32 y);
-        f64 ldexp(f64 x, i32 exp);
-        f64 frexp(f64 x, i32* exp);
-        f64 copysign(f64 x, f64 y);
-        i32 isfinite(f64 x);
-        f32 hypotf(f32 x, f32 y);
-        f32 fabsf(f32 x);
         f32 floorf(f32 x);
         f32 ceilf(f32 x);
         f32 roundf(f32 x);
@@ -96,41 +61,16 @@ when os(windows) {
         f32 fmaxf(f32 a, f32 b);
         f64 fmin(f64 a, f64 b);
         f64 fmax(f64 a, f64 b);
-        // UCRT internals used by C++ TUs: v140+ stdio, the
-        // stdin/out/err getter, wide-string fopen, plus extras.
-        i64 __stdio_common_vfprintf(u64 opts, void* stream, u8* fmt, void* loc, u8* args);
-        i32 __stdio_common_vsprintf(u64 opts, u8* buf, u64 len, u8* fmt, void* loc, u8* args);
-        i32 __stdio_common_vsscanf(u64 opts, u8* buf, u64 len, u8* fmt, void* loc, u8* args);
-        void* __acrt_iob_func(u32 index);
-        void* _wfopen(u16* path, u16* mode);
-        void qsort(void* base, u64 n, u64 sz, void* cmp);
-        void* memcpy(void* dst, void* src, u64 n);
-        void* memset(void* dst, i32 c, u64 n);
-    }
-    // imm32.dll — IME composition surface (link-time stubs).
-    extern "imm32.dll" {
-        void* ImmGetContext(void* hWnd);
-        i32 ImmReleaseContext(void* hWnd, void* hImc);
-        i32 ImmSetCandidateWindow(void* hImc, void* lpCandidate);
-        i32 ImmSetCompositionWindow(void* hImc, void* lpComp);
     }
     // MSVC FP-usage sentinel.
     i32 _fltused = 0x9875;
-    // isnan / isinf via msvcrt _isnan / _finite.
-    bool isnan(f64 x) { return _isnan(x) != 0; }
-    bool isinf(f64 x) { return _finite(x) == 0 && _isnan(x) == 0; }
-    // Index of the highest set bit in *index. Returns 0 if mask is 0.
-    i32 _BitScanReverse(u32* index, u32 mask) {
-        if mask == 0 { return 0; }
-        i32 i = 31;
-        while i >= 0 {
-            if ((mask >> cast(u32, i)) & cast(u32, 1)) != 0 {
-                *index = cast(u32, i);
-                return 1;
-            }
-            i = i - 1;
-        }
-        return 0;
+    // POSIX errno — a process-wide slot (not thread-local).
+    i32 errno = 0;
+    // Win32 high-resolution timer. void* params so LARGE_INTEGER need
+    // not be in scope; callers pass a pointer to their own.
+    extern "kernel32.dll" {
+        i32 QueryPerformanceFrequency(void* p);
+        i32 QueryPerformanceCounter(void* p);
     }
     // u64 variant of the above.
     i32 rl_BitScanReverse_u64(u64* index, u32 mask) {
@@ -145,54 +85,40 @@ when os(windows) {
         }
         return 0;
     }
-    // POSIX stubs. Linux/macOS have the real implementations.
-    i32 access(u8* path, i32 mode) { return 0 - 1; }
-    u8* getcwd(u8* buf, u64 size) { return null; }
-    i32 chdir(u8* path) { return 0 - 1; }
-    i32 mkdir(u8* path, u32 mode) { return 0 - 1; }
-    i64 readlink(u8* path, u8* buf, u64 bufsiz) { return 0 - 1; }
 }
 when os(linux) || os(macos) || os(ios) {
     i32 rl_BitScanReverse_u64(u64* index, u32 mask) { *index = 0; return 0; }
 }
 when os(linux) {
     extern "libc.so.6" {
-        i32 tolower(i32 c);
-        i32 toupper(i32 c);
-        i32 isalpha(i32 c);
-        i32 isdigit(i32 c);
         i32 isspace(i32 c);
         i32 ispunct(i32 c);
-        i32 isalnum(i32 c);
         i32 printf(u8* fmt, ...);
         i32 sprintf(u8* buf, u8* fmt, ...);
+        i32 fprintf(void* stream, u8* fmt, ...);
         i32 sscanf(u8* s, u8* fmt, ...);
+        i64 clock();
         i32 strcmp(u8* a, u8* b);
-        i32 strncmp(u8* a, u8* b, u64 n);
-        i32 memcmp(void* a, void* b, u64 n);
-        void* memchr(void* s, i32 c, u64 n);
         u64 strlen(u8* s);
         u8* strcpy(u8* dst, u8* src);
         u8* strncpy(u8* dst, u8* src, u64 n);
-        i32 strncpy_s(u8* dst, i32 dst_size, u8* src, i32 count);
         u8* strchr(u8* s, i32 c);
         u8* strrchr(u8* s, i32 c);
         u8* strstr(u8* haystack, u8* needle);
         u8* strpbrk(u8* s, u8* accept);
         u8* strcat(u8* dst, u8* src);
         i32 puts(u8* s);
-        i32 atoi(u8* s);
         i32 abs(i32 x);
-        void srand(u32 seed);
-        i32 rand();
-        f64 atof(u8* s);
-        f64 strtod(u8* s, u8** endptr);
-        i64 strtol(u8* s, u8** endptr, i32 base);
-        u64 strtoul(u8* s, u8** endptr, i32 base);
-        f64 fabs(f64 x);
+        @must_use void* fopen(u8* path, u8* mode);
+        i32 fclose(void* file);
+        @must_use u8* fgets(u8* buf, i32 n, void* stream);
+    }
+    // glibc keeps the math functions in libm.so.6, not libc.so.6 — binding
+    // them here is what pulls libm into DT_NEEDED so they resolve at runtime.
+    extern "libm.so.6" {
+        // fabs, sqrt, fabsf, sqrtf: provided by the runtime.
         f64 floor(f64 x);
         f64 ceil(f64 x);
-        f64 sqrt(f64 x);
         f64 pow(f64 b, f64 e);
         f64 sin(f64 x);
         f64 cos(f64 x);
@@ -204,6 +130,8 @@ when os(linux) {
         f64 exp(f64 x);
         f64 log2(f64 x);
         f64 round(f64 x);
+        f64 fmin(f64 a, f64 b);
+        f64 fmax(f64 a, f64 b);
         // f32 math
         f32 sinf(f32 x);
         f32 cosf(f32 x);
@@ -212,19 +140,67 @@ when os(linux) {
         f32 acosf(f32 x);
         f32 atanf(f32 x);
         f32 atan2f(f32 y, f32 x);
-        f32 sqrtf(f32 x);
         f32 powf(f32 b, f32 e);
         f32 expf(f32 x);
         f32 logf(f32 x);
-        f32 ldexpf(f32 x, i32 exp);
-        f32 frexpf(f32 x, i32* exp);
-        f32 copysignf(f32 x, f32 y);
-        f64 ldexp(f64 x, i32 exp);
-        f64 frexp(f64 x, i32* exp);
-        f64 copysign(f64 x, f64 y);
-        i32 isfinite(f64 x);
-        f32 hypotf(f32 x, f32 y);
-        f32 fabsf(f32 x);
+        f32 floorf(f32 x);
+        f32 ceilf(f32 x);
+        f32 roundf(f32 x);
+        f32 truncf(f32 x);
+        f32 fmodf(f32 a, f32 b);
+        f32 fminf(f32 a, f32 b);
+        f32 fmaxf(f32 a, f32 b);
+    }
+}
+when os(android) {
+    // Android Bionic
+    extern "libc.so" {
+        i32 isspace(i32 c);
+        i32 ispunct(i32 c);
+        i32 printf(u8* fmt, ...);
+        i32 sprintf(u8* buf, u8* fmt, ...);
+        i32 fprintf(void* stream, u8* fmt, ...);
+        i32 sscanf(u8* s, u8* fmt, ...);
+        i64 clock();
+        i32 strcmp(u8* a, u8* b);
+        u64 strlen(u8* s);
+        u8* strcpy(u8* dst, u8* src);
+        u8* strncpy(u8* dst, u8* src, u64 n);
+        u8* strchr(u8* s, i32 c);
+        u8* strrchr(u8* s, i32 c);
+        u8* strstr(u8* haystack, u8* needle);
+        u8* strpbrk(u8* s, u8* accept);
+        u8* strcat(u8* dst, u8* src);
+        i32 puts(u8* s);
+        i32 abs(i32 x);
+        @must_use void* fopen(u8* path, u8* mode);
+        i32 fclose(void* file);
+        @must_use u8* fgets(u8* buf, i32 n, void* stream);
+    }
+    extern "libm.so" {
+        f64 floor(f64 x);
+        f64 ceil(f64 x);
+        f64 pow(f64 b, f64 e);
+        f64 sin(f64 x);
+        f64 cos(f64 x);
+        f64 acos(f64 x);
+        f64 asin(f64 x);
+        f64 fmod(f64 x, f64 y);
+        f64 tan(f64 x);
+        f64 log(f64 x);
+        f64 exp(f64 x);
+        f64 log2(f64 x);
+        f64 round(f64 x);
+        f32 sinf(f32 x);
+        f32 cosf(f32 x);
+        f32 tanf(f32 x);
+        f32 asinf(f32 x);
+        f32 acosf(f32 x);
+        f32 atanf(f32 x);
+        f32 atan2f(f32 y, f32 x);
+        f32 powf(f32 b, f32 e);
+        f32 expf(f32 x);
+        f32 logf(f32 x);
         f32 floorf(f32 x);
         f32 ceilf(f32 x);
         f32 roundf(f32 x);
@@ -234,20 +210,6 @@ when os(linux) {
         f32 fmaxf(f32 a, f32 b);
         f64 fmin(f64 a, f64 b);
         f64 fmax(f64 a, f64 b);
-        @must_use void* malloc(u64 size);
-        void free(void* ptr);
-        @must_use void* realloc(void* ptr, u64 size);
-        @must_use void* calloc(u64 nmemb, u64 size);
-        void abort();
-        @must_use void* fopen(u8* path, u8* mode);
-        i32 fclose(void* file);
-        @must_use u8* fgets(u8* buf, i32 n, void* stream);
-        void* memmove(void* dst, void* src, u64 n);
-        i32 posix_memalign(void** memptr, i32 alignment, u64 size);
-    }
-    extern "libm.so.6" {
-        i32 isnan(f64 x);
-        i32 isinf(f64 x);
     }
 }
 // Numeric constants. Values are stable across platforms.
@@ -279,42 +241,27 @@ i32 __builtin_clzl(u64 x) {
 when os(macos) || os(ios) {
     // On macOS, libSystem.B.dylib provides both libc and libm.
     extern "libSystem.B.dylib" {
-        i32 tolower(i32 c);
-        i32 toupper(i32 c);
-        i32 isalpha(i32 c);
-        i32 isdigit(i32 c);
         i32 isspace(i32 c);
         i32 ispunct(i32 c);
-        i32 isalnum(i32 c);
         i32 printf(u8* fmt, ...);
         i32 sprintf(u8* buf, u8* fmt, ...);
+        i32 fprintf(void* stream, u8* fmt, ...);
         i32 sscanf(u8* s, u8* fmt, ...);
+        i64 clock();
         i32 strcmp(u8* a, u8* b);
-        i32 strncmp(u8* a, u8* b, u64 n);
-        i32 memcmp(void* a, void* b, u64 n);
-        void* memchr(void* s, i32 c, u64 n);
         u64 strlen(u8* s);
         u8* strcpy(u8* dst, u8* src);
         u8* strncpy(u8* dst, u8* src, u64 n);
-        i32 strncpy_s(u8* dst, i32 dst_size, u8* src, i32 count);
         u8* strchr(u8* s, i32 c);
         u8* strrchr(u8* s, i32 c);
         u8* strstr(u8* haystack, u8* needle);
         u8* strpbrk(u8* s, u8* accept);
         u8* strcat(u8* dst, u8* src);
         i32 puts(u8* s);
-        i32 atoi(u8* s);
         i32 abs(i32 x);
-        void srand(u32 seed);
-        i32 rand();
-        f64 atof(u8* s);
-        f64 strtod(u8* s, u8** endptr);
-        i64 strtol(u8* s, u8** endptr, i32 base);
-        u64 strtoul(u8* s, u8** endptr, i32 base);
-        f64 fabs(f64 x);
+        // fabs, sqrt: provided by the runtime.
         f64 floor(f64 x);
         f64 ceil(f64 x);
-        f64 sqrt(f64 x);
         f64 pow(f64 b, f64 e);
         f64 sin(f64 x);
         f64 cos(f64 x);
@@ -334,19 +281,11 @@ when os(macos) || os(ios) {
         f32 acosf(f32 x);
         f32 atanf(f32 x);
         f32 atan2f(f32 y, f32 x);
-        f32 sqrtf(f32 x);
+        // sqrtf: provided by the runtime.
         f32 powf(f32 b, f32 e);
         f32 expf(f32 x);
         f32 logf(f32 x);
-        f32 ldexpf(f32 x, i32 exp);
-        f32 frexpf(f32 x, i32* exp);
-        f32 copysignf(f32 x, f32 y);
-        f64 ldexp(f64 x, i32 exp);
-        f64 frexp(f64 x, i32* exp);
-        f64 copysign(f64 x, f64 y);
-        i32 isfinite(f64 x);
-        f32 hypotf(f32 x, f32 y);
-        f32 fabsf(f32 x);
+        // fabsf: provided by the runtime.
         f32 floorf(f32 x);
         f32 ceilf(f32 x);
         f32 roundf(f32 x);
@@ -356,18 +295,9 @@ when os(macos) || os(ios) {
         f32 fmaxf(f32 a, f32 b);
         f64 fmin(f64 a, f64 b);
         f64 fmax(f64 a, f64 b);
-        @must_use void* malloc(u64 size);
-        void free(void* ptr);
-        @must_use void* realloc(void* ptr, u64 size);
-        @must_use void* calloc(u64 nmemb, u64 size);
-        void abort();
         @must_use void* fopen(u8* path, u8* mode);
         i32 fclose(void* file);
         @must_use u8* fgets(u8* buf, i32 n, void* stream);
-        i32 isnan(f64 x);
-        i32 isinf(f64 x);
-        void* memmove(void* dst, void* src, u64 n);
-        i32 posix_memalign(void** memptr, i32 alignment, u64 size);
     }
 }
 
@@ -392,47 +322,6 @@ void assert(i64 cond) {
         exit(1);
     }
 }
-
-// Count trailing zeros (64-bit). Returns 64 on 0.
-i32 __builtin_ctzl(u64 x) {
-    if x == 0 { return 64; }
-    i32 c = 0;
-    while (x & cast(u64, 1)) == 0 {
-        x = x >> cast(u64, 1);
-        c = c + 1;
-    }
-    return c;
-}
-
-// Byte-swap intrinsics.
-u32 __builtin_bswap32(u32 x) {
-    return ((x & cast(u32, 255)) << 24)
-         | ((x & cast(u32, 65280)) << 8)
-         | ((x & cast(u32, 16711680)) >> 8)
-         | ((x & cast(u32, 4278190080)) >> 24);
-}
-u64 __builtin_bswap64(u64 x) {
-    u64 lo = cast(u64, __builtin_bswap32(cast(u32, x & cast(u64, 4294967295))));
-    u64 hi = cast(u64, __builtin_bswap32(cast(u32, x >> 32)));
-    return (lo << 32) | hi;
-}
-u16 __builtin_bswap16(u16 x) {
-    return cast(u16, ((cast(i32, x) & 255) << 8) | ((cast(i32, x) & 65280) >> 8));
-}
-
-// <time.h> / <sys/stat.h> / <utime.h> types + stubs.
-// Bind mktime/localtime/stat/utime to platform libc if needed.
-struct tm {
-    i32 tm_sec;
-    i32 tm_min;
-    i32 tm_hour;
-    i32 tm_mday;
-    i32 tm_mon;
-    i32 tm_year;
-    i32 tm_wday;
-    i32 tm_yday;
-    i32 tm_isdst;
-}
 struct stat {
     i64 st_dev;
     i64 st_ino;
@@ -446,19 +335,28 @@ struct stat {
     i64 st_mtime;
     i64 st_ctime;
 }
-struct utimbuf {
-    i64 actime;
-    i64 modtime;
-}
-
-i64 mktime(tm* t) { return 0; }
-tm* localtime(i64* t) { return null; }
 i32 stat(u8* path, stat* st) { return 0 - 1; }
-i32 utime(u8* path, utimbuf* t) { return 0 - 1; }
 
-// POSIX <time.h>: timespec + clock_gettime stub.
+// POSIX <time.h>: timespec + clock_gettime. The real libc fn on
+// linux/macos; on Windows (no libc clock_gettime) a monotonic
+// implementation backed by the high-resolution performance counter.
 struct timespec { i64 tv_sec; i64 tv_nsec; }
-i32 clock_gettime(i32 clk_id, timespec* tp) { return 0; }
+when os(windows) {
+    i32 clock_gettime(i32 clk_id, timespec* tp) {
+        i64 ticks = 0;
+        i64 freq = 0;
+        QueryPerformanceCounter(cast(void*, &ticks));
+        QueryPerformanceFrequency(cast(void*, &freq));
+        if freq == 0 { tp.tv_sec = 0; tp.tv_nsec = 0; return 0; }
+        tp.tv_sec = ticks / freq;
+        tp.tv_nsec = (ticks % freq) * 1000000000 / freq;
+        return 0;
+    }
+} else when os(linux) {
+    extern "libc.so.6" i32 clock_gettime(i32 clk_id, void* tp);
+} else when os(macos) || os(ios) {
+    extern "libSystem.B.dylib" i32 clock_gettime(i32 clk_id, void* tp);
+}
 
 // <stdio.h> file I/O. SEEK_* are the standard ANSI values.
 const i32 SEEK_SET = 0;
@@ -471,17 +369,9 @@ when os(windows) {
         i32 fseek(void* f, i64 off, i32 whence);
         i64 ftell(void* f);
         i32 feof(void* f);
-        i32 ferror(void* f);
-        i32 fflush(void* f);
-        void rewind(void* f);
-        i32 remove(u8* path);
         i32 rename(u8* a, u8* b);
-        @must_use void* freopen(u8* path, u8* mode, void* stream);
         i64 time(i64* t);
     }
-    // POSIX large-file stubs.
-    i64 ftello(void* f) { return 0; }
-    i32 fseeko(void* f, i64 off, i32 whence) { return 0; }
 }
 when os(linux) {
     extern "libc.so.6" {
@@ -489,15 +379,8 @@ when os(linux) {
         u64 fwrite(void* p, u64 sz, u64 n, void* f);
         i32 fseek(void* f, i64 off, i32 whence);
         i64 ftell(void* f);
-        i64 ftello(void* f);
-        i32 fseeko(void* f, i64 off, i32 whence);
         i32 feof(void* f);
-        i32 ferror(void* f);
-        i32 fflush(void* f);
-        void rewind(void* f);
-        i32 remove(u8* path);
         i32 rename(u8* a, u8* b);
-        @must_use void* freopen(u8* path, u8* mode, void* stream);
         i64 time(i64* t);
     }
 }
@@ -507,31 +390,226 @@ when os(macos) || os(ios) {
         u64 fwrite(void* p, u64 sz, u64 n, void* f);
         i32 fseek(void* f, i64 off, i32 whence);
         i64 ftell(void* f);
-        i64 ftello(void* f);
-        i32 fseeko(void* f, i64 off, i32 whence);
         i32 feof(void* f);
-        i32 ferror(void* f);
-        i32 fflush(void* f);
-        void rewind(void* f);
-        i32 remove(u8* path);
         i32 rename(u8* a, u8* b);
-        @must_use void* freopen(u8* path, u8* mode, void* stream);
         i64 time(i64* t);
     }
 }
 
 
-// --- runtime helpers ---
-// Widen a narrow string to a u16* buffer for L"…" literals.
-// Allocates per call.
-u16* __wide_literal(u8* s) {
-    if s == null { return null; }
-    i32 n = 0;
-    while *(s + n) != 0 { n = n + 1; }
-    u16* buf = alloc<u16>(n + 1);
-    for i32 i = 0; i < n; i = i + 1 {
-        *(buf + i) = cast(u16, *(s + i));
+// --- wasm target ---
+// On wasm there is no system libc, so the libc subset is provided here
+// (over the builtin allocator) or as host imports.
+when os(wasm) {
+    // Math is owned by the `math` module: it *defines* sinf/cosf/etc. on wasm,
+    // so our own `extern "math"` for them would collide with a user's
+    // `import math` (and with imgui, which imports this shim). Pull just the
+    // transcendentals selectively — the listed names only, so `min`/`max` and
+    // friends don't leak into consumers, and dedup'd against a user's full
+    // `import math`.
+    import { sin, cos, tan, asin, acos, atan, atan2, exp, log, pow, fmod, floor,
+             ceil, round, sinf, cosf, tanf, asinf, acosf, atanf, atan2f, expf,
+             logf, powf, fmodf, floorf, ceilf, roundf } from math;
+
+    // --- allocator ---
+    void* malloc(u64 size)            { return alloc(cast(i64, size)); }
+
+    // --- strings ---
+    u64 strlen(u8* s) { u64 n = 0; while *(s + n) != 0 { n = n + 1; } return n; }
+    i32 strcmp(u8* a, u8* b) {
+        while *a != 0 && *a == *b { a = a + 1; b = b + 1; }
+        return cast(i32, *a) - cast(i32, *b);
     }
-    *(buf + n) = 0;
-    return buf;
+    u8* strcpy(u8* dst, u8* src) {
+        u64 i = 0;
+        while *(src + i) != 0 { *(dst + i) = *(src + i); i = i + 1; }
+        *(dst + i) = 0;
+        return dst;
+    }
+    u8* strncpy(u8* dst, u8* src, u64 n) {
+        for u64 i = 0; i < n; i = i + 1 {
+            *(dst + i) = *(src + i);
+            if *(src + i) == 0 {
+                for u64 j = i + 1; j < n; j = j + 1 { *(dst + j) = 0; }
+                return dst;
+            }
+        }
+        return dst;
+    }
+    u8* strcat(u8* dst, u8* src) {
+        u64 d = strlen(dst); u64 i = 0;
+        while *(src + i) != 0 { *(dst + d + i) = *(src + i); i = i + 1; }
+        *(dst + d + i) = 0;
+        return dst;
+    }
+    u8* strchr(u8* s, i32 c) {
+        u8 ch = cast(u8, c);
+        while *s != 0 { if *s == ch { return s; } s = s + 1; }
+        if ch == 0 { return s; }
+        return null;
+    }
+    u8* strrchr(u8* s, i32 c) {
+        u8 ch = cast(u8, c); u8* last = null;
+        while *s != 0 { if *s == ch { last = s; } s = s + 1; }
+        if ch == 0 { return s; }
+        return last;
+    }
+    u8* strstr(u8* hay, u8* needle) {
+        if *needle == 0 { return hay; }
+        while *hay != 0 {
+            u8* h = hay; u8* n = needle;
+            while *h != 0 && *h == *n { h = h + 1; n = n + 1; }
+            if *n == 0 { return hay; }
+            hay = hay + 1;
+        }
+        return null;
+    }
+    u8* strpbrk(u8* s, u8* set) {
+        while *s != 0 {
+            u8* p = set;
+            while *p != 0 { if *p == *s { return s; } p = p + 1; }
+            s = s + 1;
+        }
+        return null;
+    }
+    i32 isspace(i32 c) { if c == 32 || (c >= 9 && c <= 13) { return 1; } return 0; }
+    i32 ispunct(i32 c) {
+        if (c >= 33 && c <= 47) || (c >= 58 && c <= 64) ||
+           (c >= 91 && c <= 96) || (c >= 123 && c <= 126) { return 1; }
+        return 0;
+    }
+
+    // --- time ---
+    // Host monotonic clock in nanoseconds.
+    extern "env" i64 clock();
+    i32 clock_gettime(i32 clk_id, void* tp) {
+        i64 ns = clock();
+        i64* p = cast(i64*, tp);
+        *p = ns / 1000000000;
+        *(p + 1) = ns % 1000000000;
+        return 0;
+    }
+    // No blocking sleep in the browser; nanosleep is a no-op.
+    i32 nanosleep(void* req, void* rem) { ignore req; ignore rem; return 0; }
+    i64 time(i64* t) {
+        i64 s = clock() / 1000000000;
+        if t != null { *t = s; }
+        return s;
+    }
+
+    // --- stdio (console) ---
+    // puts writes the string + a newline to stdout (fd 1).
+    i32 puts(u8* s) {
+        write(1, s, cast(i32, strlen(s)));
+        u8 nl = 10;
+        write(1, &nl, 1);
+        return 0;
+    }
+
+    // --- stdlib numerics ---
+    i32 abs(i32 x) { if x < 0 { return -x; } return x; }
+
+    // sin/cos/tan/asin/acos/atan/atan2/exp/log/pow/fmod/floor/ceil (f32+f64)
+    // come from the selective `import ... from math` at the top of this arm.
+    // fmin/fmax families (not in the math module).
+    f32 fminf(f32 a, f32 b) { if a < b { return a; } return b; }
+    f32 fmaxf(f32 a, f32 b) { if a > b { return a; } return b; }
+    f64 fmin(f64 a, f64 b) { if a < b { return a; } return b; }
+    f64 fmax(f64 a, f64 b) { if a > b { return a; } return b; }
+    // round/roundf come from the selective `import ... from math` (above).
+    // truncate toward zero; |x| >= 2^23 (f32) / 2^52 (f64) is already
+    // integral, so passing through avoids the i64-cast overflow + NaN.
+    f32 truncf(f32 x) {
+        if x != x { return x; }
+        if x >= 8388608.0f || x <= -8388608.0f { return x; }
+        return cast(f32, cast(i32, x));
+    }
+
+    // --- buffered file I/O over the host VFS ---
+    // The host serves assets through env.open/read/close. A FILE* is a
+    // small struct backed by the whole file read into memory on open;
+    // seek/tell operate on that buffer. Read-only; writes are no-ops.
+    struct __rl_file { u8* data; i64 size; i64 pos; }
+
+    void* fopen(u8* path, u8* mode) {
+        ignore mode;
+        i64 fd = open(path, 0);
+        if fd < 0 { return null; }
+        i64 cap = 4096;
+        u8* buf = cast(u8*, alloc(cap));
+        i64 total = 0;
+        while true {
+            if total == cap {
+                i64 ncap = cap * 2;
+                u8* nb = cast(u8*, alloc(ncap));
+                memcpy(cast(void*, nb), cast(void*, buf), cast(u64, total));
+                free(cast(void*, buf));
+                buf = nb;
+                cap = ncap;
+            }
+            i32 n = read(fd, cast(void*, buf + total), cast(i32, cap - total));
+            if n <= 0 { break; }
+            total = total + cast(i64, n);
+        }
+        close(fd);
+        __rl_file* f = new(__rl_file);
+        f.data = buf;
+        f.size = total;
+        f.pos = 0;
+        return cast(void*, f);
+    }
+    i32 fclose(void* stream) {
+        if stream == null { return 0; }
+        __rl_file* f = cast(__rl_file*, stream);
+        free(cast(void*, f.data));
+        free(stream);
+        return 0;
+    }
+    u64 fread(void* p, u64 sz, u64 n, void* stream) {
+        if stream == null || sz == 0 { return 0; }
+        __rl_file* f = cast(__rl_file*, stream);
+        i64 want = cast(i64, sz * n);
+        i64 avail = f.size - f.pos;
+        if want > avail { want = avail; }
+        if want <= 0 { return 0; }
+        memcpy(p, cast(void*, f.data + f.pos), cast(u64, want));
+        f.pos = f.pos + want;
+        return cast(u64, want) / sz;
+    }
+    u64 fwrite(void* p, u64 sz, u64 n, void* f) { ignore p; ignore sz; ignore n; ignore f; return 0; }
+    i32 fseek(void* stream, i64 off, i32 whence) {
+        if stream == null { return 0 - 1; }
+        __rl_file* f = cast(__rl_file*, stream);
+        if whence == 0 { f.pos = off; }                  // SEEK_SET
+        else if whence == 1 { f.pos = f.pos + off; }     // SEEK_CUR
+        else if whence == 2 { f.pos = f.size + off; }    // SEEK_END
+        return 0;
+    }
+    i64 ftell(void* stream) {
+        if stream == null { return 0 - 1; }
+        __rl_file* f = cast(__rl_file*, stream);
+        return f.pos;
+    }
+    i32 feof(void* stream) {
+        if stream == null { return 1; }
+        __rl_file* f = cast(__rl_file*, stream);
+        if f.pos >= f.size { return 1; }
+        return 0;
+    }
+    u8* fgets(u8* buf, i32 n, void* stream) {
+        if stream == null || n <= 0 { return null; }
+        __rl_file* f = cast(__rl_file*, stream);
+        if f.pos >= f.size { return null; }
+        i32 i = 0;
+        while i < n - 1 && f.pos < f.size {
+            u8 c = *(f.data + f.pos);
+            f.pos = f.pos + 1;
+            *(buf + i) = c;
+            i = i + 1;
+            if c == 10 { break; }
+        }
+        *(buf + i) = 0;
+        return buf;
+    }
+    i32 rename(u8* a, u8* b) { ignore a; ignore b; return 0 - 1; }
 }

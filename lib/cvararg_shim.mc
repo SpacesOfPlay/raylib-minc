@@ -1,9 +1,7 @@
-// Imports added on export so this module resolves standalone (LSP).
 import cstdlib_shim;
 
-// cvararg_shim — printf-family in pure minc. Used by TextFormat
-// and TraceLog. Supports %d %i %u %x %X %c %s %f %p %%, l/ll/z
-// length modifiers, field width, zero-pad, float precision.
+// printf-family formatting (%d %i %u %x %X %c %s %f %p %%) in pure minc.
+// Supports l/ll/z length modifiers, field width, zero-pad, float precision.
 
 i32 _vp(u8* buf, u64 cap, i32 pos, u8 c) {
     if pos >= 0 && cap > 0 && cast(u64, pos) < cap - 1 { *(buf + pos) = c; }
@@ -119,7 +117,6 @@ i32 __minc_vfmt(u8* buf, u64 cap, u8* fmt, &... ap) {
 }
 
 i32 vsnprintf(u8* buf, u64 size, u8* fmt, &... ap) { return __minc_vfmt(buf, size, fmt, ap); }
-// snprintf is minc-native (msvcrt.dll only ships _snprintf).
 i32 snprintf(u8* buf, u64 size, u8* fmt, ...) { return __minc_vfmt(buf, size, fmt, &...); }
 i32 vsprintf(u8* buf, u8* fmt, &... ap) { return __minc_vfmt(buf, cast(u64, 2147483647), fmt, ap); }
 i32 vprintf(u8* fmt, &... ap) {
@@ -127,4 +124,132 @@ i32 vprintf(u8* fmt, &... ap) {
     i32 n = __minc_vfmt(cast(u8*, &line), 1024, fmt, ap);
     puts(cast(u8*, &line));
     return n;
+}
+when os(wasm) {
+    // unbounded
+    i32 sprintf(u8* buf, u8* fmt, ...) { return __minc_vfmt(buf, cast(u64, 2147483647), fmt, &...); }
+    // printf / fprintf format into a scratch buffer and emit via the
+    // wasm `write` host import.
+    i32 printf(u8* fmt, ...) {
+        u8[1024] line;
+        i32 n = __minc_vfmt(cast(u8*, &line), 1024, fmt, &...);
+        write(1, cast(u8*, &line), n);
+        return n;
+    }
+    i32 fprintf(void* stream, u8* fmt, ...) {
+        ignore stream;
+        u8[1024] line;
+        i32 n = __minc_vfmt(cast(u8*, &line), 1024, fmt, &...);
+        write(2, cast(u8*, &line), n);
+        return n;
+    }
+    // sscanf sub-set: %i/%d/%u (decimal int), %f (float), %s
+    // (non-whitespace token), %[^c]/%[c] single-char scanset with optional
+    // width (e.g. %128[^"]), %% , literal chars, and whitespace-skips.
+    // no Hex/%x and multi-char scansets.
+    private bool __sc_ws(u8 c) { return c == 32 || c == 9 || c == 10 || c == 13 || c == 11 || c == 12; }
+    private f32 __sc_atof(u8* s, i32 len) {
+        f32 result = 0.0f;
+        f32 sign = 1.0f;
+        i32 i = 0;
+        if i < len && *(s + i) == 45 { sign = 0.0f - 1.0f; i = i + 1; }
+        else if i < len && *(s + i) == 43 { i = i + 1; }
+        while i < len && *(s + i) >= 48 && *(s + i) <= 57 {
+            result = result * 10.0f + cast(f32, *(s + i) - 48);
+            i = i + 1;
+        }
+        if i < len && *(s + i) == 46 {
+            i = i + 1;
+            f32 frac = 0.1f;
+            while i < len && *(s + i) >= 48 && *(s + i) <= 57 {
+                result = result + cast(f32, *(s + i) - 48) * frac;
+                frac = frac * 0.1f;
+                i = i + 1;
+            }
+        }
+        return result * sign;
+    }
+
+    i32 __minc_vsscanf(u8* s, u8* fmt, &... ap) {
+        i32 si = 0;
+        i32 fi = 0;
+        i32 count = 0;
+        while *(fmt + fi) != 0 {
+            u8 fc = *(fmt + fi);
+            if __sc_ws(fc) {
+                while __sc_ws(*(s + si)) { si = si + 1; }
+                fi = fi + 1;
+            } else if fc != 37 {
+                if *(s + si) != fc { break; }
+                si = si + 1;
+                fi = fi + 1;
+            } else {
+                fi = fi + 1;                 // past '%'
+                i32 width = 0;
+                bool hasWidth = false;
+                while *(fmt + fi) >= 48 && *(fmt + fi) <= 57 {
+                    width = width * 10 + cast(i32, *(fmt + fi) - 48);
+                    hasWidth = true;
+                    fi = fi + 1;
+                }
+                u8 conv = *(fmt + fi);
+                fi = fi + 1;
+                if conv == 105 || conv == 100 || conv == 117 {   // %i %d %u
+                    while __sc_ws(*(s + si)) { si = si + 1; }
+                    i64 sign = 1;
+                    if *(s + si) == 45 { sign = 0 - 1; si = si + 1; }
+                    else if *(s + si) == 43 { si = si + 1; }
+                    bool any = false;
+                    i64 v = 0;
+                    while *(s + si) >= 48 && *(s + si) <= 57 {
+                        v = v * 10 + cast(i64, *(s + si) - 48);
+                        si = si + 1;
+                        any = true;
+                    }
+                    if !any { break; }
+                    i32* out = cast(i32*, arg_read_ptr(ap));
+                    *out = cast(i32, v * sign);
+                    count = count + 1;
+                } else if conv == 102 {                          // %f
+                    while __sc_ws(*(s + si)) { si = si + 1; }
+                    i32 start = si;
+                    if *(s + si) == 45 || *(s + si) == 43 { si = si + 1; }
+                    while (*(s + si) >= 48 && *(s + si) <= 57) || *(s + si) == 46 { si = si + 1; }
+                    if si == start { break; }
+                    f32* out = cast(f32*, arg_read_ptr(ap));
+                    *out = __sc_atof(s + start, si - start);
+                    count = count + 1;
+                } else if conv == 115 {                          // %s
+                    while __sc_ws(*(s + si)) { si = si + 1; }
+                    u8* out = cast(u8*, arg_read_ptr(ap));
+                    i32 n = 0;
+                    while *(s + si) != 0 && !__sc_ws(*(s + si)) && (!hasWidth || n < width - 1) {
+                        *(out + n) = *(s + si); n = n + 1; si = si + 1;
+                    }
+                    *(out + n) = 0;
+                    count = count + 1;
+                } else if conv == 91 {                           // %[set]
+                    bool negate = false;
+                    if *(fmt + fi) == 94 { negate = true; fi = fi + 1; }   // '^'
+                    u8 setc = *(fmt + fi);                                  // single-char set
+                    while *(fmt + fi) != 0 && *(fmt + fi) != 93 { fi = fi + 1; }  // to ']'
+                    if *(fmt + fi) == 93 { fi = fi + 1; }
+                    u8* out = cast(u8*, arg_read_ptr(ap));
+                    i32 n = 0;
+                    while *(s + si) != 0 && (!hasWidth || n < width - 1) {
+                        bool inset = *(s + si) == setc;
+                        if negate && inset { break; }
+                        if !negate && !inset { break; }
+                        *(out + n) = *(s + si); n = n + 1; si = si + 1;
+                    }
+                    *(out + n) = 0;
+                    count = count + 1;
+                } else if conv == 37 {                           // %%
+                    if *(s + si) == 37 { si = si + 1; }
+                }
+            }
+        }
+        return count;
+    }
+    i32 sscanf(u8* s, u8* fmt, ...) { return __minc_vsscanf(s, fmt, &...); }
 }

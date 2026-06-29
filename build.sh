@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
-# build.sh — build (and run) a raylib-minc example on Linux/macOS.
+# build.sh — build (and run) a raylib-minc example on Linux/macOS, native or web.
 #
 # Usage:
-#   ./build.sh                          # build + run examples/core/core_basic_window.mc
-#   ./build.sh <path-to-main.mc>        # build + run any .mc file
+#   ./build.sh                          # build + run examples/core/core_basic_window.mc (native)
+#   ./build.sh <path-to-main.mc>        # build + run any .mc file (native)
 #   ./build.sh <path-to-main.mc> --no-run  # just compile, don't run
+#   ./build.sh wasm <path-to-main.mc>   # build + serve in the browser (WebAssembly)
+#   ./build.sh wasm <path-to-main.mc> --no-run   # serve, don't auto-open the browser
 #
 # Your `.mc` file just writes:
 #
@@ -15,8 +17,13 @@
 # next to a `resources/` subdir, that subdir is mirrored into
 # `build/` so relative `LoadImage("resources/...")` calls resolve.
 # GLFW resolves from the system package (`libglfw.so.3` / `libglfw.3.dylib`).
+# Uses the minc in tools/minc/ (run ./tools/get_minc.sh) — no PATH needed.
 
 set -e
+
+# `wasm` subcommand: `./build.sh wasm <example.mc>` → shift it off.
+wasm=0
+if [ "${1:-}" = "wasm" ]; then wasm=1; shift; fi
 
 src="${1:-}"
 no_run=0
@@ -81,6 +88,35 @@ if [ -z "$minc" ]; then
     echo "" >&2
     echo "See README.md (Prerequisites) and LICENSE.md (minc is separately licensed)." >&2
     exit 1
+fi
+
+# Web target: hand off to `minc run --target wasm`, which compiles the
+# example, stages the JS host + HTML harness (declared by
+# lib/rcore_wasm_app.mc), serves them, and opens the browser. Run from the
+# dist root so `import raylib;` and the @wasm_host files (in lib/) resolve.
+# No GLFW needed. --no-run serves without auto-opening (--no-browser).
+if [ "$wasm" -eq 1 ]; then
+    echo "building + serving $name for the web (wasm)..."
+    webdir="$root/build/web"
+    rm -rf "$webdir"; mkdir -p "$webdir"
+    # Stage the example's resources/ into the served dir + write an
+    # assets.json manifest the harness preloads into the VFS (so the wasm
+    # side's LoadImage/LoadFont("resources/...") resolve in the browser).
+    if [ -d "$src_dir/resources" ]; then
+        cp -r "$src_dir/resources" "$webdir/resources"
+        ( cd "$src_dir" && find resources -type f | sed 's#\\#/#g' | LC_ALL=C sort ) | \
+            awk 'BEGIN{printf "["} {printf "%s\"%s\"",(NR>1?",":""),$0} END{printf "]"}' > "$webdir/assets.json"
+    fi
+    # minc run --target wasm serves the -o directory as the web root and
+    # stages the JS host + harness (index.html) into it; our pre-staged
+    # resources/ + assets.json sit alongside. Run from $root so
+    # `import raylib;` + the @wasm_host files (lib/) resolve.
+    cd "$root"
+    if [ "$no_run" -eq 1 ]; then
+        exec "$minc" run "$main_mc" --target wasm -o "$webdir/$name.wasm" --no-browser
+    else
+        exec "$minc" run "$main_mc" --target wasm -o "$webdir/$name.wasm"
+    fi
 fi
 
 # Confirm GLFW is installed via the system package manager.

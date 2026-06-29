@@ -1,4 +1,3 @@
-// Imports added on export so this module resolves standalone (LSP).
 import raylib;
 import cstdlib_shim;
 
@@ -54,6 +53,10 @@ when os(windows) {
     type c_long = i32;
     type c_ulong = u32;
     type c_wchar = u16;
+} else when os(wasm) {
+    type c_long = i32;
+    type c_ulong = u32;
+    type c_wchar = u32;
 } else {
     type c_long = i64;
     type c_ulong = u64;
@@ -2567,12 +2570,12 @@ i32 GuiColorBarAlpha(Rectangle bounds, u8* text, f32* alpha) {
         for i32 x = 0; x < checksX; x++ {
             for i32 y = 0; y < checksY; y++ {
                 var check = Rectangle{bounds.x + cast(f32, x * 10), bounds.y + cast(f32, y * 10), 10.0f, 10.0f};
-                GuiDrawRectangle(check, 0, Color{}, (x + y) % 2 != 0 ? Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER_COLOR_DISABLED))), 0.400000f) : Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BASE_COLOR_DISABLED))), 0.400000f));
+                GuiDrawRectangle(check, 0, Color{}, (x + y) % 2 != 0 ? Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER_COLOR_DISABLED))), 0.4f) : Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BASE_COLOR_DISABLED))), 0.4f));
             }
         }
         DrawRectangleGradientEx(bounds, Color{255, 255, 255, 0}, Color{255, 255, 255, 0}, Fade(Color{0, 0, 0, 255}, guiAlpha), Fade(Color{0, 0, 0, 255}, guiAlpha));
     } else {
-        DrawRectangleGradientEx(bounds, Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BASE_COLOR_DISABLED))), 0.100000f), Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BASE_COLOR_DISABLED))), 0.100000f), Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER_COLOR_DISABLED))), guiAlpha), Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER_COLOR_DISABLED))), guiAlpha));
+        DrawRectangleGradientEx(bounds, Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BASE_COLOR_DISABLED))), 0.1f), Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BASE_COLOR_DISABLED))), 0.1f), Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER_COLOR_DISABLED))), guiAlpha), Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER_COLOR_DISABLED))), guiAlpha));
     }
     GuiDrawRectangle(bounds, GuiGetStyle(COLORPICKER, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER + state * 3))), Color{});
     GuiDrawRectangle(selector, 0, Color{}, GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER + state * 3))));
@@ -2631,7 +2634,7 @@ i32 GuiColorBarHue(Rectangle bounds, u8* text, f32* hue) {
         DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y + 4.0f * (bounds.height / 6.0f)), cast(i32, bounds.width), cast(i32, ceilf(bounds.height / 6.0f)), Fade(Color{0, 0, 255, 255}, guiAlpha), Fade(Color{255, 0, 255, 255}, guiAlpha));
         DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y + 5.0f * (bounds.height / 6.0f)), cast(i32, bounds.width), cast(i32, bounds.height / 6.0f), Fade(Color{255, 0, 255, 255}, guiAlpha), Fade(Color{255, 0, 0, 255}, guiAlpha));
     } else {
-        DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y), cast(i32, bounds.width), cast(i32, bounds.height), Fade(Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BASE_COLOR_DISABLED))), 0.100000f), guiAlpha), Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER_COLOR_DISABLED))), guiAlpha));
+        DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y), cast(i32, bounds.width), cast(i32, bounds.height), Fade(Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BASE_COLOR_DISABLED))), 0.1f), guiAlpha), Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER_COLOR_DISABLED))), guiAlpha));
     }
     GuiDrawRectangle(bounds, GuiGetStyle(COLORPICKER, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER + state * 3))), Color{});
     GuiDrawRectangle(selector, 0, Color{}, GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER + state * 3))));
@@ -2740,7 +2743,7 @@ i32 GuiColorPanelHSV(Rectangle bounds, u8* text, Vector3* colorHsv) {
         var selector = Rectangle{pickerSelector.x - cast(f32, GuiGetStyle(COLORPICKER, COLOR_SELECTOR_SIZE) / 2), pickerSelector.y - cast(f32, GuiGetStyle(COLORPICKER, COLOR_SELECTOR_SIZE) / 2), cast(f32, GuiGetStyle(COLORPICKER, COLOR_SELECTOR_SIZE)), cast(f32, GuiGetStyle(COLORPICKER, COLOR_SELECTOR_SIZE))};
         GuiDrawRectangle(selector, 0, Color{}, colWhite);
     } else {
-        DrawRectangleGradientEx(bounds, Fade(Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BASE_COLOR_DISABLED))), 0.100000f), guiAlpha), Fade(Fade(colBlack, 0.600000f), guiAlpha), Fade(Fade(colBlack, 0.600000f), guiAlpha), Fade(Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER_COLOR_DISABLED))), 0.600000f), guiAlpha));
+        DrawRectangleGradientEx(bounds, Fade(Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BASE_COLOR_DISABLED))), 0.1f), guiAlpha), Fade(Fade(colBlack, 0.6000000000000001f), guiAlpha), Fade(Fade(colBlack, 0.6000000000000001f), guiAlpha), Fade(Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER_COLOR_DISABLED))), 0.6000000000000001f), guiAlpha));
     }
     GuiDrawRectangle(bounds, GuiGetStyle(COLORPICKER, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER + state * 3))), Color{});
     return result;
@@ -2872,11 +2875,11 @@ i32 GuiGrid(Rectangle bounds, u8* text, f32 spacing, i32 subdivs, Vector2* mouse
     if subdivs > 0 {
         for i32 i = 0; i < linesV; i++ {
             var lineV = Rectangle{bounds.x + spacing * cast(f32, i) / cast(f32, subdivs), bounds.y, 1.0f, bounds.height + 1.0f};
-            GuiDrawRectangle(lineV, 0, Color{}, i % subdivs == 0 ? GuiFade(GetColor(cast(u32, color)), 0.150000f * 4.0f) : GuiFade(GetColor(cast(u32, color)), 0.150000f));
+            GuiDrawRectangle(lineV, 0, Color{}, i % subdivs == 0 ? GuiFade(GetColor(cast(u32, color)), 0.15f * 4.0f) : GuiFade(GetColor(cast(u32, color)), 0.15f));
         }
         for i32 i = 0; i < linesH; i++ {
             var lineH = Rectangle{bounds.x, bounds.y + spacing * cast(f32, i) / cast(f32, subdivs), bounds.width + 1.0f, 1.0f};
-            GuiDrawRectangle(lineH, 0, Color{}, i % subdivs == 0 ? GuiFade(GetColor(cast(u32, color)), 0.150000f * 4.0f) : GuiFade(GetColor(cast(u32, color)), 0.150000f));
+            GuiDrawRectangle(lineH, 0, Color{}, i % subdivs == 0 ? GuiFade(GetColor(cast(u32, color)), 0.15f * 4.0f) : GuiFade(GetColor(cast(u32, color)), 0.15f));
         }
     }
     if mouseCell != null {
@@ -3302,7 +3305,7 @@ u8** GuiLoadIconsFromMemory(u8* fileData, i32 dataSize, bool loadIconsName) {
             fileDataPtr += iconCount * 32;
         }
         i32 iconDataSize = iconCount * (cast(i32, iconSize) * cast(i32, iconSize) / 32) * cast(i32, sizeof(u32));
-        guiIconsPtr = cast(u32*, calloc(cast(u64, iconDataSize), cast(u64, 1)));
+        guiIconsPtr = cast(u32*, new(u8[iconDataSize]));
         memcpy(guiIconsPtr, fileDataPtr, cast(u64, iconDataSize));
     }
     return guiIconsName;
@@ -3710,7 +3713,7 @@ Vector3 ConvertRGBtoHSV(Vector3 rgb) {
     max = max > rgb.z ? max : rgb.z;
     hsv.z = max;
     delta = max - min;
-    if delta < 0.000010f {
+    if delta < 1.0e-5f {
         hsv.y = 0.0f;
         hsv.x = 0.0f;
         return hsv;

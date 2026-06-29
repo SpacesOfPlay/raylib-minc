@@ -1,96 +1,115 @@
 import raylib;
 
-i32 main() {
-    // Initialization
+private {
     const i32 screenWidth = 800;
     const i32 screenHeight = 450;
-
-    InitWindow(screenWidth, screenHeight, "raylib [text] example - rectangle bounds");
 
     u8* text = "Text cannot escape\tthis container\t...word wrap also works when active so here's a long text for testing.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nec ullamcorper sit amet risus nullam eget felis eget.";
 
     bool resizing = false;
     bool wordWrap = true;
 
-    Rectangle container = Rectangle{ 25.0f, 25.0f, cast(f32, screenWidth) - 50.0f, cast(f32, screenHeight) - 250.0f };
-    Rectangle resizer = Rectangle{ container.x + container.width - 17.0f, container.y + container.height - 17.0f, 14.0f, 14.0f };
+    Rectangle container;
+    Rectangle resizer;
 
     // Minimum width and height for the container rectangle
     const f32 minWidth = 60.0f;
     const f32 minHeight = 60.0f;
-    const f32 maxWidth = cast(f32, screenWidth) - 50.0f;
-    const f32 maxHeight = cast(f32, screenHeight) - 160.0f;
+    f32 maxWidth;
+    f32 maxHeight;
 
     Vector2 lastMouse = Vector2{ 0.0f, 0.0f }; // Stores last mouse coordinates
-    Color borderColor = MAROON;                // Container border color
-    Font font = GetFontDefault();              // Get default system font
+    Color borderColor;                         // Container border color
+    Font font;                                 // Default system font (assigned in main)
+}
+
+void UpdateDrawFrame() {
+    // Update
+    if IsKeyPressed(KEY_SPACE) { wordWrap = !wordWrap; }
+
+    Vector2 mouse = GetMousePosition();
+
+    // Check if the mouse is inside the container and toggle border color
+    if CheckCollisionPointRec(mouse, container) { borderColor = Fade(MAROON, 0.4f); }
+    else if !resizing { borderColor = MAROON; }
+
+    // Container resizing logic
+    if resizing {
+        if IsMouseButtonReleased(MOUSE_BUTTON_LEFT) { resizing = false; }
+
+        f32 width = container.width + (mouse.x - lastMouse.x);
+        if width > minWidth {
+            if width < maxWidth { container.width = width; } else { container.width = maxWidth; }
+        } else { container.width = minWidth; }
+
+        f32 height = container.height + (mouse.y - lastMouse.y);
+        if height > minHeight {
+            if height < maxHeight { container.height = height; } else { container.height = maxHeight; }
+        } else { container.height = minHeight; }
+    } else {
+        // Check if we're resizing
+        if IsMouseButtonDown(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(mouse, resizer) { resizing = true; }
+    }
+
+    // Move resizer rectangle properly
+    resizer.x = container.x + container.width - 17.0f;
+    resizer.y = container.y + container.height - 17.0f;
+
+    lastMouse = mouse; // Update mouse
+
+    // Draw
+    BeginDrawing();
+
+        ClearBackground(RAYWHITE);
+
+        DrawRectangleLinesEx(container, 3.0f, borderColor);    // Draw container border
+
+        // Draw text in container (add some padding)
+        DrawTextBoxed(font, text, Rectangle{ container.x + 4.0f, container.y + 4.0f, container.width - 4.0f, container.height - 4.0f }, 20.0f, 2.0f, wordWrap, GRAY);
+
+        DrawRectangleRec(resizer, borderColor);                // Draw the resize box
+
+        // Draw bottom info
+        DrawRectangle(0, screenHeight - 54, screenWidth, 54, GRAY);
+        DrawRectangleRec(Rectangle{ 382.0f, cast(f32, screenHeight) - 34.0f, 12.0f, 12.0f }, MAROON);
+
+        DrawText("Word Wrap: ", 313, screenHeight - 115, 20, BLACK);
+        if wordWrap { DrawText("ON", 447, screenHeight - 115, 20, RED); }
+        else { DrawText("OFF", 447, screenHeight - 115, 20, BLACK); }
+
+        DrawText("Press [SPACE] to toggle word wrap", 218, screenHeight - 86, 20, GRAY);
+
+        DrawText("Click hold & drag the    to resize the container", 155, screenHeight - 38, 20, RAYWHITE);
+
+    EndDrawing();
+}
+
+i32 main() {
+    // Initialization
+    InitWindow(screenWidth, screenHeight, "raylib [text] example - rectangle bounds");
+
+    container = Rectangle{ 25.0f, 25.0f, cast(f32, screenWidth) - 50.0f, cast(f32, screenHeight) - 250.0f };
+    resizer = Rectangle{ container.x + container.width - 17.0f, container.y + container.height - 17.0f, 14.0f, 14.0f };
+
+    maxWidth = cast(f32, screenWidth) - 50.0f;
+    maxHeight = cast(f32, screenHeight) - 160.0f;
+
+    borderColor = MAROON;                      // Container border color
+
+    font = GetFontDefault();                   // Get default system font
 
     SetTargetFPS(60);                          // Set our game to run at 60 frames-per-second
 
-    // Main game loop
-    while !WindowShouldClose() {               // Detect window close button or ESC key
-        // Update
-        if IsKeyPressed(KEY_SPACE) { wordWrap = !wordWrap; }
-
-        Vector2 mouse = GetMousePosition();
-
-        // Check if the mouse is inside the container and toggle border color
-        if CheckCollisionPointRec(mouse, container) { borderColor = Fade(MAROON, 0.4f); }
-        else if !resizing { borderColor = MAROON; }
-
-        // Container resizing logic
-        if resizing {
-            if IsMouseButtonReleased(MOUSE_BUTTON_LEFT) { resizing = false; }
-
-            f32 width = container.width + (mouse.x - lastMouse.x);
-            if width > minWidth {
-                if width < maxWidth { container.width = width; } else { container.width = maxWidth; }
-            } else { container.width = minWidth; }
-
-            f32 height = container.height + (mouse.y - lastMouse.y);
-            if height > minHeight {
-                if height < maxHeight { container.height = height; } else { container.height = maxHeight; }
-            } else { container.height = minHeight; }
-        } else {
-            // Check if we're resizing
-            if IsMouseButtonDown(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(mouse, resizer) { resizing = true; }
+    when os(wasm) {
+        rl_web_set_main_loop(UpdateDrawFrame);
+    } else {
+        // Main game loop
+        while !WindowShouldClose() {           // Detect window close button or ESC key
+            UpdateDrawFrame();
         }
-
-        // Move resizer rectangle properly
-        resizer.x = container.x + container.width - 17.0f;
-        resizer.y = container.y + container.height - 17.0f;
-
-        lastMouse = mouse; // Update mouse
-
-        // Draw
-        BeginDrawing();
-
-            ClearBackground(RAYWHITE);
-
-            DrawRectangleLinesEx(container, 3.0f, borderColor);    // Draw container border
-
-            // Draw text in container (add some padding)
-            DrawTextBoxed(font, text, Rectangle{ container.x + 4.0f, container.y + 4.0f, container.width - 4.0f, container.height - 4.0f }, 20.0f, 2.0f, wordWrap, GRAY);
-
-            DrawRectangleRec(resizer, borderColor);                // Draw the resize box
-
-            // Draw bottom info
-            DrawRectangle(0, screenHeight - 54, screenWidth, 54, GRAY);
-            DrawRectangleRec(Rectangle{ 382.0f, cast(f32, screenHeight) - 34.0f, 12.0f, 12.0f }, MAROON);
-
-            DrawText("Word Wrap: ", 313, screenHeight - 115, 20, BLACK);
-            if wordWrap { DrawText("ON", 447, screenHeight - 115, 20, RED); }
-            else { DrawText("OFF", 447, screenHeight - 115, 20, BLACK); }
-
-            DrawText("Press [SPACE] to toggle word wrap", 218, screenHeight - 86, 20, GRAY);
-
-            DrawText("Click hold & drag the    to resize the container", 155, screenHeight - 38, 20, RAYWHITE);
-
-        EndDrawing();
+        // De-Initialization
+        CloseWindow();        // Close window and OpenGL context
     }
-
-    // De-Initialization
-    CloseWindow();        // Close window and OpenGL context
     return 0;
 }
 

@@ -96,10 +96,10 @@ void DrawContent(Vector2 position, Vector2 scroll) {
     GuiLabel(Rectangle{ position.x + 20.0f + scroll.x, position.y + 300.0f + scroll.y, 250.0f, 25.0f }, "Yet Another Label");
 }
 
-i32 main() {
-    InitWindow(960, 560, "raygui - floating window example");
-    SetTargetFPS(60);
-
+// Window state (hoisted to module scope so UpdateDrawFrame can see it).
+// NOTE: these windows drag inside the canvas (SetWindowPosition is not used
+// here — movement is a GUI-internal pan), so they work fine on the web.
+private {
     Vector2 window1Position = Vector2{ 10.0f, 10.0f };
     Vector2 window1Size = Vector2{ 200.0f, 400.0f };
     bool minimized1 = false;
@@ -113,15 +113,25 @@ i32 main() {
     bool moving2 = false;
     bool resizing2 = false;
     Vector2 scroll2 = Vector2{};
+}
 
-    while !WindowShouldClose() {
-        BeginDrawing();
-            ClearBackground(DARKGREEN);
-            GuiWindowFloating(&window1Position, &window1Size, &minimized1, &moving1, &resizing1, DrawContent, Vector2{ 140.0f, 320.0f }, &scroll1, "Movable & Scalable Window");
-            GuiWindowFloating(&window2Position, &window2Size, &minimized2, &moving2, &resizing2, DrawContent, Vector2{ 140.0f, 320.0f }, &scroll2, "Another window");
-        EndDrawing();
+void UpdateDrawFrame() {
+    BeginDrawing();
+        ClearBackground(DARKGREEN);
+        GuiWindowFloating(&window1Position, &window1Size, &minimized1, &moving1, &resizing1, DrawContent, Vector2{ 140.0f, 320.0f }, &scroll1, "Movable & Scalable Window");
+        GuiWindowFloating(&window2Position, &window2Size, &minimized2, &moving2, &resizing2, DrawContent, Vector2{ 140.0f, 320.0f }, &scroll2, "Another window");
+    EndDrawing();
+}
+
+i32 main() {
+    InitWindow(960, 560, "raygui - floating window example");
+    SetTargetFPS(60);
+
+    when os(wasm) {
+        rl_web_set_main_loop(UpdateDrawFrame);
+    } else {
+        while !WindowShouldClose() { UpdateDrawFrame(); }
+        CloseWindow();
     }
-
-    CloseWindow();
     return 0;
 }

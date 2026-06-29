@@ -1,5 +1,4 @@
-// Imports added on export so this module resolves standalone (LSP).
-import raylib_lib;
+when os(wasm) { import raylib_wasm_lib; } else { import raylib_lib; }
 
 // raylib_constants.mc — named colors + math constants.
 // raylib.h defines these as object-like macros; the transpile

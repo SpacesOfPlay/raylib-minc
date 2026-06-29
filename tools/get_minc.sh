@@ -17,10 +17,10 @@
 
 set -e
 
-MINC_VERSION='0.9.5'
-MINC_SHA256_LINUX_X64='d7b995e63d9e8c22ed6173a5358506cfbf1a91b7e7ed3aec6e9e4bcf3a1e06c5'
-MINC_SHA256_LINUX_ARM64='41a48e9869ef2c7ad294ce6aa6b614038972ab80ed61315ae68880dde52de4d8'
-MINC_SHA256_MACOS_ARM64='d93a34aac948d5946c09b982576a813fd4830373107080a123224964fb448eb5'
+MINC_VERSION='0.9.8'
+MINC_SHA256_LINUX_X64='ed7cc5af7068254ec059acacd127de7c2fadd90ef487041fffae6902bb3b7e90'
+MINC_SHA256_LINUX_ARM64='5e881fa6d6b019cc45be7f1ff2cbf4ed6c164620ce6220fbb0546cf88bf6f3da'
+MINC_SHA256_MACOS_ARM64='86c0709ccefaf6f32097478d7ef3569b3943dac0ee7b6f42db19a53461f0dfba'
 
 uname_s="$(uname -s)"
 uname_m="$(uname -m)"
@@ -39,9 +39,16 @@ dst_dir="$here/minc"
 minc_bin="$dst_dir/minc"
 
 if [ -x "$minc_bin" ]; then
-    echo "minc already installed at $minc_bin — skipping download."
-    echo "(delete tools/minc/ to force a re-fetch.)"
-    exit 0
+    # Verify the installed binary matches the pinned version — otherwise a
+    # `git pull` that bumps the pin would never take effect (the old minc
+    # would be kept). `minc --version` prints "minc <ver>" on stderr (hence 2>&1).
+    installed_ver="$("$minc_bin" --version 2>&1 | head -1 | awk '{print $NF}')"
+    if [ "$installed_ver" = "$MINC_VERSION" ]; then
+        echo "minc v$MINC_VERSION already installed at $minc_bin — skipping download."
+        echo "(delete tools/minc/ to force a re-fetch.)"
+        exit 0
+    fi
+    echo "Installed minc version '$installed_ver' does not match pinned v$MINC_VERSION — re-fetching."
 fi
 
 echo "minc compiler is closed-source proprietary software from"

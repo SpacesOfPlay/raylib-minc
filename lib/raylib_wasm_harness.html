@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>raylib — minc wasm</title>
+<style>
+  body { background: #222; color: #ddd; font-family: system-ui, sans-serif;
+         display: flex; flex-direction: column; align-items: center; gap: 1em;
+         padding: 2em; margin: 0; min-height: 100vh; box-sizing: border-box; }
+  #hdr { font-size: 13px; color: #8a8a8a; }
+  /* Canvas shown at its native drawing-buffer size (1:1) so text stays
+     crisp; the host sizes the buffer to raylib's render size after init. */
+  #canvas { background: #000; border: 1px solid #444; outline: none; display: block; }
+</style>
+</head>
+<body>
+  <div id="hdr">raylib — loading…</div>
+  <canvas id="canvas"></canvas>
+<script src="raylib_wasm_host.js"></script>
+<script>
+const app = (new URLSearchParams(location.search)).get('app');
+const hdr = document.getElementById('hdr');
+if (!app || !/^[a-zA-Z0-9_-]+$/.test(app)) {
+    hdr.textContent = 'ERROR: missing or invalid ?app=<name> in URL';
+} else {
+    document.title = app + ' — raylib wasm';
+    hdr.textContent = app + ' — raylib (minc/wasm)';
+    // Files the wasm side open()s at runtime are preloaded into the host
+    // VFS before run() (RPW4). The list comes from an optional `assets.json`
+    // (a JSON array of paths like "resources/foo.png") that the build step
+    // writes next to this page when the example has a resources/ dir. An
+    // asset-free example simply has no assets.json (the fetch 404s and is
+    // ignored). You can also hard-code paths in the fallback array below.
+    (async () => {
+        let assets = [];
+        try {
+            const r = await fetch('assets.json');
+            if (r.ok) assets = await r.json();
+        } catch (e) { /* no manifest — fine */ }
+        try {
+            await window.raylibWasm.preloadAssets(assets);
+            await window.raylibWasm.run(app + '.wasm');
+        } catch (e) {
+            hdr.textContent = 'ERROR: ' + (e.stack || e.message || e);
+        }
+    })();
+}
+</script>
+</body>
+</html>

@@ -1,6 +1,44 @@
 import raylib;
 import raygui;
 
+// Control state (hoisted to module scope so UpdateDrawFrame can see it).
+private {
+    Rectangle panelRec = Rectangle{ 20.0f, 40.0f, 200.0f, 150.0f };
+    Rectangle panelContentRec = Rectangle{ 0.0f, 0.0f, 340.0f, 340.0f };
+    Rectangle panelView = Rectangle{};
+    Vector2 panelScroll = Vector2{ 99.0f, -20.0f };
+
+    bool showContentArea = true;
+}
+
+void UpdateDrawFrame() {
+    // Draw
+    BeginDrawing();
+
+        ClearBackground(RAYWHITE);
+
+        DrawText(TextFormat("[%f, %f]", panelScroll.x, panelScroll.y), 4, 4, 20, RED);
+
+        GuiScrollPanel(panelRec, null, panelContentRec, &panelScroll, &panelView);
+
+        BeginScissorMode(cast(i32, panelView.x), cast(i32, panelView.y), cast(i32, panelView.width), cast(i32, panelView.height));
+            GuiGrid(Rectangle{ panelRec.x + panelScroll.x, panelRec.y + panelScroll.y, panelContentRec.width, panelContentRec.height }, null, 16.0f, 3, null);
+        EndScissorMode();
+
+        if showContentArea {
+            DrawRectangle(cast(i32, panelRec.x + panelScroll.x), cast(i32, panelRec.y + panelScroll.y), cast(i32, panelContentRec.width), cast(i32, panelContentRec.height), Fade(RED, 0.1f));
+        }
+
+        DrawStyleEditControls();
+
+        GuiCheckBox(Rectangle{ 565.0f, 80.0f, 20.0f, 20.0f }, "SHOW CONTENT AREA", &showContentArea);
+
+        GuiSliderBar(Rectangle{ 590.0f, 385.0f, 145.0f, 15.0f }, "WIDTH", TextFormat("%i", cast(i32, panelContentRec.width)), &panelContentRec.width, 1.0f, 600.0f);
+        GuiSliderBar(Rectangle{ 590.0f, 410.0f, 145.0f, 15.0f }, "HEIGHT", TextFormat("%i", cast(i32, panelContentRec.height)), &panelContentRec.height, 1.0f, 400.0f);
+
+    EndDrawing();
+}
+
 i32 main() {
     // Initialization
     const i32 screenWidth = 800;
@@ -8,46 +46,17 @@ i32 main() {
 
     InitWindow(screenWidth, screenHeight, "raygui - GuiScrollPanel()");
 
-    Rectangle panelRec = Rectangle{ 20.0f, 40.0f, 200.0f, 150.0f };
-    Rectangle panelContentRec = Rectangle{ 0.0f, 0.0f, 340.0f, 340.0f };
-    Rectangle panelView = Rectangle{};
-    Vector2 panelScroll = Vector2{ 99.0f, -20.0f };
-
-    bool showContentArea = true;
-
     SetTargetFPS(60);
 
-    // Main game loop
-    while !WindowShouldClose() {
-        // Draw
-        BeginDrawing();
+    when os(wasm) {
+        rl_web_set_main_loop(UpdateDrawFrame);
+    } else {
+        // Main game loop
+        while !WindowShouldClose() { UpdateDrawFrame(); }
 
-            ClearBackground(RAYWHITE);
-
-            DrawText(TextFormat("[%f, %f]", panelScroll.x, panelScroll.y), 4, 4, 20, RED);
-
-            GuiScrollPanel(panelRec, null, panelContentRec, &panelScroll, &panelView);
-
-            BeginScissorMode(cast(i32, panelView.x), cast(i32, panelView.y), cast(i32, panelView.width), cast(i32, panelView.height));
-                GuiGrid(Rectangle{ panelRec.x + panelScroll.x, panelRec.y + panelScroll.y, panelContentRec.width, panelContentRec.height }, null, 16.0f, 3, null);
-            EndScissorMode();
-
-            if showContentArea {
-                DrawRectangle(cast(i32, panelRec.x + panelScroll.x), cast(i32, panelRec.y + panelScroll.y), cast(i32, panelContentRec.width), cast(i32, panelContentRec.height), Fade(RED, 0.1f));
-            }
-
-            DrawStyleEditControls();
-
-            GuiCheckBox(Rectangle{ 565.0f, 80.0f, 20.0f, 20.0f }, "SHOW CONTENT AREA", &showContentArea);
-
-            GuiSliderBar(Rectangle{ 590.0f, 385.0f, 145.0f, 15.0f }, "WIDTH", TextFormat("%i", cast(i32, panelContentRec.width)), &panelContentRec.width, 1.0f, 600.0f);
-            GuiSliderBar(Rectangle{ 590.0f, 410.0f, 145.0f, 15.0f }, "HEIGHT", TextFormat("%i", cast(i32, panelContentRec.height)), &panelContentRec.height, 1.0f, 400.0f);
-
-        EndDrawing();
+        // De-Initialization
+        CloseWindow();        // Close window and OpenGL context
     }
-
-    // De-Initialization
-    CloseWindow();        // Close window and OpenGL context
     return 0;
 }
 

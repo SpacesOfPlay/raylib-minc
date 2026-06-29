@@ -1,31 +1,13 @@
 import raylib;
 
-i32 main() {
-    // Initialization
-    const i32 screenWidth = 800;
-    const i32 screenHeight = 450;
-
-    // Possible window flags:
-    //   FLAG_VSYNC_HINT, FLAG_FULLSCREEN_MODE, FLAG_WINDOW_RESIZABLE,
-    //   FLAG_WINDOW_UNDECORATED, FLAG_WINDOW_TRANSPARENT, FLAG_WINDOW_HIDDEN,
-    //   FLAG_WINDOW_MINIMIZED, FLAG_WINDOW_MAXIMIZED, FLAG_WINDOW_UNFOCUSED,
-    //   FLAG_WINDOW_TOPMOST, FLAG_WINDOW_HIGHDPI, FLAG_WINDOW_ALWAYS_RUN,
-    //   FLAG_MSAA_4X_HINT
-
-    // Set configuration flags for window creation
-    //SetConfigFlags(FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT | FLAG_WINDOW_HIGHDPI);
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - window flags");
-
-    Vector2 ballPosition = Vector2{ cast(f32, GetScreenWidth()) / 2.0f, cast(f32, GetScreenHeight()) / 2.0f };
+private {
+    Vector2 ballPosition;
     Vector2 ballSpeed = Vector2{ 5.0f, 4.0f };
     f32 ballRadius = 20.0f;
-
     i32 framesCounter = 0;
+}
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-
-    // Main game loop
-    while !WindowShouldClose() {    // Detect window close button or ESC key
+void UpdateDrawFrame() {
         // Update
         if IsKeyPressed(KEY_F) { ToggleFullscreen(); }  // modifies window size when scaling!
 
@@ -145,9 +127,36 @@ i32 main() {
         else { DrawText("FLAG_MSAA_4X_HINT: off", 10, 380, 10, MAROON); }
 
         EndDrawing();
-    }
+}
 
-    // De-Initialization
-    CloseWindow();        // Close window and OpenGL context
+i32 main() {
+    when os(wasm) { SetConfigFlags(FLAG_WINDOW_HIGHDPI); }   // web: crisp shapes; native renders at native res (bitmap text stays crisp)
+    // Initialization
+    const i32 screenWidth = 800;
+    const i32 screenHeight = 450;
+
+    // Possible window flags:
+    //   FLAG_VSYNC_HINT, FLAG_FULLSCREEN_MODE, FLAG_WINDOW_RESIZABLE,
+    //   FLAG_WINDOW_UNDECORATED, FLAG_WINDOW_TRANSPARENT, FLAG_WINDOW_HIDDEN,
+    //   FLAG_WINDOW_MINIMIZED, FLAG_WINDOW_MAXIMIZED, FLAG_WINDOW_UNFOCUSED,
+    //   FLAG_WINDOW_TOPMOST, FLAG_WINDOW_HIGHDPI, FLAG_WINDOW_ALWAYS_RUN,
+    //   FLAG_MSAA_4X_HINT
+
+    // Set configuration flags for window creation
+    //SetConfigFlags(FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT | FLAG_WINDOW_HIGHDPI);
+    InitWindow(screenWidth, screenHeight, "raylib [core] example - window flags");
+
+    ballPosition = Vector2{ cast(f32, GetScreenWidth()) / 2.0f, cast(f32, GetScreenHeight()) / 2.0f };
+
+    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+
+    when os(wasm) {
+        rl_web_set_main_loop(UpdateDrawFrame);
+    } else {
+        // Main game loop
+        while !WindowShouldClose() { UpdateDrawFrame(); }   // Detect window close button or ESC key
+        // De-Initialization
+        CloseWindow();        // Close window and OpenGL context
+    }
     return 0;
 }

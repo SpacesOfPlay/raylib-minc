@@ -1,13 +1,15 @@
-# build.ps1 — build (and run) a raylib-minc example.
+# build.ps1 — build (and run) a raylib-minc example, native or web.
 #
 # Usage:
-#   ./build.ps1                          # build + run examples/core/core_basic_window.mc
-#   ./build.ps1 <path-to-main.mc>        # build + run any .mc file
+#   ./build.ps1                          # build + run examples/core/core_basic_window.mc (native)
+#   ./build.ps1 <path-to-main.mc>        # build + run any .mc file (native)
 #   ./build.ps1 <path-to-main.mc> -NoRun # just compile, don't run
+#   ./build.ps1 wasm <path-to-main.mc>   # build + serve in the browser (WebAssembly)
+#   ./build.ps1 wasm <path-to-main.mc> -NoRun   # serve, don't auto-open the browser
 #
 # Examples:
 #   ./build.ps1 examples/shapes/shapes_basic_shapes.mc
-#   ./build.ps1 my_game/main.mc
+#   ./build.ps1 wasm examples/core/core_basic_window.mc
 #
 # Your `.mc` file just writes:
 #
@@ -17,14 +19,22 @@
 # The binary is named after the .mc file's stem. If the .mc sits
 # next to a `resources/` subdir, that subdir is mirrored into
 # `build/` so relative `LoadImage("resources/...")` calls resolve.
+# Uses the minc in tools/minc/ (run ./tools/get_minc.ps1) — no PATH needed.
 
 param(
     [Parameter(Position=0)]
     [string]$Source,
+    [Parameter(Position=1)]
+    [string]$Arg2,
     [switch]$NoRun
 )
 
 $ErrorActionPreference = 'Stop'
+
+# `wasm` subcommand: `./build.ps1 wasm <example.mc>` → shift it off so
+# $Source becomes the example path.
+$wasm = $false
+if ($Source -eq 'wasm') { $wasm = $true; $Source = $Arg2 }
 
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 
@@ -83,6 +93,40 @@ if (-not $minc) {
     Write-Host ""
     Write-Host "See README.md (Prerequisites) and LICENSE.md (minc is separately licensed)."
     exit 1
+}
+
+# Web target: hand off to `minc run --target wasm`, which compiles the
+# example, stages the JS host + HTML harness (declared by
+# lib/rcore_wasm_app.mc), serves them, and opens the browser. Run from the
+# dist root so `import raylib;` and the @wasm_host files (in lib/) resolve.
+# No GLFW needed. -NoRun serves without auto-opening (--no-browser).
+if ($wasm) {
+    Write-Host "building + serving $name for the web (wasm)..."
+    $webDir = Join-Path $root 'build\web'
+    if (Test-Path $webDir) { Remove-Item -Recurse -Force $webDir }
+    New-Item -ItemType Directory -Path $webDir | Out-Null
+    # Stage the example's resources/ into the served dir + write an
+    # assets.json manifest the harness preloads into the VFS (so the wasm
+    # side's LoadImage/LoadFont("resources/...") resolve in the browser).
+    $resourcesSrc = Join-Path $srcDir 'resources'
+    if (Test-Path $resourcesSrc) {
+        Copy-Item -Path $resourcesSrc -Destination (Join-Path $webDir 'resources') -Recurse -Force
+        $assetList = Get-ChildItem $resourcesSrc -Recurse -File | ForEach-Object {
+            '"resources/' + $_.FullName.Substring($resourcesSrc.Length + 1).Replace('\', '/') + '"'
+        }
+        Set-Content -Path (Join-Path $webDir 'assets.json') -Value ('[' + ($assetList -join ',') + ']') -NoNewline
+    }
+    # minc run --target wasm serves the -o directory as the web root and
+    # stages the JS host + harness (index.html) into it; our pre-staged
+    # resources/ + assets.json sit alongside. Run from $root so
+    # `import raylib;` + the @wasm_host files (lib/) resolve.
+    Push-Location $root
+    try {
+        $runArgs = @('run', $mainMc, '--target', 'wasm', '-o', (Join-Path $webDir "$name.wasm"))
+        if ($NoRun) { $runArgs += '--no-browser' }
+        & $minc @runArgs
+        exit $LASTEXITCODE
+    } finally { Pop-Location }
 }
 
 $dll = Join-Path $root 'tools\glfw3.dll'

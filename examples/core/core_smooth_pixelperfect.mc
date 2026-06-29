@@ -1,37 +1,27 @@
 import raylib;
 
-i32 main() {
-    // Initialization
+private {
     const i32 screenWidth = 800;
     const i32 screenHeight = 450;
 
     const i32 virtualScreenWidth = 160;
     const i32 virtualScreenHeight = 90;
 
-    const f32 virtualRatio = cast(f32, screenWidth) / cast(f32, virtualScreenWidth);
+    f32 virtualRatio;   // = screenWidth / virtualScreenWidth (set in main)
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - smooth pixelperfect");
-
-    Camera2D worldSpaceCamera = Camera2D{};   // Game world camera
-    worldSpaceCamera.zoom = 1.0f;
-
-    Camera2D screenSpaceCamera = Camera2D{};   // Smoothing camera
-    screenSpaceCamera.zoom = 1.0f;
+    Camera2D worldSpaceCamera;    // Game world camera
+    Camera2D screenSpaceCamera;   // Smoothing camera
 
     // Render texture to draw all our objects into
-    RenderTexture2D target = LoadRenderTexture(virtualScreenWidth, virtualScreenHeight);
+    RenderTexture2D target;
 
     Rectangle rec01 = Rectangle{ 70.0f, 35.0f, 20.0f, 20.0f };
     Rectangle rec02 = Rectangle{ 90.0f, 55.0f, 30.0f, 10.0f };
     Rectangle rec03 = Rectangle{ 80.0f, 65.0f, 15.0f, 25.0f };
 
     // The target's height is flipped (negative source height) due to OpenGL
-    Rectangle sourceRec = Rectangle{ 0.0f, 0.0f,
-                                     cast(f32, target.texture.width),
-                                     -cast(f32, target.texture.height) };
-    Rectangle destRec = Rectangle{ (cast(f32, screenWidth) - cast(f32, screenWidth) / 1.25f) / 2.0f,
-                                   (cast(f32, screenHeight) - cast(f32, screenHeight) / 1.25f) / 2.0f,
-                                   cast(f32, screenWidth) / 1.25f, cast(f32, screenHeight) / 1.25f };
+    Rectangle sourceRec;
+    Rectangle destRec;
 
     Vector2 origin = Vector2{ 0.0f, 0.0f };
 
@@ -42,11 +32,9 @@ i32 main() {
 
     bool smoothOn = true;
     bool overscan = false;
+}
 
-    SetTargetFPS(60);
-
-    // Main game loop
-    while !WindowShouldClose() {
+void UpdateDrawFrame() {
         // Update
         rotation += 60.0f * GetFrameTime();   // 60 degrees per second
 
@@ -106,11 +94,41 @@ i32 main() {
             DrawText(TextFormat("Overscan: %s", overscan ? "ON" : "OFF"), 10, screenHeight - 30, 20, RED);
             DrawFPS(GetScreenWidth() - 95, 10);
         EndDrawing();
+}
+
+i32 main() {
+    // Initialization
+    virtualRatio = cast(f32, screenWidth) / cast(f32, virtualScreenWidth);
+
+    InitWindow(screenWidth, screenHeight, "raylib [core] example - smooth pixelperfect");
+
+    worldSpaceCamera = Camera2D{};   // Game world camera
+    worldSpaceCamera.zoom = 1.0f;
+
+    screenSpaceCamera = Camera2D{};   // Smoothing camera
+    screenSpaceCamera.zoom = 1.0f;
+
+    // Render texture to draw all our objects into
+    target = LoadRenderTexture(virtualScreenWidth, virtualScreenHeight);
+
+    // The target's height is flipped (negative source height) due to OpenGL
+    sourceRec = Rectangle{ 0.0f, 0.0f,
+                           cast(f32, target.texture.width),
+                           -cast(f32, target.texture.height) };
+    destRec = Rectangle{ (cast(f32, screenWidth) - cast(f32, screenWidth) / 1.25f) / 2.0f,
+                         (cast(f32, screenHeight) - cast(f32, screenHeight) / 1.25f) / 2.0f,
+                         cast(f32, screenWidth) / 1.25f, cast(f32, screenHeight) / 1.25f };
+
+    SetTargetFPS(60);
+
+    when os(wasm) {
+        rl_web_set_main_loop(UpdateDrawFrame);
+    } else {
+        // Main game loop
+        while !WindowShouldClose() { UpdateDrawFrame(); }
+        // De-Initialization
+        UnloadRenderTexture(target);
+        CloseWindow();
     }
-
-    // De-Initialization
-    UnloadRenderTexture(target);
-
-    CloseWindow();
     return 0;
 }

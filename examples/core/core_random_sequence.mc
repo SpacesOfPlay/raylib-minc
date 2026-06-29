@@ -53,22 +53,16 @@ void ShuffleColorRectSequence(ColorRect* rectangles, i32 rectCount) {
     UnloadRandomSequence(seq);
 }
 
-i32 main() {
-    // Initialization
+private {
     const i32 screenWidth = 800;
     const i32 screenHeight = 450;
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - random sequence");
-
     i32 rectCount = 20;
-    f32 rectSize = cast(f32, screenWidth) / cast(f32, rectCount);
-    ColorRect* rectangles = GenerateRandomColorRectSequence(cast(f32, rectCount), rectSize,
-                                                            cast(f32, screenWidth), 0.75f * cast(f32, screenHeight));
+    f32 rectSize;
+    ColorRect* rectangles;
+}
 
-    SetTargetFPS(60);
-
-    // Main game loop
-    while !WindowShouldClose() {
+void UpdateDrawFrame() {
         // Update
         if IsKeyPressed(KEY_SPACE) { ShuffleColorRectSequence(rectangles, rectCount); }
 
@@ -106,10 +100,27 @@ i32 main() {
 
             DrawFPS(screenWidth - 80, 10);
         EndDrawing();
-    }
+}
 
-    // De-Initialization
-    MemFree(rectangles);
-    CloseWindow();
+i32 main() {
+    when os(wasm) { SetConfigFlags(FLAG_WINDOW_HIGHDPI); }   // web: crisp shapes; native renders at native res (bitmap text stays crisp)
+    // Initialization
+    InitWindow(screenWidth, screenHeight, "raylib [core] example - random sequence");
+
+    rectSize = cast(f32, screenWidth) / cast(f32, rectCount);
+    rectangles = GenerateRandomColorRectSequence(cast(f32, rectCount), rectSize,
+                                                 cast(f32, screenWidth), 0.75f * cast(f32, screenHeight));
+
+    SetTargetFPS(60);
+
+    when os(wasm) {
+        rl_web_set_main_loop(UpdateDrawFrame);
+    } else {
+        // Main game loop
+        while !WindowShouldClose() { UpdateDrawFrame(); }
+        // De-Initialization
+        MemFree(rectangles);
+        CloseWindow();
+    }
     return 0;
 }

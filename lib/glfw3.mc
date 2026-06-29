@@ -1,4 +1,3 @@
-// Imports added on export so this module resolves standalone (LSP).
 import raylib_lib;
 
 // glfw3 — GLFW 3 binding. Uses raylib's GLFW types and constants;

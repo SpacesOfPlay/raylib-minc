@@ -1,5 +1,5 @@
 raylib-minc snapshot
   upstream: raylib 6.1-dev
-  built:    2026-06-05 20:14:14
-  build:    cdc5ba5
-  glfw:     system package (tools/get_glfw.sh)
+  built:    2026-06-30 00:19:49
+  build:    46fb8e6
+  glfw:     3.4 (download pinned by tools/get_glfw.ps1)

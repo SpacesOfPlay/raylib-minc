@@ -37,8 +37,8 @@ function Invoke-WebRequestWithRetry {
     }
 }
 
-$MincVersion   = '0.9.5'
-$MincSha256Win = '0b12f4993a00a0b2494e47e9d0b9c7ec5f4807609da94b9b938c07af1fd35094'
+$MincVersion   = '0.9.8'
+$MincSha256Win = '4e2e0f47f719c4adeea37464eb5ae121803fe82eef894c9e99ee96019af48615'
 
 $here    = Split-Path -Parent $MyInvocation.MyCommand.Path
 $zipName = "minc-$MincVersion-win-x64.zip"
@@ -48,9 +48,18 @@ $dstDir  = Join-Path $here 'minc'
 $mincExe = Join-Path $dstDir 'minc.exe'
 
 if (Test-Path $mincExe) {
-    Write-Host "minc already installed at $mincExe — skipping download."
-    Write-Host "(delete tools\minc\ to force a re-fetch.)"
-    exit 0
+    # Verify the installed binary matches the pinned version — otherwise a
+    # `git pull` that bumps the pin would never take effect (the old minc
+    # would be kept). `minc --version` prints "minc <ver>" on stderr (hence 2>&1).
+    $verLine = ''
+    try { $verLine = ((& $mincExe --version 2>&1 | Select-Object -First 1) | Out-String).Trim() } catch {}
+    $installedVer = if ($verLine) { ($verLine -split '\s+')[-1] } else { '' }
+    if ($installedVer -eq $MincVersion) {
+        Write-Host "minc v$MincVersion already installed at $mincExe — skipping download."
+        Write-Host "(delete tools\minc\ to force a re-fetch.)"
+        exit 0
+    }
+    Write-Host "Installed minc ('$verLine') does not match pinned v$MincVersion — re-fetching."
 }
 
 Write-Host "minc compiler is closed-source proprietary software from"
