@@ -1590,7 +1590,11 @@ enum __enum_STBTT_MAC_LANG_ENGLISH {
 
 type PROCESS_DPI_AWARENESS = i32;
 type MONITOR_DPI_TYPE = i32;
-type BOOL = i32;
+when os(macos) || os(ios) {
+    type BOOL = i8;
+} else {
+    type BOOL = i32;
+}
 type BYTE = u8;
 type WORD = u16;
 type DWORD = u64;
@@ -1644,6 +1648,7 @@ type LPSTR = u8*;
 type LPCSTR = u8*;
 type LPWSTR = WCHAR*;
 type LPCWSTR = WCHAR*;
+type PCWSTR = WCHAR*;
 type LPBYTE = BYTE*;
 type LPDWORD = DWORD*;
 type LPWORD = WORD*;
@@ -3818,6 +3823,28 @@ struct RAWINPUT {
     } data;
 }
 
+struct SYSTEM_INFO {
+    DWORD dwOemId;
+    DWORD dwPageSize;
+    LPVOID lpMinimumApplicationAddress;
+    LPVOID lpMaximumApplicationAddress;
+    DWORD_PTR dwActiveProcessorMask;
+    DWORD dwNumberOfProcessors;
+    DWORD dwProcessorType;
+    DWORD dwAllocationGranularity;
+    WORD wProcessorLevel;
+    WORD wProcessorRevision;
+}
+
+struct CRITICAL_SECTION {
+    PVOID DebugInfo;
+    LONG LockCount;
+    LONG RecursionCount;
+    HANDLE OwningThread;
+    HANDLE LockSemaphore;
+    ULONG_PTR SpinCount;
+}
+
 struct BITMAPV5HEADER {
     DWORD bV5Size;
     LONG bV5Width;
@@ -4322,6 +4349,7 @@ struct rl_float16 {
     f32[16] v;
 }
 
+// Function specifiers definition
 //----------------------------------------------------------------------------------
 // Defines and Macros
 //----------------------------------------------------------------------------------
@@ -4690,10 +4718,6 @@ struct sdefl_match {
     i32 len;
 }
 
-struct dirent {
-    u8* d_name;
-}
-
 // C99's intptr_t not sufficiently portable
 struct DIR {
     handle_type handle;
@@ -4989,12 +5013,12 @@ struct stbi__png {
     i32 depth;
 }
 
-unsafe_union __anon_struct_50 {
+unsafe_union __anon_raylib_lib_struct_52 {
     f32 fm;
     u32 ui;
 }
 
-unsafe_union __anon_struct_51 {
+unsafe_union __anon_raylib_lib_struct_53 {
     f32 fm;
     u32 ui;
 }
@@ -5249,6 +5273,9 @@ struct stbrp_rect {
     i32 was_packed;
 }
 
+when os(macos) || os(ios) {
+} else {
+}
 /* The raylib publishable library — every module the dist ships, in one
    translation unit. Each transpiled `.c` re-emits the shared header
    types, so we go through the unity-build route (one TU, types emit
@@ -5366,6 +5393,10 @@ struct stbrp_rect {
 //----------------------------------------------------------------------------------
 // Feature Test Macros required for this module
 //----------------------------------------------------------------------------------
+when os(linux) || defined(PLATFORM_WEB) || defined(PLATFORM_WEB_RGFW) {
+}
+when os(linux) || defined(PLATFORM_WEB) || defined(PLATFORM_WEB_RGFW) {
+}
 /**********************************************************************************************
 *
 *   raylib v6.1-dev - A simple and easy-to-use library to enjoy videogames programming (www.raylib.com)
@@ -5451,13 +5482,7 @@ struct stbrp_rect {
 // Function specifiers in case library is build/used as a shared library
 // NOTE: Microsoft specifiers to tell compiler that symbols are imported/exported from a .dll
 // NOTE: visibility("default") attribute makes symbols "visible" when compiled with -fvisibility=hidden
-when os(windows) {
 when defined(BUILD_LIBTYPE_SHARED) {
-    } else when defined(USE_LIBTYPE_SHARED) {
-    }
-} else {
-when defined(BUILD_LIBTYPE_SHARED) {
-    }
 }
 // Detach audio stream processor from the entire audio pipeline
 // Declares module functions
@@ -5764,11 +5789,11 @@ when os(windows) && defined(BUILD_LIBTYPE_SHARED) {
 // Security check in case multiple GRAPHICS_API_OPENGL_* defined
 when defined(GRAPHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPENGL_SOFTWARE) {
 when defined(GRAPHICS_API_OPENGL_21) {
-    }
+}
 when defined(GRAPHICS_API_OPENGL_43) {
-    }
+}
 when defined(GRAPHICS_API_OPENGL_ES2) {
-    }
+}
 }
 // Software implementation uses OpenGL 1.1 functionality
 when defined(GRAPHICS_API_OPENGL_SOFTWARE) {
@@ -5788,10 +5813,10 @@ when defined(GRAPHICS_API_OPENGL_ES3) {
 //----------------------------------------------------------------------------------
 // Default internal render batch elements limits
 when !(defined(RL_DEFAULT_BATCH_BUFFER_ELEMENTS)) {
-    // This is the maximum amount of elements (quads) per batch
-    // NOTE: Be careful with text, every letter maps to a quad
+// This is the maximum amount of elements (quads) per batch
+// NOTE: Be careful with text, every letter maps to a quad
 when defined(GRAPHICS_API_OPENGL_ES2) {
-    }
+}
 }
 // Load and draw a quad
 /***********************************************************************************
@@ -5803,27 +5828,6 @@ when defined(GRAPHICS_API_OPENGL_ES2) {
 when defined(BUILD_LIBTYPE_SHARED) {
 }
 when defined(GRAPHICS_API_OPENGL_11) {
-when defined(GRAPHICS_API_OPENGL_SOFTWARE) {
-    } else {
-when os(macos) || os(ios) {
-        } else {
-        }
-    }
-}
-when defined(GRAPHICS_API_OPENGL_ES3) {
-} else when defined(GRAPHICS_API_OPENGL_ES2) {
-    // NOTE: OpenGL ES 2.0 can be enabled on Desktop platforms,
-    // in that case, functions are loaded from a custom glad for OpenGL ES 2.0
-    // TODO: OpenGL ES 2.0 support shouldn't be platform-dependent, neither require GLAD
-when defined(PLATFORM_DESKTOP_GLFW) || defined(PLATFORM_DESKTOP_SDL) {
-    } else {
-    }
-    // It seems OpenGL ES 2.0 instancing entry points are not defined on Raspberry Pi
-    // provided headers (despite being defined in official Khronos GLES2 headers)
-    // TODO: Avoid raylib platform-dependent code on rlgl, it should be a completely portable library
-when defined(PLATFORM_DRM) {
-        // TODO transminc: untranslatable platform branch
-    }
 }
 //----------------------------------------------------------------------------------
 // Defines and Macros
@@ -5853,7 +5857,7 @@ void rlMatrixMode(i32 mode) {
 // Push the current matrix into RLGL.State.stack
 void rlPushMatrix() {
     if RLGL.State.stackCounter >= 32 {
-            }
+    }
     if RLGL.State.currentMatrixMode == 5888 {
         RLGL.State.transformRequired = true;
         RLGL.State.currentMatrix = &RLGL.State.transform;
@@ -6181,7 +6185,7 @@ void rlTextureParameters(u32 id, i32 param, i32 value) {
                     if RLGL.ExtSupported.texMirrorClamp != 0 {
                         glTexParameteri(GL_TEXTURE_2D, cast(u32, param), value);
                     } else {
-                                            }
+                    }
                 } else {
                     glTexParameteri(GL_TEXTURE_2D, cast(u32, param), value);
                 }
@@ -6196,9 +6200,9 @@ void rlTextureParameters(u32 id, i32 param, i32 value) {
                 if cast(f32, value) <= RLGL.ExtSupported.maxAnisotropyLevel {
                     glTexParameterf(GL_TEXTURE_2D, 34046, cast(f32, value));
                 } else if RLGL.ExtSupported.maxAnisotropyLevel > 0.0f {
-                                        glTexParameterf(GL_TEXTURE_2D, 34046, cast(f32, value));
+                    glTexParameterf(GL_TEXTURE_2D, 34046, cast(f32, value));
                 } else {
-                                    }
+                }
             }
         }
         case 16384: {
@@ -6221,7 +6225,7 @@ void rlCubemapParameters(u32 id, i32 param, i32 value) {
                     if RLGL.ExtSupported.texMirrorClamp != 0 {
                         glTexParameteri(GL_TEXTURE_CUBE_MAP, cast(u32, param), value);
                     } else {
-                                            }
+                    }
                 } else {
                     glTexParameteri(GL_TEXTURE_CUBE_MAP, cast(u32, param), value);
                 }
@@ -6235,9 +6239,9 @@ void rlCubemapParameters(u32 id, i32 param, i32 value) {
                 if cast(f32, value) <= RLGL.ExtSupported.maxAnisotropyLevel {
                     glTexParameterf(GL_TEXTURE_CUBE_MAP, 34046, cast(f32, value));
                 } else if RLGL.ExtSupported.maxAnisotropyLevel > 0.0f {
-                                        glTexParameterf(GL_TEXTURE_CUBE_MAP, 34046, cast(f32, value));
+                    glTexParameterf(GL_TEXTURE_CUBE_MAP, 34046, cast(f32, value));
                 } else {
-                                    }
+                }
             }
         }
         case 16384: {
@@ -6284,12 +6288,12 @@ void rlBindFramebuffer(u32 target, u32 framebuffer) {
 void rlActiveDrawBuffers(i32 count) {
     if count > 0 {
         if count > 8 {
-                    } else {
+        } else {
             u32[8] buffers = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5, GL_COLOR_ATTACHMENT6, GL_COLOR_ATTACHMENT7};
             glDrawBuffers(count, buffers);
         }
     } else {
-            }
+    }
 }
 //----------------------------------------------------------------------------------
 // General render state configuration
@@ -6435,21 +6439,21 @@ void rlCheckErrors() {
                 check = 0;
             }
             case 1280: {
-                            }
+            }
             case 1281: {
-                            }
+            }
             case 1282: {
-                            }
+            }
             case 1283: {
-                            }
+            }
             case 1284: {
-                            }
+            }
             case 1285: {
-                            }
+            }
             case 1286: {
-                            }
+            }
             default: {
-                            }
+            }
         }
     }
 }
@@ -6535,8 +6539,8 @@ void rlglInit(i32 width, i32 height) {
     RLGL.State.defaultTextureId = rlLoadTexture(pixels, 1, 1, RL_PIXELFORMAT_UNCOMPRESSED_R8G8B8A8, 1);
     RLGL.State.currentTextureId = RLGL.State.defaultTextureId;
     if RLGL.State.defaultTextureId != 0 {
-            } else {
-            }
+    } else {
+    }
     rlLoadShaderDefault();
     RLGL.State.currentShaderId = RLGL.State.defaultShaderId;
     RLGL.State.currentShaderLocs = RLGL.State.defaultShaderLocs;
@@ -6564,23 +6568,23 @@ void rlglInit(i32 width, i32 height) {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClearDepth(1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    }
+}
 // Vertex Buffer Object deinitialization (memory free)
 void rlglClose() {
     rlUnloadRenderBatch(RLGL.defaultBatch);
     rlUnloadShaderDefault();
     glDeleteTextures(1, &RLGL.State.defaultTextureId);
-        isGpuReady = false;
+    isGpuReady = false;
 }
 // Load OpenGL extensions
 // NOTE: External loader function must be provided
 void rlLoadExtensions(void* loader) {
     if gladLoadGL(cast(GLADloadfunc, loader)) == 0 {
-            } else {
-            }
+    } else {
+    }
     i32 numExt = 0;
     glGetIntegerv(GL_NUM_EXTENSIONS, &numExt);
-        when defined(GRAPHICS_API_OPENGL_21) {
+    when defined(GRAPHICS_API_OPENGL_21) {
         RLGL.ExtSupported.vao = GLAD_GL_ARB_vertex_array_object;
         RLGL.ExtSupported.instancing = GLAD_GL_EXT_draw_instanced && GLAD_GL_ARB_instanced_arrays;
         RLGL.ExtSupported.texNPOT = GLAD_GL_ARB_texture_non_power_of_two;
@@ -6618,28 +6622,28 @@ void rlLoadExtensions(void* loader) {
     RLGL.ExtSupported.maxDepthBits = 24;
     RLGL.ExtSupported.texAnisoFilter = true;
     RLGL.ExtSupported.texMirrorClamp = true;
-                        RLGL.loader = cast(rlglLoadProc, loader);
+    RLGL.loader = cast(rlglLoadProc, loader);
     glGetFloatv(34047, &RLGL.ExtSupported.maxAnisotropyLevel);
     if RLGL.ExtSupported.vao != 0 {
-            } else {
-            }
+    } else {
+    }
     if RLGL.ExtSupported.texNPOT != 0 {
-            } else {
-            }
+    } else {
+    }
     if RLGL.ExtSupported.texCompDXT != 0 {
-            }
+    }
     if RLGL.ExtSupported.texCompETC1 != 0 {
-            }
+    }
     if RLGL.ExtSupported.texCompETC2 != 0 {
-            }
+    }
     if RLGL.ExtSupported.texCompPVRT != 0 {
-            }
+    }
     if RLGL.ExtSupported.texCompASTC != 0 {
-            }
+    }
     if RLGL.ExtSupported.computeShader != 0 {
-            }
+    }
     if RLGL.ExtSupported.ssbo != 0 {
-            }
+    }
 }
 // Get OpenGL procedure address
 void* rlGetProcAddress(u8* procName) {
@@ -6708,7 +6712,7 @@ i32* rlGetShaderLocsDefault() {
 rlRenderBatch rlLoadRenderBatch(i32 numBuffers, i32 bufferElements) {
     rlRenderBatch batch;
     if isGpuReady == 0 {
-                return batch;
+        return batch;
     }
     batch.vertexBuffer = new(rlVertexBuffer[numBuffers]);
     for i32 i = 0; i < numBuffers; i++ {
@@ -6745,7 +6749,7 @@ rlRenderBatch rlLoadRenderBatch(i32 numBuffers, i32 bufferElements) {
         }
         RLGL.State.vertexCounter = 0;
     }
-        for i32 i = 0; i < numBuffers; i++ {
+    for i32 i = 0; i < numBuffers; i++ {
         if RLGL.ExtSupported.vao != 0 {
             glGenVertexArrays(1, &batch.vertexBuffer[i].vaoId);
             glBindVertexArray(batch.vertexBuffer[i].vaoId);
@@ -6777,7 +6781,7 @@ rlRenderBatch rlLoadRenderBatch(i32 numBuffers, i32 bufferElements) {
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, bufferElements * 6 * sizeof(i16), batch.vertexBuffer[i].indices, GL_STATIC_DRAW);
         }
     }
-        if RLGL.ExtSupported.vao != 0 {
+    if RLGL.ExtSupported.vao != 0 {
         glBindVertexArray(0);
     }
     batch.draws = new(rlDrawCall[256]);
@@ -6976,28 +6980,28 @@ bool rlCheckRenderBatchLimit(i32 vCount) {
 u32 rlLoadTexture(void* data, i32 width, i32 height, i32 format_var, i32 mipmapCount) {
     u32 id = 0;
     if isGpuReady == 0 {
-                return id;
+        return id;
     }
     glBindTexture(GL_TEXTURE_2D, 0);
     when defined(GRAPHICS_API_OPENGL_11) {
         if format_var >= RL_PIXELFORMAT_COMPRESSED_DXT1_RGB {
-                        return id;
+            return id;
         }
     } else {
         if !RLGL.ExtSupported.texCompDXT && (format_var == RL_PIXELFORMAT_COMPRESSED_DXT1_RGB || format_var == RL_PIXELFORMAT_COMPRESSED_DXT1_RGBA || format_var == RL_PIXELFORMAT_COMPRESSED_DXT3_RGBA || format_var == RL_PIXELFORMAT_COMPRESSED_DXT5_RGBA) {
-                        return id;
+            return id;
         }
         if !RLGL.ExtSupported.texCompETC1 && format_var == RL_PIXELFORMAT_COMPRESSED_ETC1_RGB {
-                        return id;
+            return id;
         }
         if !RLGL.ExtSupported.texCompETC2 && (format_var == RL_PIXELFORMAT_COMPRESSED_ETC2_RGB || format_var == RL_PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA) {
-                        return id;
+            return id;
         }
         if !RLGL.ExtSupported.texCompPVRT && (format_var == RL_PIXELFORMAT_COMPRESSED_PVRT_RGB || format_var == RL_PIXELFORMAT_COMPRESSED_PVRT_RGBA) {
-                        return id;
+            return id;
         }
         if !RLGL.ExtSupported.texCompASTC && (format_var == RL_PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA || format_var == RL_PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA) {
-                        return id;
+            return id;
         }
     }
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -7017,7 +7021,7 @@ u32 rlLoadTexture(void* data, i32 width, i32 height, i32 format_var, i32 mipmapC
         u32 glFormat;
         u32 glType;
         rlGetGlTextureFormats(format_var, &glInternalFormat, &glFormat, &glType);
-                if glInternalFormat != 0 {
+        if glInternalFormat != 0 {
             if format_var < RL_PIXELFORMAT_COMPRESSED_DXT1_RGB {
                 glTexImage2D(GL_TEXTURE_2D, i, cast(i32, glInternalFormat), mipWidth, mipHeight, 0, glFormat, glType, dataPtr);
             } else {
@@ -7070,8 +7074,8 @@ u32 rlLoadTexture(void* data, i32 width, i32 height, i32 format_var, i32 mipmapC
     }
     glBindTexture(GL_TEXTURE_2D, 0);
     if id > 0 {
-            } else {
-            }
+    } else {
+    }
     return id;
 }
 // Load depth texture/renderbuffer (to be attached to fbo)
@@ -7079,7 +7083,7 @@ u32 rlLoadTexture(void* data, i32 width, i32 height, i32 format_var, i32 mipmapC
 u32 rlLoadTextureDepth(i32 width, i32 height, bool useRenderBuffer) {
     u32 id = 0;
     if isGpuReady == 0 {
-                return id;
+        return id;
     }
     if RLGL.ExtSupported.texDepth == 0 {
         useRenderBuffer = true;
@@ -7112,12 +7116,12 @@ u32 rlLoadTextureDepth(i32 width, i32 height, bool useRenderBuffer) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         glBindTexture(GL_TEXTURE_2D, 0);
-            } else {
+    } else {
         glGenRenderbuffers(1, &id);
         glBindRenderbuffer(GL_RENDERBUFFER, id);
         glRenderbufferStorage(GL_RENDERBUFFER, glInternalFormat, width, height);
         glBindRenderbuffer(GL_RENDERBUFFER, 0);
-            }
+    }
     return id;
 }
 // Load texture cubemap
@@ -7126,7 +7130,7 @@ u32 rlLoadTextureDepth(i32 width, i32 height, bool useRenderBuffer) {
 u32 rlLoadTextureCubemap(void* data, i32 size, i32 format_var, i32 mipmapCount) {
     u32 id = 0;
     if isGpuReady == 0 {
-                return id;
+        return id;
     }
     i32 mipSize = size;
     u8* dataPtr = null;
@@ -7147,11 +7151,11 @@ u32 rlLoadTextureCubemap(void* data, i32 size, i32 format_var, i32 mipmapCount) 
             if data == null {
                 if format_var < RL_PIXELFORMAT_COMPRESSED_DXT1_RGB {
                     if format_var == RL_PIXELFORMAT_UNCOMPRESSED_R32 || format_var == RL_PIXELFORMAT_UNCOMPRESSED_R32G32B32A32 || format_var == RL_PIXELFORMAT_UNCOMPRESSED_R16 || format_var == RL_PIXELFORMAT_UNCOMPRESSED_R16G16B16A16 {
-                                            } else {
+                    } else {
                         glTexImage2D(cast(u32, GL_TEXTURE_CUBE_MAP_POSITIVE_X + face), mipmapLevel, cast(i32, glInternalFormat), mipSize, mipSize, 0, glFormat, glType, null);
                     }
                 } else {
-                                    }
+                }
             } else {
                 if format_var < RL_PIXELFORMAT_COMPRESSED_DXT1_RGB {
                     glTexImage2D(cast(u32, GL_TEXTURE_CUBE_MAP_POSITIVE_X + face), mipmapLevel, cast(i32, glInternalFormat), mipSize, mipSize, 0, glFormat, glType, dataPtr + cast(u32, face) * dataSize);
@@ -7189,8 +7193,8 @@ u32 rlLoadTextureCubemap(void* data, i32 size, i32 format_var, i32 mipmapCount) 
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
     if id > 0 {
-            } else {
-            }
+    } else {
+    }
     return id;
 }
 // Update already loaded texture in GPU with new data
@@ -7204,7 +7208,7 @@ void rlUpdateTexture(u32 id, i32 offsetX, i32 offsetY, i32 width, i32 height, i3
     if glInternalFormat != 0 && format_var < RL_PIXELFORMAT_COMPRESSED_DXT1_RGB {
         glTexSubImage2D(GL_TEXTURE_2D, 0, offsetX, offsetY, width, height, glFormat, glType, data);
     } else {
-            }
+    }
 }
 // Get OpenGL internal formats and data type from raylib PixelFormat
 void rlGetGlTextureFormats(i32 format_var, u32* glInternalFormat, u32* glFormat, u32* glType) {
@@ -7345,7 +7349,7 @@ void rlGetGlTextureFormats(i32 format_var, u32* glInternalFormat, u32* glFormat,
             }
         }
         default: {
-                    }
+        }
     }
 }
 // Unload texture from GPU memory
@@ -7356,7 +7360,7 @@ void rlUnloadTexture(u32 id) {
 // NOTE: Only supports GPU mipmap generation
 void rlGenTextureMipmaps(u32 id, i32 width, i32 height, i32 format_var, i32* mipmaps) {
     if isGpuReady == 0 {
-                return;
+        return;
     }
     glBindTexture(GL_TEXTURE_2D, id);
     bool texIsPOT = false;
@@ -7366,8 +7370,8 @@ void rlGenTextureMipmaps(u32 id, i32 width, i32 height, i32 format_var, i32* mip
     if texIsPOT || RLGL.ExtSupported.texNPOT {
         glGenerateMipmap(GL_TEXTURE_2D);
         *mipmaps = 1 + cast(i32, floor(log(cast(f64, width > height ? width : height)) / log(2.0)));
-            } else {
-            }
+    } else {
+    }
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 // Read texture pixel data
@@ -7384,7 +7388,7 @@ void* rlReadTexturePixels(u32 id, i32 width, i32 height, i32 format_var) {
         pixels = cast(void*, new(u8[size]));
         glGetTexImage(GL_TEXTURE_2D, 0, glFormat, glType, pixels);
     } else {
-            }
+    }
     glBindTexture(GL_TEXTURE_2D, 0);
     when defined(GRAPHICS_API_OPENGL_ES2) {
         u32 fboId = rlLoadFramebuffer();
@@ -7434,7 +7438,7 @@ u8* rlReadScreenPixels(i32 width, i32 height) {
 u32 rlLoadFramebuffer() {
     u32 fboId = 0;
     if isGpuReady == 0 {
-                return fboId;
+        return fboId;
     }
     glGenFramebuffers(1, &fboId);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -7487,15 +7491,15 @@ bool rlFramebufferComplete(u32 id) {
     if status != GL_FRAMEBUFFER_COMPLETE {
         switch status {
             case GL_FRAMEBUFFER_UNSUPPORTED: {
-                            }
+            }
             case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: {
-                            }
+            }
             case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS: {
                 when defined(GRAPHICS_API_OPENGL_ES2) {
-                                    }
+                }
             }
             case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: {
-                            }
+            }
             default: {
             }
         }
@@ -7520,14 +7524,14 @@ void rlUnloadFramebuffer(u32 id) {
     }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glDeleteFramebuffers(1, &id);
-    }
+}
 // Vertex data management
 //-----------------------------------------------------------------------------------------
 // Load a new attributes buffer
 u32 rlLoadVertexBuffer(void* buffer, i32 size, bool dynamic) {
     u32 id = 0;
     if isGpuReady == 0 {
-                return id;
+        return id;
     }
     glGenBuffers(1, &id);
     glBindBuffer(GL_ARRAY_BUFFER, id);
@@ -7538,7 +7542,7 @@ u32 rlLoadVertexBuffer(void* buffer, i32 size, bool dynamic) {
 u32 rlLoadVertexBufferElement(void* buffer, i32 size, bool dynamic) {
     u32 id = 0;
     if isGpuReady == 0 {
-                return id;
+        return id;
     }
     glGenBuffers(1, &id);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
@@ -7630,7 +7634,7 @@ void rlDisableStatePointer(i32 vertexAttribType) {
 u32 rlLoadVertexArray() {
     u32 vaoId = 0;
     if isGpuReady == 0 {
-                return vaoId;
+        return vaoId;
     }
     if RLGL.ExtSupported.vao != 0 {
         glGenVertexArrays(1, &vaoId);
@@ -7651,7 +7655,7 @@ void rlUnloadVertexArray(u32 vaoId) {
     if RLGL.ExtSupported.vao != 0 {
         glBindVertexArray(0);
         glDeleteVertexArrays(1, &vaoId);
-            }
+    }
 }
 // Unload vertex buffer (VBO)
 void rlUnloadVertexBuffer(u32 vboId) {
@@ -7670,11 +7674,11 @@ u32 rlLoadShader(u8* code, i32 type) {
     if success == GL_FALSE {
         switch type {
             case GL_VERTEX_SHADER: {
-                            }
+            }
             case GL_FRAGMENT_SHADER: {
-                            }
+            }
             case GL_COMPUTE_SHADER: {
-                            }
+            }
             default: {
             }
         }
@@ -7684,18 +7688,18 @@ u32 rlLoadShader(u8* code, i32 type) {
             i32 length = 0;
             var log = new(u8[maxLength]);
             glGetShaderInfoLog(shaderId, maxLength, &length, cast(u8*, log));
-                        free(log);
+            free(log);
         }
         glDeleteShader(shaderId);
         shaderId = 0;
     } else {
         switch type {
             case GL_VERTEX_SHADER: {
-                            }
+            }
             case GL_FRAGMENT_SHADER: {
-                            }
+            }
             case GL_COMPUTE_SHADER: {
-                            }
+            }
             default: {
             }
         }
@@ -7707,7 +7711,7 @@ u32 rlLoadShader(u8* code, i32 type) {
 u32 rlLoadShaderProgram(u8* vsCode, u8* fsCode) {
     u32 id = 0;
     if isGpuReady == 0 {
-                return id;
+        return id;
     }
     u32 vertexShaderId = 0;
     u32 fragmentShaderId = 0;
@@ -7738,7 +7742,7 @@ u32 rlLoadShaderProgram(u8* vsCode, u8* fsCode) {
             glDeleteShader(fragmentShaderId);
         }
         if id == 0 {
-                        id = RLGL.State.defaultShaderId;
+            id = RLGL.State.defaultShaderId;
         }
     }
     return id;
@@ -7747,7 +7751,7 @@ u32 rlLoadShaderProgram(u8* vsCode, u8* fsCode) {
 u32 rlLoadShaderProgramEx(u32 vsId, u32 fsId) {
     u32 programId = 0;
     if isGpuReady == 0 {
-                return programId;
+        return programId;
     }
     i32 success = 0;
     programId = glCreateProgram();
@@ -7765,18 +7769,18 @@ u32 rlLoadShaderProgramEx(u32 vsId, u32 fsId) {
     glLinkProgram(programId);
     glGetProgramiv(programId, GL_LINK_STATUS, &success);
     if success == GL_FALSE {
-                i32 maxLength = 0;
+        i32 maxLength = 0;
         glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &maxLength);
         if maxLength > 0 {
             i32 length = 0;
             var log = new(u8[maxLength]);
             glGetProgramInfoLog(programId, maxLength, &length, cast(u8*, log));
-                        free(log);
+            free(log);
         }
         glDeleteProgram(programId);
         programId = 0;
     } else {
-            }
+    }
     return programId;
 }
 // Load compute shader program
@@ -7789,30 +7793,30 @@ u32 rlLoadShaderProgramCompute(u32 csId) {
         glLinkProgram(programId);
         glGetProgramiv(programId, GL_LINK_STATUS, &success);
         if success == GL_FALSE {
-                        i32 maxLength = 0;
+            i32 maxLength = 0;
             glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &maxLength);
             if maxLength > 0 {
                 i32 length = 0;
                 var log = new(u8[maxLength]);
                 glGetProgramInfoLog(programId, maxLength, &length, cast(u8*, log));
-                                free(log);
+                free(log);
             }
             glDeleteProgram(programId);
             programId = 0;
         } else {
-                    }
+        }
     } else {
-            }
+    }
     return programId;
 }
 // Delete shader
 void rlUnloadShader(u32 id) {
     glDeleteShader(id);
-    }
+}
 // Unload shader program
 void rlUnloadShaderProgram(u32 id) {
     glDeleteProgram(id);
-    }
+}
 // Get shader location uniform
 // NOTE: First parameter refers to shader program id
 i32 rlGetLocationUniform(u32 id, u8* uniformName) {
@@ -7870,7 +7874,7 @@ void rlSetUniform(i32 locIndex, void* value, i32 uniformType, i32 count) {
             glUniform1iv(locIndex, count, cast(i32*, value));
         }
         default: {
-                    }
+        }
     }
 }
 // Set shader value attribute
@@ -7897,7 +7901,7 @@ void rlSetVertexAttributeDefault(i32 locIndex, void* value, i32 attribType, i32 
             }
         }
         default: {
-                    }
+        }
     }
 }
 // Set shader value uniform matrix
@@ -7938,14 +7942,14 @@ void rlComputeShaderDispatch(u32 groupX, u32 groupY, u32 groupZ) {
 // Load shader storage buffer object (SSBO)
 u32 rlLoadShaderBuffer(u32 size, void* data, i32 usageHint) {
     u32 ssbo = 0;
-        return ssbo;
+    return ssbo;
 }
 // Unload shader storage buffer object (SSBO)
 void rlUnloadShaderBuffer(u32 ssboId) {
     when defined(GRAPHICS_API_OPENGL_43) {
         glDeleteBuffers(1, &ssboId);
     } else {
-            }
+    }
 }
 // Update SSBO buffer data
 void rlUpdateShaderBuffer(u32 id, void* data, u32 dataSize, u32 offset) {
@@ -7973,14 +7977,14 @@ void rlCopyShaderBuffer(u32 destId, u32 srcId, u32 destOffset, u32 srcOffset, u3
 }
 // Bind image texture
 void rlBindImageTexture(u32 id, u32 index, i32 format_var, bool readonly) {
-    }
+}
 // Matrix state management
 //-----------------------------------------------------------------------------------------
 // Get internal modelview matrix
 Matrix rlGetMatrixModelview() {
     Matrix matrix = rlMatrixIdentity();
     when defined(GRAPHICS_API_OPENGL_11) {
-        f32[16] mat;
+        noinit f32[16] mat;
         glGetFloatv(GL_MODELVIEW_MATRIX, mat);
         matrix.m0 = mat[0];
         matrix.m1 = mat[1];
@@ -8006,9 +8010,9 @@ Matrix rlGetMatrixModelview() {
 // Get internal projection matrix
 Matrix rlGetMatrixProjection() {
     when defined(GRAPHICS_API_OPENGL_11) {
-        f32[16] mat;
+        noinit f32[16] mat;
         glGetFloatv(GL_PROJECTION_MATRIX, mat);
-        Matrix m;
+        noinit Matrix m;
         m.m0 = mat[0];
         m.m1 = mat[1];
         m.m2 = mat[2];
@@ -8209,19 +8213,17 @@ void rlLoadShaderDefault() {
     RLGL.State.defaultFShaderId = rlLoadShader(defaultFShaderCode, GL_FRAGMENT_SHADER);
     RLGL.State.defaultShaderId = rlLoadShaderProgramEx(RLGL.State.defaultVShaderId, RLGL.State.defaultFShaderId);
     if RLGL.State.defaultShaderId > 0 {
-                RLGL.State.defaultShaderLocs[RL_SHADER_LOC_VERTEX_POSITION] = glGetAttribLocation(RLGL.State.defaultShaderId, "vertexPosition");
+        RLGL.State.defaultShaderLocs[RL_SHADER_LOC_VERTEX_POSITION] = glGetAttribLocation(RLGL.State.defaultShaderId, "vertexPosition");
         RLGL.State.defaultShaderLocs[RL_SHADER_LOC_VERTEX_TEXCOORD01] = glGetAttribLocation(RLGL.State.defaultShaderId, "vertexTexCoord");
         RLGL.State.defaultShaderLocs[RL_SHADER_LOC_VERTEX_COLOR] = glGetAttribLocation(RLGL.State.defaultShaderId, "vertexColor");
         RLGL.State.defaultShaderLocs[RL_SHADER_LOC_MATRIX_MVP] = glGetUniformLocation(RLGL.State.defaultShaderId, "mvp");
         RLGL.State.defaultShaderLocs[RL_SHADER_LOC_COLOR_DIFFUSE] = glGetUniformLocation(RLGL.State.defaultShaderId, "colDiffuse");
         RLGL.State.defaultShaderLocs[RL_SHADER_LOC_MAP_ALBEDO] = glGetUniformLocation(RLGL.State.defaultShaderId, "texture0");
     } else {
-            }
-}
+    }
 }
 // Unload default shader
 // NOTE: Unloads: RLGL.State.defaultShaderId, RLGL.State.defaultShaderLocs
-private {
 void rlUnloadShaderDefault() {
     glUseProgram(0);
     glDetachShader(RLGL.State.defaultShaderId, RLGL.State.defaultVShaderId);
@@ -8230,11 +8232,9 @@ void rlUnloadShaderDefault() {
     glDeleteShader(RLGL.State.defaultFShaderId);
     glDeleteProgram(RLGL.State.defaultShaderId);
     free(RLGL.State.defaultShaderLocs);
-    }
 }
 // Get pixel data size in bytes (image or texture)
 // NOTE: Size depends on pixel format
-private {
 i32 rlGetPixelDataSize(i32 width, i32 height, i32 format_var) {
     i32 dataSize = 0;
     i32 bpp = 0;
@@ -8299,11 +8299,9 @@ i32 rlGetPixelDataSize(i32 width, i32 height, i32 format_var) {
     }
     return dataSize;
 }
-}
 // Auxiliar math functions
 //-------------------------------------------------------------------------------
 // Get identity matrix
-private {
 Matrix rlMatrixIdentity() {
     Matrix matIdentity;
     matIdentity.m0 = 1.0f;
@@ -8312,10 +8310,8 @@ Matrix rlMatrixIdentity() {
     matIdentity.m15 = 1.0f;
     return matIdentity;
 }
-}
 // Get float array of matrix data
 // Explicit conversion to column-major memory layout
-private {
 rl_float16 rlMatrixToFloatV(Matrix mat) {
     rl_float16 result;
     result.v[0] = mat.m0;
@@ -8336,10 +8332,8 @@ rl_float16 rlMatrixToFloatV(Matrix mat) {
     result.v[15] = mat.m15;
     return result;
 }
-}
 // Get two matrix multiplication
 // NOTE: When multiplying matrices... the order matters!
-private {
 Matrix rlMatrixMultiply(Matrix left, Matrix right) {
     Matrix result;
     result.m0 = left.m0 * right.m0 + left.m1 * right.m4 + left.m2 * right.m8 + left.m3 * right.m12;
@@ -8360,9 +8354,7 @@ Matrix rlMatrixMultiply(Matrix left, Matrix right) {
     result.m15 = left.m12 * right.m3 + left.m13 * right.m7 + left.m14 * right.m11 + left.m15 * right.m15;
     return result;
 }
-}
 // Transposes provided matrix
-private {
 Matrix rlMatrixTranspose(Matrix mat) {
     Matrix result;
     result.m0 = mat.m0;
@@ -8383,9 +8375,7 @@ Matrix rlMatrixTranspose(Matrix mat) {
     result.m15 = mat.m15;
     return result;
 }
-}
 // Invert provided matrix
-private {
 Matrix rlMatrixInvert(Matrix mat) {
     Matrix result;
     f32 a00 = mat.m0;
@@ -8495,12 +8485,6 @@ Matrix rlMatrixInvert(Matrix mat) {
 *
 **********************************************************************************************/
 when defined(RAYMATH_STATIC_INLINE) {
-}
-// Function specifiers definition
-when os(windows) && defined(BUILD_LIBTYPE_SHARED) {
-} else when defined(BUILD_LIBTYPE_SHARED) {
-} else when os(windows) && defined(USE_LIBTYPE_SHARED) {
-} else {
 }
 //----------------------------------------------------------------------------------
 // Module Functions Definition - Utils math
@@ -10370,9 +10354,7 @@ f32 rgVector2Angle(Vector2 v1, Vector2 v2) {
     }
     return angle;
 }
-}
 // Calculate distance between two Vector2
-private {
 f32 rgVector2Distance(Vector2 v1, Vector2 v2) {
     f32 result;
     f32 dx = v2.x - v1.x;
@@ -10380,9 +10362,7 @@ f32 rgVector2Distance(Vector2 v1, Vector2 v2) {
     result = cast(f32, sqrt(dx * dx + dy * dy));
     return result;
 }
-}
 // Time measure returned are seconds
-private {
 f64 rgGetCurrentTime() {
     f64 time = 0.0;
     time = GetTime();
@@ -10438,8 +10418,8 @@ f64 rgGetCurrentTime() {
 // NOTE: Microsoft specifiers to tell compiler that symbols are imported/exported from a .dll
 when os(windows) {
 when defined(BUILD_LIBTYPE_SHARED) {
-    } else when defined(USE_LIBTYPE_SHARED) {
-    }
+} else when defined(USE_LIBTYPE_SHARED) {
+}
 }
 /***********************************************************************************
 *
@@ -10803,28 +10783,20 @@ i32 sinfl_bsr(u32 n) {
         return 31 - __builtin_clz(n);
     }
 }
-}
-private {
 u64 sinfl_read64(void* p) {
     u64 n;
     memcpy(&n, p, cast(u64, 8));
     return n;
 }
-}
-private {
 void sinfl_copy64(u8** dst, u8** src) {
     memcpy(*dst, *src, cast(u64, 8));
     *dst += 8;
     *src += 8;
 }
-}
-private {
 u8* sinfl_write64(u8* dst, u64 w) {
     memcpy(dst, &w, cast(u64, 8));
     return dst + 8;
 }
-}
-private {
 void sinfl_refill(sinfl* s) {
     if cast(i64, s.bitend - s.bitptr) >= 8 {
         s.bitbuf |= sinfl_read64(s.bitptr) << cast(u64, s.bitcnt);
@@ -10841,32 +10813,22 @@ void sinfl_refill(sinfl* s) {
         s.bitcnt += bytesuse << 3;
     }
 }
-}
-private {
 i32 sinfl_peek(sinfl* s, i32 cnt) {
     return cast(i32, s.bitbuf & cast(u64, (1 << cnt) - 1));
 }
-}
-private {
 void sinfl_eat(sinfl* s, i32 cnt) {
     s.bitbuf >>= cast(u64, cnt);
     s.bitcnt -= cnt;
 }
-}
-private {
 i32 sinfl__get(sinfl* s, i32 cnt) {
     i32 res = sinfl_peek(s, cnt);
     sinfl_eat(s, cnt);
     return res;
 }
-}
-private {
 i32 sinfl_get(sinfl* s, i32 cnt) {
     sinfl_refill(s);
     return sinfl__get(s, cnt);
 }
-}
-private {
 i32 sinfl_build_tbl(sinfl_gen* gen, u32* tbl, i32 tbl_bits, i32* cnt) {
     i32 tbl_end = 0;
     while true {
@@ -10904,8 +10866,6 @@ i32 sinfl_build_tbl(sinfl_gen* gen, u32* tbl, i32 tbl_bits, i32* cnt) {
     }
     return 0;
 }
-}
-private {
 void sinfl_build_subtbl(sinfl_gen* gen, u32* tbl, i32 tbl_bits, i32* cnt) {
     i32 sub_bits = 0;
     i32 sub_start = 0;
@@ -10950,12 +10910,10 @@ void sinfl_build_subtbl(sinfl_gen* gen, u32* tbl, i32 tbl_bits, i32* cnt) {
         }
     }
 }
-}
-private {
 void sinfl_build(u32* tbl, u8* lens, i32 tbl_bits, i32 maxlen, i32 symcnt) {
     i32 i;
     i32 used = 0;
-    i16[288] sort;
+    noinit i16[288] sort;
     i32[16] cnt;
     i32[16] off;
     sinfl_gen gen;
@@ -10984,8 +10942,6 @@ void sinfl_build(u32* tbl, u8* lens, i32 tbl_bits, i32 maxlen, i32 symcnt) {
         sinfl_build_subtbl(&gen, tbl, tbl_bits, cnt);
     }
 }
-}
-private {
 i32 sinfl_decode(sinfl* s, u32* tbl, i32 bit_len) {
     i32 idx = sinfl_peek(s, bit_len);
     u32 key = tbl[idx];
@@ -10998,13 +10954,11 @@ i32 sinfl_decode(sinfl* s, u32* tbl, i32 bit_len) {
     sinfl_eat(s, cast(i32, key & 15));
     return cast(i32, key >> 16 & 4095);
 }
-}
-private {
 i32 sinfl_decompress(u8* out, i32 cap, u8* in, i32 size) {
     u8* oe = out + cap;
     u8* e = in + size;
     u8* o = out;
-        sinfl_states state = hdr;
+    sinfl_states state = hdr;
     sinfl s;
     i32 last = 0;
     s.bitptr = in;
@@ -11061,7 +11015,7 @@ i32 sinfl_decompress(u8* out, i32 cap, u8* in, i32 size) {
             case fixed: {
                 {
                     i32 n;
-                    u8[320] lens;
+                    noinit u8[320] lens;
                     for n = 0; n <= 143; n++ {
                         lens[n] = 8;
                     }
@@ -11086,9 +11040,9 @@ i32 sinfl_decompress(u8* out, i32 cap, u8* in, i32 size) {
                 {
                     i32 n;
                     i32 i;
-                    u32[128] hlens;
+                    noinit u32[128] hlens;
                     u8[19] nlens;
-                    u8[320] lens;
+                    noinit u8[320] lens;
                     sinfl_refill(&s);
                     {
                         i32 nlit = 257 + sinfl__get(&s, 5);
@@ -11276,21 +11230,15 @@ i32 sdefl_ilog2(i32 n) {
     }
     return cast(i32, sizeof(u64)) * CHAR_BIT - 1 - __builtin_clzl(cast(u64, n));
 }
-}
-private {
 u32 sdefl_uload32(void* p) {
     u32 n = 0;
     memcpy(&n, p, cast(u64, sizeof(n)));
     return n;
 }
-}
-private {
 u32 sdefl_hash32(void* p) {
     u32 n = sdefl_uload32(p);
     return n * 2654435721 >> cast(u32, 32 - 15);
 }
-}
-private {
 void sdefl_put(u8** dst, sdefl* s, i32 code, i32 bitcnt) {
     s.bits |= code << s.bitcnt;
     s.bitcnt += bitcnt;
@@ -11302,8 +11250,6 @@ void sdefl_put(u8** dst, sdefl* s, i32 code, i32 bitcnt) {
         *dst = *dst + 1;
     }
 }
-}
-private {
 void sdefl_heap_sub(u32* A, u32 len, u32 sub) {
     u32 c;
     u32 p = sub;
@@ -11324,16 +11270,12 @@ void sdefl_heap_sub(u32* A, u32 len, u32 sub) {
     }
     A[p] = v;
 }
-}
-private {
 void sdefl_heap_array(u32* A, u32 len) {
     u32 sub;
     for sub = len >> 1; sub >= 1; sub-- {
         sdefl_heap_sub(A, len, sub);
     }
 }
-}
-private {
 void sdefl_heap_sort(u32* A, u32 n) {
     A--;
     sdefl_heap_array(A, n);
@@ -11344,8 +11286,6 @@ void sdefl_heap_sort(u32* A, u32 n) {
         sdefl_heap_sub(A, n, 1);
     }
 }
-}
-private {
 u32 sdefl_sort_sym(u32 sym_cnt, u32* freqs, u8* lens, u32* sym_out) {
     u32[288] cnts;
     u32 cnt_num = sym_cnt + cast(u32, 3 / 4) + 3 & cast(u32, ~3);
@@ -11372,8 +11312,6 @@ u32 sdefl_sort_sym(u32 sym_cnt, u32* freqs, u8* lens, u32* sym_out) {
     sdefl_heap_sort(sym_out + cnts[cnt_num - 2], cnts[cnt_num - 1] - cnts[cnt_num - 2]);
     return used_sym;
 }
-}
-private {
 void sdefl_build_tree(u32* A, u32 sym_cnt) {
     u32 i = 0;
     u32 b = 0;
@@ -11399,8 +11337,6 @@ void sdefl_build_tree(u32* A, u32 sym_cnt) {
         if !(sym_cnt - ++e > 1) { break; }
     }
 }
-}
-private {
 void sdefl_gen_len_cnt(u32* A, u32 root, u32* len_cnt, u32 max_code_len) {
     i32 n;
     u32 i;
@@ -11426,13 +11362,11 @@ void sdefl_gen_len_cnt(u32* A, u32 root, u32* len_cnt, u32 max_code_len) {
         len_cnt[len + 1] += 2;
     }
 }
-}
-private {
 void sdefl_gen_codes(u32* A, u8* lens, u32* len_cnt, u32 max_code_word_len, u32 sym_cnt) {
     u32 i;
     u32 sym;
     u32 len;
-    u32[16] nxt;
+    noinit u32[16] nxt;
     {
         i = 0;
         for len = max_code_word_len; len >= 1; len-- {
@@ -11451,8 +11385,6 @@ void sdefl_gen_codes(u32* A, u8* lens, u32* len_cnt, u32 max_code_word_len, u32 
         A[sym] = nxt[lens[sym]]++;
     }
 }
-}
-private {
 u32 sdefl_rev(u32 c, u8 n) {
     c = (c & 21845) << 1 | (c & 43690) >> 1;
     c = (c & 13107) << 2 | (c & 52428) >> 2;
@@ -11460,12 +11392,10 @@ u32 sdefl_rev(u32 c, u8 n) {
     c = (c & 255) << 8 | (c & 65280) >> 8;
     return c >> 16 - n;
 }
-}
-private {
 void sdefl_huff(u8* lens, u32* codes, u32* freqs, u32 num_syms, u32 max_code_len) {
     u32 c;
     u32* A = codes;
-    u32[16] len_cnt;
+    noinit u32[16] len_cnt;
     u32 used_syms = sdefl_sort_sym(num_syms, freqs, lens, A);
     if used_syms == 0 {
         return;
@@ -11486,13 +11416,11 @@ void sdefl_huff(u8* lens, u32* codes, u32* freqs, u32 num_syms, u32 max_code_len
         codes[c] = sdefl_rev(codes[c], lens[c]);
     }
 }
-}
-private {
 void sdefl_precode(sdefl_symcnt* cnt, u32* freqs, u32* items, u8* litlen, u8* offlen) {
     u32* at = items;
     u32 run_start = 0;
     u32 total = 0;
-    u8[320] lens;
+    noinit u8[320] lens;
     for cnt.lit = 288; cnt.lit > 257; cnt.lit-- {
         if litlen[cnt.lit - 1] != 0 {
             break;
@@ -11550,8 +11478,6 @@ void sdefl_precode(sdefl_symcnt* cnt, u32* freqs, u32* items, u8* litlen, u8* of
     }
     cnt.items = cast(i32, cast(i64, at - items));
 }
-}
-private {
 void sdefl_match_codes(sdefl_match_codest* cod, i32 dist, i32 len) {
     assert(len <= 258);
     assert(dist <= 32768);
@@ -11561,8 +11487,6 @@ void sdefl_match_codes(sdefl_match_codest* cod, i32 dist, i32 len) {
     cod.dx = sdefl_ilog2(1 << sdefl_ilog2(dist - 1) + 1 >> 2);
     cod.dc = cod.dx != 0 ? (cod.dx + 1 << 1) + cast(i32, dist > sdefl_match_codes__dxmax[cod.dx]) : dist - 1;
 }
-}
-private {
 sdefl_blk_type sdefl_blk_type_v(sdefl* s, i32 blk_len, i32 pre_item_len, u32* pre_freq, u8* pre_len) {
     i32 dyn_cost = 0;
     i32 fix_cost = 0;
@@ -11584,36 +11508,30 @@ sdefl_blk_type sdefl_blk_type_v(sdefl* s, i32 blk_len, i32 pre_item_len, u32* pr
     fix_cost += 8 * (5 * ((blk_len + (65535 - 1)) / 65535) + blk_len + 1 + 2);
     return dyn_cost < fix_cost ? SDEFL_BLK_DYN : SDEFL_BLK_UCOMPR;
 }
-}
-private {
 void sdefl_put16(u8** dst, u16 x) {
     u8* val = *dst;
     val[0] = cast(u8, x & 255);
     val[1] = cast(u8, cast(i32, x) >> 8);
     *dst = val + 2;
 }
-}
-private {
 void sdefl_match_v(u8** dst, sdefl* s, i32 dist, i32 len) {
-    sdefl_match_codest cod;
+    noinit sdefl_match_codest cod;
     sdefl_match_codes(&cod, dist, len);
     sdefl_put(dst, s, cast(i32, s.cod.word.lit[cod.lc]), cast(i32, s.cod.len.lit[cod.lc]));
     sdefl_put(dst, s, len - sdefl_match_v__lmin[cod.ls], sdefl_match_v__lxn[cod.ls]);
     sdefl_put(dst, s, cast(i32, s.cod.word.off[cod.dc]), cast(i32, s.cod.len.off[cod.dc]));
     sdefl_put(dst, s, dist - sdefl_match_v__dmin[cod.dc], cod.dx);
 }
-}
-private {
 void sdefl_flush(u8** dst, sdefl* s, i32 is_last, u8* in, i32 blk_begin, i32 blk_end) {
     i32 blk_len = blk_end - blk_begin;
     i32 j;
     i32 i = 0;
     i32 item_cnt = 0;
     sdefl_symcnt symcnt;
-    u32[19] codes;
-    u8[19] lens;
+    noinit u32[19] codes;
+    noinit u8[19] lens;
     u32[19] freqs;
-    u32[320] items;
+    noinit u32[320] items;
     s.freq.lit[256]++;
     sdefl_huff(s.cod.len.lit, s.cod.word.lit, s.freq.lit, 288, 14);
     sdefl_huff(s.cod.len.off, s.cod.word.off, s.freq.off, 32, 15);
@@ -11686,26 +11604,20 @@ void sdefl_flush(u8** dst, sdefl* s, i32 is_last, u8* in, i32 blk_begin, i32 blk
     memset(&s.freq, 0, cast(u64, sizeof(s.freq)));
     s.seq_cnt = 0;
 }
-}
-private {
 void sdefl_seq(sdefl* s, i32 off, i32 len) {
     assert(s.seq_cnt + 2 < (256 * 1024 + 2) / 3);
     s.seq[s.seq_cnt].off = off;
     s.seq[s.seq_cnt].len = len;
     s.seq_cnt++;
 }
-}
-private {
 void sdefl_reg_match(sdefl* s, i32 off, i32 len) {
-    sdefl_match_codest cod;
+    noinit sdefl_match_codest cod;
     sdefl_match_codes(&cod, off, len);
     assert(cod.lc < 288);
     assert(cod.dc < 32);
     s.freq.lit[cod.lc]++;
     s.freq.off[cod.dc]++;
 }
-}
-private {
 void sdefl_fnd(sdefl_match* m, sdefl* s, i32 chain_len, i32 max_match, u8* in, i32 p, i32 e) {
     i32 i = s.tbl[sdefl_hash32(in + p)];
     i32 limit = p - (1 << 15) < -1 ? -1 : p - (1 << 15);
@@ -11737,8 +11649,6 @@ void sdefl_fnd(sdefl_match* m, sdefl* s, i32 chain_len, i32 max_match, u8* in, i
         i = s.prv[i & (1 << 15) - 1];
     }
 }
-}
-private {
 i32 sdefl_compr(sdefl* s, u8* out, u8* in, i32 in_len, i32 lvl) {
     u8* q = out;
     i32 max_chain = lvl < 8 ? 1 << lvl + 1 : 1 << 13;
@@ -11942,8 +11852,8 @@ i32 sdefl_bound(i32 len) {
 // NOTE: Microsoft specifiers to tell compiler that symbols are imported/exported from a .dll
 when os(windows) {
 when defined(BUILD_LIBTYPE_SHARED) {
-    } else when defined(USE_LIBTYPE_SHARED) {
-    }
+} else when defined(USE_LIBTYPE_SHARED) {
+}
 }
 // Function specifiers definition
 //----------------------------------------------------------------------------------
@@ -11997,7 +11907,7 @@ i32 rprand_get_value_raw() {
 i32* rprand_load_sequence(u32 count, i32 min, i32 max) {
     i32* sequence = null;
     if count > cast(u32, abs(max - min) + 1) {
-                return sequence;
+        return sequence;
     }
     sequence = new(i32[count]);
     i32 value = 0;
@@ -12101,73 +12011,73 @@ when os(windows) {
 when !defined(S_ISREG) && defined(S_IFMT) && defined(S_IFREG) {
 }
 when os(windows) && os(windows) {
+struct dirent {
+    u8* d_name;
+}
 DIR* opendir(u8* name) {
-        DIR* dir = null;
-        if name && name[0] {
-            u64 base_length = strlen(name);
-            u8* all = strchr("/\\", name[base_length - 1]) != null ? "*" : "/*";
-            dir = cast(DIR*, alloc(cast(i64, sizeof(*dir))));
-            if dir != null {
-                dir.name = cast(u8*, alloc(cast(i64, base_length + strlen(all) + 1)));
-                if dir.name != null {
-                    strcat(strcpy(dir.name, name), all);
-                    dir.handle = cast(handle_type, _findfirst(dir.name, &dir.info));
-                    if dir.handle != -1 {
-                        dir.result.d_name = null;
-                    } else {
-                        free(dir.name);
-                        free(dir);
-                        dir = null;
-                    }
+    DIR* dir = null;
+    if name && name[0] {
+        u64 base_length = strlen(name);
+        u8* all = strchr("/\\", name[base_length - 1]) != null ? "*" : "/*";
+        dir = cast(DIR*, alloc(cast(i64, sizeof(*dir))));
+        if dir != null {
+            dir.name = cast(u8*, alloc(cast(i64, base_length + strlen(all) + 1)));
+            if dir.name != null {
+                strcat(strcpy(dir.name, name), all);
+                dir.handle = cast(handle_type, _findfirst(dir.name, &dir.info));
+                if dir.handle != -1 {
+                    dir.result.d_name = null;
                 } else {
+                    free(dir.name);
                     free(dir);
                     dir = null;
-                    errno = ENOMEM;
                 }
+            } else {
+                free(dir);
+                dir = null;
+                errno = ENOMEM;
             }
-        } else {
-            errno = EINVAL;
         }
-        return dir;
+    } else {
+        errno = EINVAL;
     }
-i32 closedir(DIR* dir) {
-        i32 result = -1;
-        if dir != null {
-            if dir.handle != -1 {
-                result = _findclose(dir.handle);
-            }
-            free(dir.name);
-            free(dir);
-        }
-        if result == -1 {
-            errno = EBADF;
-        }
-        return result;
-    }
-dirent* rl_readdir(DIR* dir) {
-        dirent* result = null;
-        if dir && dir.handle != -1 {
-            if !dir.result.d_name || _findnext(dir.handle, &dir.info) != -1 {
-                result = &dir.result;
-                result.d_name = dir.info.name;
-            }
-        } else {
-            errno = EBADF;
-        }
-        return result;
-    }
-void rewinddir(DIR* dir) {
-        if dir && dir.handle != -1 {
-            _findclose(dir.handle);
-            dir.handle = cast(handle_type, _findfirst(dir.name, &dir.info));
-            dir.result.d_name = null;
-        } else {
-            errno = EBADF;
-        }
-    }
-} else {
+    return dir;
 }
-when os(windows) {
+i32 closedir(DIR* dir) {
+    i32 result = -1;
+    if dir != null {
+        if dir.handle != -1 {
+            result = _findclose(dir.handle);
+        }
+        free(dir.name);
+        free(dir);
+    }
+    if result == -1 {
+        errno = EBADF;
+    }
+    return result;
+}
+dirent* rl_readdir(DIR* dir) {
+    dirent* result = null;
+    if dir && dir.handle != -1 {
+        if !dir.result.d_name || _findnext(dir.handle, &dir.info) != -1 {
+            result = &dir.result;
+            result.d_name = dir.info.name;
+        }
+    } else {
+        errno = EBADF;
+    }
+    return result;
+}
+void rewinddir(DIR* dir) {
+    if dir && dir.handle != -1 {
+        _findclose(dir.handle);
+        dir.handle = cast(handle_type, _findfirst(dir.name, &dir.info));
+        dir.result.d_name = null;
+    } else {
+        errno = EBADF;
+    }
+}
 } else {
 }
 //----------------------------------------------------------------------------------
@@ -12175,8 +12085,8 @@ when os(windows) {
 //----------------------------------------------------------------------------------
 when !(defined(MAX_FILEPATH_LENGTH)) {
 when os(windows) {
-    } else {
-    }
+} else {
+}
 }
 //----------------------------------------------------------------------------------
 // Global Variables Definition
@@ -12360,41 +12270,41 @@ when defined(GLFW_INCLUDE_VULKAN) {
  */
 when defined(GLFW_INCLUDE_ES1) {
 when defined(GLFW_INCLUDE_GLEXT) {
-    }
+}
 } else when defined(GLFW_INCLUDE_ES2) {
 when defined(GLFW_INCLUDE_GLEXT) {
-    }
+}
 } else when defined(GLFW_INCLUDE_ES3) {
 when defined(GLFW_INCLUDE_GLEXT) {
-    }
+}
 } else when defined(GLFW_INCLUDE_ES31) {
 when defined(GLFW_INCLUDE_GLEXT) {
-    }
+}
 } else when defined(GLFW_INCLUDE_ES32) {
 when defined(GLFW_INCLUDE_GLEXT) {
-    }
+}
 } else when defined(GLFW_INCLUDE_GLCOREARB) {
 when os(macos) || os(ios) {
 when defined(GLFW_INCLUDE_GLEXT) {
-        }
-    } else {
+}
+} else {
 when defined(GLFW_INCLUDE_GLEXT) {
-        }
-    }
+}
+}
 } else when defined(GLFW_INCLUDE_GLU) {
 when os(macos) || os(ios) {
 when defined(GLFW_INCLUDE_GLU) {
-        }
-    } else {
+}
+} else {
 when defined(GLFW_INCLUDE_GLU) {
-        }
-    }
+}
+}
 } else {
 when os(macos) || os(ios) {
-    } else {
+} else {
 when defined(GLFW_INCLUDE_GLEXT) {
-        }
-    }
+}
+}
 }
 /*************************************************************************
  * Global definition cleanup
@@ -12412,7 +12322,7 @@ when defined(GLFW_CALLBACK_DEFINED) {
 // NOTE: GLFW3 already includes gl.h (OpenGL) headers
 // Support retrieving native window handlers
 when os(windows) {
-    /*************************************************************************
+/*************************************************************************
  * GLFW 3.4 - www.glfw.org
  * A library for OpenGL, window and input
  *------------------------------------------------------------------------
@@ -12439,16 +12349,16 @@ when os(windows) {
  *    distribution.
  *
  *************************************************************************/
-    /*************************************************************************
+/*************************************************************************
  * Doxygen documentation
  *************************************************************************/
-    /*! @file glfw3native.h
+/*! @file glfw3native.h
  *  @brief The header of the native access functions.
  *
  *  This is the header file of the native access functions.  See @ref native for
  *  more information.
  */
-    /*! @defgroup native Native access
+/*! @defgroup native Native access
  *  @brief Functions related to accessing native handles.
  *
  *  **By using the native access functions you assert that you know what you're
@@ -12489,78 +12399,78 @@ when os(windows) {
  *  #include <GLFW/glfw3native.h>
  *  @endcode
  */
-    /*************************************************************************
+/*************************************************************************
  * System headers and types
  *************************************************************************/
 when defined(GLFW_EXPOSE_NATIVE_WIN32) || defined(GLFW_EXPOSE_NATIVE_WGL) {
-        /* This is a workaround for the fact that glfw3.h needs to export APIENTRY (for
+/* This is a workaround for the fact that glfw3.h needs to export APIENTRY (for
    * example to allow applications to correctly declare a GL_KHR_debug callback)
    * but windows.h assumes no one will define APIENTRY before it does
    */
 when defined(GLFW_APIENTRY_DEFINED) {
-        }
-    }
+}
+}
 when defined(GLFW_EXPOSE_NATIVE_COCOA) || defined(GLFW_EXPOSE_NATIVE_NSGL) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_X11) || defined(GLFW_EXPOSE_NATIVE_GLX) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_WAYLAND) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_WGL) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_NSGL) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_GLX) {
-        /* This is a workaround for the fact that glfw3.h defines GLAPIENTRY because by
+/* This is a workaround for the fact that glfw3.h defines GLAPIENTRY because by
    * default it also acts as an OpenGL header
    * However, glx.h will include gl.h, which will define it unconditionally
    */
 when defined(GLFW_GLAPIENTRY_DEFINED) {
-        }
-    }
+}
+}
 when defined(GLFW_EXPOSE_NATIVE_EGL) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_OSMESA) {
-        /* This is a workaround for the fact that glfw3.h defines GLAPIENTRY because by
+/* This is a workaround for the fact that glfw3.h defines GLAPIENTRY because by
    * default it also acts as an OpenGL header
    * However, osmesa.h will include gl.h, which will define it unconditionally
    */
 when defined(GLFW_GLAPIENTRY_DEFINED) {
-        }
-    }
-    /*************************************************************************
+}
+}
+/*************************************************************************
  * Functions
  *************************************************************************/
 when defined(GLFW_EXPOSE_NATIVE_WIN32) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_WGL) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_COCOA) {
-        // TODO transminc: untranslatable platform branch
-    }
+// TODO transminc: untranslatable platform branch
+}
 when defined(GLFW_EXPOSE_NATIVE_NSGL) {
-        // TODO transminc: untranslatable platform branch
-    }
+// TODO transminc: untranslatable platform branch
+}
 when defined(GLFW_EXPOSE_NATIVE_X11) {
-        // TODO transminc: untranslatable platform branch
-    }
+// TODO transminc: untranslatable platform branch
+}
 when defined(GLFW_EXPOSE_NATIVE_GLX) {
-        // TODO transminc: untranslatable platform branch
-    }
+// TODO transminc: untranslatable platform branch
+}
 when defined(GLFW_EXPOSE_NATIVE_WAYLAND) {
-        // TODO transminc: untranslatable platform branch
-    }
+// TODO transminc: untranslatable platform branch
+}
 when defined(GLFW_EXPOSE_NATIVE_EGL) {
-        // TODO transminc: untranslatable platform branch
-    }
+// TODO transminc: untranslatable platform branch
+}
 when defined(GLFW_EXPOSE_NATIVE_OSMESA) {
-        // TODO transminc: untranslatable platform branch
-    }
+// TODO transminc: untranslatable platform branch
+}
 }
 when os(linux) {
 }
 when os(macos) || os(ios) {
-    /*************************************************************************
+/*************************************************************************
  * GLFW 3.4 - www.glfw.org
  * A library for OpenGL, window and input
  *------------------------------------------------------------------------
@@ -12587,16 +12497,16 @@ when os(macos) || os(ios) {
  *    distribution.
  *
  *************************************************************************/
-    /*************************************************************************
+/*************************************************************************
  * Doxygen documentation
  *************************************************************************/
-    /*! @file glfw3native.h
+/*! @file glfw3native.h
  *  @brief The header of the native access functions.
  *
  *  This is the header file of the native access functions.  See @ref native for
  *  more information.
  */
-    /*! @defgroup native Native access
+/*! @defgroup native Native access
  *  @brief Functions related to accessing native handles.
  *
  *  **By using the native access functions you assert that you know what you're
@@ -12637,73 +12547,73 @@ when os(macos) || os(ios) {
  *  #include <GLFW/glfw3native.h>
  *  @endcode
  */
-    /*************************************************************************
+/*************************************************************************
  * System headers and types
  *************************************************************************/
 when defined(GLFW_EXPOSE_NATIVE_WIN32) || defined(GLFW_EXPOSE_NATIVE_WGL) {
-        /* This is a workaround for the fact that glfw3.h needs to export APIENTRY (for
+/* This is a workaround for the fact that glfw3.h needs to export APIENTRY (for
    * example to allow applications to correctly declare a GL_KHR_debug callback)
    * but windows.h assumes no one will define APIENTRY before it does
    */
 when defined(GLFW_APIENTRY_DEFINED) {
-        }
-    }
+}
+}
 when defined(GLFW_EXPOSE_NATIVE_COCOA) || defined(GLFW_EXPOSE_NATIVE_NSGL) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_X11) || defined(GLFW_EXPOSE_NATIVE_GLX) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_WAYLAND) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_WGL) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_NSGL) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_GLX) {
-        /* This is a workaround for the fact that glfw3.h defines GLAPIENTRY because by
+/* This is a workaround for the fact that glfw3.h defines GLAPIENTRY because by
    * default it also acts as an OpenGL header
    * However, glx.h will include gl.h, which will define it unconditionally
    */
 when defined(GLFW_GLAPIENTRY_DEFINED) {
-        }
-    }
+}
+}
 when defined(GLFW_EXPOSE_NATIVE_EGL) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_OSMESA) {
-        /* This is a workaround for the fact that glfw3.h defines GLAPIENTRY because by
+/* This is a workaround for the fact that glfw3.h defines GLAPIENTRY because by
    * default it also acts as an OpenGL header
    * However, osmesa.h will include gl.h, which will define it unconditionally
    */
 when defined(GLFW_GLAPIENTRY_DEFINED) {
-        }
-    }
-    /*************************************************************************
+}
+}
+/*************************************************************************
  * Functions
  *************************************************************************/
 when defined(GLFW_EXPOSE_NATIVE_WIN32) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_WGL) {
-    }
+}
 when defined(GLFW_EXPOSE_NATIVE_COCOA) {
-        // TODO transminc: untranslatable platform branch
-    }
+// TODO transminc: untranslatable platform branch
+}
 when defined(GLFW_EXPOSE_NATIVE_NSGL) {
-        // TODO transminc: untranslatable platform branch
-    }
+// TODO transminc: untranslatable platform branch
+}
 when defined(GLFW_EXPOSE_NATIVE_X11) {
-        // TODO transminc: untranslatable platform branch
-    }
+// TODO transminc: untranslatable platform branch
+}
 when defined(GLFW_EXPOSE_NATIVE_GLX) {
-        // TODO transminc: untranslatable platform branch
-    }
+// TODO transminc: untranslatable platform branch
+}
 when defined(GLFW_EXPOSE_NATIVE_WAYLAND) {
-        // TODO transminc: untranslatable platform branch
-    }
+// TODO transminc: untranslatable platform branch
+}
 when defined(GLFW_EXPOSE_NATIVE_EGL) {
-        // TODO transminc: untranslatable platform branch
-    }
+// TODO transminc: untranslatable platform branch
+}
 when defined(GLFW_EXPOSE_NATIVE_OSMESA) {
-        // TODO transminc: untranslatable platform branch
-    }
+// TODO transminc: untranslatable platform branch
+}
 }
 //----------------------------------------------------------------------------------
 // Global Variables Definition
@@ -12745,7 +12655,7 @@ void ToggleFullscreen() {
             CORE.Window.flags |= cast(u32, FLAG_FULLSCREEN_MODE);
             glfwSetWindowMonitor(platform.handle, monitor, 0, 0, cast(i32, CORE.Window.screen.width), cast(i32, CORE.Window.screen.height), -1);
         } else {
-                    }
+        }
     } else {
         CORE.Window.position = CORE.Window.previousPosition;
         CORE.Window.screen = CORE.Window.previousScreen;
@@ -12798,9 +12708,9 @@ void ToggleBorderlessWindowed() {
                 CORE.Window.flags &= cast(u32, ~FLAG_BORDERLESS_WINDOWED_MODE);
             }
         } else {
-                    }
+        }
     } else {
-            }
+    }
 }
 // Set window state: maximized, if resizable
 void MaximizeWindow() {
@@ -12824,7 +12734,7 @@ void RestoreWindow() {
 // Set window configuration state using flags
 void SetWindowState(u32 flags) {
     if CORE.Window.ready == 0 {
-            }
+    }
     if (CORE.Window.flags & cast(u32, FLAG_VSYNC_HINT)) == cast(u32, FLAG_VSYNC_HINT) != ((flags & cast(u32, FLAG_VSYNC_HINT)) == cast(u32, FLAG_VSYNC_HINT)) && (flags & cast(u32, FLAG_VSYNC_HINT)) == cast(u32, FLAG_VSYNC_HINT) {
         glfwSwapInterval(1);
         CORE.Window.flags |= cast(u32, FLAG_VSYNC_HINT);
@@ -12865,17 +12775,17 @@ void SetWindowState(u32 flags) {
         CORE.Window.flags |= cast(u32, FLAG_WINDOW_ALWAYS_RUN);
     }
     if (CORE.Window.flags & cast(u32, FLAG_WINDOW_TRANSPARENT)) == cast(u32, FLAG_WINDOW_TRANSPARENT) != ((flags & cast(u32, FLAG_WINDOW_TRANSPARENT)) == cast(u32, FLAG_WINDOW_TRANSPARENT)) && (flags & cast(u32, FLAG_WINDOW_TRANSPARENT)) == cast(u32, FLAG_WINDOW_TRANSPARENT) {
-            }
+    }
     if (CORE.Window.flags & cast(u32, FLAG_WINDOW_HIGHDPI)) == cast(u32, FLAG_WINDOW_HIGHDPI) != ((flags & cast(u32, FLAG_WINDOW_HIGHDPI)) == cast(u32, FLAG_WINDOW_HIGHDPI)) && (flags & cast(u32, FLAG_WINDOW_HIGHDPI)) == cast(u32, FLAG_WINDOW_HIGHDPI) {
-            }
+    }
     if (CORE.Window.flags & cast(u32, FLAG_WINDOW_MOUSE_PASSTHROUGH)) == cast(u32, FLAG_WINDOW_MOUSE_PASSTHROUGH) != ((flags & cast(u32, FLAG_WINDOW_MOUSE_PASSTHROUGH)) == cast(u32, FLAG_WINDOW_MOUSE_PASSTHROUGH)) && (flags & cast(u32, FLAG_WINDOW_MOUSE_PASSTHROUGH)) == cast(u32, FLAG_WINDOW_MOUSE_PASSTHROUGH) {
         glfwSetWindowAttrib(platform.handle, 131085, 1);
         CORE.Window.flags |= cast(u32, FLAG_WINDOW_MOUSE_PASSTHROUGH);
     }
     if (CORE.Window.flags & cast(u32, FLAG_MSAA_4X_HINT)) == cast(u32, FLAG_MSAA_4X_HINT) != ((flags & cast(u32, FLAG_MSAA_4X_HINT)) == cast(u32, FLAG_MSAA_4X_HINT)) && (flags & cast(u32, FLAG_MSAA_4X_HINT)) == cast(u32, FLAG_MSAA_4X_HINT) {
-            }
+    }
     if (CORE.Window.flags & cast(u32, FLAG_INTERLACED_HINT)) == cast(u32, FLAG_INTERLACED_HINT) != ((flags & cast(u32, FLAG_INTERLACED_HINT)) == cast(u32, FLAG_INTERLACED_HINT)) && (flags & cast(u32, FLAG_INTERLACED_HINT)) == cast(u32, FLAG_INTERLACED_HINT) {
-            }
+    }
 }
 // Clear window configuration state flags
 void ClearWindowState(u32 flags) {
@@ -12919,17 +12829,17 @@ void ClearWindowState(u32 flags) {
         CORE.Window.flags &= cast(u32, ~FLAG_WINDOW_ALWAYS_RUN);
     }
     if (CORE.Window.flags & cast(u32, FLAG_WINDOW_TRANSPARENT)) == cast(u32, FLAG_WINDOW_TRANSPARENT) && (flags & cast(u32, FLAG_WINDOW_TRANSPARENT)) == cast(u32, FLAG_WINDOW_TRANSPARENT) {
-            }
+    }
     if (CORE.Window.flags & cast(u32, FLAG_WINDOW_HIGHDPI)) == cast(u32, FLAG_WINDOW_HIGHDPI) && (flags & cast(u32, FLAG_WINDOW_HIGHDPI)) == cast(u32, FLAG_WINDOW_HIGHDPI) {
-            }
+    }
     if (CORE.Window.flags & cast(u32, FLAG_WINDOW_MOUSE_PASSTHROUGH)) == cast(u32, FLAG_WINDOW_MOUSE_PASSTHROUGH) && (flags & cast(u32, FLAG_WINDOW_MOUSE_PASSTHROUGH)) == cast(u32, FLAG_WINDOW_MOUSE_PASSTHROUGH) {
         glfwSetWindowAttrib(platform.handle, 131085, 0);
         CORE.Window.flags &= cast(u32, ~FLAG_WINDOW_MOUSE_PASSTHROUGH);
     }
     if (CORE.Window.flags & cast(u32, FLAG_MSAA_4X_HINT)) == cast(u32, FLAG_MSAA_4X_HINT) && (flags & cast(u32, FLAG_MSAA_4X_HINT)) == cast(u32, FLAG_MSAA_4X_HINT) {
-            }
+    }
     if (CORE.Window.flags & cast(u32, FLAG_INTERLACED_HINT)) == cast(u32, FLAG_INTERLACED_HINT) && (flags & cast(u32, FLAG_INTERLACED_HINT)) == cast(u32, FLAG_INTERLACED_HINT) {
-            }
+    }
 }
 // Set icon for window
 // NOTE 1: Image must be in RGBA format, 8bit per channel
@@ -12945,7 +12855,7 @@ void SetWindowIcon(Image image) {
             icon[0].pixels = cast(u8*, image.data);
             glfwSetWindowIcon(platform.handle, 1, icon);
         } else {
-                    }
+        }
     }
 }
 // Set icon for window, multiple images
@@ -12965,7 +12875,7 @@ void SetWindowIcons(Image* images, i32 count) {
                 icons[valid].pixels = cast(u8*, images[i].data);
                 valid++;
             } else {
-                            }
+            }
         }
         glfwSetWindowIcon(platform.handle, valid, icons);
         free(icons);
@@ -12988,10 +12898,10 @@ void SetWindowMonitor(i32 monitor) {
     GLFWmonitor** monitors = glfwGetMonitors(&monitorCount);
     if monitor >= 0 && monitor < monitorCount {
         if (CORE.Window.flags & cast(u32, FLAG_FULLSCREEN_MODE)) == cast(u32, FLAG_FULLSCREEN_MODE) {
-                        GLFWvidmode* mode = glfwGetVideoMode(monitors[monitor]);
+            GLFWvidmode* mode = glfwGetVideoMode(monitors[monitor]);
             glfwSetWindowMonitor(platform.handle, monitors[monitor], 0, 0, mode.width, mode.height, mode.refreshRate);
         } else {
-                        var screenWidth = cast(i32, CORE.Window.render.width);
+            var screenWidth = cast(i32, CORE.Window.render.width);
             var screenHeight = cast(i32, CORE.Window.render.height);
             i32 monitorWorkareaX = 0;
             i32 monitorWorkareaY = 0;
@@ -13007,7 +12917,7 @@ void SetWindowMonitor(i32 monitor) {
             }
         }
     } else {
-            }
+    }
 }
 // Set window minimum dimensions (FLAG_WINDOW_RESIZABLE)
 void SetWindowMinSize(i32 width, i32 height) {
@@ -13121,7 +13031,7 @@ i32 GetCurrentMonitor() {
                         closestDist = dist;
                     }
                 } else {
-                                    }
+                }
             }
         }
     }
@@ -13137,7 +13047,7 @@ Vector2 GetMonitorPosition(i32 monitor) {
         glfwGetMonitorPos(monitors[monitor], &x, &y);
         return Vector2{cast(f32, x), cast(f32, y)};
     } else {
-            }
+    }
     return Vector2{0.0f, 0.0f};
 }
 // Get selected monitor width (currently used by monitor)
@@ -13150,9 +13060,9 @@ i32 GetMonitorWidth(i32 monitor) {
         if mode != null {
             width = mode.width;
         } else {
-                    }
+        }
     } else {
-            }
+    }
     return width;
 }
 // Get selected monitor height (currently used by monitor)
@@ -13165,9 +13075,9 @@ i32 GetMonitorHeight(i32 monitor) {
         if mode != null {
             height = mode.height;
         } else {
-                    }
+        }
     } else {
-            }
+    }
     return height;
 }
 // Get selected monitor physical width in millimetres
@@ -13178,7 +13088,7 @@ i32 GetMonitorPhysicalWidth(i32 monitor) {
     if monitor >= 0 && monitor < monitorCount {
         glfwGetMonitorPhysicalSize(monitors[monitor], &width, null);
     } else {
-            }
+    }
     return width;
 }
 // Get selected monitor physical height in millimetres
@@ -13189,7 +13099,7 @@ i32 GetMonitorPhysicalHeight(i32 monitor) {
     if monitor >= 0 && monitor < monitorCount {
         glfwGetMonitorPhysicalSize(monitors[monitor], null, &height);
     } else {
-            }
+    }
     return height;
 }
 // Get selected monitor refresh rate
@@ -13202,9 +13112,9 @@ i32 GetMonitorRefreshRate(i32 monitor) {
         if mode != null {
             refresh = mode.refreshRate;
         } else {
-                    }
+        }
     } else {
-            }
+    }
     return refresh;
 }
 // Get the human-readable, UTF-8 encoded name of the selected monitor
@@ -13214,7 +13124,7 @@ u8* GetMonitorName(i32 monitor) {
     if monitor >= 0 && monitor < monitorCount {
         return glfwGetMonitorName(monitors[monitor]);
     } else {
-            }
+    }
     return "";
 }
 // Get window position XY on monitor
@@ -13241,7 +13151,7 @@ u8* GetClipboardText() {
 // Get clipboard image
 Image GetClipboardImage() {
     Image image;
-        return image;
+    return image;
 }
 // Show mouse cursor
 void ShowCursor() {
@@ -13292,7 +13202,7 @@ f64 GetTime() {
 // REF: https://github.com/raysan5/raylib/issues/686
 void OpenURL(u8* url) {
     if strchr(url, 39) != null {
-            } else {
+    } else {
         var cmd = new(u8[strlen(url) + 32]);
         when os(windows) {
             sprintf(cmd, "explorer \"%s\"", url);
@@ -13305,7 +13215,7 @@ void OpenURL(u8* url) {
         }
         i32 result = system(cmd);
         if result == -1 {
-                    }
+        }
         free(cmd);
     }
 }
@@ -13318,7 +13228,7 @@ i32 SetGamepadMappings(u8* mappings) {
 }
 // Set gamepad vibration
 void SetGamepadVibration(i32 gamepad, f32 leftMotor, f32 rightMotor, f32 duration) {
-    }
+}
 // Set mouse position XY
 void SetMousePosition(i32 x, i32 y) {
     CORE.Input.Mouse.currentPosition = Vector2{cast(f32, x), cast(f32, y)};
@@ -13463,7 +13373,7 @@ void PollInputEvents() {
     } else {
         glfwPollEvents();
     }
-    CORE.Window.shouldClose = cast(bool, glfwWindowShouldClose(platform.handle));
+    CORE.Window.shouldClose = glfwWindowShouldClose(platform.handle) != 0;
     glfwSetWindowShouldClose(platform.handle, 0);
 }
 //----------------------------------------------------------------------------------
@@ -13477,14 +13387,10 @@ void* AllocateWrapper(u64 size, void* user) {
     ignore user;
     return cast(void*, new(u8[size]));
 }
-}
-private {
 void* ReallocateWrapper(void* block, u64 size, void* user) {
     ignore user;
     return realloc(block, size);
 }
-}
-private {
 void DeallocateWrapper(void* block, void* user) {
     ignore user;
     free(block);
@@ -13500,7 +13406,7 @@ i32 InitPlatform() {
     }
     i32 result = glfwInit();
     if result == 0 {
-                return -1;
+        return -1;
     }
     glfwDefaultWindowHints();
     glfwWindowHint(131078, 0);
@@ -13561,7 +13467,7 @@ i32 InitPlatform() {
         glfwWindowHint(131085, 0);
     }
     if (CORE.Window.flags & cast(u32, FLAG_MSAA_4X_HINT)) == cast(u32, FLAG_MSAA_4X_HINT) {
-                glfwWindowHint(135181, 4);
+        glfwWindowHint(135181, 4);
     }
     if rlGetVersion() == RL_OPENGL_21 {
         glfwWindowHint(139266, 2);
@@ -13598,7 +13504,7 @@ i32 InitPlatform() {
     if (CORE.Window.flags & cast(u32, FLAG_FULLSCREEN_MODE)) == cast(u32, FLAG_FULLSCREEN_MODE) {
         GLFWmonitor* monitor = glfwGetPrimaryMonitor();
         if monitor == null {
-                        return -1;
+            return -1;
         }
         GLFWvidmode* mode = glfwGetVideoMode(monitor);
         CORE.Window.display.width = cast(u32, mode.width);
@@ -13621,7 +13527,7 @@ i32 InitPlatform() {
         platform.handle = glfwCreateWindow(cast(i32, CORE.Window.screen.width), cast(i32, CORE.Window.screen.height), CORE.Window.title != null ? CORE.Window.title : " ", monitor, null);
         if platform.handle == null {
             glfwTerminate();
-                        return -1;
+            return -1;
         }
     } else {
         if CORE.Window.screen.width == 0 {
@@ -13633,7 +13539,7 @@ i32 InitPlatform() {
         platform.handle = glfwCreateWindow(cast(i32, CORE.Window.screen.width), cast(i32, CORE.Window.screen.height), CORE.Window.title != null ? CORE.Window.title : " ", null, null);
         if platform.handle == null {
             glfwTerminate();
-                        return -1;
+            return -1;
         }
         i32 monitorCount = 0;
         i32 monitorIndex = GetCurrentMonitor();
@@ -13652,7 +13558,7 @@ i32 InitPlatform() {
             glfwSetWindowSize(platform.handle, cast(i32, CORE.Window.screen.width), cast(i32, CORE.Window.screen.height));
         } else {
             glfwTerminate();
-                        return -1;
+            return -1;
         }
         CORE.Window.render.width = CORE.Window.screen.width;
         CORE.Window.render.height = CORE.Window.screen.height;
@@ -13666,7 +13572,7 @@ i32 InitPlatform() {
         glfwSwapInterval(0);
         if (CORE.Window.flags & cast(u32, FLAG_VSYNC_HINT)) == cast(u32, FLAG_VSYNC_HINT) {
             glfwSwapInterval(1);
-                    }
+        }
         if (CORE.Window.flags & cast(u32, FLAG_WINDOW_HIGHDPI)) == cast(u32, FLAG_WINDOW_HIGHDPI) {
             Vector2 scaleDpi = GetWindowScaleDPI();
             CORE.Window.render.width = cast(u32, cast(i32, cast(f32, CORE.Window.screen.width) * scaleDpi.x));
@@ -13688,7 +13594,7 @@ i32 InitPlatform() {
             CORE.Window.render = CORE.Window.screen;
         }
         CORE.Window.currentFbo = CORE.Window.render;
-                                                i32 monitorCount = 0;
+        i32 monitorCount = 0;
         i32 monitorIndex = GetCurrentMonitor();
         GLFWmonitor** monitors = glfwGetMonitors(&monitorCount);
         GLFWmonitor* monitor = monitors[monitorIndex];
@@ -13709,7 +13615,7 @@ i32 InitPlatform() {
             MinimizeWindow();
         }
     } else {
-                return -1;
+        return -1;
     }
     SetWindowState(requestedWindowFlags);
     rlLoadExtensions(cast(void*, glfwGetProcAddress));
@@ -13760,7 +13666,7 @@ i32 InitPlatform() {
         default: {
         }
     }
-        return 0;
+    return 0;
 }
 // Close platform
 void ClosePlatform() {
@@ -13777,17 +13683,13 @@ void ClosePlatform() {
 // GLFW3: Error callback, runs on GLFW3 error
 private {
 void ErrorCallback(i32 error, u8* description) {
-    }
 }
 // GLFW3: Window size change callback, runs when window is resized
 // NOTE: Window resizing not enabled by default, use SetConfigFlags()
-private {
 void WindowSizeCallback(GLFWwindow* window, i32 width, i32 height) {
-}
 }
 // GLFW3: Framebuffer size change callback, runs when framebuffer is resized
 // WARNING: If FLAG_WINDOW_HIGHDPI is set, WindowContentScaleCallback() is called before this function
-private {
 void FramebufferSizeCallback(GLFWwindow* window, i32 width, i32 height) {
     if width == 0 || height == 0 {
         return;
@@ -13815,10 +13717,8 @@ void FramebufferSizeCallback(GLFWwindow* window, i32 width, i32 height) {
         }
     }
 }
-}
 // GLFW3: Window content scale callback, runs on monitor content scale change detected
 // WARNING: If FLAG_WINDOW_HIGHDPI is not set, this function is not called
-private {
 void WindowContentScaleCallback(GLFWwindow* window, f32 scalex, f32 scaley) {
     CORE.Window.render.width = cast(u32, cast(i32, cast(f32, CORE.Window.screen.width) * scalex));
     CORE.Window.render.height = cast(u32, cast(i32, cast(f32, CORE.Window.screen.height) * scaley));
@@ -13826,16 +13726,12 @@ void WindowContentScaleCallback(GLFWwindow* window, f32 scalex, f32 scaley) {
     CORE.Window.screenScale = MatrixScale(scalex, scaley, 1.0f);
     SetMouseScale(1.0f / scalex, 1.0f / scaley);
 }
-}
 // GLFW3: Window position callback, runs when window position changes
-private {
 void WindowPosCallback(GLFWwindow* window, i32 x, i32 y) {
     CORE.Window.position.x = x;
     CORE.Window.position.y = y;
 }
-}
 // GLFW3: Window iconify callback, runs when window is minimized/restored
-private {
 void WindowIconifyCallback(GLFWwindow* window, i32 iconified) {
     if iconified != 0 {
         CORE.Window.flags |= cast(u32, FLAG_WINDOW_MINIMIZED);
@@ -13843,9 +13739,7 @@ void WindowIconifyCallback(GLFWwindow* window, i32 iconified) {
         CORE.Window.flags &= cast(u32, ~FLAG_WINDOW_MINIMIZED);
     }
 }
-}
 // GLFW3: Window maximize callback, runs when window is maximized/restored
-private {
 void WindowMaximizeCallback(GLFWwindow* window, i32 maximized) {
     if maximized != 0 {
         CORE.Window.flags |= cast(u32, FLAG_WINDOW_MAXIMIZED);
@@ -13853,9 +13747,7 @@ void WindowMaximizeCallback(GLFWwindow* window, i32 maximized) {
         CORE.Window.flags &= cast(u32, ~FLAG_WINDOW_MAXIMIZED);
     }
 }
-}
 // GLFW3: Window focus callback, runs when window get/lose focus
-private {
 void WindowFocusCallback(GLFWwindow* window, i32 focused) {
     if focused != 0 {
         CORE.Window.flags &= cast(u32, ~FLAG_WINDOW_UNFOCUSED);
@@ -13863,9 +13755,7 @@ void WindowFocusCallback(GLFWwindow* window, i32 focused) {
         CORE.Window.flags |= cast(u32, FLAG_WINDOW_UNFOCUSED);
     }
 }
-}
 // GLFW3: Window drop callback, runs when files are dropped into window
-private {
 void WindowDropCallback(GLFWwindow* window, i32 count, u8** paths) {
     if count > 0 {
         if CORE.Window.dropFileCount > 0 {
@@ -13884,9 +13774,7 @@ void WindowDropCallback(GLFWwindow* window, i32 count, u8** paths) {
         }
     }
 }
-}
 // GLFW3: Keyboard callback, runs on key pressed
-private {
 void KeyCallback(GLFWwindow* window, i32 key, i32 scancode, i32 action, i32 mods) {
     if key < 0 {
         return;
@@ -13909,18 +13797,14 @@ void KeyCallback(GLFWwindow* window, i32 key, i32 scancode, i32 action, i32 mods
         glfwSetWindowShouldClose(platform.handle, 1);
     }
 }
-}
 // GLFW3: Char callback, runs on key pressed to get unicode codepoint value
-private {
 void CharCallback(GLFWwindow* window, u32 codepoint) {
     if CORE.Input.Keyboard.charPressedQueueCount < 16 {
         CORE.Input.Keyboard.charPressedQueue[CORE.Input.Keyboard.charPressedQueueCount] = cast(i32, codepoint);
         CORE.Input.Keyboard.charPressedQueueCount++;
     }
 }
-}
 // GLFW3: Mouse button callback, runs on mouse button pressed
-private {
 void MouseButtonCallback(GLFWwindow* window, i32 button, i32 action, i32 mods) {
     CORE.Input.Mouse.currentButtonState[button] = cast(u8, action);
     CORE.Input.Touch.currentTouchState[button] = cast(u8, action);
@@ -13937,9 +13821,7 @@ void MouseButtonCallback(GLFWwindow* window, i32 button, i32 action, i32 mods) {
     gestureEvent.position[0].y /= cast(f32, GetScreenHeight());
     ProcessGestureEvent(gestureEvent);
 }
-}
 // GLFW3: Cursor position callback, runs on mouse movement
-private {
 void MouseCursorPosCallback(GLFWwindow* window, f64 x, f64 y) {
     CORE.Input.Mouse.currentPosition.x = cast(f32, x);
     CORE.Input.Mouse.currentPosition.y = cast(f32, y);
@@ -13953,15 +13835,11 @@ void MouseCursorPosCallback(GLFWwindow* window, f64 x, f64 y) {
     gestureEvent.position[0].y /= cast(f32, GetScreenHeight());
     ProcessGestureEvent(gestureEvent);
 }
-}
 // GLFW3: Mouse wheel scroll callback, runs on mouse wheel changes
-private {
 void MouseScrollCallback(GLFWwindow* window, f64 xoffset, f64 yoffset) {
     CORE.Input.Mouse.currentWheelMove = Vector2{cast(f32, xoffset), cast(f32, yoffset)};
 }
-}
 // GLFW3: Cursor ennter callback, when cursor enters the window
-private {
 void CursorEnterCallback(GLFWwindow* window, i32 enter) {
     if enter != 0 {
         CORE.Input.Mouse.cursorOnScreen = true;
@@ -13969,9 +13847,7 @@ void CursorEnterCallback(GLFWwindow* window, i32 enter) {
         CORE.Input.Mouse.cursorOnScreen = false;
     }
 }
-}
 // GLFW3: Joystick connected/disconnected callback
-private {
 void JoystickCallback(i32 jid, i32 event) {
     if jid < 4 {
         if event == 262145 {
@@ -14028,7 +13904,7 @@ when os(windows) {
 //void DisableCursor(void)
 // Initialize window and OpenGL context
 void InitWindow(i32 width, i32 height, u8* title) {
-                                            CORE.Window.screen.width = cast(u32, width);
+    CORE.Window.screen.width = cast(u32, width);
     CORE.Window.screen.height = cast(u32, height);
     CORE.Window.eventWaiting = false;
     CORE.Window.screenScale = MatrixIdentity();
@@ -14042,7 +13918,7 @@ void InitWindow(i32 width, i32 height, u8* title) {
     CORE.Input.Gamepad.lastButtonPressed = GAMEPAD_BUTTON_UNKNOWN;
     i32 result = InitPlatform();
     if result != 0 {
-                return;
+        return;
     }
     if CORE.Window.render.width == 0 || CORE.Window.render.height == 0 {
         CORE.Window.render.width = CORE.Window.screen.width;
@@ -14060,14 +13936,14 @@ void InitWindow(i32 width, i32 height, u8* title) {
     CORE.Time.frameCounter = 0;
     CORE.Window.shouldClose = false;
     SetRandomSeed(cast(u32, time(null)));
-    }
+}
 // Close window and unload OpenGL context
 void CloseWindow() {
     UnloadFontDefault();
     rlglClose();
     ClosePlatform();
     CORE.Window.ready = false;
-    }
+}
 // Check if window has been initialized successfully
 bool IsWindowReady() {
     return CORE.Window.ready;
@@ -14344,12 +14220,12 @@ VrStereoConfig LoadVrStereoConfig(VrDeviceInfo device) {
         config.viewOffset[0] = MatrixTranslate(device.interpupillaryDistance * 0.5f, 0.075f, 0.045f);
         config.viewOffset[1] = MatrixTranslate(-device.interpupillaryDistance * 0.5f, 0.075f, 0.045f);
     } else {
-            }
+    }
     return config;
 }
 // Unload VR stereo config properties
 void UnloadVrStereoConfig(VrStereoConfig config) {
-    }
+}
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Shaders Management
 //----------------------------------------------------------------------------------
@@ -14366,7 +14242,7 @@ Shader LoadShader(u8* vsFileName, u8* fsFileName) {
         fShaderStr = LoadFileText(fsFileName);
     }
     if vShaderStr == null && fShaderStr == null {
-            }
+    }
     shader = LoadShaderFromMemory(vShaderStr, fShaderStr);
     UnloadFileText(vShaderStr);
     UnloadFileText(fShaderStr);
@@ -14554,7 +14430,7 @@ void SetTargetFPS(i32 fps) {
     } else {
         CORE.Time.target = 1.0 / cast(f64, fps);
     }
-    }
+}
 // Get current FPS
 // NOTE: Calculating an average framerate
 i32 GetFPS() {
@@ -14653,7 +14529,7 @@ void UnloadRandomSequence(i32* sequence) {
 // NOTE: Provided fileName should not contain paths, saving to working directory
 void TakeScreenshot(u8* fileName) {
     if strchr(fileName, 39) != null {
-                return;
+        return;
     }
     var scale = Vector2{1.0f, 1.0f};
     if (CORE.Window.flags & cast(u32, FLAG_WINDOW_HIGHDPI)) == cast(u32, FLAG_WINDOW_HIGHDPI) {
@@ -14666,8 +14542,8 @@ void TakeScreenshot(u8* fileName) {
     ExportImage(image, path);
     free(imgData);
     if FileExists(path) != 0 {
-            } else {
-            }
+    } else {
+    }
 }
 // Set up window configuration flags (view FLAGS)
 // NOTE: This function is expected to be called before window creation,
@@ -14675,7 +14551,7 @@ void TakeScreenshot(u8* fileName) {
 // To configure window states after creation, use SetWindowState()
 void SetConfigFlags(u32 flags) {
     if CORE.Window.ready != 0 {
-            }
+    }
     CORE.Window.flags |= flags;
 }
 // void OpenURL(const char *url);   // Defined per platform
@@ -14732,23 +14608,23 @@ u8* LoadFileData(u8* fileName, i32* dataSize) {
                 if data != null {
                     u64 count = fread(data, cast(u64, sizeof(u8)), cast(u64, size), file);
                     if count > 2147483647 {
-                                                free(data);
+                        free(data);
                         data = null;
                     } else {
                         *dataSize = cast(i32, count);
                         if *dataSize != size {
-                                                    } else {
-                                                    }
+                        } else {
+                        }
                     }
                 } else {
-                                    }
+                }
             } else {
-                            }
+            }
             fclose(file);
         } else {
-                    }
+        }
     } else {
-            }
+    }
     return data;
 }
 // Unload file data allocated by LoadFileData()
@@ -14766,17 +14642,17 @@ bool SaveFileData(u8* fileName, void* data, i32 dataSize) {
         if file != null {
             var count = cast(i32, fwrite(data, cast(u64, sizeof(u8)), cast(u64, dataSize), file));
             if count == 0 {
-                            } else if count != dataSize {
-                            } else {
-                            }
+            } else if count != dataSize {
+            } else {
+            }
             i32 closed = fclose(file);
             if closed == 0 {
                 result = true;
             }
         } else {
-                    }
+        }
     } else {
-            }
+    }
     return result;
 }
 // Export data to code (.h), returns true on success
@@ -14812,8 +14688,8 @@ bool ExportDataAsCode(u8* data, i32 dataSize, u8* fileName) {
     result = SaveFileText(fileName, txtData);
     free(txtData);
     if result != 0 {
-            } else {
-            }
+    } else {
+    }
     return result;
 }
 // Load text data from file, returns a '\0' terminated string
@@ -14837,15 +14713,15 @@ u8* LoadFileText(u8* fileName) {
                         text = cast(u8*, realloc(text, cast(u64, count + 1)));
                     }
                     text[count] = 0;
-                                    } else {
-                                    }
+                } else {
+                }
             } else {
-                            }
+            }
             fclose(file);
         } else {
-                    }
+        }
     } else {
-            }
+    }
     return text;
 }
 // Unload file text data allocated by LoadFileText()
@@ -14863,16 +14739,16 @@ bool SaveFileText(u8* fileName, u8* text) {
         if file != null {
             i32 count = fprintf(file, "%s", text);
             if count < 0 {
-                            } else {
-                            }
+            } else {
+            }
             i32 closed = fclose(file);
             if closed == 0 {
                 result = true;
             }
         } else {
-                    }
+        }
     } else {
-            }
+    }
     return result;
 }
 // File access custom callbacks
@@ -14940,9 +14816,9 @@ i32 FileMove(u8* srcPath, u8* dstPath) {
         if FileExists(dstPath) && GetFileLength(srcPath) == GetFileLength(dstPath) {
             result = FileRemove(srcPath);
         } else {
-                    }
+        }
     } else {
-            }
+    }
     return result;
 }
 // Replace text in an existing file
@@ -15047,7 +14923,7 @@ i32 GetFileLength(u8* fileName) {
         fseek(file, 0, SEEK_END);
         i64 fileSize = ftell(file);
         if fileSize > 2147483647 {
-                    } else {
+        } else {
             size = cast(i32, fileSize);
         }
         fclose(file);
@@ -15165,7 +15041,7 @@ u8* GetApplicationDirectory() {
     when os(windows) {
         i32 len = 0;
         when defined(UNICODE) {
-            u16[0] widePath;  // TODO transminc: variable-length array
+            noinit u16[0] widePath;  // TODO transminc: variable-length array
             len = cast(i32, GetModuleFileNameW(null, cast(i32*, widePath), MAX_PATH));
             len = WideCharToMultiByte(0, 0, cast(i32*, widePath), len, GetApplicationDirectory__appDir, MAX_PATH, null, null);
         } else {
@@ -15230,10 +15106,10 @@ FilePathList LoadDirectoryFilesEx(u8* basePath, u8* filter, bool scanSubdirs) {
         }
         ScanDirectoryFiles(basePath, &files, filter, fileCounter, scanSubdirs);
         if files.count != fileCounter {
-                        files.count = fileCounter;
+            files.count = fileCounter;
         }
     } else {
-            }
+    }
     return files;
 }
 // Unload directory filepaths
@@ -15283,8 +15159,8 @@ i32 MakeDirectory(u8* dirPath) {
 bool ChangeDirectory(u8* dirPath) {
     bool result = chdir(dirPath) != 0;
     if result != 0 {
-            } else {
-            }
+    } else {
+    }
     return result == 0;
 }
 // Check if a given path point to a file
@@ -15363,7 +15239,7 @@ u32 GetDirectoryFileCountEx(u8* basePath, u8* filter, bool scanSubdirs) {
             if strcmp(entity.d_name, ".") != 0 && strcmp(entity.d_name, "..") != 0 {
                 i32 pathLength = snprintf(path, 4096, "%s/%s", basePath, entity.d_name);
                 if pathLength < 0 || pathLength >= 4096 {
-                                    } else if IsPathFile(path) != 0 {
+                } else if IsPathFile(path) != 0 {
                     if filter == null || strstr(filter, "*.*") != null || strstr(filter, "FILES*") != null || IsFileExtension(path, filter) {
                         fileCounter++;
                     }
@@ -15379,7 +15255,7 @@ u32 GetDirectoryFileCountEx(u8* basePath, u8* filter, bool scanSubdirs) {
         }
         closedir(dir);
     } else {
-            }
+    }
     return fileCounter;
 }
 //----------------------------------------------------------------------------------
@@ -15393,7 +15269,7 @@ u8* CompressData(u8* data, i32 dataSize, i32* compDataSize) {
     compData = cast(u8*, new(u8[bounds]));
     *compDataSize = sdeflate(sdefl_v, compData, data, dataSize, 8);
     free(sdefl_v);
-        return compData;
+    return compData;
 }
 // Decompress data (DEFLATE algorithm)
 u8* DecompressData(u8* compData, i32 compDataSize, i32* dataSize) {
@@ -15404,7 +15280,7 @@ u8* DecompressData(u8* compData, i32 compDataSize, i32* dataSize) {
     memcpy(data, data0, cast(u64, size));
     memset(data0, 0, cast(u64, 64 * 1024 * 1024));
     free(data0);
-        *dataSize = size;
+    *dataSize = size;
     return data;
 }
 // Encode data to Base64 string
@@ -15445,7 +15321,7 @@ u8* EncodeDataBase64(u8* data, i32 dataSize, i32* outputSize) {
     encodedData[outputCount] = 0;
     outputCount++;
     if outputCount != estimatedOutputSize {
-            }
+    }
     *outputSize = estimatedOutputSize;
     return encodedData;
 }
@@ -15472,7 +15348,7 @@ u8* DecodeDataBase64(u8* text, i32* outputSize) {
     i32 i = 0;
     while i < dataSize {
         if i + 2 >= dataSize {
-                        break;
+            break;
         }
         u32 sixtetA = DecodeDataBase64__base64DecodeTable[cast(u8, text[i])];
         u32 sixtetB = DecodeDataBase64__base64DecodeTable[cast(u8, text[i + 1])];
@@ -15480,7 +15356,7 @@ u8* DecodeDataBase64(u8* text, i32* outputSize) {
         u32 sixtetD = i + 3 < dataSize && cast(u8, text[i + 3]) != 61 ? DecodeDataBase64__base64DecodeTable[cast(u8, text[i + 3])] : 0;
         u32 octetPack = sixtetA << 18 | sixtetB << 12 | sixtetC << 6 | sixtetD;
         if outputCount + 3 > maxOutputSize {
-                        break;
+            break;
         }
         decodedData[outputCount + 0] = cast(u8, octetPack >> 16 & 255);
         decodedData[outputCount + 1] = cast(u8, octetPack >> 8 & 255);
@@ -15489,7 +15365,7 @@ u8* DecodeDataBase64(u8* text, i32* outputSize) {
         i += 4;
     }
     if estimatedOutputSize != outputCount - padding {
-            }
+    }
     *outputSize = estimatedOutputSize;
     return decodedData;
 }
@@ -15692,7 +15568,7 @@ AutomationEventList LoadAutomationEventList(u8* fileName) {
     list.events = new(AutomationEvent[16384]);
     list.capacity = 16384;
     if fileName == null {
-            } else {
+    } else {
         void* raeFile = fopen(fileName, "rt");
         if raeFile != null {
             u32 counter = 0;
@@ -15700,7 +15576,7 @@ AutomationEventList LoadAutomationEventList(u8* fileName) {
             u8[64] eventDesc;
             u8* result = fgets(buffer, 256, raeFile);
             if result != buffer {
-                            }
+            }
             while feof(raeFile) == 0 {
                 switch buffer[0] {
                     case 99: {
@@ -15717,14 +15593,14 @@ AutomationEventList LoadAutomationEventList(u8* fileName) {
                 }
                 result = fgets(buffer, 256, raeFile);
                 if result != buffer {
-                                    }
+                }
             }
             if counter != list.count {
-                                list.count = counter;
+                list.count = counter;
             }
             fclose(raeFile);
-                    }
-            }
+        }
+    }
     return list;
 }
 // Unload automation events list from file
@@ -15857,7 +15733,7 @@ void PlayAutomationEvent(AutomationEvent event) {
             default: {
             }
         }
-            }
+    }
 }
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Input Handling: Keyboard
@@ -16147,7 +16023,7 @@ Vector2 GetTouchPosition(i32 index) {
     if index < 8 {
         position = CORE.Input.Touch.position[index];
     } else {
-            }
+    }
     return position;
 }
 // Get touch point identifier for given index
@@ -16178,7 +16054,7 @@ void InitTimer() {
         if clock_gettime(CLOCK_MONOTONIC, &now) == 0 {
             CORE.Time.base = cast(u64, now.tv_sec) * 1000000000 + cast(u64, now.tv_nsec);
         } else {
-                    }
+        }
     }
     CORE.Time.previous = GetTime();
 }
@@ -16213,7 +16089,7 @@ void ScanDirectoryFiles(u8* basePath, FilePathList* files, u8* filter, u32 expec
             if strcmp(dp.d_name, ".") != 0 && strcmp(dp.d_name, "..") != 0 {
                 i32 pathLength = snprintf(path, 4096, "%s/%s", basePath, dp.d_name);
                 if pathLength < 0 || pathLength >= 4096 {
-                                    } else if IsPathFile(path) != 0 {
+                } else if IsPathFile(path) != 0 {
                     if filter == null || strstr(filter, "*.*") != null || strstr(filter, "FILES*") != null || IsFileExtension(path, filter) {
                         memcpy(files.paths[files.count], path, cast(u64, pathLength));
                         files.count++;
@@ -16231,13 +16107,11 @@ void ScanDirectoryFiles(u8* basePath, FilePathList* files, u8* filter, u32 expec
         }
         closedir(dir);
     } else {
-            }
-}
+    }
 }
 // Automation event recording
 // Checking events in current frame and save them into currentEventList
 // NOTE: Recording is by default done at EndDrawing(), before PollInputEvents()
-private {
 void RecordAutomationEvent() {
     if currentEventList.count == currentEventList.capacity {
         return;
@@ -16249,7 +16123,7 @@ void RecordAutomationEvent() {
             currentEventList.events[currentEventList.count].params[0] = key;
             currentEventList.events[currentEventList.count].params[1] = 0;
             currentEventList.events[currentEventList.count].params[2] = 0;
-                        currentEventList.count++;
+            currentEventList.count++;
         }
         if currentEventList.count == currentEventList.capacity {
             return;
@@ -16260,7 +16134,7 @@ void RecordAutomationEvent() {
             currentEventList.events[currentEventList.count].params[0] = key;
             currentEventList.events[currentEventList.count].params[1] = 0;
             currentEventList.events[currentEventList.count].params[2] = 0;
-                        currentEventList.count++;
+            currentEventList.count++;
         }
         if currentEventList.count == currentEventList.capacity {
             return;
@@ -16273,7 +16147,7 @@ void RecordAutomationEvent() {
             currentEventList.events[currentEventList.count].params[0] = button;
             currentEventList.events[currentEventList.count].params[1] = 0;
             currentEventList.events[currentEventList.count].params[2] = 0;
-                        currentEventList.count++;
+            currentEventList.count++;
         }
         if currentEventList.count == currentEventList.capacity {
             return;
@@ -16284,7 +16158,7 @@ void RecordAutomationEvent() {
             currentEventList.events[currentEventList.count].params[0] = button;
             currentEventList.events[currentEventList.count].params[1] = 0;
             currentEventList.events[currentEventList.count].params[2] = 0;
-                        currentEventList.count++;
+            currentEventList.count++;
         }
         if currentEventList.count == currentEventList.capacity {
             return;
@@ -16296,7 +16170,7 @@ void RecordAutomationEvent() {
         currentEventList.events[currentEventList.count].params[0] = cast(i32, CORE.Input.Mouse.currentPosition.x);
         currentEventList.events[currentEventList.count].params[1] = cast(i32, CORE.Input.Mouse.currentPosition.y);
         currentEventList.events[currentEventList.count].params[2] = 0;
-                currentEventList.count++;
+        currentEventList.count++;
         if currentEventList.count == currentEventList.capacity {
             return;
         }
@@ -16307,7 +16181,7 @@ void RecordAutomationEvent() {
         currentEventList.events[currentEventList.count].params[0] = cast(i32, CORE.Input.Mouse.currentWheelMove.x);
         currentEventList.events[currentEventList.count].params[1] = cast(i32, CORE.Input.Mouse.currentWheelMove.y);
         currentEventList.events[currentEventList.count].params[2] = 0;
-                currentEventList.count++;
+        currentEventList.count++;
         if currentEventList.count == currentEventList.capacity {
             return;
         }
@@ -16319,7 +16193,7 @@ void RecordAutomationEvent() {
             currentEventList.events[currentEventList.count].params[0] = id;
             currentEventList.events[currentEventList.count].params[1] = 0;
             currentEventList.events[currentEventList.count].params[2] = 0;
-                        currentEventList.count++;
+            currentEventList.count++;
         }
         if currentEventList.count == currentEventList.capacity {
             return;
@@ -16330,7 +16204,7 @@ void RecordAutomationEvent() {
             currentEventList.events[currentEventList.count].params[0] = id;
             currentEventList.events[currentEventList.count].params[1] = 0;
             currentEventList.events[currentEventList.count].params[2] = 0;
-                        currentEventList.count++;
+            currentEventList.count++;
         }
         if currentEventList.count == currentEventList.capacity {
             return;
@@ -16341,7 +16215,7 @@ void RecordAutomationEvent() {
             currentEventList.events[currentEventList.count].params[0] = id;
             currentEventList.events[currentEventList.count].params[1] = cast(i32, CORE.Input.Touch.position[id].x);
             currentEventList.events[currentEventList.count].params[2] = cast(i32, CORE.Input.Touch.position[id].y);
-                        currentEventList.count++;
+            currentEventList.count++;
         }
         if currentEventList.count == currentEventList.capacity {
             return;
@@ -16355,7 +16229,7 @@ void RecordAutomationEvent() {
                 currentEventList.events[currentEventList.count].params[0] = gamepad;
                 currentEventList.events[currentEventList.count].params[1] = button;
                 currentEventList.events[currentEventList.count].params[2] = 0;
-                                currentEventList.count++;
+                currentEventList.count++;
             }
             if currentEventList.count == currentEventList.capacity {
                 return;
@@ -16366,7 +16240,7 @@ void RecordAutomationEvent() {
                 currentEventList.events[currentEventList.count].params[0] = gamepad;
                 currentEventList.events[currentEventList.count].params[1] = button;
                 currentEventList.events[currentEventList.count].params[2] = 0;
-                                currentEventList.count++;
+                currentEventList.count++;
             }
             if currentEventList.count == currentEventList.capacity {
                 return;
@@ -16380,7 +16254,7 @@ void RecordAutomationEvent() {
                 currentEventList.events[currentEventList.count].params[0] = gamepad;
                 currentEventList.events[currentEventList.count].params[1] = axis;
                 currentEventList.events[currentEventList.count].params[2] = cast(i32, CORE.Input.Gamepad.axisState[gamepad][axis] * 32768.0f);
-                                currentEventList.count++;
+                currentEventList.count++;
             }
             if currentEventList.count == currentEventList.capacity {
                 return;
@@ -16393,7 +16267,7 @@ void RecordAutomationEvent() {
         currentEventList.events[currentEventList.count].params[0] = cast(i32, GESTURES.current);
         currentEventList.events[currentEventList.count].params[1] = 0;
         currentEventList.events[currentEventList.count].params[2] = 0;
-                currentEventList.count++;
+        currentEventList.count++;
         if currentEventList.count == currentEventList.capacity {
             return;
         }
@@ -18117,9 +17991,6 @@ f32 EaseCubicInOut(f32 t, f32 b, f32 c, f32 d) {
 }
 }
 when !(defined(STBIDEF)) {
-when defined(STB_IMAGE_STATIC) {
-    } else {
-    }
 }
 when defined(STBI_WINDOWS_UTF8) {
 }
@@ -18136,23 +18007,23 @@ when !(defined(STBI_NO_LINEAR)) {
 ////   end header file   /////////////////////////////////////////////////////
 when defined(STBI_ONLY_JPEG) || defined(STBI_ONLY_PNG) || defined(STBI_ONLY_BMP) || defined(STBI_ONLY_TGA) || defined(STBI_ONLY_GIF) || defined(STBI_ONLY_PSD) || defined(STBI_ONLY_HDR) || defined(STBI_ONLY_PIC) || defined(STBI_ONLY_PNM) || defined(STBI_ONLY_ZLIB) {
 when !(defined(STBI_ONLY_JPEG)) {
-    }
+}
 when !(defined(STBI_ONLY_PNG)) {
-    }
+}
 when !(defined(STBI_ONLY_BMP)) {
-    }
+}
 when !(defined(STBI_ONLY_PSD)) {
-    }
+}
 when !(defined(STBI_ONLY_TGA)) {
-    }
+}
 when !(defined(STBI_ONLY_GIF)) {
-    }
+}
 when !(defined(STBI_ONLY_HDR)) {
-    }
+}
 when !(defined(STBI_ONLY_PIC)) {
-    }
+}
 when !(defined(STBI_ONLY_PNM)) {
-    }
+}
 }
 when defined(STBI_NO_PNG) && !defined(STBI_SUPPORT_ZLIB) && !defined(STBI_NO_ZLIB) {
 }
@@ -18181,17 +18052,17 @@ when defined(STBI__X86_TARGET) && !defined(STBI_NO_SIMD) {
 }
 when !defined(STBI_NO_SIMD) && (defined(STBI__X86_TARGET) || defined(STBI__X64_TARGET)) {
 when os(windows) {
-        // TODO transminc: untranslatable platform branch
-    } else {
-    }
+// TODO transminc: untranslatable platform branch
+} else {
+}
 }
 // ARM NEON
 when defined(STBI_NO_SIMD) && defined(STBI_NEON) {
 }
 when defined(STBI_NEON) {
 when os(windows) {
-    } else {
-    }
+} else {
+}
 }
 when !(defined(STBI_SIMD_ALIGN)) {
 }
@@ -18206,9 +18077,7 @@ void stbi__start_mem(stbi__context* s, stbi_uc* buffer, i32 len) {
     s.img_buffer_original_end = buffer + len;
     s.img_buffer_end = s.img_buffer_original_end;
 }
-}
 // initialize a callback-based context
-private {
 void stbi__start_callbacks(stbi__context* s, stbi_io_callbacks* c, void* user) {
     s.io = *c;
     s.io_user_data = user;
@@ -18220,8 +18089,6 @@ void stbi__start_callbacks(stbi__context* s, stbi_io_callbacks* c, void* user) {
     stbi__refill_buffer(s);
     s.img_buffer_original_end = s.img_buffer_end;
 }
-}
-private {
 void stbi__rewind(stbi__context* s) {
     s.img_buffer = s.img_buffer_original;
     s.img_buffer_end = s.img_buffer_original_end;
@@ -18240,15 +18107,14 @@ u8* stbi_failure_reason() {
 when !(defined(STBI_NO_FAILURE_STRINGS)) {
 private {
 i32 stbi__err(u8* str_var) {
-        stbi__g_failure_reason = str_var;
-        return 0;
-    }
+    stbi__g_failure_reason = str_var;
+    return 0;
+}
 }
 }
 private {
 void* stbi__malloc(u64 size) {
     return alloc(cast(i64, size));
-}
 }
 // stb_image uses ints pervasively, including for offset calculations.
 // therefore the largest decoded image size we can support with the
@@ -18261,17 +18127,14 @@ void* stbi__malloc(u64 size) {
 // and no overflow occurs.
 // return 1 if the sum is valid, 0 on overflow.
 // negative terms are considered invalid.
-private {
 i32 stbi__addsizes_valid(i32 a, i32 b) {
     if b < 0 {
         return 0;
     }
     return a <= INT_MAX - b;
 }
-}
 // returns 1 if the product is valid, 0 on overflow.
 // negative factors are considered invalid.
-private {
 i32 stbi__mul2sizes_valid(i32 a, i32 b) {
     if a < 0 || b < 0 {
         return 0;
@@ -18281,52 +18144,38 @@ i32 stbi__mul2sizes_valid(i32 a, i32 b) {
     }
     return a <= INT_MAX / b;
 }
-}
 // returns 1 if "a*b + add" has no negative terms/factors and doesn't overflow
-private {
 i32 stbi__mad2sizes_valid(i32 a, i32 b, i32 add) {
     return stbi__mul2sizes_valid(a, b) && stbi__addsizes_valid(a * b, add);
 }
-}
 // returns 1 if "a*b*c + add" has no negative terms/factors and doesn't overflow
-private {
 i32 stbi__mad3sizes_valid(i32 a, i32 b, i32 c, i32 add) {
     return stbi__mul2sizes_valid(a, b) && stbi__mul2sizes_valid(a * b, c) && stbi__addsizes_valid(a * b * c, add);
 }
-}
 // returns 1 if "a*b*c*d + add" has no negative terms/factors and doesn't overflow
-private {
 i32 stbi__mad4sizes_valid(i32 a, i32 b, i32 c, i32 d, i32 add) {
     return stbi__mul2sizes_valid(a, b) && stbi__mul2sizes_valid(a * b, c) && stbi__mul2sizes_valid(a * b * c, d) && stbi__addsizes_valid(a * b * c * d, add);
 }
-}
 // mallocs with size overflow checking
-private {
 void* stbi__malloc_mad2(i32 a, i32 b, i32 add) {
     if stbi__mad2sizes_valid(a, b, add) == 0 {
         return null;
     }
     return stbi__malloc(cast(u64, a * b + add));
 }
-}
-private {
 void* stbi__malloc_mad3(i32 a, i32 b, i32 c, i32 add) {
     if stbi__mad3sizes_valid(a, b, c, add) == 0 {
         return null;
     }
     return stbi__malloc(cast(u64, a * b * c + add));
 }
-}
-private {
 void* stbi__malloc_mad4(i32 a, i32 b, i32 c, i32 d, i32 add) {
     if stbi__mad4sizes_valid(a, b, c, d, add) == 0 {
         return null;
     }
     return stbi__malloc(cast(u64, a * b * c * d + add));
 }
-}
 // returns 1 if the sum of two signed ints is valid (between -2^31 and 2^31-1 inclusive), 0 on overflow.
-private {
 i32 stbi__addints_valid(i32 a, i32 b) {
     if a >= 0 != b >= 0 {
         return 1;
@@ -18336,9 +18185,7 @@ i32 stbi__addints_valid(i32 a, i32 b) {
     }
     return a <= INT_MAX - b;
 }
-}
 // returns 1 if the product of two ints fits in a signed short, 0 on overflow.
-private {
 i32 stbi__mul2shorts_valid(i32 a, i32 b) {
     if b == 0 || b == -1 {
         return 1;
@@ -18382,8 +18229,6 @@ void* stbi__load_main(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp,
     ignore sizeof(bpc);
     return cast(u8*, cast(u64, stbi__err("unknown image type") != 0 ? null : null));
 }
-}
-private {
 stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, i32 w, i32 h, i32 channels) {
     i32 i;
     i32 img_len = w * h * channels;
@@ -18398,8 +18243,6 @@ stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, i32 w, i32 h, i32 channels) {
     free(orig);
     return reduced;
 }
-}
-private {
 stbi__uint16* stbi__convert_8_to_16(stbi_uc* orig, i32 w, i32 h, i32 channels) {
     i32 i;
     i32 img_len = w * h * channels;
@@ -18414,12 +18257,10 @@ stbi__uint16* stbi__convert_8_to_16(stbi_uc* orig, i32 w, i32 h, i32 channels) {
     free(orig);
     return enlarged;
 }
-}
-private {
 void stbi__vertical_flip(void* image, i32 w, i32 h, i32 bytes_per_pixel) {
     i32 row;
     u64 bytes_per_row = cast(u64, w) * cast(u64, bytes_per_pixel);
-    stbi_uc[2048] temp;
+    noinit stbi_uc[2048] temp;
     var bytes = cast(stbi_uc*, image);
     for row = 0; row < h >> 1; row++ {
         stbi_uc* row0 = bytes + cast(u64, row) * bytes_per_row;
@@ -18436,10 +18277,8 @@ void stbi__vertical_flip(void* image, i32 w, i32 h, i32 bytes_per_pixel) {
         }
     }
 }
-}
-private {
 u8* stbi__load_and_postprocess_8bit(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp) {
-    stbi__result_info ri;
+    noinit stbi__result_info ri;
     void* result = stbi__load_main(s, x, y, comp, req_comp, &ri, 8);
     if result == null {
         return null;
@@ -18455,10 +18294,8 @@ u8* stbi__load_and_postprocess_8bit(stbi__context* s, i32* x, i32* y, i32* comp,
     }
     return cast(u8*, result);
 }
-}
-private {
 stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp) {
-    stbi__result_info ri;
+    noinit stbi__result_info ri;
     void* result = stbi__load_main(s, x, y, comp, req_comp, &ri, 16);
     if result == null {
         return null;
@@ -18476,50 +18313,47 @@ stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, i32* x, i32* y,
 }
 }
 stbi_us* stbi_load_16_from_memory(stbi_uc* buffer, i32 len, i32* x, i32* y, i32* channels_in_file, i32 desired_channels) {
-    stbi__context s;
+    noinit stbi__context s;
     stbi__start_mem(&s, buffer, len);
     return stbi__load_and_postprocess_16bit(&s, x, y, channels_in_file, desired_channels);
 }
 stbi_us* stbi_load_16_from_callbacks(stbi_io_callbacks* clbk, void* user, i32* x, i32* y, i32* channels_in_file, i32 desired_channels) {
-    stbi__context s;
+    noinit stbi__context s;
     stbi__start_callbacks(&s, clbk, user);
     return stbi__load_and_postprocess_16bit(&s, x, y, channels_in_file, desired_channels);
 }
 stbi_uc* stbi_load_from_memory(stbi_uc* buffer, i32 len, i32* x, i32* y, i32* comp, i32 req_comp) {
-    stbi__context s;
+    noinit stbi__context s;
     stbi__start_mem(&s, buffer, len);
     return stbi__load_and_postprocess_8bit(&s, x, y, comp, req_comp);
 }
 stbi_uc* stbi_load_from_callbacks(stbi_io_callbacks* clbk, void* user, i32* x, i32* y, i32* comp, i32 req_comp) {
-    stbi__context s;
+    noinit stbi__context s;
     stbi__start_callbacks(&s, clbk, user);
     return stbi__load_and_postprocess_8bit(&s, x, y, comp, req_comp);
 }
 when !(defined(STBI_NO_LINEAR)) {
 private {
 f32* stbi__loadf_main(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp) {
-        u8* data;
-        data = stbi__load_and_postprocess_8bit(s, x, y, comp, req_comp);
-        if data != null {
-            return stbi__ldr_to_hdr(data, *x, *y, req_comp != 0 ? req_comp : *comp);
-        }
-        return cast(f32*, cast(u64, stbi__err("unknown image type") != 0 ? null : null));
+    u8* data;
+    data = stbi__load_and_postprocess_8bit(s, x, y, comp, req_comp);
+    if data != null {
+        return stbi__ldr_to_hdr(data, *x, *y, req_comp != 0 ? req_comp : *comp);
     }
+    return cast(f32*, cast(u64, stbi__err("unknown image type") != 0 ? null : null));
+}
 }
 f32* stbi_loadf_from_memory(stbi_uc* buffer, i32 len, i32* x, i32* y, i32* comp, i32 req_comp) {
-        stbi__context s;
-        stbi__start_mem(&s, buffer, len);
-        return stbi__loadf_main(&s, x, y, comp, req_comp);
-    }
-f32* stbi_loadf_from_callbacks(stbi_io_callbacks* clbk, void* user, i32* x, i32* y, i32* comp, i32 req_comp) {
-        stbi__context s;
-        stbi__start_callbacks(&s, clbk, user);
-        return stbi__loadf_main(&s, x, y, comp, req_comp);
-    }
+    noinit stbi__context s;
+    stbi__start_mem(&s, buffer, len);
+    return stbi__loadf_main(&s, x, y, comp, req_comp);
 }
-// these is-hdr-or-not is defined independent of whether STBI_NO_LINEAR is
-// defined, for API simplicity; if STBI_NO_LINEAR is defined, it always
-// reports false!
+f32* stbi_loadf_from_callbacks(stbi_io_callbacks* clbk, void* user, i32* x, i32* y, i32* comp, i32 req_comp) {
+    noinit stbi__context s;
+    stbi__start_callbacks(&s, clbk, user);
+    return stbi__loadf_main(&s, x, y, comp, req_comp);
+}
+}
 i32 stbi_is_hdr_from_memory(stbi_uc* buffer, i32 len) {
     ignore sizeof(buffer);
     ignore sizeof(len);
@@ -18534,11 +18368,11 @@ when !(defined(STBI_NO_LINEAR)) {
 private { f32 stbi__l2h_gamma = 2.2f; }
 private { f32 stbi__l2h_scale = 1.0f; }
 void stbi_ldr_to_hdr_gamma(f32 gamma) {
-        stbi__l2h_gamma = gamma;
-    }
+    stbi__l2h_gamma = gamma;
+}
 void stbi_ldr_to_hdr_scale(f32 scale) {
-        stbi__l2h_scale = scale;
-    }
+    stbi__l2h_scale = scale;
+}
 }
 private { f32 stbi__h2l_gamma_i = 1.0f / 2.2f; }
 private { f32 stbi__h2l_scale_i = 1.0f; }
@@ -18562,8 +18396,6 @@ void stbi__refill_buffer(stbi__context* s) {
         s.img_buffer_end = s.buffer_start + n;
     }
 }
-}
-private {
 stbi_uc stbi__get8(stbi__context* s) {
     if s.img_buffer < s.img_buffer_end {
         return *s.img_buffer++;
@@ -18578,401 +18410,408 @@ stbi_uc stbi__get8(stbi__context* s) {
 // nothing
 when defined(STBI_NO_PNG) {
 } else {
+// nothing
 private {
 void stbi__skip(stbi__context* s, i32 n) {
-        if n == 0 {
-            return;
-        }
-        if n < 0 {
-            s.img_buffer = s.img_buffer_end;
-            return;
-        }
-        if s.io.read != null {
-            var blen = cast(i32, cast(i64, s.img_buffer_end - s.img_buffer));
-            if blen < n {
-                s.img_buffer = s.img_buffer_end;
-                s.io.skip(s.io_user_data, n - blen);
-                return;
-            }
-        }
-        s.img_buffer += n;
+    if n == 0 {
+        return;
     }
+    if n < 0 {
+        s.img_buffer = s.img_buffer_end;
+        return;
+    }
+    if s.io.read != null {
+        var blen = cast(i32, cast(i64, s.img_buffer_end - s.img_buffer));
+        if blen < n {
+            s.img_buffer = s.img_buffer_end;
+            s.io.skip(s.io_user_data, n - blen);
+            return;
+        }
+    }
+    s.img_buffer += n;
+}
 }
 }
 when defined(STBI_NO_PNG) {
 } else {
+// nothing
 private {
 i32 stbi__getn(stbi__context* s, stbi_uc* buffer, i32 n) {
-        if s.io.read != null {
-            var blen = cast(i32, cast(i64, s.img_buffer_end - s.img_buffer));
-            if blen < n {
-                i32 res;
-                i32 count;
-                memcpy(buffer, s.img_buffer, cast(u64, blen));
-                count = s.io.read(s.io_user_data, cast(u8*, buffer) + blen, n - blen);
-                res = count == n - blen;
-                s.img_buffer = s.img_buffer_end;
-                return res;
-            }
-        }
-        if s.img_buffer + n <= s.img_buffer_end {
-            memcpy(buffer, s.img_buffer, cast(u64, n));
-            s.img_buffer += n;
-            return 1;
-        } else {
-            return 0;
+    if s.io.read != null {
+        var blen = cast(i32, cast(i64, s.img_buffer_end - s.img_buffer));
+        if blen < n {
+            i32 res;
+            i32 count;
+            memcpy(buffer, s.img_buffer, cast(u64, blen));
+            count = s.io.read(s.io_user_data, cast(u8*, buffer) + blen, n - blen);
+            res = count == n - blen;
+            s.img_buffer = s.img_buffer_end;
+            return res;
         }
     }
+    if s.img_buffer + n <= s.img_buffer_end {
+        memcpy(buffer, s.img_buffer, cast(u64, n));
+        s.img_buffer += n;
+        return 1;
+    } else {
+        return 0;
+    }
+}
 }
 }
 when defined(STBI_NO_PNG) {
 } else {
+// nothing
 private {
 i32 stbi__get16be(stbi__context* s) {
-        var z = cast(i32, stbi__get8(s));
-        return (z << 8) + stbi__get8(s);
-    }
+    var z = cast(i32, stbi__get8(s));
+    return (z << 8) + stbi__get8(s);
+}
 }
 }
 when defined(STBI_NO_PNG) {
 } else {
+// nothing
 private {
 stbi__uint32 stbi__get32be(stbi__context* s) {
-        var z = cast(stbi__uint32, stbi__get16be(s));
-        return (z << 16) + cast(u32, stbi__get16be(s));
-    }
+    var z = cast(stbi__uint32, stbi__get16be(s));
+    return (z << 16) + cast(u32, stbi__get16be(s));
+}
 }
 }
 // nothing
 when defined(STBI_NO_PNG) {
 } else {
-    //////////////////////////////////////////////////////////////////////////////
-    //
-    //  generic converter from built-in img_n to req_comp
-    //    individual types do this automatically as much as possible (e.g. jpeg
-    //    does all cases internally since it needs to colorspace convert anyway,
-    //    and it never has alpha, so very few cases ). png can automatically
-    //    interleave an alpha=255 channel, but falls back to this for other cases
-    //
-    //  assume data buffer is malloced, so malloc a new one and free that one
-    //  only failure mode is malloc failing
+//////////////////////////////////////////////////////////////////////////////
+//
+//  generic converter from built-in img_n to req_comp
+//    individual types do this automatically as much as possible (e.g. jpeg
+//    does all cases internally since it needs to colorspace convert anyway,
+//    and it never has alpha, so very few cases ). png can automatically
+//    interleave an alpha=255 channel, but falls back to this for other cases
+//
+//  assume data buffer is malloced, so malloc a new one and free that one
+//  only failure mode is malloc failing
 private {
 stbi_uc stbi__compute_y(i32 r, i32 g, i32 b) {
-        return cast(stbi_uc, r * 77 + g * 150 + 29 * b >> 8);
-    }
+    return cast(stbi_uc, r * 77 + g * 150 + 29 * b >> 8);
+}
 }
 }
 when defined(STBI_NO_PNG) {
 } else {
+// nothing
 private {
 u8* stbi__convert_format(u8* data, i32 img_n, i32 req_comp, u32 x, u32 y) {
-        i32 i;
-        i32 j;
-        u8* good;
-        if req_comp == img_n {
-            return data;
-        }
-        assert(req_comp >= 1 && req_comp <= 4);
-        good = cast(u8*, stbi__malloc_mad3(req_comp, cast(i32, x), cast(i32, y), 0));
-        if good == null {
-            free(data);
-            return cast(u8*, cast(u64, stbi__err("outofmem") != 0 ? null : null));
-        }
-        for j = 0; j < cast(i32, y); ++j {
-            u8* src = data + cast(u32, j) * x * cast(u32, img_n);
-            u8* dest = good + cast(u32, j) * x * cast(u32, req_comp);
-            switch img_n * 8 + req_comp {
-                case 1 * 8 + 2: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = src[0];
-                        dest[1] = 255;
-                        src += 1;
-                        dest += 2;
-                    }
-                }
-                case 1 * 8 + 3: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[2] = src[0];
-                        dest[1] = dest[2];
-                        dest[0] = dest[1];
-                        src += 1;
-                        dest += 3;
-                    }
-                }
-                case 1 * 8 + 4: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[2] = src[0];
-                        dest[1] = dest[2];
-                        dest[0] = dest[1];
-                        dest[3] = 255;
-                        src += 1;
-                        dest += 4;
-                    }
-                }
-                case 2 * 8 + 1: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = src[0];
-                        src += 2;
-                        dest += 1;
-                    }
-                }
-                case 2 * 8 + 3: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[2] = src[0];
-                        dest[1] = dest[2];
-                        dest[0] = dest[1];
-                        src += 2;
-                        dest += 3;
-                    }
-                }
-                case 2 * 8 + 4: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[2] = src[0];
-                        dest[1] = dest[2];
-                        dest[0] = dest[1];
-                        dest[3] = src[1];
-                        src += 2;
-                        dest += 4;
-                    }
-                }
-                case 3 * 8 + 4: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = src[0];
-                        dest[1] = src[1];
-                        dest[2] = src[2];
-                        dest[3] = 255;
-                        src += 3;
-                        dest += 4;
-                    }
-                }
-                case 3 * 8 + 1: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = stbi__compute_y(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
-                        src += 3;
-                        dest += 1;
-                    }
-                }
-                case 3 * 8 + 2: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = stbi__compute_y(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
-                        dest[1] = 255;
-                        src += 3;
-                        dest += 2;
-                    }
-                }
-                case 4 * 8 + 1: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = stbi__compute_y(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
-                        src += 4;
-                        dest += 1;
-                    }
-                }
-                case 4 * 8 + 2: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = stbi__compute_y(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
-                        dest[1] = src[3];
-                        src += 4;
-                        dest += 2;
-                    }
-                }
-                case 4 * 8 + 3: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = src[0];
-                        dest[1] = src[1];
-                        dest[2] = src[2];
-                        src += 4;
-                        dest += 3;
-                    }
-                }
-                default: {
-                    assert(0);
-                    free(data);
-                    free(good);
-                    return cast(u8*, cast(u64, stbi__err("unsupported") != 0 ? null : null));
+    i32 i;
+    i32 j;
+    u8* good;
+    if req_comp == img_n {
+        return data;
+    }
+    assert(req_comp >= 1 && req_comp <= 4);
+    good = cast(u8*, stbi__malloc_mad3(req_comp, cast(i32, x), cast(i32, y), 0));
+    if good == null {
+        free(data);
+        return cast(u8*, cast(u64, stbi__err("outofmem") != 0 ? null : null));
+    }
+    for j = 0; j < cast(i32, y); ++j {
+        u8* src = data + cast(u32, j) * x * cast(u32, img_n);
+        u8* dest = good + cast(u32, j) * x * cast(u32, req_comp);
+        switch img_n * 8 + req_comp {
+            case 1 * 8 + 2: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = src[0];
+                    dest[1] = 255;
+                    src += 1;
+                    dest += 2;
                 }
             }
+            case 1 * 8 + 3: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[2] = src[0];
+                    dest[1] = dest[2];
+                    dest[0] = dest[1];
+                    src += 1;
+                    dest += 3;
+                }
+            }
+            case 1 * 8 + 4: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[2] = src[0];
+                    dest[1] = dest[2];
+                    dest[0] = dest[1];
+                    dest[3] = 255;
+                    src += 1;
+                    dest += 4;
+                }
+            }
+            case 2 * 8 + 1: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = src[0];
+                    src += 2;
+                    dest += 1;
+                }
+            }
+            case 2 * 8 + 3: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[2] = src[0];
+                    dest[1] = dest[2];
+                    dest[0] = dest[1];
+                    src += 2;
+                    dest += 3;
+                }
+            }
+            case 2 * 8 + 4: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[2] = src[0];
+                    dest[1] = dest[2];
+                    dest[0] = dest[1];
+                    dest[3] = src[1];
+                    src += 2;
+                    dest += 4;
+                }
+            }
+            case 3 * 8 + 4: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = src[0];
+                    dest[1] = src[1];
+                    dest[2] = src[2];
+                    dest[3] = 255;
+                    src += 3;
+                    dest += 4;
+                }
+            }
+            case 3 * 8 + 1: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = stbi__compute_y(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
+                    src += 3;
+                    dest += 1;
+                }
+            }
+            case 3 * 8 + 2: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = stbi__compute_y(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
+                    dest[1] = 255;
+                    src += 3;
+                    dest += 2;
+                }
+            }
+            case 4 * 8 + 1: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = stbi__compute_y(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
+                    src += 4;
+                    dest += 1;
+                }
+            }
+            case 4 * 8 + 2: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = stbi__compute_y(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
+                    dest[1] = src[3];
+                    src += 4;
+                    dest += 2;
+                }
+            }
+            case 4 * 8 + 3: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = src[0];
+                    dest[1] = src[1];
+                    dest[2] = src[2];
+                    src += 4;
+                    dest += 3;
+                }
+            }
+            default: {
+                assert(0);
+                free(data);
+                free(good);
+                return cast(u8*, cast(u64, stbi__err("unsupported") != 0 ? null : null));
+            }
         }
-        free(data);
-        return good;
     }
+    free(data);
+    return good;
+}
 }
 }
 when defined(STBI_NO_PNG) {
 } else {
+// nothing
 private {
 stbi__uint16 stbi__compute_y_16(i32 r, i32 g, i32 b) {
-        return cast(stbi__uint16, r * 77 + g * 150 + 29 * b >> 8);
-    }
+    return cast(stbi__uint16, r * 77 + g * 150 + 29 * b >> 8);
+}
 }
 }
 when defined(STBI_NO_PNG) {
 } else {
+// nothing
 private {
 stbi__uint16* stbi__convert_format16(stbi__uint16* data, i32 img_n, i32 req_comp, u32 x, u32 y) {
-        i32 i;
-        i32 j;
-        stbi__uint16* good;
-        if req_comp == img_n {
-            return data;
-        }
-        assert(req_comp >= 1 && req_comp <= 4);
-        good = cast(stbi__uint16*, stbi__malloc(cast(u32, req_comp) * x * y * 2));
-        if good == null {
-            free(data);
-            return cast(stbi__uint16*, cast(u8*, cast(u64, stbi__err("outofmem") != 0 ? null : null)));
-        }
-        for j = 0; j < cast(i32, y); ++j {
-            stbi__uint16* src = data + cast(u32, j) * x * cast(u32, img_n);
-            stbi__uint16* dest = good + cast(u32, j) * x * cast(u32, req_comp);
-            switch img_n * 8 + req_comp {
-                case 1 * 8 + 2: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = src[0];
-                        dest[1] = 65535;
-                        src += 1;
-                        dest += 2;
-                    }
-                }
-                case 1 * 8 + 3: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[2] = src[0];
-                        dest[1] = dest[2];
-                        dest[0] = dest[1];
-                        src += 1;
-                        dest += 3;
-                    }
-                }
-                case 1 * 8 + 4: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[2] = src[0];
-                        dest[1] = dest[2];
-                        dest[0] = dest[1];
-                        dest[3] = 65535;
-                        src += 1;
-                        dest += 4;
-                    }
-                }
-                case 2 * 8 + 1: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = src[0];
-                        src += 2;
-                        dest += 1;
-                    }
-                }
-                case 2 * 8 + 3: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[2] = src[0];
-                        dest[1] = dest[2];
-                        dest[0] = dest[1];
-                        src += 2;
-                        dest += 3;
-                    }
-                }
-                case 2 * 8 + 4: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[2] = src[0];
-                        dest[1] = dest[2];
-                        dest[0] = dest[1];
-                        dest[3] = src[1];
-                        src += 2;
-                        dest += 4;
-                    }
-                }
-                case 3 * 8 + 4: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = src[0];
-                        dest[1] = src[1];
-                        dest[2] = src[2];
-                        dest[3] = 65535;
-                        src += 3;
-                        dest += 4;
-                    }
-                }
-                case 3 * 8 + 1: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = stbi__compute_y_16(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
-                        src += 3;
-                        dest += 1;
-                    }
-                }
-                case 3 * 8 + 2: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = stbi__compute_y_16(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
-                        dest[1] = 65535;
-                        src += 3;
-                        dest += 2;
-                    }
-                }
-                case 4 * 8 + 1: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = stbi__compute_y_16(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
-                        src += 4;
-                        dest += 1;
-                    }
-                }
-                case 4 * 8 + 2: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = stbi__compute_y_16(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
-                        dest[1] = src[3];
-                        src += 4;
-                        dest += 2;
-                    }
-                }
-                case 4 * 8 + 3: {
-                    for i = cast(i32, x - 1); i >= 0; --i {
-                        dest[0] = src[0];
-                        dest[1] = src[1];
-                        dest[2] = src[2];
-                        src += 4;
-                        dest += 3;
-                    }
-                }
-                default: {
-                    assert(0);
-                    free(data);
-                    free(good);
-                    return cast(stbi__uint16*, cast(u8*, cast(u64, stbi__err("unsupported") != 0 ? null : null)));
+    i32 i;
+    i32 j;
+    stbi__uint16* good;
+    if req_comp == img_n {
+        return data;
+    }
+    assert(req_comp >= 1 && req_comp <= 4);
+    good = cast(stbi__uint16*, stbi__malloc(cast(u32, req_comp) * x * y * 2));
+    if good == null {
+        free(data);
+        return cast(stbi__uint16*, cast(u8*, cast(u64, stbi__err("outofmem") != 0 ? null : null)));
+    }
+    for j = 0; j < cast(i32, y); ++j {
+        stbi__uint16* src = data + cast(u32, j) * x * cast(u32, img_n);
+        stbi__uint16* dest = good + cast(u32, j) * x * cast(u32, req_comp);
+        switch img_n * 8 + req_comp {
+            case 1 * 8 + 2: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = src[0];
+                    dest[1] = 65535;
+                    src += 1;
+                    dest += 2;
                 }
             }
+            case 1 * 8 + 3: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[2] = src[0];
+                    dest[1] = dest[2];
+                    dest[0] = dest[1];
+                    src += 1;
+                    dest += 3;
+                }
+            }
+            case 1 * 8 + 4: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[2] = src[0];
+                    dest[1] = dest[2];
+                    dest[0] = dest[1];
+                    dest[3] = 65535;
+                    src += 1;
+                    dest += 4;
+                }
+            }
+            case 2 * 8 + 1: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = src[0];
+                    src += 2;
+                    dest += 1;
+                }
+            }
+            case 2 * 8 + 3: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[2] = src[0];
+                    dest[1] = dest[2];
+                    dest[0] = dest[1];
+                    src += 2;
+                    dest += 3;
+                }
+            }
+            case 2 * 8 + 4: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[2] = src[0];
+                    dest[1] = dest[2];
+                    dest[0] = dest[1];
+                    dest[3] = src[1];
+                    src += 2;
+                    dest += 4;
+                }
+            }
+            case 3 * 8 + 4: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = src[0];
+                    dest[1] = src[1];
+                    dest[2] = src[2];
+                    dest[3] = 65535;
+                    src += 3;
+                    dest += 4;
+                }
+            }
+            case 3 * 8 + 1: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = stbi__compute_y_16(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
+                    src += 3;
+                    dest += 1;
+                }
+            }
+            case 3 * 8 + 2: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = stbi__compute_y_16(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
+                    dest[1] = 65535;
+                    src += 3;
+                    dest += 2;
+                }
+            }
+            case 4 * 8 + 1: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = stbi__compute_y_16(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
+                    src += 4;
+                    dest += 1;
+                }
+            }
+            case 4 * 8 + 2: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = stbi__compute_y_16(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
+                    dest[1] = src[3];
+                    src += 4;
+                    dest += 2;
+                }
+            }
+            case 4 * 8 + 3: {
+                for i = cast(i32, x - 1); i >= 0; --i {
+                    dest[0] = src[0];
+                    dest[1] = src[1];
+                    dest[2] = src[2];
+                    src += 4;
+                    dest += 3;
+                }
+            }
+            default: {
+                assert(0);
+                free(data);
+                free(good);
+                return cast(stbi__uint16*, cast(u8*, cast(u64, stbi__err("unsupported") != 0 ? null : null)));
+            }
         }
-        free(data);
-        return good;
     }
+    free(data);
+    return good;
+}
 }
 }
 when !(defined(STBI_NO_LINEAR)) {
 private {
 f32* stbi__ldr_to_hdr(stbi_uc* data, i32 x, i32 y, i32 comp) {
-        i32 i;
-        i32 k;
-        i32 n;
-        f32* output;
-        if data == null {
-            return null;
-        }
-        output = cast(f32*, stbi__malloc_mad4(x, y, comp, cast(i32, sizeof(f32)), 0));
-        if output == null {
-            free(data);
-            return cast(f32*, cast(u64, stbi__err("outofmem") != 0 ? null : null));
-        }
-        if (comp & 1) != 0 {
-            n = comp;
-        } else {
-            n = comp - 1;
-        }
-        for i = 0; i < x * y; ++i {
-            for k = 0; k < n; ++k {
-                output[i * comp + k] = cast(f32, pow(cast(f32, data[i * comp + k]) / 255.0f, stbi__l2h_gamma) * stbi__l2h_scale);
-            }
-        }
-        if n < comp {
-            for i = 0; i < x * y; ++i {
-                output[i * comp + n] = cast(f32, data[i * comp + n]) / 255.0f;
-            }
-        }
-        free(data);
-        return output;
+    i32 i;
+    i32 k;
+    i32 n;
+    f32* output;
+    if data == null {
+        return null;
     }
+    output = cast(f32*, stbi__malloc_mad4(x, y, comp, cast(i32, sizeof(f32)), 0));
+    if output == null {
+        free(data);
+        return cast(f32*, cast(u64, stbi__err("outofmem") != 0 ? null : null));
+    }
+    if (comp & 1) != 0 {
+        n = comp;
+    } else {
+        n = comp - 1;
+    }
+    for i = 0; i < x * y; ++i {
+        for k = 0; k < n; ++k {
+            output[i * comp + k] = cast(f32, pow(cast(f32, data[i * comp + k]) / 255.0f, stbi__l2h_gamma) * stbi__l2h_scale);
+        }
+    }
+    if n < comp {
+        for i = 0; i < x * y; ++i {
+            output[i * comp + n] = cast(f32, data[i * comp + n]) / 255.0f;
+        }
+    }
+    free(data);
+    return output;
+}
 }
 }
 //////////////////////////////////////////////////////////////////////////////
@@ -19004,394 +18843,367 @@ f32* stbi__ldr_to_hdr(stbi_uc* data, i32 x, i32 y, i32 comp) {
 when !(defined(STBI_NO_ZLIB)) {
 private {
 i32 stbi__bitreverse16(i32 n) {
-        n = (n & 43690) >> 1 | (n & 21845) << 1;
-        n = (n & 52428) >> 2 | (n & 13107) << 2;
-        n = (n & 61680) >> 4 | (n & 3855) << 4;
-        n = (n & 65280) >> 8 | (n & 255) << 8;
-        return n;
-    }
+    n = (n & 43690) >> 1 | (n & 21845) << 1;
+    n = (n & 52428) >> 2 | (n & 13107) << 2;
+    n = (n & 61680) >> 4 | (n & 3855) << 4;
+    n = (n & 65280) >> 8 | (n & 255) << 8;
+    return n;
 }
-private {
 i32 stbi__bit_reverse(i32 v, i32 bits) {
-        assert(bits <= 16);
-        return stbi__bitreverse16(v) >> 16 - bits;
-    }
+    assert(bits <= 16);
+    return stbi__bitreverse16(v) >> 16 - bits;
 }
-private {
 i32 stbi__zbuild_huffman(stbi__zhuffman* z, stbi_uc* sizelist, i32 num) {
-        i32 i;
-        i32 k = 0;
-        i32 code;
-        i32[16] next_code;
-        i32[17] sizes;
-        memset(sizes, 0, cast(u64, sizeof(sizes)));
-        memset(z.fast, 0, cast(u64, sizeof(z.fast)));
-        for i = 0; i < num; ++i {
-            ++sizes[sizelist[i]];
-        }
-        sizes[0] = 0;
-        for i = 1; i < 16; ++i {
-            if sizes[i] > 1 << i {
-                return stbi__err("bad sizes");
-            }
-        }
-        code = 0;
-        for i = 1; i < 16; ++i {
-            next_code[i] = code;
-            z.firstcode[i] = cast(stbi__uint16, code);
-            z.firstsymbol[i] = cast(stbi__uint16, k);
-            code = code + sizes[i];
-            if sizes[i] != 0 {
-                if code - 1 >= 1 << i {
-                    return stbi__err("bad codelengths");
-                }
-            }
-            z.maxcode[i] = code << 16 - i;
-            code <<= 1;
-            k += sizes[i];
-        }
-        z.maxcode[16] = 65536;
-        for i = 0; i < num; ++i {
-            var s = cast(i32, sizelist[i]);
-            if s != 0 {
-                i32 c = next_code[s] - z.firstcode[s] + z.firstsymbol[s];
-                var fastv = cast(stbi__uint16, s << 9 | i);
-                z.size[c] = cast(stbi_uc, s);
-                z.value[c] = cast(stbi__uint16, i);
-                if s <= 9 {
-                    i32 j = stbi__bit_reverse(next_code[s], s);
-                    while j < 1 << 9 {
-                        z.fast[j] = fastv;
-                        j += 1 << s;
-                    }
-                }
-                ++next_code[s];
-            }
-        }
-        return 1;
+    i32 i;
+    i32 k = 0;
+    i32 code;
+    noinit i32[16] next_code;
+    noinit i32[17] sizes;
+    memset(sizes, 0, cast(u64, sizeof(sizes)));
+    memset(z.fast, 0, cast(u64, sizeof(z.fast)));
+    for i = 0; i < num; ++i {
+        ++sizes[sizelist[i]];
     }
-}
-private {
-i32 stbi__zeof(stbi__zbuf* z) {
-        return z.zbuffer >= z.zbuffer_end;
-    }
-}
-private {
-stbi_uc stbi__zget8(stbi__zbuf* z) {
-        return cast(stbi_uc, stbi__zeof(z) != 0 ? 0 : *z.zbuffer++);
-    }
-}
-private {
-void stbi__fill_bits(stbi__zbuf* z) {
-        while true {
-            if z.code_buffer >= cast(u32, 1 << z.num_bits) {
-                z.zbuffer = z.zbuffer_end;
-                return;
-            }
-            z.code_buffer |= cast(u32, stbi__zget8(z)) << cast(u32, z.num_bits);
-            z.num_bits += 8;
-            if !(z.num_bits <= 24) { break; }
+    sizes[0] = 0;
+    for i = 1; i < 16; ++i {
+        if sizes[i] > 1 << i {
+            return stbi__err("bad sizes");
         }
     }
-}
-private {
-u32 stbi__zreceive(stbi__zbuf* z, i32 n) {
-        u32 k;
-        if z.num_bits < n {
-            stbi__fill_bits(z);
-        }
-        k = z.code_buffer & cast(u32, (1 << n) - 1);
-        z.code_buffer >>= cast(stbi__uint32, n);
-        z.num_bits -= n;
-        return k;
-    }
-}
-private {
-i32 stbi__zhuffman_decode_slowpath(stbi__zbuf* a, stbi__zhuffman* z) {
-        i32 b;
-        i32 s;
-        i32 k;
-        k = stbi__bit_reverse(cast(i32, a.code_buffer), 16);
-        for s = 9 + 1; true; ++s {
-            if k < z.maxcode[s] {
-                break;
-            }
-        }
-        if s >= 16 {
-            return -1;
-        }
-        b = (k >> 16 - s) - z.firstcode[s] + z.firstsymbol[s];
-        if b >= 288 {
-            return -1;
-        }
-        if cast(i32, z.size[b]) != s {
-            return -1;
-        }
-        a.code_buffer >>= cast(stbi__uint32, s);
-        a.num_bits -= s;
-        return cast(i32, z.value[b]);
-    }
-}
-private {
-i32 stbi__zhuffman_decode(stbi__zbuf* a, stbi__zhuffman* z) {
-        i32 b;
-        i32 s;
-        if a.num_bits < 16 {
-            if stbi__zeof(a) != 0 {
-                if a.hit_zeof_once == 0 {
-                    a.hit_zeof_once = 1;
-                    a.num_bits += 16;
-                } else {
-                    return -1;
-                }
-            } else {
-                stbi__fill_bits(a);
-            }
-        }
-        b = cast(i32, z.fast[a.code_buffer & cast(u32, (1 << 9) - 1)]);
-        if b != 0 {
-            s = b >> 9;
-            a.code_buffer >>= cast(stbi__uint32, s);
-            a.num_bits -= s;
-            return b & 511;
-        }
-        return stbi__zhuffman_decode_slowpath(a, z);
-    }
-}
-private {
-i32 stbi__zexpand(stbi__zbuf* z, u8* zout, i32 n) {
-        u8* q;
-        u32 cur;
-        u32 limit;
-        u32 old_limit;
-        z.zout = zout;
-        if z.z_expandable == 0 {
-            return stbi__err("output buffer limit");
-        }
-        cur = cast(u32, cast(i64, z.zout - z.zout_start));
-        old_limit = cast(u32, cast(i64, z.zout_end - z.zout_start));
-        limit = old_limit;
-        if UINT_MAX - cur < cast(u32, n) {
-            return stbi__err("outofmem");
-        }
-        while cur + cast(u32, n) > limit {
-            if limit > UINT_MAX / 2 {
-                return stbi__err("outofmem");
-            }
-            limit *= 2;
-        }
-        q = cast(u8*, realloc(z.zout_start, cast(u64, limit)));
-        ignore sizeof(old_limit);
-        if q == null {
-            return stbi__err("outofmem");
-        }
-        z.zout_start = q;
-        z.zout = q + cur;
-        z.zout_end = q + limit;
-        return 1;
-    }
-}
-private { i32[31] stbi__zlength_base = {3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0}; }
-private { i32[31] stbi__zlength_extra = {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 0, 0}; }
-private { i32[32] stbi__zdist_base = {1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577, 0, 0}; }
-private { i32[32] stbi__zdist_extra = {0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 0, 0}; }
-private {
-i32 stbi__parse_huffman_block(stbi__zbuf* a) {
-        u8* zout = a.zout;
-        while true {
-            i32 z = stbi__zhuffman_decode(a, &a.z_length);
-            if z < 256 {
-                if z < 0 {
-                    return stbi__err("bad huffman code");
-                }
-                if zout >= a.zout_end {
-                    if stbi__zexpand(a, zout, 1) == 0 {
-                        return 0;
-                    }
-                    zout = a.zout;
-                }
-                *zout++ = cast(u8, z);
-            } else {
-                stbi_uc* p;
-                i32 len;
-                i32 dist;
-                if z == 256 {
-                    a.zout = zout;
-                    if a.hit_zeof_once && a.num_bits < 16 {
-                        return stbi__err("unexpected end");
-                    }
-                    return 1;
-                }
-                if z >= 286 {
-                    return stbi__err("bad huffman code");
-                }
-                z -= 257;
-                len = stbi__zlength_base[z];
-                if stbi__zlength_extra[z] != 0 {
-                    len += cast(i32, stbi__zreceive(a, stbi__zlength_extra[z]));
-                }
-                z = stbi__zhuffman_decode(a, &a.z_distance);
-                if z < 0 || z >= 30 {
-                    return stbi__err("bad huffman code");
-                }
-                dist = stbi__zdist_base[z];
-                if stbi__zdist_extra[z] != 0 {
-                    dist += cast(i32, stbi__zreceive(a, stbi__zdist_extra[z]));
-                }
-                if cast(i64, zout - a.zout_start) < dist {
-                    return stbi__err("bad dist");
-                }
-                if len > cast(i64, a.zout_end - zout) {
-                    if stbi__zexpand(a, zout, len) == 0 {
-                        return 0;
-                    }
-                    zout = a.zout;
-                }
-                p = cast(stbi_uc*, zout - dist);
-                if dist == 1 {
-                    stbi_uc v = *p;
-                    if len != 0 {
-                        while true {
-                            *zout++ = cast(u8, v);
-                            if !(--len != 0) { break; }
-                        }
-                    }
-                } else {
-                    if len != 0 {
-                        while true {
-                            *zout++ = cast(u8, *p++);
-                            if !(--len != 0) { break; }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-private {
-i32 stbi__compute_huffman_codes(stbi__zbuf* a) {
-        stbi__zhuffman z_codelength;
-        stbi_uc[455] lencodes;
-        stbi_uc[19] codelength_sizes;
-        i32 i;
-        i32 n;
-        var hlit = cast(i32, stbi__zreceive(a, 5) + 257);
-        var hdist = cast(i32, stbi__zreceive(a, 5) + 1);
-        var hclen = cast(i32, stbi__zreceive(a, 4) + 4);
-        i32 ntot = hlit + hdist;
-        memset(codelength_sizes, 0, cast(u64, sizeof(codelength_sizes)));
-        for i = 0; i < hclen; ++i {
-            var s = cast(i32, stbi__zreceive(a, 3));
-            codelength_sizes[stbi__compute_huffman_codes__length_dezigzag[i]] = cast(stbi_uc, s);
-        }
-        if stbi__zbuild_huffman(&z_codelength, codelength_sizes, 19) == 0 {
-            return 0;
-        }
-        n = 0;
-        while n < ntot {
-            i32 c = stbi__zhuffman_decode(a, &z_codelength);
-            if c < 0 || c >= 19 {
+    code = 0;
+    for i = 1; i < 16; ++i {
+        next_code[i] = code;
+        z.firstcode[i] = cast(stbi__uint16, code);
+        z.firstsymbol[i] = cast(stbi__uint16, k);
+        code = code + sizes[i];
+        if sizes[i] != 0 {
+            if code - 1 >= 1 << i {
                 return stbi__err("bad codelengths");
             }
-            if c < 16 {
-                lencodes[n++] = cast(stbi_uc, c);
+        }
+        z.maxcode[i] = code << 16 - i;
+        code <<= 1;
+        k += sizes[i];
+    }
+    z.maxcode[16] = 65536;
+    for i = 0; i < num; ++i {
+        var s = cast(i32, sizelist[i]);
+        if s != 0 {
+            i32 c = next_code[s] - z.firstcode[s] + z.firstsymbol[s];
+            var fastv = cast(stbi__uint16, s << 9 | i);
+            z.size[c] = cast(stbi_uc, s);
+            z.value[c] = cast(stbi__uint16, i);
+            if s <= 9 {
+                i32 j = stbi__bit_reverse(next_code[s], s);
+                while j < 1 << 9 {
+                    z.fast[j] = fastv;
+                    j += 1 << s;
+                }
+            }
+            ++next_code[s];
+        }
+    }
+    return 1;
+}
+i32 stbi__zeof(stbi__zbuf* z) {
+    return z.zbuffer >= z.zbuffer_end;
+}
+stbi_uc stbi__zget8(stbi__zbuf* z) {
+    return cast(stbi_uc, stbi__zeof(z) != 0 ? 0 : *z.zbuffer++);
+}
+void stbi__fill_bits(stbi__zbuf* z) {
+    while true {
+        if z.code_buffer >= cast(u32, 1 << z.num_bits) {
+            z.zbuffer = z.zbuffer_end;
+            return;
+        }
+        z.code_buffer |= cast(u32, stbi__zget8(z)) << cast(u32, z.num_bits);
+        z.num_bits += 8;
+        if !(z.num_bits <= 24) { break; }
+    }
+}
+u32 stbi__zreceive(stbi__zbuf* z, i32 n) {
+    u32 k;
+    if z.num_bits < n {
+        stbi__fill_bits(z);
+    }
+    k = z.code_buffer & cast(u32, (1 << n) - 1);
+    z.code_buffer >>= cast(stbi__uint32, n);
+    z.num_bits -= n;
+    return k;
+}
+i32 stbi__zhuffman_decode_slowpath(stbi__zbuf* a, stbi__zhuffman* z) {
+    i32 b;
+    i32 s;
+    i32 k;
+    k = stbi__bit_reverse(cast(i32, a.code_buffer), 16);
+    for s = 9 + 1; true; ++s {
+        if k < z.maxcode[s] {
+            break;
+        }
+    }
+    if s >= 16 {
+        return -1;
+    }
+    b = (k >> 16 - s) - z.firstcode[s] + z.firstsymbol[s];
+    if b >= 288 {
+        return -1;
+    }
+    if cast(i32, z.size[b]) != s {
+        return -1;
+    }
+    a.code_buffer >>= cast(stbi__uint32, s);
+    a.num_bits -= s;
+    return cast(i32, z.value[b]);
+}
+i32 stbi__zhuffman_decode(stbi__zbuf* a, stbi__zhuffman* z) {
+    i32 b;
+    i32 s;
+    if a.num_bits < 16 {
+        if stbi__zeof(a) != 0 {
+            if a.hit_zeof_once == 0 {
+                a.hit_zeof_once = 1;
+                a.num_bits += 16;
             } else {
-                stbi_uc fill = 0;
-                if c == 16 {
-                    c = cast(i32, stbi__zreceive(a, 2) + 3);
-                    if n == 0 {
-                        return stbi__err("bad codelengths");
+                return -1;
+            }
+        } else {
+            stbi__fill_bits(a);
+        }
+    }
+    b = cast(i32, z.fast[a.code_buffer & cast(u32, (1 << 9) - 1)]);
+    if b != 0 {
+        s = b >> 9;
+        a.code_buffer >>= cast(stbi__uint32, s);
+        a.num_bits -= s;
+        return b & 511;
+    }
+    return stbi__zhuffman_decode_slowpath(a, z);
+}
+i32 stbi__zexpand(stbi__zbuf* z, u8* zout, i32 n) {
+    u8* q;
+    u32 cur;
+    u32 limit;
+    u32 old_limit;
+    z.zout = zout;
+    if z.z_expandable == 0 {
+        return stbi__err("output buffer limit");
+    }
+    cur = cast(u32, cast(i64, z.zout - z.zout_start));
+    old_limit = cast(u32, cast(i64, z.zout_end - z.zout_start));
+    limit = old_limit;
+    if UINT_MAX - cur < cast(u32, n) {
+        return stbi__err("outofmem");
+    }
+    while cur + cast(u32, n) > limit {
+        if limit > UINT_MAX / 2 {
+            return stbi__err("outofmem");
+        }
+        limit *= 2;
+    }
+    q = cast(u8*, realloc(z.zout_start, cast(u64, limit)));
+    ignore sizeof(old_limit);
+    if q == null {
+        return stbi__err("outofmem");
+    }
+    z.zout_start = q;
+    z.zout = q + cur;
+    z.zout_end = q + limit;
+    return 1;
+}
+i32[31] stbi__zlength_base = {3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0};
+i32[31] stbi__zlength_extra = {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 0, 0};
+i32[32] stbi__zdist_base = {1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577, 0, 0};
+i32[32] stbi__zdist_extra = {0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 0, 0};
+i32 stbi__parse_huffman_block(stbi__zbuf* a) {
+    u8* zout = a.zout;
+    while true {
+        i32 z = stbi__zhuffman_decode(a, &a.z_length);
+        if z < 256 {
+            if z < 0 {
+                return stbi__err("bad huffman code");
+            }
+            if zout >= a.zout_end {
+                if stbi__zexpand(a, zout, 1) == 0 {
+                    return 0;
+                }
+                zout = a.zout;
+            }
+            *zout++ = cast(u8, z);
+        } else {
+            stbi_uc* p;
+            i32 len;
+            i32 dist;
+            if z == 256 {
+                a.zout = zout;
+                if a.hit_zeof_once && a.num_bits < 16 {
+                    return stbi__err("unexpected end");
+                }
+                return 1;
+            }
+            if z >= 286 {
+                return stbi__err("bad huffman code");
+            }
+            z -= 257;
+            len = stbi__zlength_base[z];
+            if stbi__zlength_extra[z] != 0 {
+                len += cast(i32, stbi__zreceive(a, stbi__zlength_extra[z]));
+            }
+            z = stbi__zhuffman_decode(a, &a.z_distance);
+            if z < 0 || z >= 30 {
+                return stbi__err("bad huffman code");
+            }
+            dist = stbi__zdist_base[z];
+            if stbi__zdist_extra[z] != 0 {
+                dist += cast(i32, stbi__zreceive(a, stbi__zdist_extra[z]));
+            }
+            if cast(i64, zout - a.zout_start) < dist {
+                return stbi__err("bad dist");
+            }
+            if len > cast(i64, a.zout_end - zout) {
+                if stbi__zexpand(a, zout, len) == 0 {
+                    return 0;
+                }
+                zout = a.zout;
+            }
+            p = cast(stbi_uc*, zout - dist);
+            if dist == 1 {
+                stbi_uc v = *p;
+                if len != 0 {
+                    while true {
+                        *zout++ = cast(u8, v);
+                        if !(--len != 0) { break; }
                     }
-                    fill = lencodes[n - 1];
-                } else if c == 17 {
-                    c = cast(i32, stbi__zreceive(a, 3) + 3);
-                } else if c == 18 {
-                    c = cast(i32, stbi__zreceive(a, 7) + 11);
-                } else {
-                    return stbi__err("bad codelengths");
                 }
-                if ntot - n < c {
-                    return stbi__err("bad codelengths");
+            } else {
+                if len != 0 {
+                    while true {
+                        *zout++ = cast(u8, *p++);
+                        if !(--len != 0) { break; }
+                    }
                 }
-                memset(lencodes + n, fill, cast(u64, c));
-                n += c;
             }
         }
-        if n != ntot {
+    }
+}
+i32 stbi__compute_huffman_codes(stbi__zbuf* a) {
+    noinit stbi__zhuffman z_codelength;
+    noinit stbi_uc[455] lencodes;
+    noinit stbi_uc[19] codelength_sizes;
+    i32 i;
+    i32 n;
+    var hlit = cast(i32, stbi__zreceive(a, 5) + 257);
+    var hdist = cast(i32, stbi__zreceive(a, 5) + 1);
+    var hclen = cast(i32, stbi__zreceive(a, 4) + 4);
+    i32 ntot = hlit + hdist;
+    memset(codelength_sizes, 0, cast(u64, sizeof(codelength_sizes)));
+    for i = 0; i < hclen; ++i {
+        var s = cast(i32, stbi__zreceive(a, 3));
+        codelength_sizes[stbi__compute_huffman_codes__length_dezigzag[i]] = cast(stbi_uc, s);
+    }
+    if stbi__zbuild_huffman(&z_codelength, codelength_sizes, 19) == 0 {
+        return 0;
+    }
+    n = 0;
+    while n < ntot {
+        i32 c = stbi__zhuffman_decode(a, &z_codelength);
+        if c < 0 || c >= 19 {
             return stbi__err("bad codelengths");
         }
-        if stbi__zbuild_huffman(&a.z_length, lencodes, hlit) == 0 {
-            return 0;
-        }
-        if stbi__zbuild_huffman(&a.z_distance, lencodes + hlit, hdist) == 0 {
-            return 0;
-        }
-        return 1;
-    }
-}
-private {
-i32 stbi__parse_uncompressed_block(stbi__zbuf* a) {
-        stbi_uc[4] header;
-        i32 len;
-        i32 nlen;
-        i32 k;
-        if (a.num_bits & 7) != 0 {
-            stbi__zreceive(a, a.num_bits & 7);
-        }
-        k = 0;
-        while a.num_bits > 0 {
-            header[k++] = cast(stbi_uc, a.code_buffer & 255);
-            a.code_buffer >>= 8;
-            a.num_bits -= 8;
-        }
-        if a.num_bits < 0 {
-            return stbi__err("zlib corrupt");
-        }
-        while k < 4 {
-            header[k++] = stbi__zget8(a);
-        }
-        len = cast(i32, header[1]) * 256 + header[0];
-        nlen = cast(i32, header[3]) * 256 + header[2];
-        if nlen != (len ^ 65535) {
-            return stbi__err("zlib corrupt");
-        }
-        if a.zbuffer + len > a.zbuffer_end {
-            return stbi__err("read past buffer");
-        }
-        if a.zout + len > a.zout_end {
-            if stbi__zexpand(a, a.zout, len) == 0 {
-                return 0;
+        if c < 16 {
+            lencodes[n++] = cast(stbi_uc, c);
+        } else {
+            stbi_uc fill = 0;
+            if c == 16 {
+                c = cast(i32, stbi__zreceive(a, 2) + 3);
+                if n == 0 {
+                    return stbi__err("bad codelengths");
+                }
+                fill = lencodes[n - 1];
+            } else if c == 17 {
+                c = cast(i32, stbi__zreceive(a, 3) + 3);
+            } else if c == 18 {
+                c = cast(i32, stbi__zreceive(a, 7) + 11);
+            } else {
+                return stbi__err("bad codelengths");
             }
+            if ntot - n < c {
+                return stbi__err("bad codelengths");
+            }
+            memset(lencodes + n, fill, cast(u64, c));
+            n += c;
         }
-        memcpy(a.zout, a.zbuffer, cast(u64, len));
-        a.zbuffer += len;
-        a.zout += len;
-        return 1;
     }
+    if n != ntot {
+        return stbi__err("bad codelengths");
+    }
+    if stbi__zbuild_huffman(&a.z_length, lencodes, hlit) == 0 {
+        return 0;
+    }
+    if stbi__zbuild_huffman(&a.z_distance, lencodes + hlit, hdist) == 0 {
+        return 0;
+    }
+    return 1;
 }
-private {
+i32 stbi__parse_uncompressed_block(stbi__zbuf* a) {
+    noinit stbi_uc[4] header;
+    i32 len;
+    i32 nlen;
+    i32 k;
+    if (a.num_bits & 7) != 0 {
+        stbi__zreceive(a, a.num_bits & 7);
+    }
+    k = 0;
+    while a.num_bits > 0 {
+        header[k++] = cast(stbi_uc, a.code_buffer & 255);
+        a.code_buffer >>= 8;
+        a.num_bits -= 8;
+    }
+    if a.num_bits < 0 {
+        return stbi__err("zlib corrupt");
+    }
+    while k < 4 {
+        header[k++] = stbi__zget8(a);
+    }
+    len = cast(i32, header[1]) * 256 + header[0];
+    nlen = cast(i32, header[3]) * 256 + header[2];
+    if nlen != (len ^ 65535) {
+        return stbi__err("zlib corrupt");
+    }
+    if a.zbuffer + len > a.zbuffer_end {
+        return stbi__err("read past buffer");
+    }
+    if a.zout + len > a.zout_end {
+        if stbi__zexpand(a, a.zout, len) == 0 {
+            return 0;
+        }
+    }
+    memcpy(a.zout, a.zbuffer, cast(u64, len));
+    a.zbuffer += len;
+    a.zout += len;
+    return 1;
+}
 i32 stbi__parse_zlib_header(stbi__zbuf* a) {
-        var cmf = cast(i32, stbi__zget8(a));
-        i32 cm = cmf & 15;
-        var flg = cast(i32, stbi__zget8(a));
-        if stbi__zeof(a) != 0 {
-            return stbi__err("bad zlib header");
-        }
-        if (cmf * 256 + flg) % 31 != 0 {
-            return stbi__err("bad zlib header");
-        }
-        if (flg & 32) != 0 {
-            return stbi__err("no preset dict");
-        }
-        if cm != 8 {
-            return stbi__err("bad compression");
-        }
-        return 1;
+    var cmf = cast(i32, stbi__zget8(a));
+    i32 cm = cmf & 15;
+    var flg = cast(i32, stbi__zget8(a));
+    if stbi__zeof(a) != 0 {
+        return stbi__err("bad zlib header");
     }
+    if (cmf * 256 + flg) % 31 != 0 {
+        return stbi__err("bad zlib header");
+    }
+    if (flg & 32) != 0 {
+        return stbi__err("no preset dict");
+    }
+    if cm != 8 {
+        return stbi__err("bad compression");
+    }
+    return 1;
 }
-private { stbi_uc[288] stbi__zdefault_length = {8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8}; }
-private { stbi_uc[32] stbi__zdefault_distance = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5}; }
-    /*
+stbi_uc[288] stbi__zdefault_length = {8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8};
+stbi_uc[32] stbi__zdefault_distance = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
+/*
 Init algorithm:
 {
    int i;   // use <= to match clearly with spec
@@ -19403,135 +19215,132 @@ Init algorithm:
    for (i=0; i <=  31; ++i)     stbi__zdefault_distance[i] = 5;
 }
 */
-private {
 i32 stbi__parse_zlib(stbi__zbuf* a, i32 parse_header) {
-        i32 final;
-        i32 type;
-        if parse_header != 0 {
-            if stbi__parse_zlib_header(a) == 0 {
+    i32 final;
+    i32 type;
+    if parse_header != 0 {
+        if stbi__parse_zlib_header(a) == 0 {
+            return 0;
+        }
+    }
+    a.num_bits = 0;
+    a.code_buffer = 0;
+    a.hit_zeof_once = 0;
+    while true {
+        final = cast(i32, stbi__zreceive(a, 1));
+        type = cast(i32, stbi__zreceive(a, 2));
+        if type == 0 {
+            if stbi__parse_uncompressed_block(a) == 0 {
                 return 0;
             }
-        }
-        a.num_bits = 0;
-        a.code_buffer = 0;
-        a.hit_zeof_once = 0;
-        while true {
-            final = cast(i32, stbi__zreceive(a, 1));
-            type = cast(i32, stbi__zreceive(a, 2));
-            if type == 0 {
-                if stbi__parse_uncompressed_block(a) == 0 {
+        } else if type == 3 {
+            return 0;
+        } else {
+            if type == 1 {
+                if stbi__zbuild_huffman(&a.z_length, stbi__zdefault_length, 288) == 0 {
                     return 0;
                 }
-            } else if type == 3 {
-                return 0;
+                if stbi__zbuild_huffman(&a.z_distance, stbi__zdefault_distance, 32) == 0 {
+                    return 0;
+                }
             } else {
-                if type == 1 {
-                    if stbi__zbuild_huffman(&a.z_length, stbi__zdefault_length, 288) == 0 {
-                        return 0;
-                    }
-                    if stbi__zbuild_huffman(&a.z_distance, stbi__zdefault_distance, 32) == 0 {
-                        return 0;
-                    }
-                } else {
-                    if stbi__compute_huffman_codes(a) == 0 {
-                        return 0;
-                    }
-                }
-                if stbi__parse_huffman_block(a) == 0 {
+                if stbi__compute_huffman_codes(a) == 0 {
                     return 0;
                 }
             }
-            if !(final == 0) { break; }
+            if stbi__parse_huffman_block(a) == 0 {
+                return 0;
+            }
         }
-        return 1;
+        if !(final == 0) { break; }
     }
+    return 1;
 }
-private {
 i32 stbi__do_zlib(stbi__zbuf* a, u8* obuf, i32 olen, i32 exp, i32 parse_header) {
-        a.zout_start = obuf;
-        a.zout = obuf;
-        a.zout_end = obuf + olen;
-        a.z_expandable = exp;
-        return stbi__parse_zlib(a, parse_header);
-    }
+    a.zout_start = obuf;
+    a.zout = obuf;
+    a.zout_end = obuf + olen;
+    a.z_expandable = exp;
+    return stbi__parse_zlib(a, parse_header);
+}
 }
 u8* stbi_zlib_decode_malloc_guesssize(u8* buffer, i32 len, i32 initial_size, i32* outlen) {
-        stbi__zbuf a;
-        var p = cast(u8*, stbi__malloc(cast(u64, initial_size)));
-        if p == null {
-            return null;
-        }
-        a.zbuffer = cast(stbi_uc*, buffer);
-        a.zbuffer_end = cast(stbi_uc*, buffer) + len;
-        if stbi__do_zlib(&a, p, initial_size, 1, 1) != 0 {
-            if outlen != null {
-                *outlen = cast(i32, cast(i64, a.zout - a.zout_start));
-            }
-            return a.zout_start;
-        } else {
-            free(a.zout_start);
-            return null;
-        }
+    noinit stbi__zbuf a;
+    var p = cast(u8*, stbi__malloc(cast(u64, initial_size)));
+    if p == null {
+        return null;
     }
+    a.zbuffer = cast(stbi_uc*, buffer);
+    a.zbuffer_end = cast(stbi_uc*, buffer) + len;
+    if stbi__do_zlib(&a, p, initial_size, 1, 1) != 0 {
+        if outlen != null {
+            *outlen = cast(i32, cast(i64, a.zout - a.zout_start));
+        }
+        return a.zout_start;
+    } else {
+        free(a.zout_start);
+        return null;
+    }
+}
 u8* stbi_zlib_decode_malloc(u8* buffer, i32 len, i32* outlen) {
-        return stbi_zlib_decode_malloc_guesssize(buffer, len, 16384, outlen);
-    }
+    return stbi_zlib_decode_malloc_guesssize(buffer, len, 16384, outlen);
+}
 u8* stbi_zlib_decode_malloc_guesssize_headerflag(u8* buffer, i32 len, i32 initial_size, i32* outlen, i32 parse_header) {
-        stbi__zbuf a;
-        var p = cast(u8*, stbi__malloc(cast(u64, initial_size)));
-        if p == null {
-            return null;
-        }
-        a.zbuffer = cast(stbi_uc*, buffer);
-        a.zbuffer_end = cast(stbi_uc*, buffer) + len;
-        if stbi__do_zlib(&a, p, initial_size, 1, parse_header) != 0 {
-            if outlen != null {
-                *outlen = cast(i32, cast(i64, a.zout - a.zout_start));
-            }
-            return a.zout_start;
-        } else {
-            free(a.zout_start);
-            return null;
-        }
+    noinit stbi__zbuf a;
+    var p = cast(u8*, stbi__malloc(cast(u64, initial_size)));
+    if p == null {
+        return null;
     }
+    a.zbuffer = cast(stbi_uc*, buffer);
+    a.zbuffer_end = cast(stbi_uc*, buffer) + len;
+    if stbi__do_zlib(&a, p, initial_size, 1, parse_header) != 0 {
+        if outlen != null {
+            *outlen = cast(i32, cast(i64, a.zout - a.zout_start));
+        }
+        return a.zout_start;
+    } else {
+        free(a.zout_start);
+        return null;
+    }
+}
 i32 stbi_zlib_decode_buffer(u8* obuffer, i32 olen, u8* ibuffer, i32 ilen) {
-        stbi__zbuf a;
-        a.zbuffer = cast(stbi_uc*, ibuffer);
-        a.zbuffer_end = cast(stbi_uc*, ibuffer) + ilen;
-        if stbi__do_zlib(&a, obuffer, olen, 0, 1) != 0 {
-            return cast(i32, cast(i64, a.zout - a.zout_start));
-        } else {
-            return -1;
-        }
+    noinit stbi__zbuf a;
+    a.zbuffer = cast(stbi_uc*, ibuffer);
+    a.zbuffer_end = cast(stbi_uc*, ibuffer) + ilen;
+    if stbi__do_zlib(&a, obuffer, olen, 0, 1) != 0 {
+        return cast(i32, cast(i64, a.zout - a.zout_start));
+    } else {
+        return -1;
     }
+}
 u8* stbi_zlib_decode_noheader_malloc(u8* buffer, i32 len, i32* outlen) {
-        stbi__zbuf a;
-        var p = cast(u8*, stbi__malloc(16384));
-        if p == null {
-            return null;
-        }
-        a.zbuffer = cast(stbi_uc*, buffer);
-        a.zbuffer_end = cast(stbi_uc*, buffer) + len;
-        if stbi__do_zlib(&a, p, 16384, 1, 0) != 0 {
-            if outlen != null {
-                *outlen = cast(i32, cast(i64, a.zout - a.zout_start));
-            }
-            return a.zout_start;
-        } else {
-            free(a.zout_start);
-            return null;
-        }
+    noinit stbi__zbuf a;
+    var p = cast(u8*, stbi__malloc(16384));
+    if p == null {
+        return null;
     }
+    a.zbuffer = cast(stbi_uc*, buffer);
+    a.zbuffer_end = cast(stbi_uc*, buffer) + len;
+    if stbi__do_zlib(&a, p, 16384, 1, 0) != 0 {
+        if outlen != null {
+            *outlen = cast(i32, cast(i64, a.zout - a.zout_start));
+        }
+        return a.zout_start;
+    } else {
+        free(a.zout_start);
+        return null;
+    }
+}
 i32 stbi_zlib_decode_noheader_buffer(u8* obuffer, i32 olen, u8* ibuffer, i32 ilen) {
-        stbi__zbuf a;
-        a.zbuffer = cast(stbi_uc*, ibuffer);
-        a.zbuffer_end = cast(stbi_uc*, ibuffer) + ilen;
-        if stbi__do_zlib(&a, obuffer, olen, 0, 0) != 0 {
-            return cast(i32, cast(i64, a.zout - a.zout_start));
-        } else {
-            return -1;
-        }
+    noinit stbi__zbuf a;
+    a.zbuffer = cast(stbi_uc*, ibuffer);
+    a.zbuffer_end = cast(stbi_uc*, ibuffer) + ilen;
+    if stbi__do_zlib(&a, obuffer, olen, 0, 0) != 0 {
+        return cast(i32, cast(i64, a.zout - a.zout_start));
+    } else {
+        return -1;
     }
+}
 }
 // public domain "baseline" PNG decoder   v0.10  Sean Barrett 2006-11-18
 //    simple implementation
@@ -19545,796 +19354,764 @@ i32 stbi_zlib_decode_noheader_buffer(u8* obuffer, i32 olen, u8* ibuffer, i32 ile
 when !(defined(STBI_NO_PNG)) {
 private {
 stbi__pngchunk stbi__get_chunk_header(stbi__context* s) {
-        stbi__pngchunk c;
-        c.length = stbi__get32be(s);
-        c.type = stbi__get32be(s);
-        return c;
-    }
+    noinit stbi__pngchunk c;
+    c.length = stbi__get32be(s);
+    c.type = stbi__get32be(s);
+    return c;
 }
-private {
 i32 stbi__check_png_header(stbi__context* s) {
-        i32 i;
-        for i = 0; i < 8; ++i {
-            if stbi__get8(s) != stbi__check_png_header__png_sig[i] {
-                return stbi__err("bad png sig");
-            }
+    i32 i;
+    for i = 0; i < 8; ++i {
+        if stbi__get8(s) != stbi__check_png_header__png_sig[i] {
+            return stbi__err("bad png sig");
         }
-        return 1;
     }
+    return 1;
+}
 }
 private { stbi_uc[5] first_row_filter = {STBI__F_none, STBI__F_sub, STBI__F_none, STBI__F_avg_first, STBI__F_sub}; }
 private {
 i32 stbi__paeth(i32 a, i32 b, i32 c) {
-        i32 thresh = c * 3 - (a + b);
-        i32 lo = a < b ? a : b;
-        i32 hi = a < b ? b : a;
-        i32 t0 = hi <= thresh ? lo : c;
-        i32 t1 = thresh <= lo ? hi : t0;
-        return t1;
-    }
+    i32 thresh = c * 3 - (a + b);
+    i32 lo = a < b ? a : b;
+    i32 hi = a < b ? b : a;
+    i32 t0 = hi <= thresh ? lo : c;
+    i32 t1 = thresh <= lo ? hi : t0;
+    return t1;
 }
-private { stbi_uc[9] stbi__depth_scale_table = {0, 255, 85, 0, 17, 0, 0, 0, 1}; }
-    // adds an extra all-255 alpha channel
-    // dest == src is legal
-    // img_n must be 1 or 3
-private {
+stbi_uc[9] stbi__depth_scale_table = {0, 255, 85, 0, 17, 0, 0, 0, 1};
+// adds an extra all-255 alpha channel
+// dest == src is legal
+// img_n must be 1 or 3
 void stbi__create_png_alpha_expand8(stbi_uc* dest, stbi_uc* src, stbi__uint32 x, i32 img_n) {
-        i32 i;
-        if img_n == 1 {
-            for i = cast(i32, x - 1); i >= 0; --i {
-                dest[i * 2 + 1] = 255;
-                dest[i * 2 + 0] = src[i];
-            }
-        } else {
-            assert(img_n == 3);
-            for i = cast(i32, x - 1); i >= 0; --i {
-                dest[i * 4 + 3] = 255;
-                dest[i * 4 + 2] = src[i * 3 + 2];
-                dest[i * 4 + 1] = src[i * 3 + 1];
-                dest[i * 4 + 0] = src[i * 3 + 0];
-            }
+    i32 i;
+    if img_n == 1 {
+        for i = cast(i32, x - 1); i >= 0; --i {
+            dest[i * 2 + 1] = 255;
+            dest[i * 2 + 0] = src[i];
+        }
+    } else {
+        assert(img_n == 3);
+        for i = cast(i32, x - 1); i >= 0; --i {
+            dest[i * 4 + 3] = 255;
+            dest[i * 4 + 2] = src[i * 3 + 2];
+            dest[i * 4 + 1] = src[i * 3 + 1];
+            dest[i * 4 + 0] = src[i * 3 + 0];
         }
     }
 }
-    // create the png data from post-deflated data
-private {
+// create the png data from post-deflated data
 i32 stbi__create_png_image_raw(stbi__png* a, stbi_uc* raw, stbi__uint32 raw_len, i32 out_n, stbi__uint32 x, stbi__uint32 y, i32 depth, i32 color) {
-        i32 bytes = depth == 16 ? 2 : 1;
-        stbi__context* s = a.s;
-        stbi__uint32 i;
-        stbi__uint32 j;
-        stbi__uint32 stride = x * cast(u32, out_n) * cast(u32, bytes);
-        stbi__uint32 img_len;
-        stbi__uint32 img_width_bytes;
-        stbi_uc* filter_buf;
-        i32 all_ok = 1;
-        i32 k;
-        i32 img_n = s.img_n;
-        i32 output_bytes = out_n * bytes;
-        i32 filter_bytes = img_n * bytes;
-        var width = cast(i32, x);
-        assert(out_n == s.img_n || out_n == s.img_n + 1);
-        a.out = cast(stbi_uc*, stbi__malloc_mad3(cast(i32, x), cast(i32, y), output_bytes, 0));
-        if a.out == null {
-            return stbi__err("outofmem");
+    i32 bytes = depth == 16 ? 2 : 1;
+    stbi__context* s = a.s;
+    stbi__uint32 i;
+    stbi__uint32 j;
+    stbi__uint32 stride = x * cast(u32, out_n) * cast(u32, bytes);
+    stbi__uint32 img_len;
+    stbi__uint32 img_width_bytes;
+    stbi_uc* filter_buf;
+    i32 all_ok = 1;
+    i32 k;
+    i32 img_n = s.img_n;
+    i32 output_bytes = out_n * bytes;
+    i32 filter_bytes = img_n * bytes;
+    var width = cast(i32, x);
+    assert(out_n == s.img_n || out_n == s.img_n + 1);
+    a.out = cast(stbi_uc*, stbi__malloc_mad3(cast(i32, x), cast(i32, y), output_bytes, 0));
+    if a.out == null {
+        return stbi__err("outofmem");
+    }
+    if stbi__mad3sizes_valid(img_n, cast(i32, x), depth, 7) == 0 {
+        return stbi__err("too large");
+    }
+    img_width_bytes = cast(u32, img_n) * x * cast(u32, depth) + 7 >> 3;
+    if stbi__mad2sizes_valid(cast(i32, img_width_bytes), cast(i32, y), cast(i32, img_width_bytes)) == 0 {
+        return stbi__err("too large");
+    }
+    img_len = (img_width_bytes + 1) * y;
+    if raw_len < img_len {
+        return stbi__err("not enough pixels");
+    }
+    filter_buf = cast(stbi_uc*, stbi__malloc_mad2(cast(i32, img_width_bytes), 2, 0));
+    if filter_buf == null {
+        return stbi__err("outofmem");
+    }
+    if depth < 8 {
+        filter_bytes = 1;
+        width = cast(i32, img_width_bytes);
+    }
+    for j = 0; j < y; ++j {
+        stbi_uc* cur = filter_buf + (j & 1) * img_width_bytes;
+        stbi_uc* prior = filter_buf + (~j & 1) * img_width_bytes;
+        stbi_uc* dest = a.out + stride * j;
+        i32 nk = width * filter_bytes;
+        var filter = cast(i32, *raw++);
+        if filter > 4 {
+            all_ok = stbi__err("invalid filter");
+            break;
         }
-        if stbi__mad3sizes_valid(img_n, cast(i32, x), depth, 7) == 0 {
-            return stbi__err("too large");
+        if j == 0 {
+            filter = cast(i32, first_row_filter[filter]);
         }
-        img_width_bytes = cast(u32, img_n) * x * cast(u32, depth) + 7 >> 3;
-        if stbi__mad2sizes_valid(cast(i32, img_width_bytes), cast(i32, y), cast(i32, img_width_bytes)) == 0 {
-            return stbi__err("too large");
+        switch filter {
+            case STBI__F_none: {
+                memcpy(cur, raw, cast(u64, nk));
+            }
+            case STBI__F_sub: {
+                memcpy(cur, raw, cast(u64, filter_bytes));
+                for k = filter_bytes; k < nk; ++k {
+                    cur[k] = cast(stbi_uc, raw[k] + cur[k - filter_bytes] & 255);
+                }
+            }
+            case STBI__F_up: {
+                for k = 0; k < nk; ++k {
+                    cur[k] = cast(stbi_uc, raw[k] + prior[k] & 255);
+                }
+            }
+            case STBI__F_avg: {
+                for k = 0; k < filter_bytes; ++k {
+                    cur[k] = cast(stbi_uc, raw[k] + (cast(i32, prior[k]) >> 1) & 255);
+                }
+                for k = filter_bytes; k < nk; ++k {
+                    cur[k] = cast(stbi_uc, raw[k] + (prior[k] + cur[k - filter_bytes] >> 1) & 255);
+                }
+            }
+            case STBI__F_paeth: {
+                for k = 0; k < filter_bytes; ++k {
+                    cur[k] = cast(stbi_uc, raw[k] + prior[k] & 255);
+                }
+                for k = filter_bytes; k < nk; ++k {
+                    cur[k] = cast(stbi_uc, raw[k] + stbi__paeth(cast(i32, cur[k - filter_bytes]), cast(i32, prior[k]), cast(i32, prior[k - filter_bytes])) & 255);
+                }
+            }
+            case STBI__F_avg_first: {
+                memcpy(cur, raw, cast(u64, filter_bytes));
+                for k = filter_bytes; k < nk; ++k {
+                    cur[k] = cast(stbi_uc, raw[k] + (cast(i32, cur[k - filter_bytes]) >> 1) & 255);
+                }
+            }
         }
-        img_len = (img_width_bytes + 1) * y;
-        if raw_len < img_len {
-            return stbi__err("not enough pixels");
-        }
-        filter_buf = cast(stbi_uc*, stbi__malloc_mad2(cast(i32, img_width_bytes), 2, 0));
-        if filter_buf == null {
-            return stbi__err("outofmem");
-        }
+        raw += nk;
         if depth < 8 {
-            filter_bytes = 1;
-            width = cast(i32, img_width_bytes);
-        }
-        for j = 0; j < y; ++j {
-            stbi_uc* cur = filter_buf + (j & 1) * img_width_bytes;
-            stbi_uc* prior = filter_buf + (~j & 1) * img_width_bytes;
-            stbi_uc* dest = a.out + stride * j;
-            i32 nk = width * filter_bytes;
-            var filter = cast(i32, *raw++);
-            if filter > 4 {
-                all_ok = stbi__err("invalid filter");
-                break;
-            }
-            if j == 0 {
-                filter = cast(i32, first_row_filter[filter]);
-            }
-            switch filter {
-                case STBI__F_none: {
-                    memcpy(cur, raw, cast(u64, nk));
+            stbi_uc scale = color == 0 ? stbi__depth_scale_table[depth] : 1;
+            stbi_uc* in = cur;
+            stbi_uc* out = dest;
+            stbi_uc inb = 0;
+            stbi__uint32 nsmp = x * cast(u32, img_n);
+            if depth == 4 {
+                for i = 0; i < nsmp; ++i {
+                    if (i & 1) == 0 {
+                        inb = *in++;
+                    }
+                    *out++ = cast(stbi_uc, scale * (cast(i32, inb) >> 4));
+                    inb <<= 4;
                 }
-                case STBI__F_sub: {
-                    memcpy(cur, raw, cast(u64, filter_bytes));
-                    for k = filter_bytes; k < nk; ++k {
-                        cur[k] = cast(stbi_uc, raw[k] + cur[k - filter_bytes] & 255);
+            } else if depth == 2 {
+                for i = 0; i < nsmp; ++i {
+                    if (i & 3) == 0 {
+                        inb = *in++;
                     }
+                    *out++ = cast(stbi_uc, scale * (cast(i32, inb) >> 6));
+                    inb <<= 2;
                 }
-                case STBI__F_up: {
-                    for k = 0; k < nk; ++k {
-                        cur[k] = cast(stbi_uc, raw[k] + prior[k] & 255);
+            } else {
+                assert(depth == 1);
+                for i = 0; i < nsmp; ++i {
+                    if (i & 7) == 0 {
+                        inb = *in++;
                     }
-                }
-                case STBI__F_avg: {
-                    for k = 0; k < filter_bytes; ++k {
-                        cur[k] = cast(stbi_uc, raw[k] + (cast(i32, prior[k]) >> 1) & 255);
-                    }
-                    for k = filter_bytes; k < nk; ++k {
-                        cur[k] = cast(stbi_uc, raw[k] + (prior[k] + cur[k - filter_bytes] >> 1) & 255);
-                    }
-                }
-                case STBI__F_paeth: {
-                    for k = 0; k < filter_bytes; ++k {
-                        cur[k] = cast(stbi_uc, raw[k] + prior[k] & 255);
-                    }
-                    for k = filter_bytes; k < nk; ++k {
-                        cur[k] = cast(stbi_uc, raw[k] + stbi__paeth(cast(i32, cur[k - filter_bytes]), cast(i32, prior[k]), cast(i32, prior[k - filter_bytes])) & 255);
-                    }
-                }
-                case STBI__F_avg_first: {
-                    memcpy(cur, raw, cast(u64, filter_bytes));
-                    for k = filter_bytes; k < nk; ++k {
-                        cur[k] = cast(stbi_uc, raw[k] + (cast(i32, cur[k - filter_bytes]) >> 1) & 255);
-                    }
+                    *out++ = cast(stbi_uc, scale * (cast(i32, inb) >> 7));
+                    inb <<= 1;
                 }
             }
-            raw += nk;
-            if depth < 8 {
-                stbi_uc scale = color == 0 ? stbi__depth_scale_table[depth] : 1;
-                stbi_uc* in = cur;
-                stbi_uc* out = dest;
-                stbi_uc inb = 0;
-                stbi__uint32 nsmp = x * cast(u32, img_n);
-                if depth == 4 {
-                    for i = 0; i < nsmp; ++i {
-                        if (i & 1) == 0 {
-                            inb = *in++;
-                        }
-                        *out++ = cast(stbi_uc, scale * (cast(i32, inb) >> 4));
-                        inb <<= 4;
-                    }
-                } else if depth == 2 {
-                    for i = 0; i < nsmp; ++i {
-                        if (i & 3) == 0 {
-                            inb = *in++;
-                        }
-                        *out++ = cast(stbi_uc, scale * (cast(i32, inb) >> 6));
-                        inb <<= 2;
-                    }
-                } else {
-                    assert(depth == 1);
-                    for i = 0; i < nsmp; ++i {
-                        if (i & 7) == 0 {
-                            inb = *in++;
-                        }
-                        *out++ = cast(stbi_uc, scale * (cast(i32, inb) >> 7));
-                        inb <<= 1;
-                    }
+            if img_n != out_n {
+                stbi__create_png_alpha_expand8(dest, dest, x, img_n);
+            }
+        } else if depth == 8 {
+            if img_n == out_n {
+                memcpy(dest, cur, cast(u64, x * cast(u32, img_n)));
+            } else {
+                stbi__create_png_alpha_expand8(dest, cur, x, img_n);
+            }
+        } else if depth == 16 {
+            var dest16 = cast(stbi__uint16*, dest);
+            stbi__uint32 nsmp = x * cast(u32, img_n);
+            if img_n == out_n {
+                for i = 0; i < nsmp; ++i {
+                    *dest16 = cast(stbi__uint16, cast(i32, cur[0]) << 8 | cur[1]);
+                    ++dest16;
+                    cur += 2;
                 }
-                if img_n != out_n {
-                    stbi__create_png_alpha_expand8(dest, dest, x, img_n);
-                }
-            } else if depth == 8 {
-                if img_n == out_n {
-                    memcpy(dest, cur, cast(u64, x * cast(u32, img_n)));
-                } else {
-                    stbi__create_png_alpha_expand8(dest, cur, x, img_n);
-                }
-            } else if depth == 16 {
-                var dest16 = cast(stbi__uint16*, dest);
-                stbi__uint32 nsmp = x * cast(u32, img_n);
-                if img_n == out_n {
-                    for i = 0; i < nsmp; ++i {
-                        *dest16 = cast(stbi__uint16, cast(i32, cur[0]) << 8 | cur[1]);
-                        ++dest16;
+            } else {
+                assert(img_n + 1 == out_n);
+                if img_n == 1 {
+                    for i = 0; i < x; ++i {
+                        dest16[0] = cast(stbi__uint16, cast(i32, cur[0]) << 8 | cur[1]);
+                        dest16[1] = 65535;
+                        dest16 += 2;
                         cur += 2;
                     }
                 } else {
-                    assert(img_n + 1 == out_n);
-                    if img_n == 1 {
-                        for i = 0; i < x; ++i {
-                            dest16[0] = cast(stbi__uint16, cast(i32, cur[0]) << 8 | cur[1]);
-                            dest16[1] = 65535;
-                            dest16 += 2;
-                            cur += 2;
-                        }
-                    } else {
-                        assert(img_n == 3);
-                        for i = 0; i < x; ++i {
-                            dest16[0] = cast(stbi__uint16, cast(i32, cur[0]) << 8 | cur[1]);
-                            dest16[1] = cast(stbi__uint16, cast(i32, cur[2]) << 8 | cur[3]);
-                            dest16[2] = cast(stbi__uint16, cast(i32, cur[4]) << 8 | cur[5]);
-                            dest16[3] = 65535;
-                            dest16 += 4;
-                            cur += 6;
-                        }
-                    }
-                }
-            }
-        }
-        free(filter_buf);
-        if all_ok == 0 {
-            return 0;
-        }
-        return 1;
-    }
-}
-private {
-i32 stbi__create_png_image(stbi__png* a, stbi_uc* image_data, stbi__uint32 image_data_len, i32 out_n, i32 depth, i32 color, i32 interlaced) {
-        i32 bytes = depth == 16 ? 2 : 1;
-        i32 out_bytes = out_n * bytes;
-        stbi_uc* final;
-        i32 p;
-        if interlaced == 0 {
-            return stbi__create_png_image_raw(a, image_data, image_data_len, out_n, a.s.img_x, a.s.img_y, depth, color);
-        }
-        final = cast(stbi_uc*, stbi__malloc_mad3(cast(i32, a.s.img_x), cast(i32, a.s.img_y), out_bytes, 0));
-        if final == null {
-            return stbi__err("outofmem");
-        }
-        for p = 0; p < 7; ++p {
-            i32[7] xorig = {0, 4, 0, 2, 0, 1, 0};
-            i32[7] yorig = {0, 0, 4, 0, 2, 0, 1};
-            i32[7] xspc = {8, 8, 4, 4, 2, 2, 1};
-            i32[7] yspc = {8, 8, 8, 4, 4, 2, 2};
-            i32 i;
-            i32 j;
-            i32 x;
-            i32 y;
-            x = cast(i32, (a.s.img_x - cast(u32, xorig[p]) + cast(u32, xspc[p]) - 1) / cast(u32, xspc[p]));
-            y = cast(i32, (a.s.img_y - cast(u32, yorig[p]) + cast(u32, yspc[p]) - 1) / cast(u32, yspc[p]));
-            if x && y {
-                var img_len = cast(stbi__uint32, ((a.s.img_n * x * depth + 7 >> 3) + 1) * y);
-                if stbi__create_png_image_raw(a, image_data, image_data_len, out_n, cast(stbi__uint32, x), cast(stbi__uint32, y), depth, color) == 0 {
-                    free(final);
-                    return 0;
-                }
-                for j = 0; j < y; ++j {
+                    assert(img_n == 3);
                     for i = 0; i < x; ++i {
-                        i32 out_y = j * yspc[p] + yorig[p];
-                        i32 out_x = i * xspc[p] + xorig[p];
-                        memcpy(final + cast(u32, out_y) * a.s.img_x * cast(u32, out_bytes) + out_x * out_bytes, a.out + (j * x + i) * out_bytes, cast(u64, out_bytes));
+                        dest16[0] = cast(stbi__uint16, cast(i32, cur[0]) << 8 | cur[1]);
+                        dest16[1] = cast(stbi__uint16, cast(i32, cur[2]) << 8 | cur[3]);
+                        dest16[2] = cast(stbi__uint16, cast(i32, cur[4]) << 8 | cur[5]);
+                        dest16[3] = 65535;
+                        dest16 += 4;
+                        cur += 6;
                     }
                 }
-                free(a.out);
-                image_data += img_len;
-                image_data_len -= img_len;
             }
         }
-        a.out = final;
-        return 1;
     }
+    free(filter_buf);
+    if all_ok == 0 {
+        return 0;
+    }
+    return 1;
 }
-private {
+i32 stbi__create_png_image(stbi__png* a, stbi_uc* image_data, stbi__uint32 image_data_len, i32 out_n, i32 depth, i32 color, i32 interlaced) {
+    i32 bytes = depth == 16 ? 2 : 1;
+    i32 out_bytes = out_n * bytes;
+    stbi_uc* final;
+    i32 p;
+    if interlaced == 0 {
+        return stbi__create_png_image_raw(a, image_data, image_data_len, out_n, a.s.img_x, a.s.img_y, depth, color);
+    }
+    final = cast(stbi_uc*, stbi__malloc_mad3(cast(i32, a.s.img_x), cast(i32, a.s.img_y), out_bytes, 0));
+    if final == null {
+        return stbi__err("outofmem");
+    }
+    for p = 0; p < 7; ++p {
+        i32[7] xorig = {0, 4, 0, 2, 0, 1, 0};
+        i32[7] yorig = {0, 0, 4, 0, 2, 0, 1};
+        i32[7] xspc = {8, 8, 4, 4, 2, 2, 1};
+        i32[7] yspc = {8, 8, 8, 4, 4, 2, 2};
+        i32 i;
+        i32 j;
+        i32 x;
+        i32 y;
+        x = cast(i32, (a.s.img_x - cast(u32, xorig[p]) + cast(u32, xspc[p]) - 1) / cast(u32, xspc[p]));
+        y = cast(i32, (a.s.img_y - cast(u32, yorig[p]) + cast(u32, yspc[p]) - 1) / cast(u32, yspc[p]));
+        if x && y {
+            var img_len = cast(stbi__uint32, ((a.s.img_n * x * depth + 7 >> 3) + 1) * y);
+            if stbi__create_png_image_raw(a, image_data, image_data_len, out_n, cast(stbi__uint32, x), cast(stbi__uint32, y), depth, color) == 0 {
+                free(final);
+                return 0;
+            }
+            for j = 0; j < y; ++j {
+                for i = 0; i < x; ++i {
+                    i32 out_y = j * yspc[p] + yorig[p];
+                    i32 out_x = i * xspc[p] + xorig[p];
+                    memcpy(final + cast(u32, out_y) * a.s.img_x * cast(u32, out_bytes) + out_x * out_bytes, a.out + (j * x + i) * out_bytes, cast(u64, out_bytes));
+                }
+            }
+            free(a.out);
+            image_data += img_len;
+            image_data_len -= img_len;
+        }
+    }
+    a.out = final;
+    return 1;
+}
 i32 stbi__compute_transparency(stbi__png* z, stbi_uc* tc, i32 out_n) {
-        stbi__context* s = z.s;
-        stbi__uint32 i;
-        stbi__uint32 pixel_count = s.img_x * s.img_y;
-        stbi_uc* p = z.out;
-        assert(out_n == 2 || out_n == 4);
-        if out_n == 2 {
-            for i = 0; i < pixel_count; ++i {
-                p[1] = cast(stbi_uc, p[0] == tc[0] ? 0 : 255);
-                p += 2;
-            }
-        } else {
-            for i = 0; i < pixel_count; ++i {
-                if p[0] == tc[0] && p[1] == tc[1] && p[2] == tc[2] {
-                    p[3] = 0;
-                }
-                p += 4;
-            }
+    stbi__context* s = z.s;
+    stbi__uint32 i;
+    stbi__uint32 pixel_count = s.img_x * s.img_y;
+    stbi_uc* p = z.out;
+    assert(out_n == 2 || out_n == 4);
+    if out_n == 2 {
+        for i = 0; i < pixel_count; ++i {
+            p[1] = cast(stbi_uc, p[0] == tc[0] ? 0 : 255);
+            p += 2;
         }
-        return 1;
-    }
-}
-private {
-i32 stbi__compute_transparency16(stbi__png* z, stbi__uint16* tc, i32 out_n) {
-        stbi__context* s = z.s;
-        stbi__uint32 i;
-        stbi__uint32 pixel_count = s.img_x * s.img_y;
-        var p = cast(stbi__uint16*, z.out);
-        assert(out_n == 2 || out_n == 4);
-        if out_n == 2 {
-            for i = 0; i < pixel_count; ++i {
-                p[1] = cast(stbi__uint16, p[0] == tc[0] ? 0 : 65535);
-                p += 2;
-            }
-        } else {
-            for i = 0; i < pixel_count; ++i {
-                if p[0] == tc[0] && p[1] == tc[1] && p[2] == tc[2] {
-                    p[3] = 0;
-                }
-                p += 4;
-            }
-        }
-        return 1;
-    }
-}
-private {
-i32 stbi__expand_png_palette(stbi__png* a, stbi_uc* palette, i32 len, i32 pal_img_n) {
-        stbi__uint32 i;
-        stbi__uint32 pixel_count = a.s.img_x * a.s.img_y;
-        stbi_uc* p;
-        stbi_uc* temp_out;
-        stbi_uc* orig = a.out;
-        p = cast(stbi_uc*, stbi__malloc_mad2(cast(i32, pixel_count), pal_img_n, 0));
-        if p == null {
-            return stbi__err("outofmem");
-        }
-        temp_out = p;
-        if pal_img_n == 3 {
-            for i = 0; i < pixel_count; ++i {
-                var n = cast(i32, orig[i] * 4);
-                p[0] = palette[n];
-                p[1] = palette[n + 1];
-                p[2] = palette[n + 2];
-                p += 3;
-            }
-        } else {
-            for i = 0; i < pixel_count; ++i {
-                var n = cast(i32, orig[i] * 4);
-                p[0] = palette[n];
-                p[1] = palette[n + 1];
-                p[2] = palette[n + 2];
-                p[3] = palette[n + 3];
-                p += 4;
-            }
-        }
-        free(a.out);
-        a.out = temp_out;
-        ignore sizeof(len);
-        return 1;
-    }
-}
-private { i32 stbi__unpremultiply_on_load_global = 0; }
-private { i32 stbi__de_iphone_flag_global = 0; }
-void stbi_set_unpremultiply_on_load(i32 flag_true_if_should_unpremultiply) {
-        stbi__unpremultiply_on_load_global = flag_true_if_should_unpremultiply;
-    }
-void stbi_convert_iphone_png_to_rgb(i32 flag_true_if_should_convert) {
-        stbi__de_iphone_flag_global = flag_true_if_should_convert;
-    }
-when !(defined(STBI_THREAD_LOCAL)) {
     } else {
-        // TODO transminc: untranslatable platform branch
+        for i = 0; i < pixel_count; ++i {
+            if p[0] == tc[0] && p[1] == tc[1] && p[2] == tc[2] {
+                p[3] = 0;
+            }
+            p += 4;
+        }
     }
+    return 1;
+}
+i32 stbi__compute_transparency16(stbi__png* z, stbi__uint16* tc, i32 out_n) {
+    stbi__context* s = z.s;
+    stbi__uint32 i;
+    stbi__uint32 pixel_count = s.img_x * s.img_y;
+    var p = cast(stbi__uint16*, z.out);
+    assert(out_n == 2 || out_n == 4);
+    if out_n == 2 {
+        for i = 0; i < pixel_count; ++i {
+            p[1] = cast(stbi__uint16, p[0] == tc[0] ? 0 : 65535);
+            p += 2;
+        }
+    } else {
+        for i = 0; i < pixel_count; ++i {
+            if p[0] == tc[0] && p[1] == tc[1] && p[2] == tc[2] {
+                p[3] = 0;
+            }
+            p += 4;
+        }
+    }
+    return 1;
+}
+i32 stbi__expand_png_palette(stbi__png* a, stbi_uc* palette, i32 len, i32 pal_img_n) {
+    stbi__uint32 i;
+    stbi__uint32 pixel_count = a.s.img_x * a.s.img_y;
+    stbi_uc* p;
+    stbi_uc* temp_out;
+    stbi_uc* orig = a.out;
+    p = cast(stbi_uc*, stbi__malloc_mad2(cast(i32, pixel_count), pal_img_n, 0));
+    if p == null {
+        return stbi__err("outofmem");
+    }
+    temp_out = p;
+    if pal_img_n == 3 {
+        for i = 0; i < pixel_count; ++i {
+            var n = cast(i32, orig[i] * 4);
+            p[0] = palette[n];
+            p[1] = palette[n + 1];
+            p[2] = palette[n + 2];
+            p += 3;
+        }
+    } else {
+        for i = 0; i < pixel_count; ++i {
+            var n = cast(i32, orig[i] * 4);
+            p[0] = palette[n];
+            p[1] = palette[n + 1];
+            p[2] = palette[n + 2];
+            p[3] = palette[n + 3];
+            p += 4;
+        }
+    }
+    free(a.out);
+    a.out = temp_out;
+    ignore sizeof(len);
+    return 1;
+}
+i32 stbi__unpremultiply_on_load_global = 0;
+i32 stbi__de_iphone_flag_global = 0;
+}
+void stbi_set_unpremultiply_on_load(i32 flag_true_if_should_unpremultiply) {
+    stbi__unpremultiply_on_load_global = flag_true_if_should_unpremultiply;
+}
+void stbi_convert_iphone_png_to_rgb(i32 flag_true_if_should_convert) {
+    stbi__de_iphone_flag_global = flag_true_if_should_convert;
+}
 private {
 void stbi__de_iphone(stbi__png* z) {
-        stbi__context* s = z.s;
-        stbi__uint32 i;
-        stbi__uint32 pixel_count = s.img_x * s.img_y;
-        stbi_uc* p = z.out;
-        if s.img_out_n == 3 {
+    stbi__context* s = z.s;
+    stbi__uint32 i;
+    stbi__uint32 pixel_count = s.img_x * s.img_y;
+    stbi_uc* p = z.out;
+    if s.img_out_n == 3 {
+        for i = 0; i < pixel_count; ++i {
+            stbi_uc t = p[0];
+            p[0] = p[2];
+            p[2] = t;
+            p += 3;
+        }
+    } else {
+        assert(s.img_out_n == 4);
+        if stbi__unpremultiply_on_load_global != 0 {
+            for i = 0; i < pixel_count; ++i {
+                stbi_uc a = p[3];
+                stbi_uc t = p[0];
+                if a != 0 {
+                    var half = cast(stbi_uc, a / 2);
+                    p[0] = cast(stbi_uc, (p[2] * 255 + half) / a);
+                    p[1] = cast(stbi_uc, (p[1] * 255 + half) / a);
+                    p[2] = cast(stbi_uc, (t * 255 + half) / a);
+                } else {
+                    p[0] = p[2];
+                    p[2] = t;
+                }
+                p += 4;
+            }
+        } else {
             for i = 0; i < pixel_count; ++i {
                 stbi_uc t = p[0];
                 p[0] = p[2];
                 p[2] = t;
-                p += 3;
-            }
-        } else {
-            assert(s.img_out_n == 4);
-            if stbi__unpremultiply_on_load_global != 0 {
-                for i = 0; i < pixel_count; ++i {
-                    stbi_uc a = p[3];
-                    stbi_uc t = p[0];
-                    if a != 0 {
-                        var half = cast(stbi_uc, a / 2);
-                        p[0] = cast(stbi_uc, (p[2] * 255 + half) / a);
-                        p[1] = cast(stbi_uc, (p[1] * 255 + half) / a);
-                        p[2] = cast(stbi_uc, (t * 255 + half) / a);
-                    } else {
-                        p[0] = p[2];
-                        p[2] = t;
-                    }
-                    p += 4;
-                }
-            } else {
-                for i = 0; i < pixel_count; ++i {
-                    stbi_uc t = p[0];
-                    p[0] = p[2];
-                    p[2] = t;
-                    p += 4;
-                }
+                p += 4;
             }
         }
     }
 }
-private {
 i32 stbi__parse_png_file(stbi__png* z, i32 scan, i32 req_comp) {
-        stbi_uc[1024] palette;
-        stbi_uc pal_img_n = 0;
-        stbi_uc has_trans = 0;
-        stbi_uc[3] tc;
-        stbi__uint16[3] tc16;
-        stbi__uint32 ioff = 0;
-        stbi__uint32 idata_limit = 0;
-        stbi__uint32 i;
-        stbi__uint32 pal_len = 0;
-        i32 first = 1;
-        i32 k;
-        i32 interlace = 0;
-        i32 color = 0;
-        i32 is_iphone = 0;
-        stbi__context* s = z.s;
-        z.expanded = null;
-        z.idata = null;
-        z.out = null;
-        if stbi__check_png_header(s) == 0 {
-            return 0;
-        }
-        if scan == STBI__SCAN_type {
-            return 1;
-        }
-        while true {
-            stbi__pngchunk c = stbi__get_chunk_header(s);
-            switch c.type {
-                case (cast(u32, 67) << 24) + (cast(u32, 103) << 16) + (cast(u32, 66) << 8) + cast(u32, 73): {
-                    is_iphone = 1;
-                    stbi__skip(s, cast(i32, c.length));
-                }
-                case (cast(u32, 73) << 24) + (cast(u32, 72) << 16) + (cast(u32, 68) << 8) + cast(u32, 82): {
-                    {
-                        i32 comp;
-                        i32 filter;
-                        if first == 0 {
-                            return stbi__err("multiple IHDR");
-                        }
-                        first = 0;
-                        if c.length != 13 {
-                            return stbi__err("bad IHDR len");
-                        }
-                        s.img_x = stbi__get32be(s);
-                        s.img_y = stbi__get32be(s);
-                        if s.img_y > cast(u32, 1 << 24) {
+    noinit stbi_uc[1024] palette;
+    stbi_uc pal_img_n = 0;
+    stbi_uc has_trans = 0;
+    stbi_uc[3] tc;
+    noinit stbi__uint16[3] tc16;
+    stbi__uint32 ioff = 0;
+    stbi__uint32 idata_limit = 0;
+    stbi__uint32 i;
+    stbi__uint32 pal_len = 0;
+    i32 first = 1;
+    i32 k;
+    i32 interlace = 0;
+    i32 color = 0;
+    i32 is_iphone = 0;
+    stbi__context* s = z.s;
+    z.expanded = null;
+    z.idata = null;
+    z.out = null;
+    if stbi__check_png_header(s) == 0 {
+        return 0;
+    }
+    if scan == STBI__SCAN_type {
+        return 1;
+    }
+    while true {
+        stbi__pngchunk c = stbi__get_chunk_header(s);
+        switch c.type {
+            case (cast(u32, 67) << 24) + (cast(u32, 103) << 16) + (cast(u32, 66) << 8) + cast(u32, 73): {
+                is_iphone = 1;
+                stbi__skip(s, cast(i32, c.length));
+            }
+            case (cast(u32, 73) << 24) + (cast(u32, 72) << 16) + (cast(u32, 68) << 8) + cast(u32, 82): {
+                {
+                    i32 comp;
+                    i32 filter;
+                    if first == 0 {
+                        return stbi__err("multiple IHDR");
+                    }
+                    first = 0;
+                    if c.length != 13 {
+                        return stbi__err("bad IHDR len");
+                    }
+                    s.img_x = stbi__get32be(s);
+                    s.img_y = stbi__get32be(s);
+                    if s.img_y > cast(u32, 1 << 24) {
+                        return stbi__err("too large");
+                    }
+                    if s.img_x > cast(u32, 1 << 24) {
+                        return stbi__err("too large");
+                    }
+                    z.depth = cast(i32, stbi__get8(s));
+                    if z.depth != 1 && z.depth != 2 && z.depth != 4 && z.depth != 8 && z.depth != 16 {
+                        return stbi__err("1/2/4/8/16-bit only");
+                    }
+                    color = cast(i32, stbi__get8(s));
+                    if color > 6 {
+                        return stbi__err("bad ctype");
+                    }
+                    if color == 3 && z.depth == 16 {
+                        return stbi__err("bad ctype");
+                    }
+                    if color == 3 {
+                        pal_img_n = 3;
+                    } else if (color & 1) != 0 {
+                        return stbi__err("bad ctype");
+                    }
+                    comp = cast(i32, stbi__get8(s));
+                    if comp != 0 {
+                        return stbi__err("bad comp method");
+                    }
+                    filter = cast(i32, stbi__get8(s));
+                    if filter != 0 {
+                        return stbi__err("bad filter method");
+                    }
+                    interlace = cast(i32, stbi__get8(s));
+                    if interlace > 1 {
+                        return stbi__err("bad interlace method");
+                    }
+                    if !s.img_x || !s.img_y {
+                        return stbi__err("0-pixel image");
+                    }
+                    if pal_img_n == 0 {
+                        s.img_n = ((color & 2) != 0 ? 3 : 1) + ((color & 4) != 0 ? 1 : 0);
+                        if cast(u32, 1 << 30) / s.img_x / cast(u32, s.img_n) < s.img_y {
                             return stbi__err("too large");
                         }
-                        if s.img_x > cast(u32, 1 << 24) {
+                    } else {
+                        s.img_n = 1;
+                        if cast(u32, 1 << 30) / s.img_x / 4 < s.img_y {
                             return stbi__err("too large");
                         }
-                        z.depth = cast(i32, stbi__get8(s));
-                        if z.depth != 1 && z.depth != 2 && z.depth != 4 && z.depth != 8 && z.depth != 16 {
-                            return stbi__err("1/2/4/8/16-bit only");
-                        }
-                        color = cast(i32, stbi__get8(s));
-                        if color > 6 {
-                            return stbi__err("bad ctype");
-                        }
-                        if color == 3 && z.depth == 16 {
-                            return stbi__err("bad ctype");
-                        }
-                        if color == 3 {
-                            pal_img_n = 3;
-                        } else if (color & 1) != 0 {
-                            return stbi__err("bad ctype");
-                        }
-                        comp = cast(i32, stbi__get8(s));
-                        if comp != 0 {
-                            return stbi__err("bad comp method");
-                        }
-                        filter = cast(i32, stbi__get8(s));
-                        if filter != 0 {
-                            return stbi__err("bad filter method");
-                        }
-                        interlace = cast(i32, stbi__get8(s));
-                        if interlace > 1 {
-                            return stbi__err("bad interlace method");
-                        }
-                        if !s.img_x || !s.img_y {
-                            return stbi__err("0-pixel image");
-                        }
-                        if pal_img_n == 0 {
-                            s.img_n = ((color & 2) != 0 ? 3 : 1) + ((color & 4) != 0 ? 1 : 0);
-                            if cast(u32, 1 << 30) / s.img_x / cast(u32, s.img_n) < s.img_y {
-                                return stbi__err("too large");
-                            }
-                        } else {
-                            s.img_n = 1;
-                            if cast(u32, 1 << 30) / s.img_x / 4 < s.img_y {
-                                return stbi__err("too large");
-                            }
-                        }
-                        break case;
                     }
+                    break case;
                 }
-                case (cast(u32, 80) << 24) + (cast(u32, 76) << 16) + (cast(u32, 84) << 8) + cast(u32, 69): {
-                    {
-                        if first != 0 {
-                            return stbi__err("first not IHDR");
-                        }
-                        if c.length > cast(u32, 256 * 3) {
-                            return stbi__err("invalid PLTE");
-                        }
-                        pal_len = c.length / 3;
-                        if pal_len * 3 != c.length {
-                            return stbi__err("invalid PLTE");
-                        }
-                        for i = 0; i < pal_len; ++i {
-                            palette[i * 4 + 0] = stbi__get8(s);
-                            palette[i * 4 + 1] = stbi__get8(s);
-                            palette[i * 4 + 2] = stbi__get8(s);
-                            palette[i * 4 + 3] = 255;
-                        }
-                        break case;
-                    }
-                }
-                case (cast(u32, 116) << 24) + (cast(u32, 82) << 16) + (cast(u32, 78) << 8) + cast(u32, 83): {
-                    {
-                        if first != 0 {
-                            return stbi__err("first not IHDR");
-                        }
-                        if z.idata != null {
-                            return stbi__err("tRNS after IDAT");
-                        }
-                        if pal_img_n != 0 {
-                            if scan == STBI__SCAN_header {
-                                s.img_n = 4;
-                                return 1;
-                            }
-                            if pal_len == 0 {
-                                return stbi__err("tRNS before PLTE");
-                            }
-                            if c.length > pal_len {
-                                return stbi__err("bad tRNS len");
-                            }
-                            pal_img_n = 4;
-                            for i = 0; i < c.length; ++i {
-                                palette[i * 4 + 3] = stbi__get8(s);
-                            }
-                        } else {
-                            if (s.img_n & 1) == 0 {
-                                return stbi__err("tRNS with alpha");
-                            }
-                            if c.length != cast(stbi__uint32, s.img_n) * 2 {
-                                return stbi__err("bad tRNS len");
-                            }
-                            has_trans = 1;
-                            if scan == STBI__SCAN_header {
-                                ++s.img_n;
-                                return 1;
-                            }
-                            if z.depth == 16 {
-                                for k = 0; k < s.img_n && k < 3; ++k {
-                                    tc16[k] = cast(stbi__uint16, stbi__get16be(s));
-                                }
-                            } else {
-                                for k = 0; k < s.img_n && k < 3; ++k {
-                                    tc[k] = cast(stbi_uc, cast(stbi_uc, stbi__get16be(s) & 255) * stbi__depth_scale_table[z.depth]);
-                                }
-                            }
-                        }
-                        break case;
-                    }
-                }
-                case (cast(u32, 73) << 24) + (cast(u32, 68) << 16) + (cast(u32, 65) << 8) + cast(u32, 84): {
-                    {
-                        if first != 0 {
-                            return stbi__err("first not IHDR");
-                        }
-                        if pal_img_n && !pal_len {
-                            return stbi__err("no PLTE");
-                        }
-                        if scan == STBI__SCAN_header {
-                            if pal_img_n != 0 {
-                                s.img_n = cast(i32, pal_img_n);
-                            }
-                            return 1;
-                        }
-                        if c.length > cast(u32, 1 << 30) {
-                            return stbi__err("IDAT size limit");
-                        }
-                        if cast(i32, ioff + c.length) < cast(i32, ioff) {
-                            return 0;
-                        }
-                        if ioff + c.length > idata_limit {
-                            stbi__uint32 idata_limit_old = idata_limit;
-                            stbi_uc* p;
-                            if idata_limit == 0 {
-                                idata_limit = c.length > 4096 ? c.length : 4096;
-                            }
-                            while ioff + c.length > idata_limit {
-                                idata_limit *= 2;
-                            }
-                            ignore sizeof(idata_limit_old);
-                            p = cast(stbi_uc*, realloc(z.idata, cast(u64, idata_limit)));
-                            if p == null {
-                                return stbi__err("outofmem");
-                            }
-                            z.idata = p;
-                        }
-                        if stbi__getn(s, z.idata + ioff, cast(i32, c.length)) == 0 {
-                            return stbi__err("outofdata");
-                        }
-                        ioff += c.length;
-                        break case;
-                    }
-                }
-                case (cast(u32, 73) << 24) + (cast(u32, 69) << 16) + (cast(u32, 78) << 8) + cast(u32, 68): {
-                    {
-                        stbi__uint32 raw_len;
-                        stbi__uint32 bpl;
-                        if first != 0 {
-                            return stbi__err("first not IHDR");
-                        }
-                        if scan != STBI__SCAN_load {
-                            return 1;
-                        }
-                        if z.idata == null {
-                            return stbi__err("no IDAT");
-                        }
-                        bpl = (s.img_x * cast(u32, z.depth) + 7) / 8;
-                        raw_len = bpl * s.img_y * cast(u32, s.img_n) + s.img_y;
-                        z.expanded = cast(stbi_uc*, stbi_zlib_decode_malloc_guesssize_headerflag(cast(u8*, z.idata), cast(i32, ioff), cast(i32, raw_len), cast(i32*, &raw_len), cast(i32, !is_iphone)));
-                        if z.expanded == null {
-                            return 0;
-                        }
-                        free(z.idata);
-                        z.idata = null;
-                        if req_comp == s.img_n + 1 && req_comp != 3 && !pal_img_n || has_trans {
-                            s.img_out_n = s.img_n + 1;
-                        } else {
-                            s.img_out_n = s.img_n;
-                        }
-                        if stbi__create_png_image(z, z.expanded, raw_len, s.img_out_n, z.depth, color, interlace) == 0 {
-                            return 0;
-                        }
-                        if has_trans != 0 {
-                            if z.depth == 16 {
-                                if stbi__compute_transparency16(z, tc16, s.img_out_n) == 0 {
-                                    return 0;
-                                }
-                            } else {
-                                if stbi__compute_transparency(z, tc, s.img_out_n) == 0 {
-                                    return 0;
-                                }
-                            }
-                        }
-                        if is_iphone && stbi__de_iphone_flag_global && s.img_out_n > 2 {
-                            stbi__de_iphone(z);
-                        }
-                        if pal_img_n != 0 {
-                            s.img_n = cast(i32, pal_img_n);
-                            s.img_out_n = cast(i32, pal_img_n);
-                            if req_comp >= 3 {
-                                s.img_out_n = req_comp;
-                            }
-                            if stbi__expand_png_palette(z, palette, cast(i32, pal_len), s.img_out_n) == 0 {
-                                return 0;
-                            }
-                        } else if has_trans != 0 {
-                            ++s.img_n;
-                        }
-                        free(z.expanded);
-                        z.expanded = null;
-                        stbi__get32be(s);
-                        return 1;
-                    }
-                }
-                default: {
+            }
+            case (cast(u32, 80) << 24) + (cast(u32, 76) << 16) + (cast(u32, 84) << 8) + cast(u32, 69): {
+                {
                     if first != 0 {
                         return stbi__err("first not IHDR");
                     }
-                    if (c.type & cast(u32, 1 << 29)) == 0 {
-                        when !(defined(STBI_NO_FAILURE_STRINGS)) {
-                            stbi__parse_png_file__invalid_chunk[0] = cast(u8, cast(stbi_uc, c.type >> 24 & 255));
-                            stbi__parse_png_file__invalid_chunk[1] = cast(u8, cast(stbi_uc, c.type >> 16 & 255));
-                            stbi__parse_png_file__invalid_chunk[2] = cast(u8, cast(stbi_uc, c.type >> 8 & 255));
-                            stbi__parse_png_file__invalid_chunk[3] = cast(u8, cast(stbi_uc, c.type >> 0 & 255));
-                        }
-                        return stbi__err(stbi__parse_png_file__invalid_chunk);
+                    if c.length > cast(u32, 256 * 3) {
+                        return stbi__err("invalid PLTE");
                     }
-                    stbi__skip(s, cast(i32, c.length));
+                    pal_len = c.length / 3;
+                    if pal_len * 3 != c.length {
+                        return stbi__err("invalid PLTE");
+                    }
+                    for i = 0; i < pal_len; ++i {
+                        palette[i * 4 + 0] = stbi__get8(s);
+                        palette[i * 4 + 1] = stbi__get8(s);
+                        palette[i * 4 + 2] = stbi__get8(s);
+                        palette[i * 4 + 3] = 255;
+                    }
+                    break case;
                 }
             }
-            stbi__get32be(s);
+            case (cast(u32, 116) << 24) + (cast(u32, 82) << 16) + (cast(u32, 78) << 8) + cast(u32, 83): {
+                {
+                    if first != 0 {
+                        return stbi__err("first not IHDR");
+                    }
+                    if z.idata != null {
+                        return stbi__err("tRNS after IDAT");
+                    }
+                    if pal_img_n != 0 {
+                        if scan == STBI__SCAN_header {
+                            s.img_n = 4;
+                            return 1;
+                        }
+                        if pal_len == 0 {
+                            return stbi__err("tRNS before PLTE");
+                        }
+                        if c.length > pal_len {
+                            return stbi__err("bad tRNS len");
+                        }
+                        pal_img_n = 4;
+                        for i = 0; i < c.length; ++i {
+                            palette[i * 4 + 3] = stbi__get8(s);
+                        }
+                    } else {
+                        if (s.img_n & 1) == 0 {
+                            return stbi__err("tRNS with alpha");
+                        }
+                        if c.length != cast(stbi__uint32, s.img_n) * 2 {
+                            return stbi__err("bad tRNS len");
+                        }
+                        has_trans = 1;
+                        if scan == STBI__SCAN_header {
+                            ++s.img_n;
+                            return 1;
+                        }
+                        if z.depth == 16 {
+                            for k = 0; k < s.img_n && k < 3; ++k {
+                                tc16[k] = cast(stbi__uint16, stbi__get16be(s));
+                            }
+                        } else {
+                            for k = 0; k < s.img_n && k < 3; ++k {
+                                tc[k] = cast(stbi_uc, cast(stbi_uc, stbi__get16be(s) & 255) * stbi__depth_scale_table[z.depth]);
+                            }
+                        }
+                    }
+                    break case;
+                }
+            }
+            case (cast(u32, 73) << 24) + (cast(u32, 68) << 16) + (cast(u32, 65) << 8) + cast(u32, 84): {
+                {
+                    if first != 0 {
+                        return stbi__err("first not IHDR");
+                    }
+                    if pal_img_n && !pal_len {
+                        return stbi__err("no PLTE");
+                    }
+                    if scan == STBI__SCAN_header {
+                        if pal_img_n != 0 {
+                            s.img_n = cast(i32, pal_img_n);
+                        }
+                        return 1;
+                    }
+                    if c.length > cast(u32, 1 << 30) {
+                        return stbi__err("IDAT size limit");
+                    }
+                    if cast(i32, ioff + c.length) < cast(i32, ioff) {
+                        return 0;
+                    }
+                    if ioff + c.length > idata_limit {
+                        stbi__uint32 idata_limit_old = idata_limit;
+                        stbi_uc* p;
+                        if idata_limit == 0 {
+                            idata_limit = c.length > 4096 ? c.length : 4096;
+                        }
+                        while ioff + c.length > idata_limit {
+                            idata_limit *= 2;
+                        }
+                        ignore sizeof(idata_limit_old);
+                        p = cast(stbi_uc*, realloc(z.idata, cast(u64, idata_limit)));
+                        if p == null {
+                            return stbi__err("outofmem");
+                        }
+                        z.idata = p;
+                    }
+                    if stbi__getn(s, z.idata + ioff, cast(i32, c.length)) == 0 {
+                        return stbi__err("outofdata");
+                    }
+                    ioff += c.length;
+                    break case;
+                }
+            }
+            case (cast(u32, 73) << 24) + (cast(u32, 69) << 16) + (cast(u32, 78) << 8) + cast(u32, 68): {
+                {
+                    stbi__uint32 raw_len;
+                    stbi__uint32 bpl;
+                    if first != 0 {
+                        return stbi__err("first not IHDR");
+                    }
+                    if scan != STBI__SCAN_load {
+                        return 1;
+                    }
+                    if z.idata == null {
+                        return stbi__err("no IDAT");
+                    }
+                    bpl = (s.img_x * cast(u32, z.depth) + 7) / 8;
+                    raw_len = bpl * s.img_y * cast(u32, s.img_n) + s.img_y;
+                    z.expanded = cast(stbi_uc*, stbi_zlib_decode_malloc_guesssize_headerflag(cast(u8*, z.idata), cast(i32, ioff), cast(i32, raw_len), cast(i32*, &raw_len), cast(i32, !is_iphone)));
+                    if z.expanded == null {
+                        return 0;
+                    }
+                    free(z.idata);
+                    z.idata = null;
+                    if req_comp == s.img_n + 1 && req_comp != 3 && !pal_img_n || has_trans {
+                        s.img_out_n = s.img_n + 1;
+                    } else {
+                        s.img_out_n = s.img_n;
+                    }
+                    if stbi__create_png_image(z, z.expanded, raw_len, s.img_out_n, z.depth, color, interlace) == 0 {
+                        return 0;
+                    }
+                    if has_trans != 0 {
+                        if z.depth == 16 {
+                            if stbi__compute_transparency16(z, tc16, s.img_out_n) == 0 {
+                                return 0;
+                            }
+                        } else {
+                            if stbi__compute_transparency(z, tc, s.img_out_n) == 0 {
+                                return 0;
+                            }
+                        }
+                    }
+                    if is_iphone && stbi__de_iphone_flag_global && s.img_out_n > 2 {
+                        stbi__de_iphone(z);
+                    }
+                    if pal_img_n != 0 {
+                        s.img_n = cast(i32, pal_img_n);
+                        s.img_out_n = cast(i32, pal_img_n);
+                        if req_comp >= 3 {
+                            s.img_out_n = req_comp;
+                        }
+                        if stbi__expand_png_palette(z, palette, cast(i32, pal_len), s.img_out_n) == 0 {
+                            return 0;
+                        }
+                    } else if has_trans != 0 {
+                        ++s.img_n;
+                    }
+                    free(z.expanded);
+                    z.expanded = null;
+                    stbi__get32be(s);
+                    return 1;
+                }
+            }
+            default: {
+                if first != 0 {
+                    return stbi__err("first not IHDR");
+                }
+                if (c.type & cast(u32, 1 << 29)) == 0 {
+                    when !(defined(STBI_NO_FAILURE_STRINGS)) {
+                        stbi__parse_png_file__invalid_chunk[0] = cast(u8, cast(stbi_uc, c.type >> 24 & 255));
+                        stbi__parse_png_file__invalid_chunk[1] = cast(u8, cast(stbi_uc, c.type >> 16 & 255));
+                        stbi__parse_png_file__invalid_chunk[2] = cast(u8, cast(stbi_uc, c.type >> 8 & 255));
+                        stbi__parse_png_file__invalid_chunk[3] = cast(u8, cast(stbi_uc, c.type >> 0 & 255));
+                    }
+                    return stbi__err(stbi__parse_png_file__invalid_chunk);
+                }
+                stbi__skip(s, cast(i32, c.length));
+            }
         }
+        stbi__get32be(s);
     }
 }
-private {
 void* stbi__do_png(stbi__png* p, i32* x, i32* y, i32* n, i32 req_comp, stbi__result_info* ri) {
-        void* result = null;
-        if req_comp < 0 || req_comp > 4 {
-            return cast(u8*, cast(u64, stbi__err("bad req_comp") != 0 ? null : null));
+    void* result = null;
+    if req_comp < 0 || req_comp > 4 {
+        return cast(u8*, cast(u64, stbi__err("bad req_comp") != 0 ? null : null));
+    }
+    if stbi__parse_png_file(p, STBI__SCAN_load, req_comp) != 0 {
+        if p.depth <= 8 {
+            ri.bits_per_channel = 8;
+        } else if p.depth == 16 {
+            ri.bits_per_channel = 16;
+        } else {
+            return cast(u8*, cast(u64, stbi__err("bad bits_per_channel") != 0 ? null : null));
         }
-        if stbi__parse_png_file(p, STBI__SCAN_load, req_comp) != 0 {
-            if p.depth <= 8 {
-                ri.bits_per_channel = 8;
-            } else if p.depth == 16 {
-                ri.bits_per_channel = 16;
-            } else {
-                return cast(u8*, cast(u64, stbi__err("bad bits_per_channel") != 0 ? null : null));
-            }
-            result = p.out;
-            p.out = null;
-            if req_comp && req_comp != p.s.img_out_n {
-                if ri.bits_per_channel == 8 {
-                    result = stbi__convert_format(cast(u8*, result), p.s.img_out_n, req_comp, p.s.img_x, p.s.img_y);
-                } else {
-                    result = stbi__convert_format16(cast(stbi__uint16*, result), p.s.img_out_n, req_comp, p.s.img_x, p.s.img_y);
-                }
-                p.s.img_out_n = req_comp;
-                if result == null {
-                    return result;
-                }
-            }
-            *x = cast(i32, p.s.img_x);
-            *y = cast(i32, p.s.img_y);
-            if n != null {
-                *n = p.s.img_n;
-            }
-        }
-        free(p.out);
+        result = p.out;
         p.out = null;
-        free(p.expanded);
-        p.expanded = null;
-        free(p.idata);
-        p.idata = null;
-        return result;
+        if req_comp && req_comp != p.s.img_out_n {
+            if ri.bits_per_channel == 8 {
+                result = stbi__convert_format(cast(u8*, result), p.s.img_out_n, req_comp, p.s.img_x, p.s.img_y);
+            } else {
+                result = stbi__convert_format16(cast(stbi__uint16*, result), p.s.img_out_n, req_comp, p.s.img_x, p.s.img_y);
+            }
+            p.s.img_out_n = req_comp;
+            if result == null {
+                return result;
+            }
+        }
+        *x = cast(i32, p.s.img_x);
+        *y = cast(i32, p.s.img_y);
+        if n != null {
+            *n = p.s.img_n;
+        }
     }
+    free(p.out);
+    p.out = null;
+    free(p.expanded);
+    p.expanded = null;
+    free(p.idata);
+    p.idata = null;
+    return result;
 }
-private {
 void* stbi__png_load(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp, stbi__result_info* ri) {
-        stbi__png p;
-        p.s = s;
-        return stbi__do_png(&p, x, y, comp, req_comp, ri);
-    }
+    noinit stbi__png p;
+    p.s = s;
+    return stbi__do_png(&p, x, y, comp, req_comp, ri);
 }
-private {
 i32 stbi__png_test(stbi__context* s) {
-        i32 r;
-        r = stbi__check_png_header(s);
-        stbi__rewind(s);
-        return r;
-    }
+    i32 r;
+    r = stbi__check_png_header(s);
+    stbi__rewind(s);
+    return r;
 }
-private {
 i32 stbi__png_info_raw(stbi__png* p, i32* x, i32* y, i32* comp) {
-        if stbi__parse_png_file(p, STBI__SCAN_header, 0) == 0 {
-            stbi__rewind(p.s);
-            return 0;
-        }
-        if x != null {
-            *x = cast(i32, p.s.img_x);
-        }
-        if y != null {
-            *y = cast(i32, p.s.img_y);
-        }
-        if comp != null {
-            *comp = p.s.img_n;
-        }
-        return 1;
+    if stbi__parse_png_file(p, STBI__SCAN_header, 0) == 0 {
+        stbi__rewind(p.s);
+        return 0;
     }
+    if x != null {
+        *x = cast(i32, p.s.img_x);
+    }
+    if y != null {
+        *y = cast(i32, p.s.img_y);
+    }
+    if comp != null {
+        *comp = p.s.img_n;
+    }
+    return 1;
 }
-private {
 i32 stbi__png_info(stbi__context* s, i32* x, i32* y, i32* comp) {
-        stbi__png p;
-        p.s = s;
-        return stbi__png_info_raw(&p, x, y, comp);
-    }
+    noinit stbi__png p;
+    p.s = s;
+    return stbi__png_info_raw(&p, x, y, comp);
 }
-private {
 i32 stbi__png_is16(stbi__context* s) {
-        stbi__png p;
-        p.s = s;
-        if stbi__png_info_raw(&p, null, null, null) == 0 {
-            return 0;
-        }
-        if p.depth != 16 {
-            stbi__rewind(p.s);
-            return 0;
-        }
-        return 1;
+    noinit stbi__png p;
+    p.s = s;
+    if stbi__png_info_raw(&p, null, null, null) == 0 {
+        return 0;
     }
+    if p.depth != 16 {
+        stbi__rewind(p.s);
+        return 0;
+    }
+    return 1;
+}
 }
 }
 // Microsoft/Windows BMP image
@@ -20372,8 +20149,6 @@ i32 stbi__info_main(stbi__context* s, i32* x, i32* y, i32* comp) {
     }
     return stbi__err("unknown image type");
 }
-}
-private {
 i32 stbi__is_16_main(stbi__context* s) {
     when !(defined(STBI_NO_PNG)) {
         if stbi__png_is16(s) != 0 {
@@ -20384,22 +20159,22 @@ i32 stbi__is_16_main(stbi__context* s) {
 }
 }
 i32 stbi_info_from_memory(stbi_uc* buffer, i32 len, i32* x, i32* y, i32* comp) {
-    stbi__context s;
+    noinit stbi__context s;
     stbi__start_mem(&s, buffer, len);
     return stbi__info_main(&s, x, y, comp);
 }
 i32 stbi_info_from_callbacks(stbi_io_callbacks* c, void* user, i32* x, i32* y, i32* comp) {
-    stbi__context s;
+    noinit stbi__context s;
     stbi__start_callbacks(&s, c, user);
     return stbi__info_main(&s, x, y, comp);
 }
 i32 stbi_is_16_bit_from_memory(stbi_uc* buffer, i32 len) {
-    stbi__context s;
+    noinit stbi__context s;
     stbi__start_mem(&s, buffer, len);
     return stbi__is_16_main(&s);
 }
 i32 stbi_is_16_bit_from_callbacks(stbi_io_callbacks* c, void* user) {
-    stbi__context s;
+    noinit stbi__context s;
     stbi__start_callbacks(&s, c, user);
     return stbi__is_16_main(&s);
 }
@@ -20486,10 +20261,10 @@ Image LoadImageAnimFromMemory(u8* fileType, u8* fileData, i32 dataSize, i32* fra
 Image LoadImageFromMemory(u8* fileType, u8* fileData, i32 dataSize) {
     Image image;
     if fileData == null || dataSize == 0 {
-                return image;
+        return image;
     }
     if fileType == null {
-                return image;
+        return image;
     }
     if false || strcmp(fileType, ".png") == 0 || strcmp(fileType, ".PNG") == 0 {
         if fileData != null {
@@ -20509,10 +20284,10 @@ Image LoadImageFromMemory(u8* fileType, u8* fileData, i32 dataSize) {
             }
         }
     } else {
-            }
+    }
     if image.data != null {
-            } else {
-            }
+    } else {
+    }
     return image;
 }
 // Load image from GPU texture data
@@ -20529,10 +20304,10 @@ Image LoadImageFromTexture(Texture2D texture) {
             when defined(GRAPHICS_API_OPENGL_ES2) {
                 image.format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8;
             }
-                    } else {
-                    }
+        } else {
+        }
     } else {
-            }
+    }
     return image;
 }
 // Load image from screen buffer (screenshot)
@@ -20562,12 +20337,12 @@ void UnloadImage(Image image) {
 bool ExportImage(Image image, u8* fileName) {
     i32 result = 0;
     if image.width == 0 || image.height == 0 || image.data == null {
-        return cast(bool, result);
+        return result != 0;
     }
     if result != 0 {
-            } else {
-            }
-    return cast(bool, result);
+    } else {
+    }
+    return result != 0;
 }
 // Export image to memory buffer
 u8* ExportImageToMemory(Image image, u8* fileType, i32* dataSize) {
@@ -20586,7 +20361,7 @@ u8* ExportImageToMemory(Image image, u8* fileType, i32* dataSize) {
     } else if image.format == PIXELFORMAT_UNCOMPRESSED_R8G8B8A8 {
         channels = 4;
     }
-        return fileData;
+    return fileData;
 }
 // Export image as code file (.h) defining an array of bytes
 bool ExportImageAsCode(Image image, u8* fileName) {
@@ -20623,8 +20398,8 @@ bool ExportImageAsCode(Image image, u8* fileName) {
     result = SaveFileText(fileName, txtData);
     free(txtData);
     if result != 0 {
-            } else {
-            }
+    } else {
+    }
     return result;
 }
 //------------------------------------------------------------------------------------
@@ -20704,12 +20479,12 @@ void ImageCrop(Image* image, Rectangle crop) {
         crop.height = cast(f32, image.height) - crop.y;
     }
     if crop.x > cast(f32, image.width) || crop.y > cast(f32, image.height) {
-                return;
+        return;
     }
     if image.mipmaps > 1 {
-            }
+    }
     if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
-            } else {
+    } else {
         i32 bytesPerPixel = GetPixelDataSize(1, 1, image.format);
         var croppedData = cast(u8*, alloc(cast(i64, cast(i32, crop.width * crop.height) * bytesPerPixel)));
         {
@@ -20927,7 +20702,7 @@ void ImageFormat(Image* image, i32 newFormat) {
                 }
             }
         } else {
-                    }
+        }
     }
 }
 // Create an image from text (default font)
@@ -20977,7 +20752,7 @@ Image ImageTextEx(Font font, u8* text, f32 fontSize, f32 spacing, Color tint) {
     }
     if textSize.y != imSize.y {
         f32 scaleFactor = textSize.y / imSize.y;
-                if font.texture.id == GetFontDefault().texture.id {
+        if font.texture.id == GetFontDefault().texture.id {
             ImageResizeNN(&imText, cast(i32, imSize.x * scaleFactor), cast(i32, imSize.y * scaleFactor));
         } else {
             ImageResize(&imText, cast(i32, imSize.x * scaleFactor), cast(i32, imSize.y * scaleFactor));
@@ -20992,23 +20767,23 @@ Image ImageFromChannel(Image image, i32 selectedChannel) {
         return result;
     }
     if selectedChannel < 0 {
-                selectedChannel = 0;
+        selectedChannel = 0;
     }
     if image.format == PIXELFORMAT_UNCOMPRESSED_GRAYSCALE || image.format == PIXELFORMAT_UNCOMPRESSED_R32 || image.format == PIXELFORMAT_UNCOMPRESSED_R16 {
         if selectedChannel > 0 {
-                        selectedChannel = 0;
+            selectedChannel = 0;
         }
     } else if image.format == PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA {
         if selectedChannel > 1 {
-                        selectedChannel = 1;
+            selectedChannel = 1;
         }
     } else if image.format == PIXELFORMAT_UNCOMPRESSED_R5G6B5 || image.format == PIXELFORMAT_UNCOMPRESSED_R8G8B8 || image.format == PIXELFORMAT_UNCOMPRESSED_R32G32B32 || image.format == PIXELFORMAT_UNCOMPRESSED_R16G16B16 {
         if selectedChannel > 2 {
-                        selectedChannel = 0;
+            selectedChannel = 0;
         }
     }
     if selectedChannel > 3 {
-                selectedChannel = 3;
+        selectedChannel = 3;
     }
     result.format = PIXELFORMAT_UNCOMPRESSED_GRAYSCALE;
     result.height = image.height;
@@ -21016,7 +20791,7 @@ Image ImageFromChannel(Image image, i32 selectedChannel) {
     result.mipmaps = 1;
     var pixels = new(u8[image.width * image.height]);
     if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
-            } else {
+    } else {
         {
             i32 i = 0;
             i32 k = 0;
@@ -21211,9 +20986,9 @@ void ImageResizeCanvas(Image* image, i32 newWidth, i32 newHeight, i32 offsetX, i
         return;
     }
     if image.mipmaps > 1 {
-            }
+    }
     if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
-            } else if newWidth != image.width || newHeight != image.height {
+    } else if newWidth != image.width || newHeight != image.height {
         var srcRec = Rectangle{0.0f, 0.0f, cast(f32, image.width), cast(f32, image.height)};
         var dstPos = Vector2{cast(f32, offsetX), cast(f32, offsetY)};
         if offsetX < 0 {
@@ -21286,9 +21061,9 @@ void ImageAlphaClear(Image* image, Color color, f32 threshold) {
         return;
     }
     if image.mipmaps > 1 {
-            }
+    }
     if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
-            } else {
+    } else {
         switch image.format {
             case PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA: {
                 {
@@ -21376,8 +21151,8 @@ void ImageAlphaClear(Image* image, Color color, f32 threshold) {
 // NOTE 2: alphaMask should be same size as image
 void ImageAlphaMask(Image* image, Image alphaMask) {
     if image.width != alphaMask.width || image.height != alphaMask.height {
-            } else if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
-            } else {
+    } else if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
+    } else {
         Image mask = ImageCopy(alphaMask);
         if mask.format != PIXELFORMAT_UNCOMPRESSED_GRAYSCALE {
             ImageFormat(&mask, PIXELFORMAT_UNCOMPRESSED_GRAYSCALE);
@@ -21550,7 +21325,7 @@ void ImageKernelConvolution(Image* image, f32* kernel, i32 kernelSize) {
     }
     var kernelWidth = cast(i32, sqrtf(cast(f32, kernelSize)));
     if kernelWidth * kernelWidth != kernelSize {
-                return;
+        return;
     }
     Color* pixels = LoadImageColors(*image);
     var imageCopy2 = new(Vector4[image.height * image.width]);
@@ -21674,7 +21449,7 @@ void ImageMipmaps(Image* image) {
         if mipHeight < 1 {
             mipHeight = 1;
         }
-                mipCount++;
+        mipCount++;
         mipSize += GetPixelDataSize(mipWidth, mipHeight, image.format);
     }
     if image.mipmaps < mipCount {
@@ -21701,13 +21476,13 @@ void ImageMipmaps(Image* image) {
             if i < image.mipmaps {
                 continue;
             }
-                        ImageResize(&imCopy, mipWidth, mipHeight);
+            ImageResize(&imCopy, mipWidth, mipHeight);
             memcpy(nextmip, imCopy.data, cast(u64, mipSize));
         }
         UnloadImage(imCopy);
         image.mipmaps = mipCount;
     } else {
-            }
+    }
 }
 // Dither image data to 16bpp or lower (Floyd-Steinberg dithering)
 // NOTE: In case selected bpp do not represent a known 16bit format,
@@ -21717,14 +21492,14 @@ void ImageDither(Image* image, i32 rBpp, i32 gBpp, i32 bBpp, i32 aBpp) {
         return;
     }
     if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
-                return;
+        return;
     }
     if rBpp + gBpp + bBpp + aBpp > 16 {
-            } else {
+    } else {
         Color* pixels = LoadImageColors(*image);
         free(image.data);
         if image.format != PIXELFORMAT_UNCOMPRESSED_R8G8B8 && image.format != PIXELFORMAT_UNCOMPRESSED_R8G8B8A8 {
-                    }
+        }
         if rBpp == 5 && gBpp == 6 && bBpp == 5 && aBpp == 0 {
             image.format = PIXELFORMAT_UNCOMPRESSED_R5G6B5;
         } else if rBpp == 5 && gBpp == 5 && bBpp == 5 && aBpp == 1 {
@@ -21733,7 +21508,7 @@ void ImageDither(Image* image, i32 rBpp, i32 gBpp, i32 bBpp, i32 aBpp) {
             image.format = PIXELFORMAT_UNCOMPRESSED_R4G4B4A4;
         } else {
             image.format = 0;
-                    }
+        }
         image.data = new(u16[image.width * image.height]);
         var oldPixel = Color{255, 255, 255, 255};
         var newPixel = Color{255, 255, 255, 255};
@@ -21791,9 +21566,9 @@ void ImageFlipVertical(Image* image) {
         return;
     }
     if image.mipmaps > 1 {
-            }
+    }
     if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
-            } else {
+    } else {
         i32 bytesPerPixel = GetPixelDataSize(1, 1, image.format);
         var flippedData = cast(u8*, alloc(cast(i64, image.width * image.height * bytesPerPixel)));
         {
@@ -21814,9 +21589,9 @@ void ImageFlipHorizontal(Image* image) {
         return;
     }
     if image.mipmaps > 1 {
-            }
+    }
     if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
-            } else {
+    } else {
         i32 bytesPerPixel = GetPixelDataSize(1, 1, image.format);
         var flippedData = cast(u8*, alloc(cast(i64, image.width * image.height * bytesPerPixel)));
         for i32 y = 0; y < image.height; y++ {
@@ -21836,9 +21611,9 @@ void ImageRotate(Image* image, i32 degrees) {
         return;
     }
     if image.mipmaps > 1 {
-            }
+    }
     if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
-            } else {
+    } else {
         f32 rad = cast(f32, degrees) * 3.141592653589793f / 180.0f;
         f32 sinRadius = sinf(rad);
         f32 cosRadius = cosf(rad);
@@ -21880,9 +21655,9 @@ void ImageRotateCW(Image* image) {
         return;
     }
     if image.mipmaps > 1 {
-            }
+    }
     if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
-            } else {
+    } else {
         i32 bytesPerPixel = GetPixelDataSize(1, 1, image.format);
         var rotatedData = cast(u8*, alloc(cast(i64, image.width * image.height * bytesPerPixel)));
         for i32 y = 0; y < image.height; y++ {
@@ -21906,9 +21681,9 @@ void ImageRotateCCW(Image* image) {
         return;
     }
     if image.mipmaps > 1 {
-            }
+    }
     if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
-            } else {
+    } else {
         i32 bytesPerPixel = GetPixelDataSize(1, 1, image.format);
         var rotatedData = cast(u8*, alloc(cast(i64, image.width * image.height * bytesPerPixel)));
         for i32 y = 0; y < image.height; y++ {
@@ -22103,11 +21878,11 @@ Color* LoadImageColors(Image image) {
     }
     var pixels = new(Color[image.width * image.height]);
     if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
-            } else {
+    } else {
         if image.format == PIXELFORMAT_UNCOMPRESSED_R32 || image.format == PIXELFORMAT_UNCOMPRESSED_R32G32B32 || image.format == PIXELFORMAT_UNCOMPRESSED_R32G32B32A32 {
-                    }
+        }
         if image.format == PIXELFORMAT_UNCOMPRESSED_R16 || image.format == PIXELFORMAT_UNCOMPRESSED_R16G16B16 || image.format == PIXELFORMAT_UNCOMPRESSED_R16G16B16A16 {
-                    }
+        }
         {
             i32 i = 0;
             i32 k = 0;
@@ -22262,7 +22037,7 @@ Color* LoadImagePalette(Image image, i32 maxPaletteSize, i32* colorCount) {
                     palCount++;
                     if palCount >= maxPaletteSize {
                         i = image.width * image.height;
-                                            }
+                    }
                 }
             }
         }
@@ -22427,10 +22202,10 @@ Color GetImageColor(Image image, i32 x, i32 y) {
                 }
             }
             default: {
-                            }
+            }
         }
     } else {
-            }
+    }
     return color;
 }
 //------------------------------------------------------------------------------------
@@ -22908,7 +22683,7 @@ void ImageDraw(Image* dst, Image src, Rectangle srcRec, Rectangle dstRec, Color 
         return;
     }
     if dst.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
-            } else {
+    } else {
         Image srcMod;
         Image* srcPtr = &src;
         bool useSrcMod = false;
@@ -23052,7 +22827,7 @@ Texture2D LoadTextureFromImage(Image image) {
     if image.width != 0 && image.height != 0 {
         texture.id = rlLoadTexture(image.data, image.width, image.height, image.format, image.mipmaps);
     } else {
-            }
+    }
     texture.width = image.width;
     texture.height = image.height;
     texture.mipmaps = image.mipmaps;
@@ -23153,10 +22928,10 @@ TextureCubemap LoadTextureCubemap(Image image, i32 layout) {
             cubemap.format = faces.format;
             cubemap.mipmaps = faces.mipmaps;
         } else {
-                    }
+        }
         UnloadImage(faces);
     } else {
-            }
+    }
     return cubemap;
 }
 // Load texture for rendering (framebuffer)
@@ -23179,10 +22954,10 @@ RenderTexture2D LoadRenderTexture(i32 width, i32 height) {
         rlFramebufferAttach(target.id, target.texture.id, RL_ATTACHMENT_COLOR_CHANNEL0, RL_ATTACHMENT_TEXTURE2D, 0);
         rlFramebufferAttach(target.id, target.depth.id, RL_ATTACHMENT_DEPTH, RL_ATTACHMENT_RENDERBUFFER, 0);
         if rlFramebufferComplete(target.id) != 0 {
-                    }
+        }
         rlDisableFramebuffer();
     } else {
-            }
+    }
     return target;
 }
 // Check if a texture is valid (loaded in GPU)
@@ -23197,7 +22972,7 @@ bool IsTextureValid(Texture2D texture) {
 void UnloadTexture(Texture2D texture) {
     if texture.id > 0 {
         rlUnloadTexture(texture.id);
-            }
+    }
 }
 // Check if a render texture is valid (loaded in GPU)
 bool IsRenderTextureValid(RenderTexture2D target) {
@@ -23267,7 +23042,7 @@ void SetTextureFilter(Texture2D texture, i32 filter) {
                     rlTextureParameters(texture.id, 10241, 9987);
                     rlTextureParameters(texture.id, 10240, 9729);
                 } else {
-                                        rlTextureParameters(texture.id, 10241, 9729);
+                    rlTextureParameters(texture.id, 10241, 9729);
                     rlTextureParameters(texture.id, 10240, 9729);
                 }
             }
@@ -23654,7 +23429,7 @@ i32 ColorToInt(Color color) {
 }
 // Get color normalized as float [0..1]
 Vector4 ColorNormalize(Color color) {
-    Vector4 result;
+    noinit Vector4 result;
     result.x = cast(f32, color.r) / 255.0f;
     result.y = cast(f32, color.g) / 255.0f;
     result.z = cast(f32, color.b) / 255.0f;
@@ -23663,7 +23438,7 @@ Vector4 ColorNormalize(Color color) {
 }
 // Get color from normalized values [0..1]
 Color ColorFromNormalized(Vector4 normalized) {
-    Color result;
+    noinit Color result;
     result.r = cast(u8, normalized.x * 255.0f);
     result.g = cast(u8, normalized.y * 255.0f);
     result.b = cast(u8, normalized.z * 255.0f);
@@ -23862,7 +23637,7 @@ Color ColorAlphaBlend(Color dst, Color src, Color tint) {
         } else {
             Vector4 fdst = ColorNormalize(dst);
             Vector4 fsrc = ColorNormalize(src);
-            Vector4 ftint = ColorNormalize(tint);
+            unused Vector4 ftint = ColorNormalize(tint);
             Vector4 fout;
             fout.w = fsrc.w + fdst.w * (1.0f - fsrc.w);
             if fout.w > 0.0f {
@@ -23891,7 +23666,7 @@ Color ColorLerp(Color color1, Color color2, f32 factor) {
 }
 // Get a Color struct from hexadecimal value
 Color GetColor(u32 hexValue) {
-    Color color;
+    noinit Color color;
     color.r = cast(u8, hexValue >> 24) & 255;
     color.g = cast(u8, hexValue >> 16) & 255;
     color.b = cast(u8, hexValue >> 8) & 255;
@@ -24124,7 +23899,7 @@ i32 GetPixelDataSize(i32 width, i32 height, i32 format_var) {
 private {
 f32 HalfToFloat(u16 x) {
     f32 result = 0.0f;
-    __anon_struct_50 uni;
+    __anon_raylib_lib_struct_52 uni;
     var e = cast(u32, cast(i32, x & 31744) >> 10);
     var m = cast(u32, cast(i32, x & 1023) << 13);
     uni.fm = cast(f32, m);
@@ -24133,12 +23908,10 @@ f32 HalfToFloat(u16 x) {
     result = uni.fm;
     return result;
 }
-}
 // Convert float to half-float (stored as unsigned short)
-private {
 u16 FloatToHalf(f32 x) {
     u16 result = 0;
-    __anon_struct_51 uni;
+    __anon_raylib_lib_struct_53 uni;
     uni.fm = x;
     u32 b = uni.ui + 4096;
     u32 e = (b & 2139095040) >> 23;
@@ -24146,13 +23919,11 @@ u16 FloatToHalf(f32 x) {
     result = cast(u16, (b & 2147483648) >> 16 | cast(u32, cast(i32, e > 112)) * (e - 112 << 10 & 31744 | m >> 13) | cast(u32, cast(i32, e < 113) & cast(i32, e > 101)) * ((8384512 + m >> 125 - e) + 1 >> 1) | cast(u32, cast(i32, e > 143) * 32767));
     return result;
 }
-}
 // Get pixel data from image as Vector4 array (float normalized)
-private {
 Vector4* LoadImageDataNormalized(Image image) {
     var pixels = new(Vector4[image.width * image.height]);
     if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
-            } else {
+    } else {
         {
             i32 i = 0;
             i32 k = 0;
@@ -24327,27 +24098,19 @@ stbtt_uint8 stbtt__buf_get8(stbtt__buf* b) {
     }
     return b.data[b.cursor++];
 }
-}
-private {
 stbtt_uint8 stbtt__buf_peek8(stbtt__buf* b) {
     if b.cursor >= b.size {
         return 0;
     }
     return b.data[b.cursor];
 }
-}
-private {
 void stbtt__buf_seek(stbtt__buf* b, i32 o) {
     assert(cast(i64, !(o > b.size || o < 0)));
     b.cursor = o > b.size || o < 0 ? b.size : o;
 }
-}
-private {
 void stbtt__buf_skip(stbtt__buf* b, i32 o) {
     stbtt__buf_seek(b, b.cursor + o);
 }
-}
-private {
 stbtt_uint32 stbtt__buf_get(stbtt__buf* b, i32 n) {
     stbtt_uint32 v = 0;
     i32 i;
@@ -24357,18 +24120,14 @@ stbtt_uint32 stbtt__buf_get(stbtt__buf* b, i32 n) {
     }
     return v;
 }
-}
-private {
 stbtt__buf stbtt__new_buf(void* p, u64 size) {
-    stbtt__buf r;
+    noinit stbtt__buf r;
     assert(size < 1073741824);
     r.data = cast(stbtt_uint8*, p);
     r.size = cast(i32, size);
     r.cursor = 0;
     return r;
 }
-}
-private {
 stbtt__buf stbtt__buf_range(stbtt__buf* b, i32 o, i32 s) {
     stbtt__buf r = stbtt__new_buf(null, 0);
     if o < 0 || s < 0 || o > b.size || s > b.size - o {
@@ -24378,8 +24137,6 @@ stbtt__buf stbtt__buf_range(stbtt__buf* b, i32 o, i32 s) {
     r.size = s;
     return r;
 }
-}
-private {
 stbtt__buf stbtt__cff_get_index(stbtt__buf* b) {
     i32 count;
     i32 start;
@@ -24394,8 +24151,6 @@ stbtt__buf stbtt__cff_get_index(stbtt__buf* b) {
     }
     return stbtt__buf_range(b, start, b.cursor - start);
 }
-}
-private {
 stbtt_uint32 stbtt__cff_int(stbtt__buf* b) {
     var b0 = cast(i32, stbtt__buf_get8(b));
     if b0 >= 32 && b0 <= 246 {
@@ -24412,8 +24167,6 @@ stbtt_uint32 stbtt__cff_int(stbtt__buf* b) {
     assert(0);
     return 0;
 }
-}
-private {
 void stbtt__cff_skip_operand(stbtt__buf* b) {
     i32 v;
     var b0 = cast(i32, stbtt__buf_peek8(b));
@@ -24430,8 +24183,6 @@ void stbtt__cff_skip_operand(stbtt__buf* b) {
         stbtt__cff_int(b);
     }
 }
-}
-private {
 stbtt__buf stbtt__dict_get(stbtt__buf* b, i32 key) {
     stbtt__buf_seek(b, 0);
     while b.cursor < b.size {
@@ -24452,8 +24203,6 @@ stbtt__buf stbtt__dict_get(stbtt__buf* b, i32 key) {
     }
     return stbtt__buf_range(b, 0, 0);
 }
-}
-private {
 void stbtt__dict_get_ints(stbtt__buf* b, i32 key, i32 outcount, stbtt_uint32* out) {
     i32 i;
     stbtt__buf operands = stbtt__dict_get(b, key);
@@ -24461,14 +24210,10 @@ void stbtt__dict_get_ints(stbtt__buf* b, i32 key, i32 outcount, stbtt_uint32* ou
         out[i] = stbtt__cff_int(&operands);
     }
 }
-}
-private {
 i32 stbtt__cff_index_count(stbtt__buf* b) {
     stbtt__buf_seek(b, 0);
     return cast(i32, stbtt__buf_get(b, 2));
 }
-}
-private {
 stbtt__buf stbtt__cff_index_get(stbtt__buf b, i32 i) {
     i32 count;
     i32 offsize;
@@ -24484,34 +24229,24 @@ stbtt__buf stbtt__cff_index_get(stbtt__buf b, i32 i) {
     end = cast(i32, stbtt__buf_get(&b, offsize));
     return stbtt__buf_range(&b, 2 + (count + 1) * offsize + start, end - start);
 }
-}
 //////////////////////////////////////////////////////////////////////////
 //
 // accessors to parse data from file
 //
 // on platforms that don't allow misaligned reads, if we want to allow
 // truetype fonts that aren't padded to alignment, define ALLOW_UNALIGNED_TRUETYPE
-private {
 stbtt_uint16 ttUSHORT(stbtt_uint8* p) {
     return cast(stbtt_uint16, cast(i32, p[0]) * 256 + p[1]);
 }
-}
-private {
 stbtt_int16 ttSHORT(stbtt_uint8* p) {
     return cast(stbtt_int16, cast(i32, p[0]) * 256 + p[1]);
 }
-}
-private {
 stbtt_uint32 ttULONG(stbtt_uint8* p) {
     return cast(stbtt_uint32, (cast(i32, p[0]) << 24) + (cast(i32, p[1]) << 16) + (cast(i32, p[2]) << 8) + p[3]);
 }
-}
-private {
 stbtt_int32 ttLONG(stbtt_uint8* p) {
     return (cast(i32, p[0]) << 24) + (cast(i32, p[1]) << 16) + (cast(i32, p[2]) << 8) + p[3];
 }
-}
-private {
 i32 stbtt__isfont(stbtt_uint8* font) {
     if font[0] == 49 && font[1] == 0 && font[2] == 0 && font[3] == 0 {
         return 1;
@@ -24530,9 +24265,7 @@ i32 stbtt__isfont(stbtt_uint8* font) {
     }
     return 0;
 }
-}
 // @OPTIMIZE: binary search
-private {
 stbtt_uint32 stbtt__find_table(stbtt_uint8* data, stbtt_uint32 fontstart, u8* tag) {
     var num_tables = cast(stbtt_int32, ttUSHORT(data + fontstart + 4));
     stbtt_uint32 tabledir = fontstart + 12;
@@ -24545,8 +24278,6 @@ stbtt_uint32 stbtt__find_table(stbtt_uint8* data, stbtt_uint32 fontstart, u8* ta
     }
     return 0;
 }
-}
-private {
 i32 stbtt_GetFontOffsetForIndex_internal(u8* font_collection, i32 index) {
     if stbtt__isfont(font_collection) != 0 {
         return index == 0 ? 0 : -1;
@@ -24562,8 +24293,6 @@ i32 stbtt_GetFontOffsetForIndex_internal(u8* font_collection, i32 index) {
     }
     return -1;
 }
-}
-private {
 i32 stbtt_GetNumberOfFonts_internal(u8* font_collection) {
     if stbtt__isfont(font_collection) != 0 {
         return 1;
@@ -24575,12 +24304,10 @@ i32 stbtt_GetNumberOfFonts_internal(u8* font_collection) {
     }
     return 0;
 }
-}
-private {
 stbtt__buf stbtt__get_subrs(stbtt__buf cff, stbtt__buf fontdict) {
     stbtt_uint32 subrsoff = 0;
     stbtt_uint32[2] private_loc = {0, 0};
-    stbtt__buf pdict;
+    noinit stbtt__buf pdict;
     stbtt__dict_get_ints(&fontdict, 18, 2, private_loc);
     if !private_loc[1] || !private_loc[0] {
         return stbtt__new_buf(null, 0);
@@ -24593,9 +24320,7 @@ stbtt__buf stbtt__get_subrs(stbtt__buf cff, stbtt__buf fontdict) {
     stbtt__buf_seek(&cff, cast(i32, private_loc[1] + subrsoff));
     return stbtt__cff_get_index(&cff);
 }
-}
 // since most people won't use this, find this table the first time it's needed
-private {
 i32 stbtt__get_svg(stbtt_fontinfo* info) {
     stbtt_uint32 t;
     if info.svg < 0 {
@@ -24609,8 +24334,6 @@ i32 stbtt__get_svg(stbtt_fontinfo* info) {
     }
     return info.svg;
 }
-}
-private {
 i32 stbtt_InitFont_internal(stbtt_fontinfo* info, u8* data, i32 fontstart) {
     stbtt_uint32 cmap;
     stbtt_uint32 t;
@@ -24635,9 +24358,9 @@ i32 stbtt_InitFont_internal(stbtt_fontinfo* info, u8* data, i32 fontstart) {
             return 0;
         }
     } else {
-        stbtt__buf b;
-        stbtt__buf topdict;
-        stbtt__buf topdictidx;
+        noinit stbtt__buf b;
+        noinit stbtt__buf topdict;
+        noinit stbtt__buf topdictidx;
         stbtt_uint32 cstype = 2;
         stbtt_uint32 charstrings = 0;
         stbtt_uint32 fdarrayoff = 0;
@@ -24710,8 +24433,6 @@ i32 stbtt_InitFont_internal(stbtt_fontinfo* info, u8* data, i32 fontstart) {
     info.indexToLocFormat = cast(i32, ttUSHORT(data + info.head + 50));
     return 1;
 }
-}
-private {
 i32 stbtt_FindGlyphIndex(stbtt_fontinfo* info, i32 unicode_codepoint) {
     stbtt_uint8* data = info.data;
     var index_map = cast(stbtt_uint32, info.index_map);
@@ -24800,13 +24521,9 @@ i32 stbtt_FindGlyphIndex(stbtt_fontinfo* info, i32 unicode_codepoint) {
     assert(0);
     return 0;
 }
-}
-private {
 i32 stbtt_GetCodepointShape(stbtt_fontinfo* info, i32 unicode_codepoint, stbtt_vertex** vertices) {
     return stbtt_GetGlyphShape(info, stbtt_FindGlyphIndex(info, unicode_codepoint), vertices);
 }
-}
-private {
 void stbtt_setvertex(stbtt_vertex* v, stbtt_uint8 type, stbtt_int32 x, stbtt_int32 y, stbtt_int32 cx, stbtt_int32 cy) {
     v.type = type;
     v.x = cast(stbtt_int16, x);
@@ -24814,8 +24531,6 @@ void stbtt_setvertex(stbtt_vertex* v, stbtt_uint8 type, stbtt_int32 x, stbtt_int
     v.cx = cast(stbtt_int16, cx);
     v.cy = cast(stbtt_int16, cy);
 }
-}
-private {
 i32 stbtt__GetGlyfOffset(stbtt_fontinfo* info, i32 glyph_index) {
     i32 g1;
     i32 g2;
@@ -24860,13 +24575,9 @@ i32 stbtt_GetGlyphBox(stbtt_fontinfo* info, i32 glyph_index, i32* x0, i32* y0, i
     }
     return 1;
 }
-}
-private {
 i32 stbtt_GetCodepointBox(stbtt_fontinfo* info, i32 codepoint, i32* x0, i32* y0, i32* x1, i32* y1) {
     return stbtt_GetGlyphBox(info, stbtt_FindGlyphIndex(info, codepoint), x0, y0, x1, y1);
 }
-}
-private {
 i32 stbtt_IsGlyphEmpty(stbtt_fontinfo* info, i32 glyph_index) {
     stbtt_int16 numberOfContours;
     i32 g;
@@ -24880,8 +24591,6 @@ i32 stbtt_IsGlyphEmpty(stbtt_fontinfo* info, i32 glyph_index) {
     numberOfContours = ttSHORT(info.data + g);
     return numberOfContours == 0;
 }
-}
-private {
 i32 stbtt__close_shape(stbtt_vertex* vertices, i32 num_vertices, i32 was_off, i32 start_off, stbtt_int32 sx, stbtt_int32 sy, stbtt_int32 scx, stbtt_int32 scy, stbtt_int32 cx, stbtt_int32 cy) {
     if start_off != 0 {
         if was_off != 0 {
@@ -24897,8 +24606,6 @@ i32 stbtt__close_shape(stbtt_vertex* vertices, i32 num_vertices, i32 was_off, i3
     }
     return num_vertices;
 }
-}
-private {
 i32 stbtt__GetGlyphShapeTT(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex** pvertices) {
     stbtt_int16 numberOfContours;
     stbtt_uint8* endPtsOfContours;
@@ -25145,8 +24852,6 @@ i32 stbtt__GetGlyphShapeTT(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex**
     *pvertices = vertices;
     return num_vertices;
 }
-}
-private {
 void stbtt__track_vertex(stbtt__csctx* c, stbtt_int32 x, stbtt_int32 y) {
     if x > c.max_x || !c.started {
         c.max_x = x;
@@ -25162,8 +24867,6 @@ void stbtt__track_vertex(stbtt__csctx* c, stbtt_int32 x, stbtt_int32 y) {
     }
     c.started = 1;
 }
-}
-private {
 void stbtt__csctx_v(stbtt__csctx* c, stbtt_uint8 type, stbtt_int32 x, stbtt_int32 y, stbtt_int32 cx, stbtt_int32 cy, stbtt_int32 cx1, stbtt_int32 cy1) {
     if c.bounds != 0 {
         stbtt__track_vertex(c, x, y);
@@ -25178,15 +24881,11 @@ void stbtt__csctx_v(stbtt__csctx* c, stbtt_uint8 type, stbtt_int32 x, stbtt_int3
     }
     c.num_vertices++;
 }
-}
-private {
 void stbtt__csctx_close_shape(stbtt__csctx* ctx) {
     if ctx.first_x != ctx.x || ctx.first_y != ctx.y {
         stbtt__csctx_v(ctx, cast(stbtt_uint8, STBTT_vline), cast(i32, ctx.first_x), cast(i32, ctx.first_y), 0, 0, 0, 0);
     }
 }
-}
-private {
 void stbtt__csctx_rmove_to(stbtt__csctx* ctx, f32 dx, f32 dy) {
     stbtt__csctx_close_shape(ctx);
     ctx.x = ctx.x + dx;
@@ -25195,15 +24894,11 @@ void stbtt__csctx_rmove_to(stbtt__csctx* ctx, f32 dx, f32 dy) {
     ctx.first_y = ctx.y;
     stbtt__csctx_v(ctx, cast(stbtt_uint8, STBTT_vmove), cast(i32, ctx.x), cast(i32, ctx.y), 0, 0, 0, 0);
 }
-}
-private {
 void stbtt__csctx_rline_to(stbtt__csctx* ctx, f32 dx, f32 dy) {
     ctx.x += dx;
     ctx.y += dy;
     stbtt__csctx_v(ctx, cast(stbtt_uint8, STBTT_vline), cast(i32, ctx.x), cast(i32, ctx.y), 0, 0, 0, 0);
 }
-}
-private {
 void stbtt__csctx_rccurve_to(stbtt__csctx* ctx, f32 dx1, f32 dy1, f32 dx2, f32 dy2, f32 dx3, f32 dy3) {
     f32 cx1 = ctx.x + dx1;
     f32 cy1 = ctx.y + dy1;
@@ -25213,8 +24908,6 @@ void stbtt__csctx_rccurve_to(stbtt__csctx* ctx, f32 dx1, f32 dy1, f32 dx2, f32 d
     ctx.y = cy2 + dy3;
     stbtt__csctx_v(ctx, cast(stbtt_uint8, STBTT_vcubic), cast(i32, ctx.x), cast(i32, ctx.y), cast(i32, cx1), cast(i32, cy1), cast(i32, cx2), cast(i32, cy2));
 }
-}
-private {
 stbtt__buf stbtt__get_subr(stbtt__buf idx, i32 n) {
     i32 count = stbtt__cff_index_count(&idx);
     i32 bias = 107;
@@ -25229,8 +24922,6 @@ stbtt__buf stbtt__get_subr(stbtt__buf idx, i32 n) {
     }
     return stbtt__cff_index_get(idx, n);
 }
-}
-private {
 stbtt__buf stbtt__cid_get_glyph_subrs(stbtt_fontinfo* info, i32 glyph_index) {
     stbtt__buf fdselect = info.fdselect;
     i32 nranges;
@@ -25263,8 +24954,6 @@ stbtt__buf stbtt__cid_get_glyph_subrs(stbtt_fontinfo* info, i32 glyph_index) {
     }
     return stbtt__get_subrs(info.cff, stbtt__cff_index_get(info.fontdicts, fdselector));
 }
-}
-private {
 i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c) {
     i32 in_header = 1;
     i32 maskbits = 0;
@@ -25275,10 +24964,10 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
     i32 b0;
     i32 has_subrs = 0;
     i32 clear_stack;
-    f32[48] s;
-    stbtt__buf[10] subr_stack;
+    noinit f32[48] s;
+    noinit stbtt__buf[10] subr_stack;
     stbtt__buf subrs = info.subrs;
-    stbtt__buf b;
+    noinit stbtt__buf b;
     f32 f;
     b = stbtt__cff_index_get(info.charstrings, glyph_index);
     while b.cursor < b.size {
@@ -25581,8 +25270,6 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
     }
     return 0;
 }
-}
-private {
 i32 stbtt__GetGlyphShapeT2(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex** pvertices) {
     var count_ctx = stbtt__csctx{1, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0, null, 0};
     var output_ctx = stbtt__csctx{0, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0, null, 0};
@@ -25598,8 +25285,6 @@ i32 stbtt__GetGlyphShapeT2(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex**
     *pvertices = null;
     return 0;
 }
-}
-private {
 i32 stbtt__GetGlyphInfoT2(stbtt_fontinfo* info, i32 glyph_index, i32* x0, i32* y0, i32* x1, i32* y1) {
     var c = stbtt__csctx{1, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0, null, 0};
     i32 r = stbtt__run_charstring(info, glyph_index, &c);
@@ -25617,8 +25302,6 @@ i32 stbtt__GetGlyphInfoT2(stbtt_fontinfo* info, i32 glyph_index, i32* x0, i32* y
     }
     return r != 0 ? c.num_vertices : 0;
 }
-}
-private {
 i32 stbtt_GetGlyphShape(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex** pvertices) {
     if info.cff.size == 0 {
         return stbtt__GetGlyphShapeTT(info, glyph_index, pvertices);
@@ -25626,8 +25309,6 @@ i32 stbtt_GetGlyphShape(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex** pv
         return stbtt__GetGlyphShapeT2(info, glyph_index, pvertices);
     }
 }
-}
-private {
 void stbtt_GetGlyphHMetrics(stbtt_fontinfo* info, i32 glyph_index, i32* advanceWidth, i32* leftSideBearing) {
     stbtt_uint16 numOfLongHorMetrics = ttUSHORT(info.data + info.hhea + 34);
     if glyph_index < cast(i32, numOfLongHorMetrics) {
@@ -25646,8 +25327,6 @@ void stbtt_GetGlyphHMetrics(stbtt_fontinfo* info, i32 glyph_index, i32* advanceW
         }
     }
 }
-}
-private {
 i32 stbtt_GetKerningTableLength(stbtt_fontinfo* info) {
     stbtt_uint8* data = info.data + info.kern;
     if info.kern == 0 {
@@ -25661,8 +25340,6 @@ i32 stbtt_GetKerningTableLength(stbtt_fontinfo* info) {
     }
     return cast(i32, ttUSHORT(data + 10));
 }
-}
-private {
 i32 stbtt_GetKerningTable(stbtt_fontinfo* info, stbtt_kerningentry* table, i32 table_length) {
     stbtt_uint8* data = info.data + info.kern;
     i32 k;
@@ -25687,8 +25364,6 @@ i32 stbtt_GetKerningTable(stbtt_fontinfo* info, stbtt_kerningentry* table, i32 t
     }
     return length;
 }
-}
-private {
 i32 stbtt__GetGlyphKernInfoAdvance(stbtt_fontinfo* info, i32 glyph1, i32 glyph2) {
     stbtt_uint8* data = info.data + info.kern;
     stbtt_uint32 needle;
@@ -25721,8 +25396,6 @@ i32 stbtt__GetGlyphKernInfoAdvance(stbtt_fontinfo* info, i32 glyph1, i32 glyph2)
     }
     return 0;
 }
-}
-private {
 stbtt_int32 stbtt__GetCoverageIndex(stbtt_uint8* coverageTable, i32 glyph) {
     stbtt_uint16 coverageFormat = ttUSHORT(coverageTable);
     switch coverageFormat {
@@ -25785,8 +25458,6 @@ stbtt_int32 stbtt__GetCoverageIndex(stbtt_uint8* coverageTable, i32 glyph) {
     }
     return -1;
 }
-}
-private {
 stbtt_int32 stbtt__GetGlyphClass(stbtt_uint8* classDefTable, i32 glyph) {
     stbtt_uint16 classDefFormat = ttUSHORT(classDefTable);
     switch classDefFormat {
@@ -25834,9 +25505,7 @@ stbtt_int32 stbtt__GetGlyphClass(stbtt_uint8* classDefTable, i32 glyph) {
     }
     return 0;
 }
-}
 // Define to STBTT_assert(x) if you want to break on unimplemented formats.
-private {
 stbtt_int32 stbtt__GetGlyphGPOSInfoAdvance(stbtt_fontinfo* info, i32 glyph1, i32 glyph2) {
     stbtt_uint16 lookupListOffset;
     stbtt_uint8* lookupList;
@@ -25958,8 +25627,6 @@ stbtt_int32 stbtt__GetGlyphGPOSInfoAdvance(stbtt_fontinfo* info, i32 glyph1, i32
     }
     return 0;
 }
-}
-private {
 i32 stbtt_GetGlyphKernAdvance(stbtt_fontinfo* info, i32 g1, i32 g2) {
     i32 xAdvance = 0;
     if info.gpos != 0 {
@@ -25969,21 +25636,15 @@ i32 stbtt_GetGlyphKernAdvance(stbtt_fontinfo* info, i32 g1, i32 g2) {
     }
     return xAdvance;
 }
-}
-private {
 i32 stbtt_GetCodepointKernAdvance(stbtt_fontinfo* info, i32 ch1, i32 ch2) {
     if !info.kern && !info.gpos {
         return 0;
     }
     return stbtt_GetGlyphKernAdvance(info, stbtt_FindGlyphIndex(info, ch1), stbtt_FindGlyphIndex(info, ch2));
 }
-}
-private {
 void stbtt_GetCodepointHMetrics(stbtt_fontinfo* info, i32 codepoint, i32* advanceWidth, i32* leftSideBearing) {
     stbtt_GetGlyphHMetrics(info, stbtt_FindGlyphIndex(info, codepoint), advanceWidth, leftSideBearing);
 }
-}
-private {
 void stbtt_GetFontVMetrics(stbtt_fontinfo* info, i32* ascent, i32* descent, i32* lineGap) {
     if ascent != null {
         *ascent = ttSHORT(info.data + info.hhea + 4);
@@ -25995,8 +25656,6 @@ void stbtt_GetFontVMetrics(stbtt_fontinfo* info, i32* ascent, i32* descent, i32*
         *lineGap = ttSHORT(info.data + info.hhea + 8);
     }
 }
-}
-private {
 i32 stbtt_GetFontVMetricsOS2(stbtt_fontinfo* info, i32* typoAscent, i32* typoDescent, i32* typoLineGap) {
     var tab = cast(i32, stbtt__find_table(info.data, cast(stbtt_uint32, info.fontstart), "OS/2"));
     if tab == 0 {
@@ -26013,34 +25672,24 @@ i32 stbtt_GetFontVMetricsOS2(stbtt_fontinfo* info, i32* typoAscent, i32* typoDes
     }
     return 1;
 }
-}
-private {
 void stbtt_GetFontBoundingBox(stbtt_fontinfo* info, i32* x0, i32* y0, i32* x1, i32* y1) {
     *x0 = ttSHORT(info.data + info.head + 36);
     *y0 = ttSHORT(info.data + info.head + 38);
     *x1 = ttSHORT(info.data + info.head + 40);
     *y1 = ttSHORT(info.data + info.head + 42);
 }
-}
-private {
 f32 stbtt_ScaleForPixelHeight(stbtt_fontinfo* info, f32 height) {
     i32 fheight = ttSHORT(info.data + info.hhea + 4) - ttSHORT(info.data + info.hhea + 6);
     return height / cast(f32, fheight);
 }
-}
-private {
 f32 stbtt_ScaleForMappingEmToPixels(stbtt_fontinfo* info, f32 pixels) {
     var unitsPerEm = cast(i32, ttUSHORT(info.data + info.head + 18));
     return pixels / cast(f32, unitsPerEm);
 }
-}
-private {
 void stbtt_FreeShape(stbtt_fontinfo* info, stbtt_vertex* v) {
     ignore info.userdata;
     free(v);
 }
-}
-private {
 stbtt_uint8* stbtt_FindSVGDoc(stbtt_fontinfo* info, i32 gl) {
     i32 i;
     stbtt_uint8* data = info.data;
@@ -26055,8 +25704,6 @@ stbtt_uint8* stbtt_FindSVGDoc(stbtt_fontinfo* info, i32 gl) {
     }
     return null;
 }
-}
-private {
 i32 stbtt_GetGlyphSVG(stbtt_fontinfo* info, i32 gl, u8** svg) {
     stbtt_uint8* data = info.data;
     stbtt_uint8* svg_doc;
@@ -26071,17 +25718,9 @@ i32 stbtt_GetGlyphSVG(stbtt_fontinfo* info, i32 gl, u8** svg) {
         return 0;
     }
 }
-}
-private {
 i32 stbtt_GetCodepointSVG(stbtt_fontinfo* info, i32 unicode_codepoint, u8** svg) {
     return stbtt_GetGlyphSVG(info, stbtt_FindGlyphIndex(info, unicode_codepoint), svg);
 }
-}
-//////////////////////////////////////////////////////////////////////////////
-//
-// antialiasing software rasterizer
-//
-private {
 void stbtt_GetGlyphBitmapBoxSubpixel(stbtt_fontinfo* font, i32 glyph, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
     i32 x0 = 0;
     i32 y0 = 0;
@@ -26115,23 +25754,15 @@ void stbtt_GetGlyphBitmapBoxSubpixel(stbtt_fontinfo* font, i32 glyph, f32 scale_
         }
     }
 }
-}
-private {
 void stbtt_GetGlyphBitmapBox(stbtt_fontinfo* font, i32 glyph, f32 scale_x, f32 scale_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
     stbtt_GetGlyphBitmapBoxSubpixel(font, glyph, scale_x, scale_y, 0.0f, 0.0f, ix0, iy0, ix1, iy1);
 }
-}
-private {
 void stbtt_GetCodepointBitmapBoxSubpixel(stbtt_fontinfo* font, i32 codepoint, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
     stbtt_GetGlyphBitmapBoxSubpixel(font, stbtt_FindGlyphIndex(font, codepoint), scale_x, scale_y, shift_x, shift_y, ix0, iy0, ix1, iy1);
 }
-}
-private {
 void stbtt_GetCodepointBitmapBox(stbtt_fontinfo* font, i32 codepoint, f32 scale_x, f32 scale_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
     stbtt_GetCodepointBitmapBoxSubpixel(font, codepoint, scale_x, scale_y, 0.0f, 0.0f, ix0, iy0, ix1, iy1);
 }
-}
-private {
 void* stbtt__hheap_alloc(stbtt__hheap* hh, u64 size, void* userdata) {
     if hh.first_free != null {
         void* p = hh.first_free;
@@ -26153,14 +25784,10 @@ void* stbtt__hheap_alloc(stbtt__hheap* hh, u64 size, void* userdata) {
         return cast(u8*, hh.head) + sizeof(stbtt__hheap_chunk) + size * cast(u64, hh.num_remaining_in_head_chunk);
     }
 }
-}
-private {
 void stbtt__hheap_free(stbtt__hheap* hh, void* p) {
     *cast(void**, p) = hh.first_free;
     hh.first_free = p;
 }
-}
-private {
 void stbtt__hheap_cleanup(stbtt__hheap* hh, void* userdata) {
     stbtt__hheap_chunk* c = hh.head;
     while c != null {
@@ -26170,8 +25797,6 @@ void stbtt__hheap_cleanup(stbtt__hheap* hh, void* userdata) {
         c = n;
     }
 }
-}
-private {
 stbtt__active_edge* stbtt__new_active(stbtt__hheap* hh, stbtt__edge* e, i32 off_x, f32 start_point, void* userdata) {
     var z = cast(stbtt__active_edge*, stbtt__hheap_alloc(hh, cast(u64, sizeof(stbtt__active_edge)), userdata));
     f32 dxdy = (e.x1 - e.x0) / (e.y1 - e.y0);
@@ -26189,10 +25814,8 @@ stbtt__active_edge* stbtt__new_active(stbtt__hheap* hh, stbtt__edge* e, i32 off_
     z.next = null;
     return z;
 }
-}
 // the edge passed in here does not cross the vertical line at x or the vertical line at x+1
 // (i.e. it has already been clipped to those)
-private {
 void stbtt__handle_clipped_edge(f32* scanline, i32 x, stbtt__active_edge* e, f32 x0, f32 y0, f32 x1, f32 y1) {
     if y0 == y1 {
         return;
@@ -26227,30 +25850,22 @@ void stbtt__handle_clipped_edge(f32* scanline, i32 x, stbtt__active_edge* e, f32
     if x0 <= cast(f32, x) && x1 <= cast(f32, x) {
         scanline[x] += e.direction * (y1 - y0);
     } else if x0 >= cast(f32, x + 1) && x1 >= cast(f32, x + 1) {
-            } else {
+    } else {
         assert(x0 >= cast(f32, x) && x0 <= cast(f32, x + 1) && x1 >= cast(f32, x) && x1 <= cast(f32, x + 1));
         scanline[x] += e.direction * (y1 - y0) * (1.0f - (x0 - cast(f32, x) + (x1 - cast(f32, x))) / 2.0f);
     }
 }
-}
-private {
 f32 stbtt__sized_trapezoid_area(f32 height, f32 top_width, f32 bottom_width) {
     assert(top_width >= 0.0f);
     assert(bottom_width >= 0.0f);
     return (top_width + bottom_width) / 2.0f * height;
 }
-}
-private {
 f32 stbtt__position_trapezoid_area(f32 height, f32 tx0, f32 tx1, f32 bx0, f32 bx1) {
     return stbtt__sized_trapezoid_area(height, tx1 - tx0, bx1 - bx0);
 }
-}
-private {
 f32 stbtt__sized_triangle_area(f32 height, f32 width) {
     return height * width / 2.0f;
 }
-}
-private {
 void stbtt__fill_active_edges_new(f32* scanline, f32* scanline_fill, i32 len, stbtt__active_edge* e, f32 y_top) {
     f32 y_bottom = y_top + 1.0f;
     while e != null {
@@ -26387,16 +26002,14 @@ void stbtt__fill_active_edges_new(f32* scanline, f32* scanline_fill, i32 len, st
         e = e.next;
     }
 }
-}
 // directly AA rasterize edges w/o supersampling
-private {
 void stbtt__rasterize_sorted_edges(stbtt__bitmap* result, stbtt__edge* e, i32 n, i32 vsubsample, i32 off_x, i32 off_y, void* userdata) {
     stbtt__hheap hh;
     stbtt__active_edge* active = null;
     i32 y;
     i32 j = 0;
     i32 i;
-    f32[129] scanline_data;
+    noinit f32[129] scanline_data;
     f32* scanline;
     f32* scanline2;
     ignore sizeof(vsubsample);
@@ -26475,8 +26088,6 @@ void stbtt__rasterize_sorted_edges(stbtt__bitmap* result, stbtt__edge* e, i32 n,
         free(scanline);
     }
 }
-}
-private {
 void stbtt__sort_edges_ins_sort(stbtt__edge* p, i32 n) {
     i32 i;
     i32 j;
@@ -26498,11 +26109,9 @@ void stbtt__sort_edges_ins_sort(stbtt__edge* p, i32 n) {
         }
     }
 }
-}
-private {
 void stbtt__sort_edges_quicksort(stbtt__edge* p, i32 n) {
     while n > 12 {
-        stbtt__edge t;
+        noinit stbtt__edge t;
         i32 c01;
         i32 c12;
         i32 c;
@@ -26555,14 +26164,10 @@ void stbtt__sort_edges_quicksort(stbtt__edge* p, i32 n) {
         }
     }
 }
-}
-private {
 void stbtt__sort_edges(stbtt__edge* p, i32 n) {
     stbtt__sort_edges_quicksort(p, n);
     stbtt__sort_edges_ins_sort(p, n);
 }
-}
-private {
 void stbtt__rasterize(stbtt__bitmap* result, stbtt__point* pts, i32* wcount, i32 windings, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 off_x, i32 off_y, i32 invert, void* userdata) {
     f32 y_scale_inv = invert != 0 ? -scale_y : scale_y;
     stbtt__edge* e;
@@ -26611,8 +26216,6 @@ void stbtt__rasterize(stbtt__bitmap* result, stbtt__point* pts, i32* wcount, i32
     ignore userdata;
     free(e);
 }
-}
-private {
 void stbtt__add_point(stbtt__point* points, i32 n, f32 x, f32 y) {
     if points == null {
         return;
@@ -26620,9 +26223,7 @@ void stbtt__add_point(stbtt__point* points, i32 n, f32 x, f32 y) {
     points[n].x = x;
     points[n].y = y;
 }
-}
 // tessellate until threshold p is happy... @TODO warped to compensate for non-linear stretching
-private {
 i32 stbtt__tesselate_curve(stbtt__point* points, i32* num_points, f32 x0, f32 y0, f32 x1, f32 y1, f32 x2, f32 y2, f32 objspace_flatness_squared, i32 n) {
     f32 mx = (x0 + 2.0f * x1 + x2) / 4.0f;
     f32 my = (y0 + 2.0f * y1 + y2) / 4.0f;
@@ -26640,8 +26241,6 @@ i32 stbtt__tesselate_curve(stbtt__point* points, i32* num_points, f32 x0, f32 y0
     }
     return 1;
 }
-}
-private {
 void stbtt__tesselate_cubic(stbtt__point* points, i32* num_points, f32 x0, f32 y0, f32 x1, f32 y1, f32 x2, f32 y2, f32 x3, f32 y3, f32 objspace_flatness_squared, i32 n) {
     f32 dx0 = x1 - x0;
     f32 dy0 = y1 - y0;
@@ -26677,9 +26276,7 @@ void stbtt__tesselate_cubic(stbtt__point* points, i32* num_points, f32 x0, f32 y
         *num_points = *num_points + 1;
     }
 }
-}
 // returns number of contours
-private {
 stbtt__point* stbtt_FlattenCurves(stbtt_vertex* vertices, i32 num_verts, f32 objspace_flatness, i32** contour_lengths, i32* num_contours, void* userdata) {
     stbtt__point* points = null;
     i32 num_points = 0;
@@ -26754,8 +26351,6 @@ stbtt__point* stbtt_FlattenCurves(stbtt_vertex* vertices, i32 num_verts, f32 obj
     }
     return points;
 }
-}
-private {
 void stbtt_Rasterize(stbtt__bitmap* result, f32 flatness_in_pixels, stbtt_vertex* vertices, i32 num_verts, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 x_off, i32 y_off, i32 invert, void* userdata) {
     f32 scale = scale_x > scale_y ? scale_y : scale_x;
     i32 winding_count = 0;
@@ -26769,20 +26364,16 @@ void stbtt_Rasterize(stbtt__bitmap* result, f32 flatness_in_pixels, stbtt_vertex
         free(windings);
     }
 }
-}
-private {
 void stbtt_FreeBitmap(u8* bitmap, void* userdata) {
     ignore userdata;
     free(bitmap);
 }
-}
-private {
 u8* stbtt_GetGlyphBitmapSubpixel(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 glyph, i32* width, i32* height, i32* xoff, i32* yoff) {
     i32 ix0;
     i32 iy0;
     i32 ix1;
     i32 iy1;
-    stbtt__bitmap gbm;
+    noinit stbtt__bitmap gbm;
     stbtt_vertex* vertices;
     i32 num_verts = stbtt_GetGlyphShape(info, glyph, &vertices);
     if scale_x == 0.0f {
@@ -26824,19 +26415,15 @@ u8* stbtt_GetGlyphBitmapSubpixel(stbtt_fontinfo* info, f32 scale_x, f32 scale_y,
     free(vertices);
     return gbm.pixels;
 }
-}
-private {
 u8* stbtt_GetGlyphBitmap(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, i32 glyph, i32* width, i32* height, i32* xoff, i32* yoff) {
     return stbtt_GetGlyphBitmapSubpixel(info, scale_x, scale_y, 0.0f, 0.0f, glyph, width, height, xoff, yoff);
 }
-}
-private {
 void stbtt_MakeGlyphBitmapSubpixel(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 glyph) {
     i32 ix0;
     i32 iy0;
     stbtt_vertex* vertices;
     i32 num_verts = stbtt_GetGlyphShape(info, glyph, &vertices);
-    stbtt__bitmap gbm;
+    noinit stbtt__bitmap gbm;
     stbtt_GetGlyphBitmapBoxSubpixel(info, glyph, scale_x, scale_y, shift_x, shift_y, &ix0, &iy0, null, null);
     gbm.pixels = output;
     gbm.w = out_w;
@@ -26848,50 +26435,36 @@ void stbtt_MakeGlyphBitmapSubpixel(stbtt_fontinfo* info, u8* output, i32 out_w, 
     ignore info.userdata;
     free(vertices);
 }
-}
-private {
 void stbtt_MakeGlyphBitmap(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, i32 glyph) {
     stbtt_MakeGlyphBitmapSubpixel(info, output, out_w, out_h, out_stride, scale_x, scale_y, 0.0f, 0.0f, glyph);
 }
-}
-private {
 u8* stbtt_GetCodepointBitmapSubpixel(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 codepoint, i32* width, i32* height, i32* xoff, i32* yoff) {
     return stbtt_GetGlyphBitmapSubpixel(info, scale_x, scale_y, shift_x, shift_y, stbtt_FindGlyphIndex(info, codepoint), width, height, xoff, yoff);
 }
-}
-private {
 void stbtt_MakeCodepointBitmapSubpixelPrefilter(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 oversample_x, i32 oversample_y, f32* sub_x, f32* sub_y, i32 codepoint) {
     stbtt_MakeGlyphBitmapSubpixelPrefilter(info, output, out_w, out_h, out_stride, scale_x, scale_y, shift_x, shift_y, oversample_x, oversample_y, sub_x, sub_y, stbtt_FindGlyphIndex(info, codepoint));
 }
-}
-private {
 void stbtt_MakeCodepointBitmapSubpixel(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 codepoint) {
     stbtt_MakeGlyphBitmapSubpixel(info, output, out_w, out_h, out_stride, scale_x, scale_y, shift_x, shift_y, stbtt_FindGlyphIndex(info, codepoint));
 }
-}
-private {
 u8* stbtt_GetCodepointBitmap(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, i32 codepoint, i32* width, i32* height, i32* xoff, i32* yoff) {
     return stbtt_GetCodepointBitmapSubpixel(info, scale_x, scale_y, 0.0f, 0.0f, codepoint, width, height, xoff, yoff);
 }
-}
-private {
 void stbtt_MakeCodepointBitmap(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, i32 codepoint) {
     stbtt_MakeCodepointBitmapSubpixel(info, output, out_w, out_h, out_stride, scale_x, scale_y, 0.0f, 0.0f, codepoint);
-}
 }
 //////////////////////////////////////////////////////////////////////////////
 //
 // bitmap baking
 //
 // This is SUPER-CRAPPY packing to keep source code small
-private {
 i32 stbtt_BakeFontBitmap_internal(u8* data, i32 offset, f32 pixel_height, u8* pixels, i32 pw, i32 ph, i32 first_char, i32 num_chars, stbtt_bakedchar* chardata) {
     f32 scale;
     i32 x;
     i32 y;
     i32 bottom_y;
     i32 i;
-    stbtt_fontinfo f;
+    noinit stbtt_fontinfo f;
     f.userdata = null;
     if stbtt_InitFont(&f, data, offset) == 0 {
         return -1;
@@ -26939,8 +26512,6 @@ i32 stbtt_BakeFontBitmap_internal(u8* data, i32 offset, f32 pixel_height, u8* pi
     }
     return bottom_y;
 }
-}
-private {
 void stbtt_GetBakedQuad(stbtt_bakedchar* chardata, i32 pw, i32 ph, i32 char_index, f32* xpos, f32* ypos, stbtt_aligned_quad* q, i32 opengl_fillrule) {
     var d3d_bias = cast(f32, opengl_fillrule != 0 ? 0.0f : -0.5f);
     f32 ipw = 1.0f / cast(f32, pw);
@@ -26966,46 +26537,38 @@ void stbtt_GetBakedQuad(stbtt_bakedchar* chardata, i32 pw, i32 ph, i32 char_inde
 when !(defined(STB_RECT_PACK_VERSION)) {
 private {
 void stbrp_init_target(stbrp_context* con, i32 pw, i32 ph, stbrp_node* nodes, i32 num_nodes) {
-        con.width = pw;
-        con.height = ph;
-        con.x = 0;
-        con.y = 0;
-        con.bottom_y = 0;
-        ignore sizeof(nodes);
-        ignore sizeof(num_nodes);
-    }
+    con.width = pw;
+    con.height = ph;
+    con.x = 0;
+    con.y = 0;
+    con.bottom_y = 0;
+    ignore sizeof(nodes);
+    ignore sizeof(num_nodes);
 }
-private {
 void stbrp_pack_rects(stbrp_context* con, stbrp_rect* rects, i32 num_rects) {
-        i32 i;
-        for i = 0; i < num_rects; ++i {
-            if con.x + rects[i].w > con.width {
-                con.x = 0;
-                con.y = con.bottom_y;
-            }
-            if con.y + rects[i].h > con.height {
-                break;
-            }
-            rects[i].x = con.x;
-            rects[i].y = con.y;
-            rects[i].was_packed = 1;
-            con.x += rects[i].w;
-            if con.y + rects[i].h > con.bottom_y {
-                con.bottom_y = con.y + rects[i].h;
-            }
+    i32 i;
+    for i = 0; i < num_rects; ++i {
+        if con.x + rects[i].w > con.width {
+            con.x = 0;
+            con.y = con.bottom_y;
         }
-        for ; i < num_rects; ++i {
-            rects[i].was_packed = 0;
+        if con.y + rects[i].h > con.height {
+            break;
         }
+        rects[i].x = con.x;
+        rects[i].y = con.y;
+        rects[i].was_packed = 1;
+        con.x += rects[i].w;
+        if con.y + rects[i].h > con.bottom_y {
+            con.bottom_y = con.y + rects[i].h;
+        }
+    }
+    for ; i < num_rects; ++i {
+        rects[i].was_packed = 0;
     }
 }
 }
-//////////////////////////////////////////////////////////////////////////////
-//
-// bitmap baking
-//
-// This is SUPER-AWESOME (tm Ryan Gordon) packing using stb_rect_pack.h. If
-// stb_rect_pack.h isn't available, it uses the BakeFontBitmap strategy.
+}
 private {
 i32 stbtt_PackBegin(stbtt_pack_context* spc, u8* pixels, i32 pw, i32 ph, i32 stride_in_bytes, i32 padding, void* alloc_context) {
     ignore alloc_context;
@@ -27041,16 +26604,12 @@ i32 stbtt_PackBegin(stbtt_pack_context* spc, u8* pixels, i32 pw, i32 ph, i32 str
     }
     return 1;
 }
-}
-private {
 void stbtt_PackEnd(stbtt_pack_context* spc) {
     ignore spc.user_allocator_context;
     free(spc.nodes);
     ignore spc.user_allocator_context;
     free(spc.pack_info);
 }
-}
-private {
 void stbtt_PackSetOversampling(stbtt_pack_context* spc, u32 h_oversample, u32 v_oversample) {
     assert(h_oversample <= 8);
     assert(v_oversample <= 8);
@@ -27061,15 +26620,11 @@ void stbtt_PackSetOversampling(stbtt_pack_context* spc, u32 h_oversample, u32 v_
         spc.v_oversample = v_oversample;
     }
 }
-}
-private {
 void stbtt_PackSetSkipMissingCodepoints(stbtt_pack_context* spc, i32 skip) {
     spc.skip_missing = skip;
 }
-}
-private {
 void stbtt__h_prefilter(u8* pixels, i32 w, i32 h, i32 stride_in_bytes, u32 kernel_width) {
-    u8[8] buffer;
+    noinit u8[8] buffer;
     var safe_w = cast(i32, cast(u32, w) - kernel_width);
     i32 j;
     memset(buffer, 0, cast(u64, 8));
@@ -27123,10 +26678,8 @@ void stbtt__h_prefilter(u8* pixels, i32 w, i32 h, i32 stride_in_bytes, u32 kerne
         pixels += stride_in_bytes;
     }
 }
-}
-private {
 void stbtt__v_prefilter(u8* pixels, i32 w, i32 h, i32 stride_in_bytes, u32 kernel_width) {
-    u8[8] buffer;
+    noinit u8[8] buffer;
     var safe_h = cast(i32, cast(u32, h) - kernel_width);
     i32 j;
     memset(buffer, 0, cast(u64, 8));
@@ -27180,17 +26733,12 @@ void stbtt__v_prefilter(u8* pixels, i32 w, i32 h, i32 stride_in_bytes, u32 kerne
         pixels += 1;
     }
 }
-}
-private {
 f32 stbtt__oversample_shift(i32 oversample) {
     if oversample == 0 {
         return 0.0f;
     }
     return cast(f32, -(oversample - 1)) / (2.0f * cast(f32, oversample));
 }
-}
-// rects array must be big enough to accommodate all characters in the given ranges
-private {
 i32 stbtt_PackFontRangesGatherRects(stbtt_pack_context* spc, stbtt_fontinfo* info, stbtt_pack_range* ranges, i32 num_ranges, stbrp_rect* rects) {
     i32 i;
     i32 j;
@@ -27225,8 +26773,6 @@ i32 stbtt_PackFontRangesGatherRects(stbtt_pack_context* spc, stbtt_fontinfo* inf
     }
     return k;
 }
-}
-private {
 void stbtt_MakeGlyphBitmapSubpixelPrefilter(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 prefilter_x, i32 prefilter_y, f32* sub_x, f32* sub_y, i32 glyph) {
     stbtt_MakeGlyphBitmapSubpixel(info, output, out_w - (prefilter_x - 1), out_h - (prefilter_y - 1), out_stride, scale_x, scale_y, shift_x, shift_y, glyph);
     if prefilter_x > 1 {
@@ -27238,9 +26784,6 @@ void stbtt_MakeGlyphBitmapSubpixelPrefilter(stbtt_fontinfo* info, u8* output, i3
     *sub_x = stbtt__oversample_shift(prefilter_x);
     *sub_y = stbtt__oversample_shift(prefilter_y);
 }
-}
-// rects array must be big enough to accommodate all characters in the given ranges
-private {
 i32 stbtt_PackFontRangesRenderIntoRects(stbtt_pack_context* spc, stbtt_fontinfo* info, stbtt_pack_range* ranges, i32 num_ranges, stbrp_rect* rects) {
     i32 i;
     i32 j;
@@ -27315,15 +26858,11 @@ i32 stbtt_PackFontRangesRenderIntoRects(stbtt_pack_context* spc, stbtt_fontinfo*
     spc.v_oversample = cast(u32, old_v_over);
     return return_value;
 }
-}
-private {
 void stbtt_PackFontRangesPackRects(stbtt_pack_context* spc, stbrp_rect* rects, i32 num_rects) {
     stbrp_pack_rects(cast(stbrp_context*, spc.pack_info), rects, num_rects);
 }
-}
-private {
 i32 stbtt_PackFontRanges(stbtt_pack_context* spc, u8* fontdata, i32 font_index, stbtt_pack_range* ranges, i32 num_ranges) {
-    stbtt_fontinfo info;
+    noinit stbtt_fontinfo info;
     i32 i;
     i32 j;
     i32 n;
@@ -27355,10 +26894,8 @@ i32 stbtt_PackFontRanges(stbtt_pack_context* spc, u8* fontdata, i32 font_index, 
     free(rects);
     return return_value;
 }
-}
-private {
 i32 stbtt_PackFontRange(stbtt_pack_context* spc, u8* fontdata, i32 font_index, f32 font_size, i32 first_unicode_codepoint_in_range, i32 num_chars_in_range, stbtt_packedchar* chardata_for_range) {
-    stbtt_pack_range range;
+    noinit stbtt_pack_range range;
     range.first_unicode_codepoint_in_range = first_unicode_codepoint_in_range;
     range.array_of_unicode_codepoints = null;
     range.num_chars = num_chars_in_range;
@@ -27366,14 +26903,12 @@ i32 stbtt_PackFontRange(stbtt_pack_context* spc, u8* fontdata, i32 font_index, f
     range.font_size = font_size;
     return stbtt_PackFontRanges(spc, fontdata, font_index, &range, 1);
 }
-}
-private {
 void stbtt_GetScaledFontVMetrics(u8* fontdata, i32 index, f32 size, f32* ascent, f32* descent, f32* lineGap) {
     i32 i_ascent;
     i32 i_descent;
     i32 i_lineGap;
     f32 scale;
-    stbtt_fontinfo info;
+    noinit stbtt_fontinfo info;
     stbtt_InitFont(&info, fontdata, stbtt_GetFontOffsetForIndex(fontdata, index));
     scale = size > 0.0f ? stbtt_ScaleForPixelHeight(&info, size) : stbtt_ScaleForMappingEmToPixels(&info, -size);
     stbtt_GetFontVMetrics(&info, &i_ascent, &i_descent, &i_lineGap);
@@ -27381,8 +26916,6 @@ void stbtt_GetScaledFontVMetrics(u8* fontdata, i32 index, f32 size, f32* ascent,
     *descent = cast(f32, i_descent) * scale;
     *lineGap = cast(f32, i_lineGap) * scale;
 }
-}
-private {
 void stbtt_GetPackedQuad(stbtt_packedchar* chardata, i32 pw, i32 ph, i32 char_index, f32* xpos, f32* ypos, stbtt_aligned_quad* q, i32 align_to_integer) {
     f32 ipw = 1.0f / cast(f32, pw);
     f32 iph = 1.0f / cast(f32, ph);
@@ -27406,7 +26939,6 @@ void stbtt_GetPackedQuad(stbtt_packedchar* chardata, i32 pw, i32 ph, i32 char_in
     q.t1 = cast(f32, b.y1) * iph;
     *xpos += b.xadvance;
 }
-}
 //////////////////////////////////////////////////////////////////////////////
 //
 // sdf computation
@@ -27415,7 +26947,6 @@ void stbtt_GetPackedQuad(stbtt_packedchar* chardata, i32 pw, i32 ph, i32 char_in
    `f32[2]* hits` in transminc's emit, which minc's parser doesn't
    accept. Flattened to `float *hits` (length 4) + index arithmetic at
    each access. The one caller passes `(float *)hits`. */
-private {
 i32 stbtt__ray_intersect_bezier(f32* orig, f32* ray, f32* q0, f32* q1, f32* q2, f32* hits) {
     f32 q0perp = q0[1] * ray[0] - q0[0] * ray[1];
     f32 q1perp = q1[1] * ray[0] - q1[0] * ray[1];
@@ -27474,16 +27005,12 @@ i32 stbtt__ray_intersect_bezier(f32* orig, f32* ray, f32* q0, f32* q1, f32* q2, 
         }
     }
 }
-}
-private {
 i32 equal(f32* a, f32* b) {
     return a[0] == b[0] && a[1] == b[1];
 }
-}
-private {
 i32 stbtt__compute_crossings_x(f32 x, f32 y, i32 nverts, stbtt_vertex* verts) {
     i32 i;
-    f32[2] orig;
+    noinit f32[2] orig;
     f32[2] ray = {1, 0};
     f32 y_frac;
     i32 winding = 0;
@@ -27519,10 +27046,10 @@ i32 stbtt__compute_crossings_x(f32 x, f32 y, i32 nverts, stbtt_vertex* verts) {
             i32 ay = y0 < (y1 < y2 ? y1 : y2) ? y0 : y1 < y2 ? y1 : y2;
             i32 by = y0 < (y1 < y2 ? y2 : y1) ? y1 < y2 ? y2 : y1 : y0;
             if y > cast(f32, ay) && y < cast(f32, by) && x > cast(f32, ax) {
-                f32[2] q0;
-                f32[2] q1;
-                f32[2] q2;
-                f32[4] hits;
+                noinit f32[2] q0;
+                noinit f32[2] q1;
+                noinit f32[2] q2;
+                noinit f32[4] hits;
                 q0[0] = cast(f32, x0);
                 q0[1] = cast(f32, y0);
                 q1[0] = cast(f32, x1);
@@ -27558,8 +27085,6 @@ i32 stbtt__compute_crossings_x(f32 x, f32 y, i32 nverts, stbtt_vertex* verts) {
     }
     return winding;
 }
-}
-private {
 f32 stbtt__cuberoot(f32 x) {
     if x < 0.0f {
         return -cast(f32, pow(-x, 1.0f / 3.0f));
@@ -27567,9 +27092,7 @@ f32 stbtt__cuberoot(f32 x) {
         return cast(f32, pow(x, 1.0f / 3.0f));
     }
 }
-}
 // x^3 + a*x^2 + b*x + c = 0
-private {
 i32 stbtt__solve_cubic(f32 a, f32 b, f32 c, f32* r) {
     f32 s = -a / 3.0f;
     f32 p = b - a * a / 3.0f;
@@ -27595,8 +27118,6 @@ i32 stbtt__solve_cubic(f32 a, f32 b, f32 c, f32* r) {
         return 3;
     }
 }
-}
-private {
 u8* stbtt_GetGlyphSDF(stbtt_fontinfo* info, f32 scale, i32 glyph, i32 padding, u8 onedge_value, f32 pixel_dist_scale, i32* width, i32* height, i32* xoff, i32* yoff) {
     f32 scale_x = scale;
     f32 scale_y = scale;
@@ -27814,24 +27335,18 @@ u8* stbtt_GetGlyphSDF(stbtt_fontinfo* info, f32 scale, i32 glyph, i32 padding, u
     }
     return data;
 }
-}
-private {
 u8* stbtt_GetCodepointSDF(stbtt_fontinfo* info, f32 scale, i32 codepoint, i32 padding, u8 onedge_value, f32 pixel_dist_scale, i32* width, i32* height, i32* xoff, i32* yoff) {
     return stbtt_GetGlyphSDF(info, scale, stbtt_FindGlyphIndex(info, codepoint), padding, onedge_value, pixel_dist_scale, width, height, xoff, yoff);
 }
-}
-private {
 void stbtt_FreeSDF(u8* bitmap, void* userdata) {
     ignore userdata;
     free(bitmap);
-}
 }
 //////////////////////////////////////////////////////////////////////////////
 //
 // font name matching -- recommended not to use this
 //
 // check if a utf8 string contains a prefix which is the utf16 string; if so return length of matching utf8 string
-private {
 stbtt_int32 stbtt__CompareUTF8toUTF16_bigendian_prefix(stbtt_uint8* s1, stbtt_int32 len1, stbtt_uint8* s2, stbtt_int32 len2) {
     stbtt_int32 i = 0;
     while len2 != 0 {
@@ -27895,15 +27410,9 @@ stbtt_int32 stbtt__CompareUTF8toUTF16_bigendian_prefix(stbtt_uint8* s1, stbtt_in
     }
     return i;
 }
-}
-private {
 i32 stbtt_CompareUTF8toUTF16_bigendian_internal(u8* s1, i32 len1, u8* s2, i32 len2) {
     return len1 == stbtt__CompareUTF8toUTF16_bigendian_prefix(cast(stbtt_uint8*, s1), len1, cast(stbtt_uint8*, s2), len2);
 }
-}
-// returns results in whatever encoding you request... but note that 2-byte encodings
-// will be BIG-ENDIAN... use stbtt_CompareUTF8toUTF16_bigendian() to compare
-private {
 u8* stbtt_GetFontNameString(stbtt_fontinfo* font, i32* length, i32 platformID, i32 encodingID, i32 languageID, i32 nameID) {
     stbtt_int32 i;
     stbtt_int32 count;
@@ -27925,8 +27434,6 @@ u8* stbtt_GetFontNameString(stbtt_fontinfo* font, i32* length, i32 platformID, i
     }
     return null;
 }
-}
-private {
 i32 stbtt__matchpair(stbtt_uint8* fc, stbtt_uint32 nm, stbtt_uint8* name, stbtt_int32 nlen, stbtt_int32 target_id, stbtt_int32 next_id) {
     stbtt_int32 i;
     var count = cast(stbtt_int32, ttUSHORT(fc + nm + 2));
@@ -27967,8 +27474,6 @@ i32 stbtt__matchpair(stbtt_uint8* fc, stbtt_uint32 nm, stbtt_uint8* name, stbtt_
     }
     return 0;
 }
-}
-private {
 i32 stbtt__matches(stbtt_uint8* fc, stbtt_uint32 offset, stbtt_uint8* name, stbtt_int32 flags) {
     var nlen = cast(stbtt_int32, strlen(cast(u8*, name)));
     stbtt_uint32 nm;
@@ -28009,8 +27514,6 @@ i32 stbtt__matches(stbtt_uint8* fc, stbtt_uint32 offset, stbtt_uint8* name, stbt
     }
     return 0;
 }
-}
-private {
 i32 stbtt_FindMatchingFont_internal(u8* font_collection, u8* name_utf8, stbtt_int32 flags) {
     stbtt_int32 i;
     for i = 0; true; ++i {
@@ -28023,33 +27526,21 @@ i32 stbtt_FindMatchingFont_internal(u8* font_collection, u8* name_utf8, stbtt_in
         }
     }
 }
-}
-private {
 i32 stbtt_BakeFontBitmap(u8* data, i32 offset, f32 pixel_height, u8* pixels, i32 pw, i32 ph, i32 first_char, i32 num_chars, stbtt_bakedchar* chardata) {
     return stbtt_BakeFontBitmap_internal(data, offset, pixel_height, pixels, pw, ph, first_char, num_chars, chardata);
 }
-}
-private {
 i32 stbtt_GetFontOffsetForIndex(u8* data, i32 index) {
     return stbtt_GetFontOffsetForIndex_internal(data, index);
 }
-}
-private {
 i32 stbtt_GetNumberOfFonts(u8* data) {
     return stbtt_GetNumberOfFonts_internal(data);
 }
-}
-private {
 i32 stbtt_InitFont(stbtt_fontinfo* info, u8* data, i32 offset) {
     return stbtt_InitFont_internal(info, data, offset);
 }
-}
-private {
 i32 stbtt_FindMatchingFont(u8* fontdata, u8* name, i32 flags) {
     return stbtt_FindMatchingFont_internal(fontdata, name, flags);
 }
-}
-private {
 i32 stbtt_CompareUTF8toUTF16_bigendian(u8* s1, i32 len1, u8* s2, i32 len2) {
     return stbtt_CompareUTF8toUTF16_bigendian_internal(s1, len1, s2, len2);
 }
@@ -28239,7 +27730,7 @@ void LoadFontDefault() {
     }
     UnloadImage(imFont);
     defaultFont.baseSize = cast(i32, defaultFont.recs[0].height);
-    }
+}
 // Unload raylib default font
 void UnloadFontDefault() {
     for i32 i = 0; i < defaultFont.glyphCount; i++ {
@@ -28273,9 +27764,9 @@ Font LoadFont(u8* fileName) {
         UnloadImage(image);
     }
     if font.texture.id == 0 {
-            } else {
+    } else {
         SetTextureFilter(font.texture, TEXTURE_FILTER_POINT);
-            }
+    }
     return font;
 }
 // Load Font from TTF or BDF font file with generation parameters
@@ -28386,8 +27877,8 @@ Font LoadFontFromMemory(u8* fileType, u8* fileData, i32 dataSize, i32 fontSize, 
             font.glyphs[i].image = ImageFromImage(atlas, font.recs[i]);
         }
         UnloadImage(atlas);
-            } else {
-                font = GetFontDefault();
+    } else {
+        font = GetFontDefault();
     }
     return font;
 }
@@ -28459,7 +27950,7 @@ GlyphInfo* LoadFontData(u8* fileData, i32 dataSize, i32 fontSize, i32* codepoint
                         stbtt_GetCodepointHMetrics(&fontInfo, cp, &glyphs[k].advanceX, null);
                         glyphs[k].advanceX = cast(i32, cast(f32, glyphs[k].advanceX) * scaleFactor);
                         if type != FONT_SDF && cpHeight > fontSize {
-                                                    }
+                        }
                         glyphs[k].image.width = cpWidth;
                         glyphs[k].image.height = cpHeight;
                         glyphs[k].image.mipmaps = 1;
@@ -28492,9 +27983,9 @@ GlyphInfo* LoadFontData(u8* fileData, i32 dataSize, i32 fontSize, i32* codepoint
                 }
             }
             if glyphCounter < codepointCount {
-                            }
+            }
         } else {
-                    }
+        }
         if genFontChars != 0 {
             free(requiredCodepoints);
         }
@@ -28507,7 +27998,7 @@ GlyphInfo* LoadFontData(u8* fileData, i32 dataSize, i32 fontSize, i32* codepoint
 Image GenImageFontAtlas(GlyphInfo* glyphs, Rectangle** glyphRecs, i32 glyphCount, i32 fontSize, i32 padding, i32 packMethod) {
     Image atlas;
     if glyphs == null {
-                return atlas;
+        return atlas;
     }
     *glyphRecs = null;
     glyphCount = glyphCount > 0 ? glyphCount : 95;
@@ -28543,7 +28034,7 @@ Image GenImageFontAtlas(GlyphInfo* glyphs, Rectangle** glyphRecs, i32 glyphCount
                 offsetX = padding;
                 offsetY += fontSize + 2 * padding;
                 if offsetY > atlas.height - fontSize - padding {
-                                        i32 updatedAtlasHeight = atlas.height * 2;
+                    i32 updatedAtlasHeight = atlas.height * 2;
                     i32 updatedAtlasDataSize = atlas.width * updatedAtlasHeight;
                     var updatedAtlasData = cast(u8*, new(u8[updatedAtlasDataSize]));
                     memcpy(updatedAtlasData, atlas.data, cast(u64, atlasDataSize));
@@ -28595,7 +28086,7 @@ Image GenImageFontAtlas(GlyphInfo* glyphs, Rectangle** glyphRecs, i32 glyphCount
                     }
                 }
             } else {
-                            }
+            }
         }
         free(rects);
         free(nodes);
@@ -28644,7 +28135,7 @@ void UnloadFont(Font font) {
         UnloadFontData(font.glyphs, font.glyphCount);
         UnloadTexture(font.texture);
         free(font.recs);
-            }
+    }
 }
 // Export font as code file, returns true on success
 bool ExportFontAsCode(Font font, u8* fileName) {
@@ -28653,7 +28144,7 @@ bool ExportFontAsCode(Font font, u8* fileName) {
     strncpy(fileNamePascal, TextToPascal(GetFileNameWithoutExt(fileName)), cast(u64, 256 - 1));
     Image image = LoadImageFromTexture(font.texture);
     if image.format != PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA {
-            }
+    }
     i32 imageDataSize = GetPixelDataSize(image.width, image.height, image.format);
     i32 txtDataSize = imageDataSize * 6 + font.glyphCount * 64 + font.glyphCount * 64 + 32768;
     var txtData = new(u8[txtDataSize]);
@@ -28735,8 +28226,8 @@ bool ExportFontAsCode(Font font, u8* fileName) {
     result = SaveFileText(fileName, txtData);
     free(txtData);
     if result != 0 {
-            } else {
-            }
+    } else {
+    }
     return result;
 }
 // Draw current FPS
@@ -29221,7 +28712,7 @@ u8* TextReplace(u8* text, u8* search, u8* replacement) {
             }
             strncpy(tempPtr, text, cast(u64, TextLength(text)));
         } else {
-                    }
+        }
     }
     return TextReplace__buffer;
 }
@@ -29343,7 +28834,7 @@ u8* TextInsert(u8* text, u8* insert, i32 position) {
             }
             TextInsert__buffer[textLen + insertLen] = 0;
         } else {
-                    }
+        }
     }
     return TextInsert__buffer;
 }
@@ -29793,10 +29284,8 @@ i32 GetLine(u8* origin, u8* buffer, i32 maxLength) {
     buffer[count] = 0;
     return count;
 }
-}
 // Load a BMFont file (AngelCode font file)
 // REQUIRES: strstr(), sscanf(), strrchr(), memcpy()
-private {
 Font LoadBMFont(u8* fileName) {
     Font font;
     u8[256] buffer;
@@ -29826,7 +29315,7 @@ Font LoadBMFont(u8* fileName) {
         return font;
     }
     if pageCount > 8 {
-                pageCount = 8;
+        pageCount = 8;
     }
     for i32 i = 0; i < pageCount; i++ {
         readBytes = GetLine(fileTextPtr, buffer, 256);
@@ -29905,15 +29394,15 @@ Font LoadBMFont(u8* fileName) {
             font.glyphs[i].image = ImageFromImage(fullFont, font.recs[i]);
         } else {
             font.glyphs[i].image = GenImageColor(cast(i32, font.recs[i].width), cast(i32, font.recs[i].height), Color{0, 0, 0, 255});
-                    }
+        }
     }
     UnloadImage(fullFont);
     UnloadFileText(fileText);
     if font.texture.id == 0 {
         UnloadFont(font);
         font = GetFontDefault();
-            } else {
-            }
+    } else {
+    }
     return font;
 }
 }
@@ -30240,9 +29729,6 @@ Font LoadBMFont(u8* fileName) {
 *
 **********************************************************************************************/
 // Required for: Vector3, Quaternion and Matrix functionality
-when os(windows) {
-} else {
-}
 //----------------------------------------------------------------------------------
 // Defines and Macros
 //----------------------------------------------------------------------------------
@@ -30828,9 +30314,9 @@ Model LoadModel(u8* fileName) {
             UploadMesh(&model.meshes[i], false);
         }
     } else {
-            }
+    }
     if model.materialCount == 0 {
-                model.materialCount = 1;
+        model.materialCount = 1;
         model.materials = new(Material[model.materialCount]);
         model.materials[0] = LoadMaterialDefault();
         if model.meshMaterial == null {
@@ -30909,7 +30395,7 @@ void UnloadModel(Model model) {
     free(model.meshMaterial);
     free(model.skeleton.bones);
     free(model.skeleton.bindPose);
-    }
+}
 // Compute model bounding box limits (considers all meshes)
 BoundingBox GetModelBoundingBox(Model model) {
     BoundingBox bounds;
@@ -30935,7 +30421,7 @@ BoundingBox GetModelBoundingBox(Model model) {
 // Upload vertex data into a VAO (if supported) and VBO
 void UploadMesh(Mesh* mesh, bool dynamic) {
     if mesh.vaoId > 0 {
-                return;
+        return;
     }
     mesh.vboId = new(u32[7]);
     mesh.vaoId = 0;
@@ -31002,8 +30488,8 @@ void UploadMesh(Mesh* mesh, bool dynamic) {
         mesh.vboId[6] = rlLoadVertexBufferElement(mesh.indices, cast(i32, mesh.triangleCount * 3 * sizeof(u16)), dynamic);
     }
     if mesh.vaoId > 0 {
-            } else {
-            }
+    } else {
+    }
     rlDisableVertexArray();
 }
 // Update mesh vertex data in GPU for a specific buffer index
@@ -31461,7 +30947,7 @@ bool ExportMeshAsCode(Mesh mesh, u8* fileName) {
 Material* LoadMaterials(u8* fileName, i32* materialCount) {
     Material* materials = null;
     u32 count = 0;
-        *materialCount = cast(i32, count);
+    *materialCount = cast(i32, count);
     return materials;
 }
 // Load default material (Supports: DIFFUSE, SPECULAR, NORMAL maps)
@@ -31505,8 +30991,8 @@ void SetMaterialTexture(Material* material, i32 mapType, Texture2D texture) {
 // Set the material for a mesh
 void SetModelMeshMaterial(Model* model, i32 meshId, i32 materialId) {
     if meshId >= model.meshCount {
-            } else if materialId >= model.materialCount {
-            } else {
+    } else if materialId >= model.materialCount {
+    } else {
         model.meshMaterial[meshId] = materialId;
     }
 }
@@ -31673,7 +31159,7 @@ bool IsModelAnimationValid(Model model, ModelAnimation anim) {
     if model.skeleton.boneCount != anim.boneCount {
         result = false;
     }
-    return cast(bool, result);
+    return result != 0;
 }
 // Compute mesh bounding box limits
 // NOTE: minVertex and maxVertex should be transformed by model transform matrix
@@ -31696,7 +31182,7 @@ BoundingBox GetMeshBoundingBox(Mesh mesh) {
 // Compute mesh tangents
 void GenMeshTangents(Mesh* mesh) {
     if mesh == null || mesh.vertices == null || mesh.texcoords == null || mesh.normals == null {
-                return;
+        return;
     }
     if mesh.tangents == null {
         mesh.tangents = new(f32[mesh.vertexCount * 4]);
@@ -31707,7 +31193,7 @@ void GenMeshTangents(Mesh* mesh) {
     var tan1 = new(Vector3[mesh.vertexCount]);
     var tan2 = new(Vector3[mesh.vertexCount]);
     if tan1 == null || tan2 == null {
-                if tan1 != null {
+        if tan1 != null {
             free(tan1);
         }
         if tan2 != null {
@@ -31798,7 +31284,7 @@ void GenMeshTangents(Mesh* mesh) {
         rlEnableVertexAttribute(4);
         rlDisableVertexArray();
     }
-    }
+}
 // Draw a model (with texture if set)
 void DrawModel(Model model, Vector3 position, f32 scale, Color tint) {
     var vScale = Vector3{scale, scale, scale};
@@ -31869,12 +31355,12 @@ void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle source, Vector
         up = Vector3Negate(up);
         origin.y *= -1.0f;
     }
-    Vector3 forward;
+    noinit Vector3 forward;
     if rotation != 0.0 {
         forward = Vector3CrossProduct(right, up);
     }
     Vector3 origin3D = Vector3Add(Vector3Scale(Vector3Normalize(right), origin.x), Vector3Scale(Vector3Normalize(up), origin.y));
-    Vector3[4] points;
+    noinit Vector3[4] points;
     points[0] = Vector3Zero();
     points[1] = right;
     points[2] = Vector3Add(up, right);
@@ -31886,7 +31372,7 @@ void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle source, Vector
         }
         points[i] = Vector3Add(points[i], position);
     }
-    Vector2[4] texcoords;
+    noinit Vector2[4] texcoords;
     texcoords[0] = Vector2{source.x / cast(f32, texture.width), (source.y + source.height) / cast(f32, texture.height)};
     texcoords[1] = Vector2{(source.x + source.width) / cast(f32, texture.width), (source.y + source.height) / cast(f32, texture.height)};
     texcoords[2] = Vector2{(source.x + source.width) / cast(f32, texture.width), source.y / cast(f32, texture.height)};

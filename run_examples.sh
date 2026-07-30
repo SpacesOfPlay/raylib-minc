@@ -24,9 +24,12 @@ while IFS= read -r f; do exs+=("$f"); done < <(find "$root/examples" -name '*.mc
 n=${#exs[@]}
 [ "$n" -gt 0 ] || { echo "no examples found under $root/examples" >&2; exit 1; }
 
-minc="$root/tools/minc/minc"
-[ -x "$minc" ] || minc="$(command -v minc 2>/dev/null || true)"
-[ -n "$minc" ] || { echo "minc not found — run ./tools/get_minc.sh (or put minc on PATH)" >&2; exit 1; }
+# minc: $MINC override, else PATH, else next to this script.
+if [ -n "${MINC:-}" ]; then
+    if [ -d "$MINC" ]; then minc="$MINC/minc"; else minc="$MINC"; fi
+elif command -v minc >/dev/null 2>&1; then minc="$(command -v minc)"
+else minc="$root/minc"; fi
+[ -x "$minc" ] || { echo "minc not found — install from https://minc.dev (see install_minc.md), or set MINC" >&2; exit 1; }
 
 # ---------------------------------------------------------------- web mode
 if [ "$mode" = "wasm" ]; then

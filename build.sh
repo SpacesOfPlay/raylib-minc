@@ -17,7 +17,8 @@
 # next to a `resources/` subdir, that subdir is mirrored into
 # `build/` so relative `LoadImage("resources/...")` calls resolve.
 # GLFW resolves from the system package (`libglfw.so.3` / `libglfw.3.dylib`).
-# Uses the minc in tools/minc/ (run ./tools/get_minc.sh) — no PATH needed.
+# minc is taken from $MINC, then PATH, then next to this script;
+# install it from https://minc.dev (see install_minc.md).
 
 set -e
 
@@ -66,27 +67,20 @@ fi
 src_dir="$(dirname "$main_mc")"
 name="$(basename "$main_mc" .mc)"
 
-# Locate minc — tools/minc/ (get_minc.sh drops it here), then PATH.
-minc=""
-if [ -x "$root/tools/minc/minc" ]; then
-    minc="$root/tools/minc/minc"
+# minc: $MINC override (install dir, or a direct binary path), else
+# PATH (installed toolchain), else next
+# to this script (manual zip layout). Install from https://minc.dev.
+if [ -n "${MINC:-}" ]; then
+    if [ -d "$MINC" ]; then minc="$MINC/minc"; else minc="$MINC"; fi
+elif command -v minc >/dev/null 2>&1; then
+    minc="$(command -v minc)"
 else
-    minc="$(command -v minc 2>/dev/null || true)"
+    minc="$root/minc"
 fi
-if [ -z "$minc" ]; then
-    echo "" >&2
-    echo "minc compiler not found." >&2
-    echo "" >&2
-    echo "Options:" >&2
-    echo "  1. Auto-fetch the pinned closed-source binary:" >&2
-    echo "       ./tools/get_minc.sh" >&2
-    echo "     (drops a tools/minc/minc; gitignored; license at tools/minc/LICENSE.md)" >&2
-    echo "" >&2
-    echo "  2. Install manually from" >&2
-    echo "       https://github.com/SpacesOfPlay/minc-dev/releases" >&2
-    echo "     and put minc on PATH." >&2
-    echo "" >&2
-    echo "See README.md (Prerequisites) and LICENSE.md (minc is separately licensed)." >&2
+if [ ! -x "$minc" ]; then
+    echo "minc compiler not found. Install it:" >&2
+    echo "  curl -fsSL https://minc.dev/install | bash" >&2
+    echo "or set MINC (see install_minc.md)." >&2
     exit 1
 fi
 
@@ -120,8 +114,8 @@ if [ "$wasm" -eq 1 ]; then
 fi
 
 # Confirm GLFW is installed via the system package manager.
-"$root/tools/get_glfw.sh" >/dev/null || {
-    echo "GLFW not installed — see tools/get_glfw.sh output." >&2
+"$root/get_glfw.sh" >/dev/null || {
+    echo "GLFW not installed — see get_glfw.sh output." >&2
     exit 1
 }
 
@@ -145,9 +139,9 @@ fi
 echo "built $exe"
 
 # macOS: minc bakes @loader_path/libglfw.3.dylib into the binary, so the
-# dylib (fetched by tools/get_glfw.sh) must sit next to the exe.
-if [ "$(uname -s)" = "Darwin" ] && [ -e "$root/tools/libglfw.3.dylib" ]; then
-    cp "$root/tools/libglfw.3.dylib" "$build_dir/libglfw.3.dylib"
+# dylib (fetched by get_glfw.sh) must sit next to the exe.
+if [ "$(uname -s)" = "Darwin" ] && [ -e "$root/libglfw.3.dylib" ]; then
+    cp "$root/libglfw.3.dylib" "$build_dir/libglfw.3.dylib"
 fi
 
 if [ "$no_run" -eq 0 ]; then

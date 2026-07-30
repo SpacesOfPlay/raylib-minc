@@ -2,11 +2,11 @@
 # get_glfw.sh — ensure GLFW is available for the runtime binary.
 #
 #   macOS  : download a pinned upstream GLFW release, verify its
-#            SHA-256, and drop a universal `tools/libglfw.3.dylib`
+#            SHA-256, and drop a universal `libglfw.3.dylib`
 #            (build.sh copies it next to each example's binary, since
 #            minc bakes an @loader_path reference). No Homebrew needed.
 #   Linux  : GLFW has no official prebuilt; use the system package.
-#   Windows: run `tools/get_glfw.ps1` instead.
+#   Windows: run `get_glfw.ps1` instead.
 #
 # Run once per checkout — the result is reused for every example.
 
@@ -71,7 +71,7 @@ case "$(uname -s)" in
         ;;
     *)
         echo "Unsupported platform: $(uname -s)" >&2
-        echo "On Windows, run tools/get_glfw.ps1 instead." >&2
+        echo "On Windows, run get_glfw.ps1 instead." >&2
         exit 1
         ;;
 esac

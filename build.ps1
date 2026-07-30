@@ -19,7 +19,8 @@
 # The binary is named after the .mc file's stem. If the .mc sits
 # next to a `resources/` subdir, that subdir is mirrored into
 # `build/` so relative `LoadImage("resources/...")` calls resolve.
-# Uses the minc in tools/minc/ (run ./tools/get_minc.ps1) — no PATH needed.
+# minc is taken from $env:MINC, then PATH, then next to this script;
+# install it from https://minc.dev (see install_minc.md).
 
 param(
     [Parameter(Position=0)]
@@ -69,29 +70,20 @@ if ((Test-Path $srcPath -PathType Container)) {
 $srcDir = Split-Path -Parent $mainMc
 $name   = [System.IO.Path]::GetFileNameWithoutExtension($mainMc)
 
-# Locate the minc compiler — tools/minc/ (get_minc.ps1 drops it here),
-# then PATH.
-$minc = $null
-$localMinc = Join-Path $root 'tools\minc\minc.exe'
-if (Test-Path $localMinc) {
-    $minc = (Resolve-Path $localMinc).Path
-} else {
+# Locate minc: $env:MINC (install dir, or a direct binary path),
+# then PATH, then next to this script.
+$minc = $env:MINC
+if ($minc -and (Test-Path $minc -PathType Container)) { $minc = Join-Path $minc 'minc.exe' }
+if (-not $minc) {
     $minc = (Get-Command minc.exe -ErrorAction SilentlyContinue).Source
 }
-if (-not $minc) {
-    Write-Host ""
-    Write-Host "minc compiler not found." -ForegroundColor Red
-    Write-Host ""
-    Write-Host "Options:"
-    Write-Host "  1. Auto-fetch the pinned closed-source binary:"
-    Write-Host "       .\tools\get_minc.ps1"
-    Write-Host "     (drops a tools\minc\minc.exe; gitignored; license at tools\minc\LICENSE.md)"
-    Write-Host ""
-    Write-Host "  2. Install manually from"
-    Write-Host "       https://github.com/SpacesOfPlay/minc-dev/releases"
-    Write-Host "     and put minc.exe on PATH."
-    Write-Host ""
-    Write-Host "See README.md (Prerequisites) and LICENSE.md (minc is separately licensed)."
+if (-not $minc) { $minc = Join-Path $root 'minc.exe' }
+if (-not (Test-Path $minc)) {
+    Write-Host ''
+    Write-Host 'minc compiler not found.' -ForegroundColor Red
+    Write-Host 'Install it:  powershell -c "irm minc.dev/install.ps1 | iex"'
+    Write-Host 'or set $env:MINC (see install_minc.md).'
+    Write-Host 'See README.md.'
     exit 1
 }
 
@@ -129,9 +121,9 @@ if ($wasm) {
     } finally { Pop-Location }
 }
 
-$dll = Join-Path $root 'tools\glfw3.dll'
+$dll = Join-Path $root 'glfw3.dll'
 if (-not (Test-Path $dll)) {
-    Write-Error "glfw3.dll not found at $dll. Run ./tools/get_glfw.ps1 first."
+    Write-Error "glfw3.dll not found at $dll. Run ./get_glfw.ps1 first."
     exit 1
 }
 

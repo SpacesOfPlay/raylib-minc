@@ -2,7 +2,7 @@
 #
 # raylib-minc needs `glfw3.dll` next to the runtime binary. On Windows
 # this script fetches a pinned upstream release, verifies its SHA-256,
-# and drops `tools/glfw3.dll` for `build.ps1` to copy next to each
+# and drops `glfw3.dll` for `build.ps1` to copy next to each
 # example's exe. Linux/macOS users install GLFW via their system
 # package manager (apt/brew); see README.md.
 #
@@ -57,7 +57,7 @@ Invoke-WebRequestWithRetry -Uri $GlfwUrl -OutFile $zip
 $actualSha = (Get-FileHash $zip -Algorithm SHA256).Hash.ToLower()
 if ($GlfwSha256 -eq '<unverified-set-on-first-publish>') {
     Write-Warning "SHA-256 not pinned. Got: $actualSha"
-    Write-Warning "Update tools/get_glfw.ps1's `$GlfwSha256 with this value to enable verification."
+    Write-Warning "Update get_glfw.ps1's `$GlfwSha256 with this value to enable verification."
 } elseif ($actualSha -ne $GlfwSha256.ToLower()) {
     Remove-Item $zip
     throw "GLFW download SHA-256 mismatch. Expected $GlfwSha256, got $actualSha. Refusing to proceed."

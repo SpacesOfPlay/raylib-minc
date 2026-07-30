@@ -528,6 +528,18 @@ enum GuiPropertyElement {
     OTHER = 3,
 }
 
+// Function specifiers definition
+//----------------------------------------------------------------------------------
+// Defines and Macros
+//----------------------------------------------------------------------------------
+// Simple log system to avoid printf() calls if required
+// NOTE: Avoiding those calls, also avoids const strings memory usage
+// Macros to define required UI inputs, including mapping to gamepad controls
+// TODO: Define additionally required macros for missing inputs
+//  Mapping to alternative button down pressed
+// TODO: WARNING: GuiTabBar() still requires IsMouseButtonPressed(MOUSE_MIDDLE_BUTTON)
+// Mapping to scroll delta changes
+// TODO: Review inconsistencies between platforms
 //----------------------------------------------------------------------------------
 // Types and Structures Definition
 // NOTE: Some types are required for RAYGUI_STANDALONE usage
@@ -881,28 +893,7 @@ struct GuiStyleProp {
 **********************************************************************************************/
 // Function specifiers in case library is build/used as a shared library (Windows)
 // NOTE: Microsoft specifiers to tell compiler that symbols are imported/exported from a .dll
-when os(windows) {
 when defined(BUILD_LIBTYPE_SHARED) {
-    } else when defined(USE_LIBTYPE_SHARED) {
-    }
-} else {
-when defined(BUILD_LIBTYPE_SHARED) {
-    }
-}
-// Function specifiers definition
-//----------------------------------------------------------------------------------
-// Defines and Macros
-//----------------------------------------------------------------------------------
-// Simple log system to avoid printf() calls if required
-// NOTE: Avoiding those calls, also avoids const strings memory usage
-// Macros to define required UI inputs, including mapping to gamepad controls
-// TODO: Define additionally required macros for missing inputs
-//  Mapping to alternative button down pressed
-// TODO: WARNING: GuiTabBar() still requires IsMouseButtonPressed(MOUSE_MIDDLE_BUTTON)
-// Mapping to scroll delta changes
-// TODO: Review inconsistencies between platforms
-when defined(PLATFORM_WEB) {
-} else {
 }
 /***********************************************************************************
 *
@@ -3396,6 +3387,7 @@ Rectangle GetTextBounds(i32 control, Rectangle bounds) {
     textBounds.height = bounds.height - cast(f32, 2 * GuiGetStyle(control, BORDER_WIDTH)) - cast(f32, 2 * GuiGetStyle(control, TEXT_PADDING));
     switch control {
         case COMBOBOX, DROPDOWNBOX, LISTVIEW, SLIDER, CHECKBOX, VALUEBOX, CONTROL11: {
+            fallthrough;
         }
         default: {
             {
@@ -3409,10 +3401,8 @@ Rectangle GetTextBounds(i32 control, Rectangle bounds) {
     }
     return textBounds;
 }
-}
 // Get text icon if provided and move text cursor
 // NOTE: Up to RAYGUI_ICON_MAX_ICONS supported for iconId
-private {
 u8* GetTextIcon(u8* text, i32* iconId) {
     *iconId = -1;
     if text[0] == 35 {
@@ -3434,10 +3424,8 @@ u8* GetTextIcon(u8* text, i32* iconId) {
     }
     return text;
 }
-}
 // Get text divided into lines (by line-breaks '\n')
 // WARNING: It returns pointers to new lines but it does not add NULL ('\0') terminator!
-private {
 u8** GetTextLines(u8* text, i32* count) {
     for i32 i = 0; i < 128; i++ {
         GetTextLines__lines[i] = null;
@@ -3453,9 +3441,7 @@ u8** GetTextLines(u8* text, i32* count) {
     }
     return GetTextLines__lines;
 }
-}
 // Get text width to next space for provided string
-private {
 f32 GetNextSpaceWidth(u8* text, i32* nextSpaceIndex) {
     f32 width = 0.0f;
     i32 codepointByteCount = 0;
@@ -3476,9 +3462,7 @@ f32 GetNextSpaceWidth(u8* text, i32* nextSpaceIndex) {
     }
     return width;
 }
-}
 // Gui draw text using default font
-private {
 void GuiDrawText(u8* text, Rectangle textBounds, i32 alignment, Color tint) {
     if text == null || text[0] == 0 {
         return;
@@ -3626,9 +3610,7 @@ void GuiDrawText(u8* text, Rectangle textBounds, i32 alignment, Color tint) {
         }
     }
 }
-}
 // Gui draw rectangle using default raygui plain style with borders
-private {
 void GuiDrawRectangle(Rectangle rec, i32 borderWidth, Color borderColor, Color color) {
     if color.a > 0 {
         DrawRectangle(cast(i32, rec.x), cast(i32, rec.y), cast(i32, rec.width), cast(i32, rec.height), GuiFade(color, guiAlpha));
@@ -3640,9 +3622,7 @@ void GuiDrawRectangle(Rectangle rec, i32 borderWidth, Color borderColor, Color c
         DrawRectangle(cast(i32, rec.x), cast(i32, rec.y) + cast(i32, rec.height) - borderWidth, cast(i32, rec.width), borderWidth, GuiFade(borderColor, guiAlpha));
     }
 }
-}
 // Draw tooltip using control bounds
-private {
 void GuiTooltip(Rectangle controlRec) {
     if !guiLocked && guiTooltip && guiTooltipPtr != null && !guiControlExclusiveMode {
         Vector2 textSize = MeasureTextEx(GuiGetFont(), guiTooltipPtr, cast(f32, GuiGetStyle(DEFAULT, TEXT_SIZE)), cast(f32, GuiGetStyle(DEFAULT, TEXT_SPACING)));
@@ -3664,10 +3644,8 @@ void GuiTooltip(Rectangle controlRec) {
         GuiSetStyle(LABEL, TEXT_PADDING, textPadding);
     }
 }
-}
 // Split controls text into multiple strings
 // Also check for multiple columns (required by GuiToggleGroup())
-private {
 u8** GuiTextSplit(u8* text, u8 delimiter, i32* count, i32* textRow) {
     memset(GuiTextSplit__buffer, 0, cast(u64, 1024));
     GuiTextSplit__result[0] = GuiTextSplit__buffer;
@@ -3698,10 +3676,8 @@ u8** GuiTextSplit(u8* text, u8 delimiter, i32* count, i32* textRow) {
     *count = counter;
     return GuiTextSplit__result;
 }
-}
 // Convert color data from RGB to HSV
 // NOTE: Color data should be passed normalized
-private {
 Vector3 ConvertRGBtoHSV(Vector3 rgb) {
     Vector3 hsv;
     f32 min = 0.0f;
@@ -3740,10 +3716,8 @@ Vector3 ConvertRGBtoHSV(Vector3 rgb) {
     }
     return hsv;
 }
-}
 // Convert color data from HSV to RGB
 // NOTE: Color data should be passed normalized
-private {
 Vector3 ConvertHSVtoRGB(Vector3 hsv) {
     Vector3 rgb;
     f32 hh = 0.0f;
@@ -3805,6 +3779,7 @@ Vector3 ConvertHSVtoRGB(Vector3 hsv) {
             }
         }
         case 5: {
+            fallthrough;
         }
         default: {
             {
@@ -3816,9 +3791,7 @@ Vector3 ConvertHSVtoRGB(Vector3 hsv) {
     }
     return rgb;
 }
-}
 // Scroll bar control (used by GuiScrollPanel())
-private {
 i32 GuiScrollBar(Rectangle bounds, i32 value, i32 minValue, i32 maxValue) {
     GuiState state = guiState;
     bool isVertical = (bounds.width > bounds.height ? false : true) != 0;
@@ -3908,10 +3881,8 @@ i32 GuiScrollBar(Rectangle bounds, i32 value, i32 minValue, i32 maxValue) {
     }
     return value;
 }
-}
 // Color fade-in or fade-out, alpha goes from 0.0f to 1.0f
 // WARNING: It multiplies current alpha by alpha scale factor
-private {
 Color GuiFade(Color color, f32 alpha) {
     if alpha < 0.0f {
         alpha = 0.0f;
@@ -3921,11 +3892,11 @@ Color GuiFade(Color color, f32 alpha) {
     var result = Color{color.r, color.g, color.b, cast(u8, cast(f32, color.a) * alpha)};
     return result;
 }
+bool GuiTextInputBox__textEditMode = false;
+u8* GuiTextInputBox__stars = "****************";
+u8[1024] GuiIconText__buffer;
+u8[16] GuiIconText__iconBuffer;
+u8*[128] GetTextLines__lines;
+u8*[128] GuiTextSplit__result;
+u8[1024] GuiTextSplit__buffer;
 }
-private { bool GuiTextInputBox__textEditMode = false; }
-private { u8* GuiTextInputBox__stars = "****************"; }
-private { u8[1024] GuiIconText__buffer; }
-private { u8[16] GuiIconText__iconBuffer; }
-private { u8*[128] GetTextLines__lines; }
-private { u8*[128] GuiTextSplit__result; }
-private { u8[1024] GuiTextSplit__buffer; }

@@ -133,6 +133,8 @@ i32 rl_fstat(u8* path, void* buf) { return 0 - 1; }
 i32 errno = 0;
 
 // Null FILE* sentinels for fflush(stdout/stderr). Output still
-// reaches the console.
-void* stdout = null;
-void* stderr = null;
+// reaches the console. Named c_stdout/c_stderr — transminc maps the
+// C names here by default — so they can't shadow minc's stdout()/
+// stderr() builtins in units that concatenate this shim.
+void* c_stdout = null;
+void* c_stderr = null;

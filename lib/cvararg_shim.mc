@@ -120,7 +120,7 @@ i32 vsnprintf(u8* buf, u64 size, u8* fmt, &... ap) { return __minc_vfmt(buf, siz
 i32 snprintf(u8* buf, u64 size, u8* fmt, ...) { return __minc_vfmt(buf, size, fmt, &...); }
 i32 vsprintf(u8* buf, u8* fmt, &... ap) { return __minc_vfmt(buf, cast(u64, 2147483647), fmt, ap); }
 i32 vprintf(u8* fmt, &... ap) {
-    u8[1024] line;
+    noinit u8[1024] line;
     i32 n = __minc_vfmt(cast(u8*, &line), 1024, fmt, ap);
     puts(cast(u8*, &line));
     return n;
@@ -128,19 +128,24 @@ i32 vprintf(u8* fmt, &... ap) {
 when os(wasm) {
     // unbounded
     i32 sprintf(u8* buf, u8* fmt, ...) { return __minc_vfmt(buf, cast(u64, 2147483647), fmt, &...); }
-    // printf / fprintf format into a scratch buffer and emit via the
-    // wasm `write` host import.
+    // printf / fprintf format into a scratch buffer
     i32 printf(u8* fmt, ...) {
-        u8[1024] line;
+        noinit u8[1024] line;
         i32 n = __minc_vfmt(cast(u8*, &line), 1024, fmt, &...);
-        write(1, cast(u8*, &line), n);
+        str s;
+        s.data = cast(u8*, &line);
+        s.len = n;
+        print("{}", s);
         return n;
     }
     i32 fprintf(void* stream, u8* fmt, ...) {
         ignore stream;
-        u8[1024] line;
+        noinit u8[1024] line;
         i32 n = __minc_vfmt(cast(u8*, &line), 1024, fmt, &...);
-        write(2, cast(u8*, &line), n);
+        str s;
+        s.data = cast(u8*, &line);
+        s.len = n;
+        eprint("{}", s);
         return n;
     }
     // sscanf sub-set: %i/%d/%u (decimal int), %f (float), %s

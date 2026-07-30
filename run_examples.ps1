@@ -23,12 +23,13 @@ $exs = Get-ChildItem (Join-Path $root 'examples') -Recurse -Filter *.mc | Sort-O
 $n = $exs.Count
 if ($n -eq 0) { Write-Error "no examples found under $root\examples"; exit 1 }
 
-$minc = Join-Path $root 'tools\minc\minc.exe'
-if (-not (Test-Path $minc)) {
-    $g = Get-Command minc.exe -ErrorAction SilentlyContinue
-    $minc = if ($g) { $g.Source } else { $null }
-}
-if (-not $minc) { Write-Error "minc not found — run .\tools\get_minc.ps1 (or put minc.exe on PATH)"; exit 1 }
+# minc: $env:MINC (install dir, or a direct binary path), then
+# PATH, then next to this script.
+$minc = $env:MINC
+if ($minc -and (Test-Path $minc -PathType Container)) { $minc = Join-Path $minc 'minc.exe' }
+if (-not $minc) { $minc = (Get-Command minc.exe -ErrorAction SilentlyContinue).Source }
+if (-not $minc) { $minc = Join-Path $root 'minc.exe' }
+if (-not (Test-Path $minc)) { Write-Error "minc not found — install from https://minc.dev (see install_minc.md), or set `$env:MINC"; exit 1 }
 
 # ---------------------------------------------------------------- web mode
 if ($Mode -eq 'wasm') {

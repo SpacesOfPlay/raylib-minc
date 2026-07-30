@@ -3,9 +3,7 @@ build/
 *.obj
 *.o
 *.pdb
-tools/glfw3.dll
-tools/libglfw.3.dylib
-tools/glfw-*.zip
-tools/glfw-*/
-tools/minc/
-tools/minc-*.zip
+glfw3.dll
+libglfw.3.dylib
+glfw-*.zip
+glfw-*/

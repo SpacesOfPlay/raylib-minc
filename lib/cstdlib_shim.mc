@@ -25,14 +25,13 @@ when os(windows) {
         f64 floor(f64 x);
         f64 ceil(f64 x);
         f64 pow(f64 b, f64 e);
-        f64 sin(f64 x);
         f64 cos(f64 x);
         f64 acos(f64 x);
-        f64 asin(f64 x);
         f64 fmod(f64 x, f64 y);
         f64 tan(f64 x);
         f64 log(f64 x);
         f64 exp(f64 x);
+        void abort();
         @must_use void* fopen(u8* path, u8* mode);
         i32 fclose(void* file);
         @must_use u8* fgets(u8* buf, i32 n, void* stream);
@@ -43,10 +42,8 @@ when os(windows) {
         f64 log2(f64 x);
         f32 sinf(f32 x);
         f32 cosf(f32 x);
-        f32 tanf(f32 x);
         f32 asinf(f32 x);
         f32 acosf(f32 x);
-        f32 atanf(f32 x);
         f32 atan2f(f32 y, f32 x);
         // sqrtf: provided by the runtime.
         f32 powf(f32 b, f32 e);
@@ -109,6 +106,8 @@ when os(linux) {
         u8* strcat(u8* dst, u8* src);
         i32 puts(u8* s);
         i32 abs(i32 x);
+        // malloc, calloc, realloc, free: provided by the runtime allocator.
+        void abort();
         @must_use void* fopen(u8* path, u8* mode);
         i32 fclose(void* file);
         @must_use u8* fgets(u8* buf, i32 n, void* stream);
@@ -120,10 +119,8 @@ when os(linux) {
         f64 floor(f64 x);
         f64 ceil(f64 x);
         f64 pow(f64 b, f64 e);
-        f64 sin(f64 x);
         f64 cos(f64 x);
         f64 acos(f64 x);
-        f64 asin(f64 x);
         f64 fmod(f64 x, f64 y);
         f64 tan(f64 x);
         f64 log(f64 x);
@@ -135,10 +132,8 @@ when os(linux) {
         // f32 math
         f32 sinf(f32 x);
         f32 cosf(f32 x);
-        f32 tanf(f32 x);
         f32 asinf(f32 x);
         f32 acosf(f32 x);
-        f32 atanf(f32 x);
         f32 atan2f(f32 y, f32 x);
         f32 powf(f32 b, f32 e);
         f32 expf(f32 x);
@@ -173,6 +168,7 @@ when os(android) {
         u8* strcat(u8* dst, u8* src);
         i32 puts(u8* s);
         i32 abs(i32 x);
+        void abort();
         @must_use void* fopen(u8* path, u8* mode);
         i32 fclose(void* file);
         @must_use u8* fgets(u8* buf, i32 n, void* stream);
@@ -181,10 +177,8 @@ when os(android) {
         f64 floor(f64 x);
         f64 ceil(f64 x);
         f64 pow(f64 b, f64 e);
-        f64 sin(f64 x);
         f64 cos(f64 x);
         f64 acos(f64 x);
-        f64 asin(f64 x);
         f64 fmod(f64 x, f64 y);
         f64 tan(f64 x);
         f64 log(f64 x);
@@ -193,10 +187,8 @@ when os(android) {
         f64 round(f64 x);
         f32 sinf(f32 x);
         f32 cosf(f32 x);
-        f32 tanf(f32 x);
         f32 asinf(f32 x);
         f32 acosf(f32 x);
-        f32 atanf(f32 x);
         f32 atan2f(f32 y, f32 x);
         f32 powf(f32 b, f32 e);
         f32 expf(f32 x);
@@ -218,16 +210,10 @@ const i32 S_IFMT = 0xF000;
 const i32 S_IFREG = 0x8000;
 const i32 S_IFDIR = 0x4000;
 
-// Count leading zeros (32-bit). Returns 32 on 0.
-i32 __builtin_clz(u32 x) {
-    if x == 0 { return 32; }
-    i32 n = 0;
-    while (x & (cast(u32, 1) << 31)) == 0 {
-        n = n + 1;
-        x = x << 1;
-    }
-    return n;
-}
+// __builtin_clz (32-bit) lives with the other builtin-over-intrinsic
+// wrappers further down; the bit-loop copy that used to sit here
+// silently lost to it by include order (minc's duplicate-definition
+// hard error now rejects the pair outright).
 // Count leading zeros (64-bit).
 i32 __builtin_clzl(u64 x) {
     if x == 0 { return 64; }
@@ -263,10 +249,8 @@ when os(macos) || os(ios) {
         f64 floor(f64 x);
         f64 ceil(f64 x);
         f64 pow(f64 b, f64 e);
-        f64 sin(f64 x);
         f64 cos(f64 x);
         f64 acos(f64 x);
-        f64 asin(f64 x);
         f64 fmod(f64 x, f64 y);
         f64 tan(f64 x);
         f64 log(f64 x);
@@ -276,10 +260,8 @@ when os(macos) || os(ios) {
         // f32 math
         f32 sinf(f32 x);
         f32 cosf(f32 x);
-        f32 tanf(f32 x);
         f32 asinf(f32 x);
         f32 acosf(f32 x);
-        f32 atanf(f32 x);
         f32 atan2f(f32 y, f32 x);
         // sqrtf: provided by the runtime.
         f32 powf(f32 b, f32 e);
@@ -295,6 +277,8 @@ when os(macos) || os(ios) {
         f32 fmaxf(f32 a, f32 b);
         f64 fmin(f64 a, f64 b);
         f64 fmax(f64 a, f64 b);
+        // malloc, calloc, realloc, free: provided by the runtime allocator.
+        void abort();
         @must_use void* fopen(u8* path, u8* mode);
         i32 fclose(void* file);
         @must_use u8* fgets(u8* buf, i32 n, void* stream);
@@ -321,6 +305,10 @@ void assert(i64 cond) {
         eprint("assertion failed\n");
         exit(1);
     }
+}
+i32 __builtin_clz(u32 x) {
+    if x == 0 { return 32; }
+    return clz(cast(i32, x));
 }
 struct stat {
     i64 st_dev;
@@ -401,18 +389,21 @@ when os(macos) || os(ios) {
 // On wasm there is no system libc, so the libc subset is provided here
 // (over the builtin allocator) or as host imports.
 when os(wasm) {
-    // Math is owned by the `math` module: it *defines* sinf/cosf/etc. on wasm,
-    // so our own `extern "math"` for them would collide with a user's
-    // `import math` (and with imgui, which imports this shim). Pull just the
-    // transcendentals selectively — the listed names only, so `min`/`max` and
-    // friends don't leak into consumers, and dedup'd against a user's full
-    // `import math`.
-    import { sin, cos, tan, asin, acos, atan, atan2, exp, log, pow, fmod, floor,
-             ceil, round, sinf, cosf, tanf, asinf, acosf, atanf, atan2f, expf,
-             logf, powf, fmodf, floorf, ceilf, roundf } from math;
+    // abort delegates to the JS host (which logs + stops).
+    extern "env" void __wasm_abort();
+    void abort() { __wasm_abort(); }
+
+    // Math comes from the math module (it defines the wasm versions).
+    import math;
 
     // --- allocator ---
     void* malloc(u64 size)            { return alloc(cast(i64, size)); }
+    void* calloc(u64 count, u64 size) {
+        i64 total = cast(i64, count) * cast(i64, size);
+        void* p = alloc(total);
+        if p != null { memset(p, 0, total); }
+        return p;
+    }
 
     // --- strings ---
     u64 strlen(u8* s) { u64 n = 0; while *(s + n) != 0 { n = n + 1; } return n; }
@@ -498,25 +489,21 @@ when os(wasm) {
     }
 
     // --- stdio (console) ---
-    // puts writes the string + a newline to stdout (fd 1).
+    // puts writes the string + a newline to stdout.
     i32 puts(u8* s) {
-        write(1, s, cast(i32, strlen(s)));
-        u8 nl = 10;
-        write(1, &nl, 1);
+        str line = { .data = s, .len = cast(i32, strlen(s)) };
+        print("{}\n", line);
         return 0;
     }
 
     // --- stdlib numerics ---
     i32 abs(i32 x) { if x < 0 { return -x; } return x; }
 
-    // sin/cos/tan/asin/acos/atan/atan2/exp/log/pow/fmod/floor/ceil (f32+f64)
-    // come from the selective `import ... from math` at the top of this arm.
     // fmin/fmax families (not in the math module).
     f32 fminf(f32 a, f32 b) { if a < b { return a; } return b; }
     f32 fmaxf(f32 a, f32 b) { if a > b { return a; } return b; }
     f64 fmin(f64 a, f64 b) { if a < b { return a; } return b; }
     f64 fmax(f64 a, f64 b) { if a > b { return a; } return b; }
-    // round/roundf come from the selective `import ... from math` (above).
     // truncate toward zero; |x| >= 2^23 (f32) / 2^52 (f64) is already
     // integral, so passing through avoids the i64-cast overflow + NaN.
     f32 truncf(f32 x) {

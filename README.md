@@ -9,8 +9,8 @@ raylib's C source.
 ```powershell
 git clone https://github.com/SpacesOfPlay/raylib-minc
 cd raylib-minc
-./tools/get_minc.ps1                              # downloads minc compiler
-./tools/get_glfw.ps1                              # downloads GLFW
+powershell -c "irm minc.dev/install.ps1 | iex"   # install minc (see install_minc.md)
+./get_glfw.ps1                                    # downloads GLFW
 ./build.ps1                                       # builds + runs the default example
 ```
 
@@ -25,7 +25,7 @@ sudo apt install libglfw3 libglfw3-dev          # Debian/Ubuntu
 # sudo pacman -S glfw                           # Arch
 git clone https://github.com/SpacesOfPlay/raylib-minc
 cd raylib-minc
-./tools/get_minc.sh                             # downloads minc compiler
+curl -fsSL https://minc.dev/install | bash       # install minc (see install_minc.md)
 ./build.sh                                      # builds + runs the default example
 ```
 
@@ -34,8 +34,8 @@ cd raylib-minc
 ```sh
 git clone https://github.com/SpacesOfPlay/raylib-minc
 cd raylib-minc
-./tools/get_minc.sh                             # downloads minc compiler
-./tools/get_glfw.sh                             # downloads GLFW (no Homebrew needed)
+curl -fsSL https://minc.dev/install | bash       # install minc (see install_minc.md)
+./get_glfw.sh                                   # downloads GLFW (no Homebrew needed)
 ./build.sh                                      # builds + runs the default example
 ```
 
@@ -44,10 +44,12 @@ cd raylib-minc
 
 ## Prerequisites
 
-- **minc compiler** — `./tools/get_minc.{ps1,sh}` fetches a pinned
-  release into `tools/minc/`. Or put `minc(.exe)` on PATH yourself.
+- **minc compiler** — the one-liner in
+  [`install_minc.md`](install_minc.md) installs it from
+  <https://minc.dev>. build.sh /
+  build.ps1 resolve minc from `$MINC`, then PATH, then next to the script.
   minc is separately licensed; see [`LICENSE.md`](LICENSE.md).
-- **GLFW 3.x** — Windows + macOS run `tools/get_glfw.{ps1,sh}`.
+- **GLFW 3.x** — Windows + macOS run `get_glfw.{ps1,sh}`.
   Linux installs via package manager.
 
 ## What works
@@ -104,8 +106,9 @@ raylib-minc also targets the web — compiled straight to WebAssembly
 
 The `wasm` subcommand compiles the example to `.wasm`, stages the JS host
 + HTML harness (declared by `lib/rcore_wasm_app.mc`), serves it, and opens
-a browser — all via the bundled `tools/minc` (no compiler on PATH needed).
-Add `--no-run` (`-NoRun` on Windows) to serve without auto-opening. Under
+a browser — all via the installed minc (resolved from `$MINC`, PATH, or
+next to the script). Add `--no-run` (`-NoRun` on Windows) to serve without
+auto-opening. Under
 the hood it runs `minc run --target wasm <example>`.
 
 **One cross-platform seam — the main loop.** A browser can't run a
@@ -184,10 +187,11 @@ editing them by hand. Snapshot sources are listed in [`VERSION`](VERSION).
 
 ## Troubleshooting
 
-- **"minc compiler not found"** — run `./tools/get_minc.{ps1,sh}`
-  or put `minc` on PATH.
-- **"glfw3.dll not found"** (Windows) — run `./tools/get_glfw.ps1`.
-- **"libglfw.3.dylib not found"** (macOS) — run `./tools/get_glfw.sh`
+- **"minc compiler not found"** — install minc (see
+  [`install_minc.md`](install_minc.md)), put `minc` on PATH, or set
+  `$MINC`.
+- **"glfw3.dll not found"** (Windows) — run `./get_glfw.ps1`.
+- **"libglfw.3.dylib not found"** (macOS) — run `./get_glfw.sh`
   then rebuild.
 - **"libglfw.so.3 not found"** (Linux) — install the runtime
   package (`libglfw3`), not just `-dev`.
