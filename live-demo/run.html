@@ -25,11 +25,18 @@ body {
 #name { color: var(--fg); }
 #src { margin-left: auto; }
 /* The host sets canvas.style.width/height to raylib's logical screen size
-   after InitWindow, so the buffer maps 1:1 to device pixels. Don't set a
-   width here — scroll the wrapper instead when the canvas is wider. */
+   after InitWindow, so the backbuffer maps 1:1 to device pixels. Two ways
+   to lose that, both of which resample the whole canvas:
+     - box-sizing: border-box (from the * rule) would make the 1px border
+       eat into the drawing area — 800px declared, 798px drawn, 1200px of
+       backbuffer squeezed into it.
+     - flex-shrink (on by default for a flex item) would squeeze it again
+       whenever the viewport is narrower than the canvas.
+   So: content-box, no shrink, and #stage scrolls instead. */
 #stage { flex: 1; display: flex; align-items: center; justify-content: center;
          width: 100%; padding: 1.2em; overflow: auto; }
-#canvas { background: #000; border: 1px solid var(--line); display: block; outline: none; }
+#canvas { box-sizing: content-box; flex: none;
+          background: #000; border: 1px solid var(--line); display: block; outline: none; }
 #status { color: var(--faint); padding: 1em; text-align: center; }
 #status.err { color: #e2938d; max-width: 60em; text-align: left; white-space: pre-wrap; }
 </style>
