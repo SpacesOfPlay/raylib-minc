@@ -4,12 +4,15 @@ A [minc](https://minc.dev)-language port of
 [raylib](https://github.com/raysan5/raylib), transpiled from
 raylib's C source.
 
+All examples as wasm:
+[web examples](https://spacesofplay.github.io/raylib-minc/).
+
 ## Quickstart (Windows)
 
 ```powershell
 git clone https://github.com/SpacesOfPlay/raylib-minc
 cd raylib-minc
-powershell -c "irm minc.dev/install.ps1 | iex"   # install minc (see install_minc.md)
+powershell -c "irm minc.dev/install.ps1 | iex"    # install minc (see install_minc.md)
 ./get_glfw.ps1                                    # downloads GLFW
 ./build.ps1                                       # builds + runs the default example
 ```
@@ -96,8 +99,8 @@ layout](https://github.com/raysan5/raylib/tree/master/examples).
 
 ## Run in the browser (WebAssembly)
 
-raylib-minc also targets the web — compiled straight to WebAssembly
-(WebGL2), no emscripten. The **same source** builds for desktop and web:
+raylib-minc also targets the web. Compiled straight to WebAssembly
+(WebGL2), no emscripten. The same source builds for desktop and web:
 
 ```
 ./build.sh examples/core/core_basic_window.mc        # desktop
@@ -108,14 +111,12 @@ The `wasm` subcommand compiles the example to `.wasm`, stages the JS host
 + HTML harness (declared by `lib/rcore_wasm_app.mc`), serves it, and opens
 a browser — all via the installed minc (resolved from `$MINC`, PATH, or
 next to the script). Add `--no-run` (`-NoRun` on Windows) to serve without
-auto-opening. Under
-the hood it runs `minc run --target wasm <example>`.
+auto-opening. Under the hood it runs `minc run --target wasm <example>`.
 
-**One cross-platform seam — the main loop.** A browser can't run a
-blocking `while (!WindowShouldClose())`, so a portable example puts its
-loop body in a shared `UpdateDrawFrame()` and branches once in `main`
-(exactly like upstream raylib's `PLATFORM_WEB` / `emscripten_set_main_loop`
-split):
+One cross-platform main loop. A browser can't run a blocking 
+`while (!WindowShouldClose())`, so a portable example puts its loop body in 
+a shared `UpdateDrawFrame()` and branches once in `main` (exactly like upstream 
+raylib's `PLATFORM_WEB` / `emscripten_set_main_loop` split):
 
 ```minc
 when os(wasm) {
@@ -127,8 +128,8 @@ when os(wasm) {
 }
 ```
 
-**All bundled examples** use this portable shape, so any of them runs on
-the web — e.g. `./build.sh wasm examples/shapes/shapes_bouncing_ball.mc`.
+All bundled examples use this portable shape, so any of them runs on
+the web: `./build.sh wasm examples/shapes/shapes_bouncing_ball.mc`.
 
 Asset loaders (`text_font_loading`, `textures_image_loading`,
 `textures_logo_raylib`) just work: `./build.sh wasm <example>` copies the
@@ -146,9 +147,11 @@ provide yet (they still build and run, just with reduced behavior):
   raygui `portable_window`) toggle OS-window properties that are no-ops on
   a single canvas.
 
-Assets: list files your example `LoadXxx()`es at runtime in the harness's
-`ASSETS` array (`lib/raylib_wasm_harness.html`); the host preloads them
-into an in-memory VFS before the module runs.
+Assets: the page fetches an `assets.json` manifest — a JSON array of the
+paths your example `LoadXxx()`es at runtime — and the host preloads those
+files into an in-memory VFS before the module runs. `./build.sh wasm`
+writes it from the example's `resources/` dir; hand-write it for anything
+loaded from elsewhere.
 
 Audio and gamepad are not wired on the web target yet.
 
@@ -166,10 +169,12 @@ To walk the whole `examples/` tree one at a time:
 - **Native** builds and runs each example in turn. Close its window (or
   press Enter) to advance; at the prompt: `r` replays, `s` runs the rest
   back-to-back, `q` quits. Resume partway with `native 10` / `-Start 10`.
-- **Web** compiles every example to `build/web_all/` and serves a single
-  clickable **menu** (`menu.html`) — click an example, view it, use the
-  browser **Back** button to return. Needs `python` on PATH; pick a port
-  with `-Port 9000` / `PORT=9000`.
+- **Web** compiles every example to `build/web_all/`, stages the
+  [`live-demo/`](live-demo/) pages beside them and serves the gallery —
+  click an example, view it, use the browser **Back** button to return.
+  This is the published site, so it doubles as a check of it before you
+  push. Needs `python` on PATH; pick a port with `-Port 9000` /
+  `PORT=9000`.
 
 ## How it works
 
@@ -182,8 +187,7 @@ the OS C runtime, and OpenGL are external; the web output is a
 freestanding `.wasm` driven by `lib/raylib_wasm_host.js`.
 
 The `lib/raylib_lib.mc` / `lib/raylib_wasm_lib.mc` files are transpile
-snapshots. Fix bugs by re-publishing from updated sources, not by
-editing them by hand. Snapshot sources are listed in [`VERSION`](VERSION).
+snapshots. Snapshot sources are listed in [`VERSION`](VERSION).
 
 ## Troubleshooting
 

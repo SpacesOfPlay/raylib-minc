@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>raylib-minc</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #161926; --line: #2b3145; --fg: #c8cee0; --dim: #9aa0b8;
+  --faint: #6d7490; --link: #7fb3ff;
+  --mono: 'Cascadia Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+}
+body {
+  background: var(--bg); color: var(--dim); font-family: var(--mono);
+  font-size: 12px; min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center;
+}
+#bar {
+  width: 100%; display: flex; align-items: center; gap: 1em;
+  padding: .7em 1.2em; border-bottom: 1px solid var(--line);
+}
+#bar a { color: var(--link); text-decoration: none; }
+#bar a:hover { text-decoration: underline; }
+#name { color: var(--fg); }
+#src { margin-left: auto; }
+/* The host sets canvas.style.width/height to raylib's logical screen size
+   after InitWindow, so the buffer maps 1:1 to device pixels. Don't set a
+   width here — scroll the wrapper instead when the canvas is wider. */
+#stage { flex: 1; display: flex; align-items: center; justify-content: center;
+         width: 100%; padding: 1.2em; overflow: auto; }
+#canvas { background: #000; border: 1px solid var(--line); display: block; outline: none; }
+#status { color: var(--faint); padding: 1em; text-align: center; }
+#status.err { color: #e2938d; max-width: 60em; text-align: left; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<div id="bar">
+  <a href="index.html">&larr; examples</a>
+  <span id="name"></span>
+  <a id="src" href="https://github.com/SpacesOfPlay/raylib-minc/tree/main/examples">source</a>
+</div>
+<div id="stage">
+  <canvas id="canvas"></canvas>
+</div>
+<div id="status">loading…</div>
+<script src="raylib_wasm_host.js"></script>
+<script>
+// Runner for the gallery: index.html links here as run.html?app=<name>,
+// and the pages workflow puts <name>.wasm beside this file. Same bootstrap
+// as lib/raylib_wasm_harness.html (what `minc run --target wasm` stages for
+// a single example) plus the back link and error surface.
+const app = new URLSearchParams(location.search).get('app');
+const statusEl = document.getElementById('status');
+const canvas = document.getElementById('canvas');
+
+function fail(msg) {
+    statusEl.className = 'err';
+    statusEl.textContent = msg;
+    canvas.style.display = 'none';
+}
+window.addEventListener('error', e => fail('error: ' + ((e.error && (e.error.stack || e.error.message)) || e.message)));
+window.addEventListener('unhandledrejection', e => fail('error: ' + ((e.reason && (e.reason.stack || e.reason.message)) || e.reason)));
+
+if (!app || !/^[a-zA-Z0-9_-]+$/.test(app)) {
+    document.getElementById('name').textContent = '—';
+    fail('missing or invalid ?app=<name> in the URL. Pick one from the examples list.');
+} else {
+    document.title = app + ' — raylib-minc';
+    document.getElementById('name').textContent = app;
+    (async () => {
+        try {
+            // Files the wasm side open()s at runtime are preloaded into the
+            // host VFS before run(). assets.json is one merged manifest for
+            // the whole gallery (every app preloads all of it — a few KB),
+            // written by the build alongside the copied resources/.
+            let assets = [];
+            try {
+                const r = await fetch('assets.json');
+                if (r.ok) assets = await r.json();
+            } catch (e) { /* no manifest — fine */ }
+            await window.raylibWasm.preloadAssets(assets);
+            // Fetch the module here rather than through run(): a 404 would
+            // otherwise reach WebAssembly.instantiate as the server's error
+            // page and report a magic-word mismatch.
+            const r = await fetch(app + '.wasm');
+            if (!r.ok) throw new Error(`no ${app}.wasm here (HTTP ${r.status}) — is it in the examples list?`);
+            await window.raylibWasm.runFromBytes(await r.arrayBuffer());
+            statusEl.textContent = '';
+        } catch (e) {
+            fail('failed to start ' + app + '\n\n' + (e.stack || e.message || e));
+        }
+    })();
+}
+</script>
+</body>
+</html>

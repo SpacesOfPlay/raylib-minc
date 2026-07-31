@@ -14146,6 +14146,9 @@ f32* stbi_loadf_from_callbacks(stbi_io_callbacks* clbk, void* user, i32* x, i32*
     return stbi__loadf_main(&s, x, y, comp, req_comp);
 }
 }
+// these is-hdr-or-not is defined independent of whether STBI_NO_LINEAR is
+// defined, for API simplicity; if STBI_NO_LINEAR is defined, it always
+// reports false!
 i32 stbi_is_hdr_from_memory(stbi_uc* buffer, i32 len) {
     ignore sizeof(buffer);
     ignore sizeof(len);
@@ -14202,7 +14205,6 @@ stbi_uc stbi__get8(stbi__context* s) {
 // nothing
 when defined(STBI_NO_PNG) {
 } else {
-// nothing
 private {
 void stbi__skip(stbi__context* s, i32 n) {
     if n == 0 {
@@ -14226,7 +14228,6 @@ void stbi__skip(stbi__context* s, i32 n) {
 }
 when defined(STBI_NO_PNG) {
 } else {
-// nothing
 private {
 i32 stbi__getn(stbi__context* s, stbi_uc* buffer, i32 n) {
     if s.io.read != null {
@@ -14253,7 +14254,6 @@ i32 stbi__getn(stbi__context* s, stbi_uc* buffer, i32 n) {
 }
 when defined(STBI_NO_PNG) {
 } else {
-// nothing
 private {
 i32 stbi__get16be(stbi__context* s) {
     var z = cast(i32, stbi__get8(s));
@@ -14263,7 +14263,6 @@ i32 stbi__get16be(stbi__context* s) {
 }
 when defined(STBI_NO_PNG) {
 } else {
-// nothing
 private {
 stbi__uint32 stbi__get32be(stbi__context* s) {
     var z = cast(stbi__uint32, stbi__get16be(s));
@@ -14292,7 +14291,6 @@ stbi_uc stbi__compute_y(i32 r, i32 g, i32 b) {
 }
 when defined(STBI_NO_PNG) {
 } else {
-// nothing
 private {
 u8* stbi__convert_format(u8* data, i32 img_n, i32 req_comp, u32 x, u32 y) {
     i32 i;
@@ -14428,7 +14426,6 @@ u8* stbi__convert_format(u8* data, i32 img_n, i32 req_comp, u32 x, u32 y) {
 }
 when defined(STBI_NO_PNG) {
 } else {
-// nothing
 private {
 stbi__uint16 stbi__compute_y_16(i32 r, i32 g, i32 b) {
     return cast(stbi__uint16, r * 77 + g * 150 + 29 * b >> 8);
@@ -14437,7 +14434,6 @@ stbi__uint16 stbi__compute_y_16(i32 r, i32 g, i32 b) {
 }
 when defined(STBI_NO_PNG) {
 } else {
-// nothing
 private {
 stbi__uint16* stbi__convert_format16(stbi__uint16* data, i32 img_n, i32 req_comp, u32 x, u32 y) {
     i32 i;
@@ -21490,6 +21486,10 @@ i32 stbtt_GetGlyphSVG(stbtt_fontinfo* info, i32 gl, u8** svg) {
 i32 stbtt_GetCodepointSVG(stbtt_fontinfo* info, i32 unicode_codepoint, u8** svg) {
     return stbtt_GetGlyphSVG(info, stbtt_FindGlyphIndex(info, unicode_codepoint), svg);
 }
+//////////////////////////////////////////////////////////////////////////////
+//
+// antialiasing software rasterizer
+//
 void stbtt_GetGlyphBitmapBoxSubpixel(stbtt_fontinfo* font, i32 glyph, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
     i32 x0 = 0;
     i32 y0 = 0;
@@ -22338,6 +22338,12 @@ void stbrp_pack_rects(stbrp_context* con, stbrp_rect* rects, i32 num_rects) {
 }
 }
 }
+//////////////////////////////////////////////////////////////////////////////
+//
+// bitmap baking
+//
+// This is SUPER-AWESOME (tm Ryan Gordon) packing using stb_rect_pack.h. If
+// stb_rect_pack.h isn't available, it uses the BakeFontBitmap strategy.
 private {
 i32 stbtt_PackBegin(stbtt_pack_context* spc, u8* pixels, i32 pw, i32 ph, i32 stride_in_bytes, i32 padding, void* alloc_context) {
     ignore alloc_context;
@@ -22508,6 +22514,7 @@ f32 stbtt__oversample_shift(i32 oversample) {
     }
     return cast(f32, -(oversample - 1)) / (2.0f * cast(f32, oversample));
 }
+// rects array must be big enough to accommodate all characters in the given ranges
 i32 stbtt_PackFontRangesGatherRects(stbtt_pack_context* spc, stbtt_fontinfo* info, stbtt_pack_range* ranges, i32 num_ranges, stbrp_rect* rects) {
     i32 i;
     i32 j;
@@ -22553,6 +22560,7 @@ void stbtt_MakeGlyphBitmapSubpixelPrefilter(stbtt_fontinfo* info, u8* output, i3
     *sub_x = stbtt__oversample_shift(prefilter_x);
     *sub_y = stbtt__oversample_shift(prefilter_y);
 }
+// rects array must be big enough to accommodate all characters in the given ranges
 i32 stbtt_PackFontRangesRenderIntoRects(stbtt_pack_context* spc, stbtt_fontinfo* info, stbtt_pack_range* ranges, i32 num_ranges, stbrp_rect* rects) {
     i32 i;
     i32 j;
@@ -23182,6 +23190,8 @@ stbtt_int32 stbtt__CompareUTF8toUTF16_bigendian_prefix(stbtt_uint8* s1, stbtt_in
 i32 stbtt_CompareUTF8toUTF16_bigendian_internal(u8* s1, i32 len1, u8* s2, i32 len2) {
     return len1 == stbtt__CompareUTF8toUTF16_bigendian_prefix(cast(stbtt_uint8*, s1), len1, cast(stbtt_uint8*, s2), len2);
 }
+// returns results in whatever encoding you request... but note that 2-byte encodings
+// will be BIG-ENDIAN... use stbtt_CompareUTF8toUTF16_bigendian() to compare
 u8* stbtt_GetFontNameString(stbtt_fontinfo* font, i32* length, i32 platformID, i32 encodingID, i32 languageID, i32 nameID) {
     stbtt_int32 i;
     stbtt_int32 count;

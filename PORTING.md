@@ -117,7 +117,6 @@ DrawText("hi", 10, 10, 20, BLACK);
 - **File I/O** — use raylib's `LoadFileData` / `SaveFileData`. Raw
   stdio is partially shimmed but not recommended.
 - **`printf %lld`/`%hhd`** — supported via `lib/cvararg_shim.mc`.
-- **`memcpy`/`memset`/`malloc`** — provided by `lib/cstdlib_shim.mc`.
 
 ## See also
 

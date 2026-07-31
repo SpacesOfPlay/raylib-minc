@@ -4,14 +4,15 @@
 #   ./run_examples.sh                # native: build + run each example. Close the
 #                                    #   window (or press Enter) to advance.
 #   ./run_examples.sh native 10      # native: start from example #10.
-#   ./run_examples.sh wasm           # web: compile all examples, then serve ONE
-#                                    #   clickable menu (needs python3). Click an
-#                                    #   example, view it, use Back for the menu.
+#   ./run_examples.sh wasm           # web: compile all examples, then serve the
+#                                    #   live-demo gallery (needs python3). Click
+#                                    #   an example, view it, use Back to return.
 #   PORT=9000 ./run_examples.sh wasm
 #
 # Native uses build.sh per example (so GLFW etc. resolve exactly like a normal
-# build). Web compiles each example to build/web_all/<name>.wasm and writes a
-# menu.html that loads them through the harness's ?app=<name>.
+# build). Web compiles each example to build/web_all/<name>.wasm and serves the
+# live-demo/ pages beside them — the same gallery the pages workflow publishes,
+# so this is also how you check that site before pushing.
 set -u
 mode="${1:-native}"
 start="${2:-1}"
@@ -36,7 +37,7 @@ if [ "$mode" = "wasm" ]; then
     web="$root/build/web_all"
     rm -rf "$web"; mkdir -p "$web"
     cp "$root/lib/raylib_wasm_host.js" "$web/"
-    cp "$root/lib/raylib_wasm_harness.html" "$web/index.html"
+    cp "$root/live-demo/index.html" "$root/live-demo/run.html" "$web/"
 
     # Merge every example's resources/ into one dir + a combined manifest.
     # (Every app preloads all assets — harmless. Same-named files collide;
@@ -55,53 +56,43 @@ if [ "$mode" = "wasm" ]; then
     fi
     rm -f "$assets_tmp"
 
-    items="$web/.menu_items"; : > "$items"
-    i=0; ok=0; fails=""; last_cat=""
+    i=0; ok=0; fails=""
     for ex in "${exs[@]}"; do
         i=$((i + 1))
         name="$(basename "$ex" .mc)"
-        cat="$(basename "$(dirname "$ex")")"
         printf "[%d/%d] %-30s" "$i" "$n" "$name"
         if ( cd "$root" && "$minc" "$ex" --target wasm -o "$web/$name.wasm" ) >/dev/null 2>&1; then
             ok=$((ok + 1)); echo " ok"
-            [ "$cat" = "$last_cat" ] || { echo "  <h2>$cat</h2>" >> "$items"; last_cat="$cat"; }
-            echo "  <a href=\"index.html?app=$name\">$name</a>" >> "$items"
         else
             echo " FAIL"; fails="$fails $name"
         fi
     done
 
-    {
-        echo '<!doctype html><meta charset="utf-8"><title>raylib-minc examples</title>'
-        echo '<style>'
-        echo ' body{background:#222;color:#ddd;font-family:system-ui,sans-serif;padding:2em;max-width:60em;margin:auto}'
-        echo ' h1{font-size:1.3em} h2{color:#8ab;border-bottom:1px solid #444;margin-top:1.5em}'
-        echo ' a{display:inline-block;min-width:18em;color:#9cf;text-decoration:none;padding:.25em .5em}'
-        echo ' a:hover{background:#333}'
-        echo '</style>'
-        echo "<h1>raylib-minc &mdash; $ok/$n examples (web)</h1>"
-        echo '<p>Click an example; use the browser <b>Back</b> button to return here.</p>'
-        cat "$items"
-    } > "$web/menu.html"
-    rm -f "$items"
-
     echo
     echo "compiled $ok/$n examples -> $web"
     [ -z "$fails" ] || echo "FAILED to compile:$fails"
 
-    py="$(command -v python3 2>/dev/null || command -v python 2>/dev/null || true)"
-    [ -n "$py" ] || { echo "python not found — serve '$web' with any static server and open menu.html" >&2; exit 1; }
+    # Run each candidate, don't just look it up: on Windows/Git Bash `python3`
+    # is often the Microsoft Store stub, which resolves and then exits.
+    py=""
+    for c in python3 python; do
+        p="$(command -v "$c" 2>/dev/null)" || continue
+        "$p" -c '' >/dev/null 2>&1 && { py="$p"; break; }
+    done
+    [ -n "$py" ] || { echo "python not found — serve '$web' with any static server and open index.html" >&2; exit 1; }
     # Serve with Cache-Control: no-store so the browser never pins a stale
     # raylib_wasm_host.js / .wasm between runs (plain http.server caches).
+    # Threading: a keep-alive connection from one tab otherwise blocks every
+    # other request, so a second tab just hangs.
     cat > "$web/_serve.py" <<'PY'
 import http.server, sys
 class H(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
         self.send_header('Cache-Control', 'no-store')
         http.server.SimpleHTTPRequestHandler.end_headers(self)
-http.server.HTTPServer(('127.0.0.1', int(sys.argv[1])), H).serve_forever()
+http.server.ThreadingHTTPServer(('127.0.0.1', int(sys.argv[1])), H).serve_forever()
 PY
-    url="http://localhost:$port/menu.html"
+    url="http://localhost:$port/index.html"
     echo "serving at $url  (Ctrl+C to stop)"
     ( cd "$web" && "$py" _serve.py "$port" >/dev/null 2>&1 ) &
     srv=$!

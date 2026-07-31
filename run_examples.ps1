@@ -3,14 +3,15 @@
 #   .\run_examples.ps1                 # native: build + run each example. Close
 #                                      #   the window (or press Enter) for the next.
 #   .\run_examples.ps1 native -Start 10  # native: start from example #10.
-#   .\run_examples.ps1 wasm            # web: compile all examples, then serve ONE
-#                                      #   clickable menu (needs python). Click an
-#                                      #   example, view it, use Back for the menu.
+#   .\run_examples.ps1 wasm            # web: compile all examples, then serve the
+#                                      #   live-demo gallery (needs python). Click
+#                                      #   an example, view it, use Back to return.
 #   .\run_examples.ps1 wasm -Port 9000
 #
 # Native uses build.ps1 per example (so it picks up GLFW etc. exactly like a
 # normal build). Web compiles each example to build/web_all/<name>.wasm and
-# writes a menu.html that loads them via the harness's ?app=<name>.
+# serves the live-demo/ pages beside them — the same gallery the pages workflow
+# publishes, so this is also how you check that site before pushing.
 param(
     [Parameter(Position=0)][ValidateSet('native','wasm')][string]$Mode = 'native',
     [int]$Start = 1,
@@ -37,7 +38,8 @@ if ($Mode -eq 'wasm') {
     if (Test-Path $web) { Remove-Item -Recurse -Force $web }
     New-Item -ItemType Directory -Path $web | Out-Null
     Copy-Item (Join-Path $root 'lib\raylib_wasm_host.js') $web
-    Copy-Item (Join-Path $root 'lib\raylib_wasm_harness.html') (Join-Path $web 'index.html')
+    Copy-Item (Join-Path $root 'live-demo\index.html') $web
+    Copy-Item (Join-Path $root 'live-demo\run.html') $web
 
     # Merge every example's resources/ into one dir + a combined manifest.
     # (Every app preloads all assets — harmless, a few KB extra. Same-named
@@ -60,35 +62,16 @@ if ($Mode -eq 'wasm') {
             -Value ('[' + (($assets | ForEach-Object { '"' + $_ + '"' }) -join ',') + ']') -NoNewline
     }
 
-    $items = New-Object System.Text.StringBuilder
-    $i = 0; $ok = 0; $fails = @(); $lastCat = ''
+    $i = 0; $ok = 0; $fails = @()
     foreach ($ex in $exs) {
         $i++; $name = $ex.BaseName
-        $cat = Split-Path -Leaf $ex.DirectoryName
         Write-Host ("[{0}/{1}] {2,-30}" -f $i, $n, $name) -NoNewline
         Push-Location $root
         try { & $minc $ex.FullName --target wasm -o (Join-Path $web "$name.wasm") *> $null; $rc = $LASTEXITCODE }
         finally { Pop-Location }
-        if ($rc -eq 0) {
-            $ok++; Write-Host " ok"
-            if ($cat -ne $lastCat) { [void]$items.AppendLine("  <h2>$cat</h2>"); $lastCat = $cat }
-            [void]$items.AppendLine("  <a href=""index.html?app=$name"">$name</a>")
-        } else { $fails += $name; Write-Host " FAIL" }
+        if ($rc -eq 0) { $ok++; Write-Host " ok" }
+        else { $fails += $name; Write-Host " FAIL" }
     }
-
-    $html = @"
-<!doctype html><meta charset="utf-8"><title>raylib-minc examples</title>
-<style>
- body{background:#222;color:#ddd;font-family:system-ui,sans-serif;padding:2em;max-width:60em;margin:auto}
- h1{font-size:1.3em} h2{color:#8ab;border-bottom:1px solid #444;margin-top:1.5em}
- a{display:inline-block;min-width:18em;color:#9cf;text-decoration:none;padding:.25em .5em}
- a:hover{background:#333}
-</style>
-<h1>raylib-minc &mdash; $ok/$n examples (web)</h1>
-<p>Click an example; use the browser <b>Back</b> button to return here.</p>
-$($items.ToString())
-"@
-    Set-Content -Path (Join-Path $web 'menu.html') -Value $html
 
     Write-Host ""
     Write-Host "compiled $ok/$n examples -> $web"
@@ -96,19 +79,21 @@ $($items.ToString())
 
     $py = Get-Command python -ErrorAction SilentlyContinue
     if (-not $py) { $py = Get-Command python3 -ErrorAction SilentlyContinue }
-    if (-not $py) { Write-Error "python not found — serve '$web' with any static server and open menu.html"; exit 1 }
+    if (-not $py) { Write-Error "python not found — serve '$web' with any static server and open index.html"; exit 1 }
     # Serve with Cache-Control: no-store so the browser never pins a stale
     # raylib_wasm_host.js / .wasm between runs (plain http.server caches).
+    # Threading: a keep-alive connection from one tab otherwise blocks every
+    # other request, so a second tab just hangs.
     $serve = @"
 import http.server, sys
 class H(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
         self.send_header('Cache-Control', 'no-store')
         http.server.SimpleHTTPRequestHandler.end_headers(self)
-http.server.HTTPServer(('127.0.0.1', int(sys.argv[1])), H).serve_forever()
+http.server.ThreadingHTTPServer(('127.0.0.1', int(sys.argv[1])), H).serve_forever()
 "@
     Set-Content -Path (Join-Path $web '_serve.py') -Value $serve
-    $url = "http://localhost:$Port/menu.html"
+    $url = "http://localhost:$Port/index.html"
     Write-Host "serving at $url  (Ctrl+C to stop)"
     Start-Process $url
     Push-Location $web

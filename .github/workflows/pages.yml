@@ -1,0 +1,93 @@
+# Publishes live-demo/ to GitHub Pages. The wasm is built here, not
+# committed — set Settings > Pages > Source to "GitHub Actions".
+name: pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Downloaded, not piped to bash: a piped script shares stdin with
+      # its own source.
+      - name: install minc
+        run: |
+          curl -fsSL https://minc.dev/install -o "$RUNNER_TEMP/install.sh"
+          bash "$RUNNER_TEMP/install.sh" < /dev/null
+          echo "$HOME/.minc" >> "$GITHUB_PATH"
+
+      - run: minc --version
+
+      # cwd is the repo root so `import raylib;` resolves against ./lib.
+      # No GLFW and no threads: the wasm arm is WebGL2 + the hand-written
+      # rcore backend, single-threaded, so the page needs no cross-origin
+      # isolation. A failed example fails the job — the gallery links are
+      # a fixed list, and a missing .wasm is a dead link.
+      - name: build live-demo
+        run: |
+          cp lib/raylib_wasm_host.js live-demo/
+          find examples -name '*.mc' -type f | LC_ALL=C sort | while read -r f; do
+            name="$(basename "$f" .mc)"
+            echo "--- $name"
+            minc "$f" --target wasm -o "live-demo/$name.wasm"
+          done
+
+      # Merge every category's resources/ into one dir + one manifest the
+      # runner preloads into the host VFS. Same-named files would collide;
+      # none do today.
+      - name: stage assets
+        run: |
+          for d in examples/*/resources; do
+            [ -d "$d" ] || continue
+            mkdir -p live-demo/resources
+            cp -R "$d/." live-demo/resources/
+          done
+          if [ -d live-demo/resources ]; then
+            ( cd live-demo && find resources -type f | LC_ALL=C sort ) | \
+              awk 'BEGIN{printf"["}{printf"%s\"%s\"",(NR>1?",":""),$0}END{printf"]"}' \
+              > live-demo/assets.json
+            cat live-demo/assets.json
+          fi
+
+      # index.html's list is hand-written (it carries the per-example
+      # descriptions and caveats). Fail the job rather than publish a dead
+      # link, or an example the gallery never links to.
+      - name: check the gallery lists exactly what was built
+        run: |
+          grep -o "id: '[^']*'" live-demo/index.html | sed "s/id: '\(.*\)'/\1/" \
+            | LC_ALL=C sort > /tmp/listed
+          for w in live-demo/*.wasm; do basename "$w" .wasm; done \
+            | LC_ALL=C sort > /tmp/built
+          diff /tmp/listed /tmp/built \
+            || { echo "live-demo/index.html is out of step with examples/ (< listed, > built)"; exit 1; }
+
+      - run: ls -l live-demo
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: live-demo
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

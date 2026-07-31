@@ -7,3 +7,9 @@ glfw3.dll
 libglfw.3.dylib
 glfw-*.zip
 glfw-*/
+
+# Staged into live-demo/ by the pages workflow, not committed.
+live-demo/*.wasm
+live-demo/raylib_wasm_host.js
+live-demo/assets.json
+live-demo/resources/

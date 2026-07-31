@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>raylib-minc — web examples</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #161926; --panel: #1d2131; --line: #2b3145;
+  --fg: #c8cee0; --dim: #9aa0b8; --faint: #6d7490; --link: #7fb3ff;
+  --mono: 'Cascadia Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+}
+body {
+  background: var(--bg); color: var(--dim); font-family: var(--mono);
+  font-size: 13px; line-height: 1.65; padding: 2.5em 1.5em 4em;
+}
+main { max-width: 62em; margin: 0 auto; }
+h1 { color: var(--fg); font-size: 20px; font-weight: 600; letter-spacing: -.01em; }
+.lede { margin-top: .6em; max-width: 62em; }
+.lede a, footer a { color: var(--link); text-decoration: none; }
+.lede a:hover, footer a:hover { text-decoration: underline; }
+h2 {
+  color: var(--fg); font-size: 13px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .12em; margin: 2.5em 0 .2em; padding-bottom: .5em;
+  border-bottom: 1px solid var(--line);
+}
+.cat-note { color: var(--faint); margin-bottom: 1em; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(19em, 1fr)); gap: .6em; }
+a.card {
+  display: block; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 5px; padding: .7em .9em; text-decoration: none; color: inherit;
+}
+a.card:hover { border-color: #45507a; background: #222739; }
+a.card .name { color: var(--link); display: block; }
+a.card .desc { color: var(--dim); font-size: 12px; }
+a.card .note {
+  display: block; color: var(--faint); font-size: 11px; margin-top: .35em;
+  padding-left: .9em; text-indent: -.9em;
+}
+a.card .note::before { content: '! '; color: #d8a657; }
+footer { margin-top: 3.5em; padding-top: 1.2em; border-top: 1px solid var(--line);
+         color: var(--faint); font-size: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>raylib-minc — web examples</h1>
+  <p class="lede">
+    <a href="https://github.com/raysan5/raylib">raylib</a> transpiled to the
+    <a href="https://minc.dev">minc</a> language, compiled
+    to WebAssembly. No emscripten, no C toolchain. The same example
+    source builds for Windows, Linux, macOS and the web. Rendering is WebGL2
+    through raylib's own rlgl; the platform layer is a hand-written wasm
+    backend driving <code>requestAnimationFrame</code>.
+  </p>
+  <p class="lede">
+    Click an example to run it; the browser Back button returns here.
+    Sources are in
+    <a href="https://github.com/SpacesOfPlay/raylib-minc/tree/main/examples">examples/</a>.
+  </p>
+  <div id="cats"></div>
+  <footer>
+    Built from <a href="https://github.com/SpacesOfPlay/raylib-minc">SpacesOfPlay/raylib-minc</a>
+    by its <code>pages</code> workflow — one <code>minc &lt;example&gt; --target wasm</code>
+    per entry above.
+  </footer>
+</main>
+<script>
+// One entry per examples/<cat>/<name>.mc. `note` records where the browser
+// behaves differently from the desktop build.
+const CATS = [
+  { name: 'core', blurb: 'Windowing, input, cameras, timing.', items: [
+    { id: 'core_basic_window', desc: 'A window and a line of text — the minimal program.' },
+    { id: 'core_input_keys', desc: 'Move a ball with the arrow keys.' },
+    { id: 'core_input_mouse', desc: 'Follow the cursor; buttons recolour the circle.' },
+    { id: 'core_input_mouse_wheel', desc: 'Scroll the wheel to move a box.' },
+    { id: 'core_input_gestures', desc: 'Recognise taps, drags and swipes.',
+      note: 'Pinch and multi-finger gestures need a touchscreen.' },
+    { id: 'core_2d_camera', desc: 'Side-scrolling camera over a random skyline.' },
+    { id: 'core_2d_camera_mouse_zoom', desc: 'Drag to pan, wheel to zoom at the cursor.' },
+    { id: 'core_3d_camera_free', desc: 'Orbit a cube with the mouse.' },
+    { id: 'core_3d_camera_first_person', desc: 'WASD and mouse-look through a small scene.',
+      note: 'Click the canvas first — mouse-look needs pointer lock.' },
+    { id: 'core_world_screen', desc: 'Project a 3D position into 2D screen space.' },
+    { id: 'core_random_values', desc: 'GetRandomValue(), reseeded on a timer.' },
+    { id: 'core_random_sequence', desc: 'A shuffled sequence with no repeats.' },
+    { id: 'core_scissor_test', desc: 'Clip drawing to a moving rectangle.' },
+    { id: 'core_smooth_pixelperfect', desc: 'Pixel-art render texture with a smooth camera.' },
+    { id: 'core_basic_screen_manager', desc: 'Logo, title, gameplay and ending screen states.' },
+    { id: 'core_window_should_close', desc: 'Confirm-before-exit dialog.',
+      note: 'Press ESC — a canvas has no close button, and the page stays open.' },
+    { id: 'core_storage_values', desc: 'Save and load values through a storage file.',
+      note: 'The browser has no filesystem; saved values do not survive a reload.' },
+    { id: 'core_window_flags', desc: 'Toggle window flags at runtime.',
+      note: 'Most flags move an OS window the canvas does not have.' },
+  ]},
+  { name: 'shapes', blurb: '2D primitives, collision, easing.', items: [
+    { id: 'shapes_basic_shapes', desc: 'Every 2D primitive raylib draws.' },
+    { id: 'shapes_bouncing_ball', desc: 'A ball bouncing off the edges. Space pauses.' },
+    { id: 'shapes_colors_palette', desc: 'raylib’s named colours, hover for hex.' },
+    { id: 'shapes_following_eyes', desc: 'Two eyes tracking the cursor.' },
+    { id: 'shapes_collision_area', desc: 'Rectangle overlap, drawn and measured.' },
+    { id: 'shapes_lines_bezier', desc: 'A bezier curve between two dragged points.' },
+    { id: 'shapes_rectangle_scaling', desc: 'Drag the corner to resize a rectangle.' },
+    { id: 'shapes_logo_raylib', desc: 'The raylib logo, drawn from rectangles.' },
+    { id: 'shapes_logo_raylib_anim', desc: 'The same logo, assembled by animation.' },
+  ]},
+  { name: 'textures', blurb: 'Image loading and drawing. PNG decodes in the wasm build.', items: [
+    { id: 'textures_logo_raylib', desc: 'Load a texture and draw it centred.' },
+    { id: 'textures_image_loading', desc: 'Decode a PNG from the asset VFS into a texture.' },
+  ]},
+  { name: 'text', blurb: 'Font loading, layout and formatting.', items: [
+    { id: 'text_format_text', desc: 'TextFormat() against a live counter.' },
+    { id: 'text_writing_anim', desc: 'Type-on animation over a paragraph.' },
+    { id: 'text_font_loading', desc: 'Default, BMFont and TTF side by side.' },
+    { id: 'text_rectangle_bounds', desc: 'Word-wrapped text inside a resizable box.' },
+    { id: 'text_input_box', desc: 'A click-to-focus text field.' },
+  ]},
+  { name: 'models', blurb: '3D primitives and rlgl. Mesh loaders are not ported yet.', items: [
+    { id: 'models_geometric_shapes', desc: 'Cubes, spheres, cylinders and planes.' },
+    { id: 'models_box_collisions', desc: 'A box tested against box, sphere and ray.' },
+    { id: 'models_waving_cubes', desc: 'A cube field driven by a sine wave.' },
+    { id: 'models_rlgl_solar_system', desc: 'Nested transforms through the rlgl matrix stack.' },
+  ]},
+  { name: 'raygui', blurb: 'raygui, transpiled alongside raylib and drawn with it.', items: [
+    { id: 'controls_demo', desc: 'The standard control set on one panel.' },
+    { id: 'controls_test_suite', desc: 'Every raygui control, exercised.' },
+    { id: 'floating_window', desc: 'A draggable in-canvas window.' },
+    { id: 'scroll_panel', desc: 'GuiScrollPanel() over oversized content.' },
+    { id: 'portable_window', desc: 'A window with its own title bar and drag.',
+      note: 'The drag calls SetWindowPosition, a no-op on a fixed canvas.' },
+  ]},
+];
+
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+document.getElementById('cats').innerHTML = CATS.map(c => `
+  <h2>${esc(c.name)}</h2>
+  <p class="cat-note">${esc(c.blurb)}</p>
+  <div class="grid">${c.items.map(it => `
+    <a class="card" href="run.html?app=${encodeURIComponent(it.id)}">
+      <span class="name">${esc(it.id)}</span>
+      <span class="desc">${esc(it.desc)}</span>
+      ${it.note ? `<span class="note">${esc(it.note)}</span>` : ''}
+    </a>`).join('')}</div>`).join('');
+</script>
+</body>
+</html>
