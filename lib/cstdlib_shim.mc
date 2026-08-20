@@ -61,7 +61,7 @@ when os(windows) {
     }
     // MSVC FP-usage sentinel.
     i32 _fltused = 0x9875;
-    // POSIX errno — a process-wide slot (not thread-local).
+    // POSIX errno; a process-wide slot (not thread-local).
     i32 errno = 0;
     // Win32 high-resolution timer. void* params so LARGE_INTEGER need
     // not be in scope; callers pass a pointer to their own.
@@ -112,7 +112,7 @@ when os(linux) {
         i32 fclose(void* file);
         @must_use u8* fgets(u8* buf, i32 n, void* stream);
     }
-    // glibc keeps the math functions in libm.so.6, not libc.so.6 — binding
+    // glibc keeps the math functions in libm.so.6, not libc.so.6; binding
     // them here is what pulls libm into DT_NEEDED so they resolve at runtime.
     extern "libm.so.6" {
         // fabs, sqrt, fabsf, sqrtf: provided by the runtime.

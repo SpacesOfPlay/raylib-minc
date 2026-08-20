@@ -16,15 +16,6 @@ const i32 SEEK_END = 2;
 const f32 FLT_EPSILON = 0.00000011920929f;
 
 // transminc: C #define values surfaced as compile-time configuration
-@define "__GNUC__" 4
-@define "RAYLIB_VERSION_MAJOR" 6
-@define "RAYLIB_VERSION_MINOR" 1
-@define "RAYLIB_VERSION_PATCH" 0
-@define "SUPPORT_MODULE_RSHAPES" 1
-@define "SUPPORT_MODULE_RTEXTURES" 1
-@define "SUPPORT_MODULE_RTEXT" 1
-@define "SUPPORT_MODULE_RMODELS" 1
-@define "SUPPORT_MODULE_RAUDIO" 0
 @define "SUPPORT_TRACELOG" 0
 @define "SUPPORT_CAMERA_SYSTEM" 1
 @define "SUPPORT_GESTURES_SYSTEM" 1
@@ -32,204 +23,19 @@ const f32 FLT_EPSILON = 0.00000011920929f;
 @define "SUPPORT_MOUSE_GESTURES" 1
 @define "SUPPORT_SSH_KEYBOARD_RPI" 1
 @define "SUPPORT_WINMM_HIGHRES_TIMER" 1
-@define "SUPPORT_BUSY_WAIT_LOOP" 0
-@define "SUPPORT_PARTIALBUSY_WAIT_LOOP" 1
 @define "SUPPORT_COMPRESSION_API" 1
 @define "SUPPORT_AUTOMATION_EVENTS" 1
 @define "SUPPORT_CUSTOM_FRAME_CONTROL" 0
 @define "RLGL_ENABLE_OPENGL_DEBUG_CONTEXT" 0
 @define "RLGL_SHOW_GL_DETAILS_INFO" 0
 @define "SUPPORT_QUADS_DRAW_MODE" 1
-@define "SUPPORT_FILEFORMAT_PNG" 1
 @define "SUPPORT_FILEFORMAT_BMP" 0
-@define "SUPPORT_FILEFORMAT_TGA" 0
-@define "SUPPORT_FILEFORMAT_JPG" 0
-@define "SUPPORT_FILEFORMAT_GIF" 0
-@define "SUPPORT_FILEFORMAT_QOI" 0
-@define "SUPPORT_FILEFORMAT_PSD" 0
-@define "SUPPORT_FILEFORMAT_DDS" 0
-@define "SUPPORT_FILEFORMAT_HDR" 0
-@define "SUPPORT_FILEFORMAT_PIC" 0
-@define "SUPPORT_FILEFORMAT_PNM" 0
-@define "SUPPORT_FILEFORMAT_KTX" 0
-@define "SUPPORT_FILEFORMAT_ASTC" 0
-@define "SUPPORT_FILEFORMAT_PKM" 0
-@define "SUPPORT_FILEFORMAT_PVR" 0
 @define "SUPPORT_IMAGE_EXPORT" 0
 @define "SUPPORT_IMAGE_GENERATION" 0
-@define "SUPPORT_FILEFORMAT_TTF" 1
-@define "SUPPORT_FILEFORMAT_FNT" 1
-@define "SUPPORT_FILEFORMAT_BDF" 0
-@define "SUPPORT_FILEFORMAT_OBJ" 0
-@define "SUPPORT_FILEFORMAT_MTL" 0
-@define "SUPPORT_FILEFORMAT_IQM" 0
-@define "SUPPORT_FILEFORMAT_GLTF" 0
-@define "SUPPORT_FILEFORMAT_VOX" 0
-@define "SUPPORT_FILEFORMAT_M3D" 0
 @define "SUPPORT_MESH_GENERATION" 0
 @define "SUPPORT_GPU_SKINNING" 0
-@define "SUPPORT_FILEFORMAT_WAV" 1
-@define "SUPPORT_FILEFORMAT_OGG" 1
-@define "SUPPORT_FILEFORMAT_MP3" 1
-@define "SUPPORT_FILEFORMAT_QOA" 1
-@define "SUPPORT_FILEFORMAT_FLAC" 0
-@define "SUPPORT_FILEFORMAT_XM" 1
-@define "SUPPORT_FILEFORMAT_MOD" 1
 @define "RL_DEFAULT_BATCH_BUFFER_ELEMENTS" 2048
-@define "RL_DEFAULT_BATCH_BUFFERS" 1
-@define "RL_DEFAULT_BATCH_DRAWCALLS" 256
-@define "RL_DEFAULT_BATCH_MAX_TEXTURE_UNITS" 4
-@define "RL_MAX_MATRIX_STACK_SIZE" 32
-@define "RL_MAX_SHADER_LOCATIONS" 32
-@define "RL_TEXTURE_WRAP_S" 10242
-@define "RL_TEXTURE_WRAP_T" 10243
-@define "RL_TEXTURE_MAG_FILTER" 10240
-@define "RL_TEXTURE_MIN_FILTER" 10241
-@define "RL_TEXTURE_FILTER_NEAREST" 9728
-@define "RL_TEXTURE_FILTER_LINEAR" 9729
-@define "RL_TEXTURE_FILTER_MIP_NEAREST" 9984
-@define "RL_TEXTURE_FILTER_NEAREST_MIP_LINEAR" 9986
-@define "RL_TEXTURE_FILTER_LINEAR_MIP_NEAREST" 9985
-@define "RL_TEXTURE_FILTER_MIP_LINEAR" 9987
-@define "RL_TEXTURE_FILTER_ANISOTROPIC" 12288
-@define "RL_TEXTURE_MIPMAP_BIAS_RATIO" 16384
-@define "RL_TEXTURE_WRAP_REPEAT" 10497
-@define "RL_TEXTURE_WRAP_CLAMP" 33071
-@define "RL_TEXTURE_WRAP_MIRROR_REPEAT" 33648
-@define "RL_TEXTURE_WRAP_MIRROR_CLAMP" 34626
-@define "RL_MODELVIEW" 5888
-@define "RL_PROJECTION" 5889
-@define "RL_TEXTURE" 5890
-@define "RL_LINES" 1
-@define "RL_TRIANGLES" 4
-@define "RL_QUADS" 7
-@define "RL_UNSIGNED_BYTE" 5121
-@define "RL_FLOAT" 5126
-@define "RL_STREAM_DRAW" 35040
-@define "RL_STREAM_READ" 35041
-@define "RL_STREAM_COPY" 35042
-@define "RL_STATIC_DRAW" 35044
-@define "RL_STATIC_READ" 35045
-@define "RL_STATIC_COPY" 35046
-@define "RL_DYNAMIC_DRAW" 35048
-@define "RL_DYNAMIC_READ" 35049
-@define "RL_DYNAMIC_COPY" 35050
-@define "RL_FRAGMENT_SHADER" 35632
-@define "RL_VERTEX_SHADER" 35633
-@define "RL_COMPUTE_SHADER" 37305
-@define "RL_ZERO" 0
-@define "RL_ONE" 1
-@define "RL_SRC_COLOR" 768
-@define "RL_ONE_MINUS_SRC_COLOR" 769
-@define "RL_SRC_ALPHA" 770
-@define "RL_ONE_MINUS_SRC_ALPHA" 771
-@define "RL_DST_ALPHA" 772
-@define "RL_ONE_MINUS_DST_ALPHA" 773
-@define "RL_DST_COLOR" 774
-@define "RL_ONE_MINUS_DST_COLOR" 775
-@define "RL_SRC_ALPHA_SATURATE" 776
-@define "RL_CONSTANT_COLOR" 32769
-@define "RL_ONE_MINUS_CONSTANT_COLOR" 32770
-@define "RL_CONSTANT_ALPHA" 32771
-@define "RL_ONE_MINUS_CONSTANT_ALPHA" 32772
-@define "RL_FUNC_ADD" 32774
-@define "RL_MIN" 32775
-@define "RL_MAX" 32776
-@define "RL_FUNC_SUBTRACT" 32778
-@define "RL_FUNC_REVERSE_SUBTRACT" 32779
-@define "RL_BLEND_EQUATION" 32777
-@define "RL_BLEND_EQUATION_RGB" 32777
-@define "RL_BLEND_EQUATION_ALPHA" 34877
-@define "RL_BLEND_DST_RGB" 32968
-@define "RL_BLEND_SRC_RGB" 32969
-@define "RL_BLEND_DST_ALPHA" 32970
-@define "RL_BLEND_SRC_ALPHA" 32971
-@define "RL_BLEND_COLOR" 32773
-@define "RL_READ_FRAMEBUFFER" 36008
-@define "RL_DRAW_FRAMEBUFFER" 36009
-@define "RL_DEFAULT_SHADER_ATTRIB_LOCATION_POSITION" 0
-@define "RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD" 1
-@define "RL_DEFAULT_SHADER_ATTRIB_LOCATION_NORMAL" 2
-@define "RL_DEFAULT_SHADER_ATTRIB_LOCATION_COLOR" 3
-@define "RL_DEFAULT_SHADER_ATTRIB_LOCATION_TANGENT" 4
-@define "RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD2" 5
-@define "RL_DEFAULT_SHADER_ATTRIB_LOCATION_INDICES" 6
-@define "RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEINDICES" 7
-@define "RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEWEIGHTS" 8
-@define "RL_DEFAULT_SHADER_ATTRIB_LOCATION_INSTANCETRANSFORM" 9
-@define "GL_SHADING_LANGUAGE_VERSION" 35724
-@define "GL_COMPRESSED_RGB_S3TC_DXT1_EXT" 33776
-@define "GL_COMPRESSED_RGBA_S3TC_DXT1_EXT" 33777
-@define "GL_COMPRESSED_RGBA_S3TC_DXT3_EXT" 33778
-@define "GL_COMPRESSED_RGBA_S3TC_DXT5_EXT" 33779
-@define "GL_ETC1_RGB8_OES" 36196
-@define "GL_COMPRESSED_RGB8_ETC2" 37492
-@define "GL_COMPRESSED_RGBA8_ETC2_EAC" 37496
-@define "GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG" 35840
-@define "GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG" 35842
-@define "GL_COMPRESSED_RGBA_ASTC_4x4_KHR" 37808
-@define "GL_COMPRESSED_RGBA_ASTC_8x8_KHR" 37815
-@define "GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT" 34047
-@define "GL_TEXTURE_MAX_ANISOTROPY_EXT" 34046
-@define "GL_PROGRAM_POINT_SIZE" 34370
-@define "GL_LINE_WIDTH" 2849
-@define "MAX_TOUCH_POINTS" 8
-@define "SINFL_PRE_TBL_SIZE" 128
-@define "SINFL_LIT_TBL_SIZE" 1334
-@define "SINFL_OFF_TBL_SIZE" 402
-@define "SDEFL_HASH_BITS" 15
-@define "SDEFL_MIN_MATCH" 4
-@define "SDEFL_LVL_MIN" 0
-@define "SDEFL_LVL_DEF" 5
-@define "SDEFL_LVL_MAX" 8
-@define "SDEFL_MAX_MATCH" 258
-@define "_CRT_INTERNAL_NONSTDC_NAMES" 1
-@define "MAX_TRACELOG_MSG_LENGTH" 256
-@define "MAX_FILEPATH_CAPACITY" 8192
-@define "MAX_FILEPATH_LENGTH" 4096
-@define "MAX_KEYBOARD_KEYS" 512
-@define "MAX_MOUSE_BUTTONS" 8
-@define "MAX_GAMEPADS" 4
-@define "MAX_GAMEPAD_NAME_LENGTH" 128
-@define "MAX_GAMEPAD_AXES" 8
-@define "MAX_GAMEPAD_BUTTONS" 32
-@define "MAX_KEY_PRESSED_QUEUE" 16
-@define "MAX_CHAR_PRESSED_QUEUE" 16
-@define "MAX_DECOMPRESSION_SIZE" 64
-@define "MAX_AUTOMATION_EVENTS" 16384
-@define "FPS_CAPTURE_FRAMES_COUNT" 30
-@define "TEXT_BYTES_PER_LINE" 20
-@define "MAX_FILE_EXTENSIONS" 32
-@define "MAX_FILENAME_LENGTH" 256
-@define "COMPRESSION_QUALITY_DEFLATE" 8
-@define "SPLINE_SEGMENT_DIVISIONS" 24
-@define "STBI_VERSION" 1
-@define "STBI__ZFAST_BITS" 9
-@define "STBI__ZNSYMS" 288
-@define "PIXELFORMAT_UNCOMPRESSED_R5G5B5A1_ALPHA_THRESHOLD" 50
-@define "GAUSSIAN_BLUR_ITERATIONS" 4
-@define "STBTT_MACSTYLE_DONTCARE" 0
-@define "STBTT_MACSTYLE_BOLD" 1
-@define "STBTT_MACSTYLE_ITALIC" 2
-@define "STBTT_MACSTYLE_UNDERSCORE" 4
-@define "STBTT_MACSTYLE_NONE" 8
-@define "STBTT_MAX_OVERSAMPLE" 8
-@define "STBTT_RASTERIZER_VERSION" 2
-@define "MAX_TEXT_BUFFER_LENGTH" 1024
-@define "MAX_TEXTSPLIT_COUNT" 128
 @define "FONT_ATLAS_CORNER_REC_SIZE" 3
-@define "FONT_TTF_DEFAULT_SIZE" 32
-@define "FONT_TTF_DEFAULT_NUMCHARS" 95
-@define "FONT_TTF_DEFAULT_FIRST_CHAR" 32
-@define "FONT_TTF_DEFAULT_CHARS_PADDING" 4
-@define "MAX_GLYPHS_FROM_IMAGE" 256
-@define "FONT_SDF_CHAR_PADDING" 4
-@define "FONT_SDF_ON_EDGE_VALUE" 128
-@define "FONT_BITMAP_ALPHA_THRESHOLD" 80
-@define "MAX_TEXTFORMAT_BUFFERS" 4
-@define "MAX_BUFFER_SIZE" 256
-@define "MAX_FONT_IMAGE_PAGES" 8
-@define "MAX_MATERIAL_MAPS" 12
 @define "MAX_MESH_VERTEX_BUFFERS" 7
 
 struct DIR;
@@ -821,7 +627,6 @@ enum rlCullMode {
     RL_CULL_FACE_BACK = 1,
 }
 
-// Vector2, Vector3, Quaternion and Matrix functionality
 /**********************************************************************************************
 *
 *   rgestures - Gestures system, gestures processing based on input events (touch/mouse)
@@ -948,231 +753,6 @@ enum __enum_STBI__F_none {
     STBI__F_avg_first = 5,
 }
 
-/*
-   revision history:
-      2.20  (2019-02-07) support utf8 filenames in Windows; fix warnings and platform ifdefs
-      2.19  (2018-02-11) fix warning
-      2.18  (2018-01-30) fix warnings
-      2.17  (2018-01-29) change sbti__shiftsigned to avoid clang -O2 bug
-                         1-bit BMP
-                         *_is_16_bit api
-                         avoid warnings
-      2.16  (2017-07-23) all functions have 16-bit variants;
-                         STBI_NO_STDIO works again;
-                         compilation fixes;
-                         fix rounding in unpremultiply;
-                         optimize vertical flip;
-                         disable raw_len validation;
-                         documentation fixes
-      2.15  (2017-03-18) fix png-1,2,4 bug; now all Imagenet JPGs decode;
-                         warning fixes; disable run-time SSE detection on gcc;
-                         uniform handling of optional "return" values;
-                         thread-safe initialization of zlib tables
-      2.14  (2017-03-03) remove deprecated STBI_JPEG_OLD; fixes for Imagenet JPGs
-      2.13  (2016-11-29) add 16-bit API, only supported for PNG right now
-      2.12  (2016-04-02) fix typo in 2.11 PSD fix that caused crashes
-      2.11  (2016-04-02) allocate large structures on the stack
-                         remove white matting for transparent PSD
-                         fix reported channel count for PNG & BMP
-                         re-enable SSE2 in non-gcc 64-bit
-                         support RGB-formatted JPEG
-                         read 16-bit PNGs (only as 8-bit)
-      2.10  (2016-01-22) avoid warning introduced in 2.09 by STBI_REALLOC_SIZED
-      2.09  (2016-01-16) allow comments in PNM files
-                         16-bit-per-pixel TGA (not bit-per-component)
-                         info() for TGA could break due to .hdr handling
-                         info() for BMP to shares code instead of sloppy parse
-                         can use STBI_REALLOC_SIZED if allocator doesn't support realloc
-                         code cleanup
-      2.08  (2015-09-13) fix to 2.07 cleanup, reading RGB PSD as RGBA
-      2.07  (2015-09-13) fix compiler warnings
-                         partial animated GIF support
-                         limited 16-bpc PSD support
-                         #ifdef unused functions
-                         bug with < 92 byte PIC,PNM,HDR,TGA
-      2.06  (2015-04-19) fix bug where PSD returns wrong '*comp' value
-      2.05  (2015-04-19) fix bug in progressive JPEG handling, fix warning
-      2.04  (2015-04-15) try to re-enable SIMD on MinGW 64-bit
-      2.03  (2015-04-12) extra corruption checking (mmozeiko)
-                         stbi_set_flip_vertically_on_load (nguillemot)
-                         fix NEON support; fix mingw support
-      2.02  (2015-01-19) fix incorrect assert, fix warning
-      2.01  (2015-01-17) fix various warnings; suppress SIMD on gcc 32-bit without -msse2
-      2.00b (2014-12-25) fix STBI_MALLOC in progressive JPEG
-      2.00  (2014-12-25) optimize JPG, including x86 SSE2 & NEON SIMD (ryg)
-                         progressive JPEG (stb)
-                         PGM/PPM support (Ken Miller)
-                         STBI_MALLOC,STBI_REALLOC,STBI_FREE
-                         GIF bugfix -- seemingly never worked
-                         STBI_NO_*, STBI_ONLY_*
-      1.48  (2014-12-14) fix incorrectly-named assert()
-      1.47  (2014-12-14) 1/2/4-bit PNG support, both direct and paletted (Omar Cornut & stb)
-                         optimize PNG (ryg)
-                         fix bug in interlaced PNG with user-specified channel count (stb)
-      1.46  (2014-08-26)
-              fix broken tRNS chunk (colorkey-style transparency) in non-paletted PNG
-      1.45  (2014-08-16)
-              fix MSVC-ARM internal compiler error by wrapping malloc
-      1.44  (2014-08-07)
-              various warning fixes from Ronny Chevalier
-      1.43  (2014-07-15)
-              fix MSVC-only compiler problem in code changed in 1.42
-      1.42  (2014-07-09)
-              don't define _CRT_SECURE_NO_WARNINGS (affects user code)
-              fixes to stbi__cleanup_jpeg path
-              added STBI_ASSERT to avoid requiring assert.h
-      1.41  (2014-06-25)
-              fix search&replace from 1.36 that messed up comments/error messages
-      1.40  (2014-06-22)
-              fix gcc struct-initialization warning
-      1.39  (2014-06-15)
-              fix to TGA optimization when req_comp != number of components in TGA;
-              fix to GIF loading because BMP wasn't rewinding (whoops, no GIFs in my test suite)
-              add support for BMP version 5 (more ignored fields)
-      1.38  (2014-06-06)
-              suppress MSVC warnings on integer casts truncating values
-              fix accidental rename of 'skip' field of I/O
-      1.37  (2014-06-04)
-              remove duplicate typedef
-      1.36  (2014-06-03)
-              convert to header file single-file library
-              if de-iphone isn't set, load iphone images color-swapped instead of returning NULL
-      1.35  (2014-05-27)
-              various warnings
-              fix broken STBI_SIMD path
-              fix bug where stbi_load_from_file no longer left file pointer in correct place
-              fix broken non-easy path for 32-bit BMP (possibly never used)
-              TGA optimization by Arseny Kapoulkine
-      1.34  (unknown)
-              use STBI_NOTUSED in stbi__resample_row_generic(), fix one more leak in tga failure case
-      1.33  (2011-07-14)
-              make stbi_is_hdr work in STBI_NO_HDR (as specified), minor compiler-friendly improvements
-      1.32  (2011-07-13)
-              support for "info" function for all supported filetypes (SpartanJ)
-      1.31  (2011-06-20)
-              a few more leak fixes, bug in PNG handling (SpartanJ)
-      1.30  (2011-06-11)
-              added ability to load files via callbacks to accomidate custom input streams (Ben Wenger)
-              removed deprecated format-specific test/load functions
-              removed support for installable file formats (stbi_loader) -- would have been broken for IO callbacks anyway
-              error cases in bmp and tga give messages and don't leak (Raymond Barbiero, grisha)
-              fix inefficiency in decoding 32-bit BMP (David Woo)
-      1.29  (2010-08-16)
-              various warning fixes from Aurelien Pocheville
-      1.28  (2010-08-01)
-              fix bug in GIF palette transparency (SpartanJ)
-      1.27  (2010-08-01)
-              cast-to-stbi_uc to fix warnings
-      1.26  (2010-07-24)
-              fix bug in file buffering for PNG reported by SpartanJ
-      1.25  (2010-07-17)
-              refix trans_data warning (Won Chun)
-      1.24  (2010-07-12)
-              perf improvements reading from files on platforms with lock-heavy fgetc()
-              minor perf improvements for jpeg
-              deprecated type-specific functions so we'll get feedback if they're needed
-              attempt to fix trans_data warning (Won Chun)
-      1.23    fixed bug in iPhone support
-      1.22  (2010-07-10)
-              removed image *writing* support
-              stbi_info support from Jetro Lauha
-              GIF support from Jean-Marc Lienher
-              iPhone PNG-extensions from James Brown
-              warning-fixes from Nicolas Schulz and Janez Zemva (i.stbi__err. Janez (U+017D)emva)
-      1.21    fix use of 'stbi_uc' in header (reported by jon blow)
-      1.20    added support for Softimage PIC, by Tom Seddon
-      1.19    bug in interlaced PNG corruption check (found by ryg)
-      1.18  (2008-08-02)
-              fix a threading bug (local mutable static)
-      1.17    support interlaced PNG
-      1.16    major bugfix - stbi__convert_format converted one too many pixels
-      1.15    initialize some fields for thread safety
-      1.14    fix threadsafe conversion bug
-              header-file-only version (#define STBI_HEADER_FILE_ONLY before including)
-      1.13    threadsafe
-      1.12    const qualifiers in the API
-      1.11    Support installable IDCT, colorspace conversion routines
-      1.10    Fixes for 64-bit (don't use "unsigned long")
-              optimized upsampling by Fabian "ryg" Giesen
-      1.09    Fix format-conversion for PSD code (bad global variables!)
-      1.08    Thatcher Ulrich's PSD code integrated by Nicolas Schulz
-      1.07    attempt to fix C++ warning/errors again
-      1.06    attempt to fix C++ warning/errors again
-      1.05    fix TGA loading to return correct *comp and use good luminance calc
-      1.04    default float alpha is 1, not 255; use 'void *' for stbi_image_free
-      1.03    bugfixes to STBI_NO_STDIO, STBI_NO_HDR
-      1.02    support for (subset of) HDR files, float interface for preferred access to them
-      1.01    fix bug: possible bug in handling right-side up bmps... not sure
-              fix bug: the stbi__bmp_load() and stbi__tga_load() functions didn't work at all
-      1.00    interface to zlib that skips zlib header
-      0.99    correct handling of alpha in palette
-      0.98    TGA loader by lonesock; dynamically add loaders (untested)
-      0.97    jpeg errors on too large a file; also catch another malloc failure
-      0.96    fix detection of invalid v value - particleman@mollyrocket forum
-      0.95    during header scan, seek to markers in case of padding
-      0.94    STBI_NO_STDIO to disable stdio usage; rename all #defines the same
-      0.93    handle jpegtran output; verbose errors
-      0.92    read 4,8,16,24,32-bit BMP files of several formats
-      0.91    output 24-bit Windows 3.0 BMP files
-      0.90    fix a few more warnings; bump version number to approach 1.0
-      0.61    bugfixes due to Marc LeBlanc, Christopher Lloyd
-      0.60    fix compiling as c++
-      0.59    fix warnings: merge Dave Moore's -Wall fixes
-      0.58    fix bug: zlib uncompressed mode len/nlen was wrong endian
-      0.57    fix bug: jpg last huffman symbol before marker was >9 bits but less than 16 available
-      0.56    fix bug: zlib uncompressed mode len vs. nlen
-      0.55    fix bug: restart_interval not initialized to 0
-      0.54    allow NULL for 'int *comp'
-      0.53    fix bug in png 3->4; speedup png decoding
-      0.52    png handles req_comp=3,4 directly; minor cleanup; jpeg comments
-      0.51    obey req_comp requests, 1-component jpegs return as 1-component,
-              on 'test' only check type, not whether we support this variant
-      0.50  (2006-11-19)
-              first released version
-*/
-/*
-------------------------------------------------------------------------------
-This software is available under 2 licenses -- choose whichever you prefer.
-------------------------------------------------------------------------------
-ALTERNATIVE A - MIT License
-Copyright (c) 2017 Sean Barrett
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-------------------------------------------------------------------------------
-ALTERNATIVE B - Public Domain (www.unlicense.org)
-This is free and unencumbered software released into the public domain.
-Anyone is free to copy, modify, publish, use, compile, sell, or distribute this
-software, either in source code form or as a compiled binary, for any purpose,
-commercial or non-commercial, and by any means.
-In jurisdictions that recognize copyright laws, the author or authors of this
-software dedicate any and all copyright interest in the software to the public
-domain. We make this dedication for the benefit of the public at large and to
-the detriment of our heirs and successors. We intend this dedication to be an
-overt act of relinquishment in perpetuity of all present and future rights to
-this software under copyright law.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-------------------------------------------------------------------------------
-*/
-// Required for: stbi_load_from_file()
-// NOTE: Used to read image data (multiple formats support)
 /* stb_image_resize2.h - STUB for the transminc raylib build.
 
    rtextures.c includes the real (huge, SIMD-heavy) stb_image_resize2
@@ -1306,279 +886,6 @@ when !(defined(STBI_NO_ZLIB)) {
 }
 when !(defined(STBI_NO_PNG)) {
 }
-/**********************************************************************************************
-*
-*   rtext - Basic functions to load fonts and draw text
-*
-*   CONFIGURATION:
-*       #define SUPPORT_MODULE_RTEXT        1
-*           rtext module is included in the build
-*
-*       #define SUPPORT_FILEFORMAT_FNT      1
-*       #define SUPPORT_FILEFORMAT_TTF      1
-*       #define SUPPORT_FILEFORMAT_BDF      0
-*           Selected desired fileformats to be supported for loading. Some of those formats are
-*           supported by default, to remove support, #define as 0 in this module or your build system
-*
-*       #define MAX_TEXT_BUFFER_LENGTH   1024
-*           Text functions using static buffer max size
-*
-*       #define MAX_TEXTSPLIT_COUNT       128
-*           TextSplit() function static substrings pointers array (pointing to static buffer)
-*
-*       #define FONT_ATLAS_CORNER_REC_SIZE  3
-*           On font atlas image generation [GenImageFontAtlas()], add a NxN pixels white rectangle
-*           at the bottom-right corner of the atlas. It can be useful to for shapes drawing, to allow
-*           drawing text and shapes with a single draw call [SetShapesTexture()]
-*
-*   DEPENDENCIES:
-*       stb_truetype  - Load TTF file and rasterize characters data
-*       stb_rect_pack - Rectangles packing algorithms, required for font atlas generation
-*
-*
-*   LICENSE: zlib/libpng
-*
-*   Copyright (c) 2013-2026 Ramon Santamaria (@raysan5)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*
-**********************************************************************************************/
-/**********************************************************************************************
-*
-*   raylib v6.1-dev - A simple and easy-to-use library to enjoy videogames programming (www.raylib.com)
-*
-*   FEATURES:
-*       - NO external dependencies, all required libraries included with raylib
-*       - Multiplatform: Windows, Linux, macOS, FreeBSD, Web, Android, Raspberry Pi, DRM native...
-*       - Written in plain C code (C99) in PascalCase/camelCase notation
-*       - Hardware accelerated with OpenGL (1.1, 2.1, 3.3, 4.3, ES2, ES3 - choose at compile)
-*       - Software renderer optional, for systems with no GPU: [rlsw]
-*       - Custom OpenGL abstraction layer (usable as standalone module): [rlgl]
-*       - Multiple Fonts formats supported (TTF, OTF, FNT, BDF, Sprite fonts)
-*       - Many texture formats supported, including compressed formats (DXT, ETC, ASTC)
-*       - Full 3d support for 3d Shapes, Models, Billboards, Heightmaps and more!
-*       - Flexible Materials system, supporting classic maps and PBR maps
-*       - Animated 3D models supported (skeletal bones animation) (IQM, M3D, GLTF)
-*       - Shaders support, including Model shaders and Postprocessing shaders
-*       - Powerful math module for Vector, Matrix and Quaternion operations: [raymath]
-*       - Audio loading and playing with streaming support (WAV, OGG, MP3, FLAC, QOA, XM, MOD)
-*       - VR stereo rendering with configurable HMD device parameters
-*       - Bindings to multiple programming languages available!
-*
-*   NOTES:
-*       - One default Font is loaded on InitWindow()->LoadFontDefault() [core, text]
-*       - One default Texture2D is loaded on rlglInit(), 1x1 white pixel R8G8B8A8 [rlgl] (OpenGL 3.3 or ES2)
-*       - One default Shader is loaded on rlglInit()->rlLoadShaderDefault() [rlgl] (OpenGL 3.3 or ES2)
-*       - One default RenderBatch is loaded on rlglInit()->rlLoadRenderBatch() [rlgl] (OpenGL 3.3 or ES2)
-*
-*   DEPENDENCIES:
-*       [rcore] Depends on the selected platform backend, check rcore.c header for details
-*       [rlgl] glad/glad_gles2 (David Herberth - github.com/Dav1dde/glad) for OpenGL extensions loading
-*       [raudio] miniaudio (David Reid - github.com/mackron/miniaudio) for audio device/context management
-*
-*   OPTIONAL DEPENDENCIES (included):
-*       [rcore] sinfl (Micha Mettke) for DEFLATE decompression algorithm
-*       [rcore] sdefl (Micha Mettke) for DEFLATE compression algorithm
-*       [rcore] rprand (Ramon Santamaria) for pseudo-random numbers generation
-*       [rtextures] qoi (Dominic Szablewski - https://phoboslab.org) for QOI image management
-*       [rtextures] stb_image (Sean Barrett) for images loading (BMP, TGA, PNG, JPEG, HDR...)
-*       [rtextures] stb_image_write (Sean Barrett) for image writing (BMP, TGA, PNG, JPG)
-*       [rtextures] stb_image_resize2 (Sean Barrett) for image resizing algorithms
-*       [rtextures] stb_perlin (Sean Barrett) for Perlin Noise image generation
-*       [rtextures] rltexgpu (Ramon Santamaria) for GPU-compressed texture formats
-*       [rtext] stb_truetype (Sean Barrett) for ttf fonts loading
-*       [rtext] stb_rect_pack (Sean Barrett) for rectangles packing
-*       [rmodels] par_shapes (Philip Rideout) for parametric 3d shapes generation
-*       [rmodels] tinyobj_loader_c (Syoyo Fujita) for models loading (OBJ, MTL)
-*       [rmodels] cgltf (Johannes Kuhlmann) for models loading (glTF)
-*       [rmodels] m3d (bzt) for models loading (M3D, https://bztsrc.gitlab.io/model3d)
-*       [rmodels] vox_loader (Johann Nadalutti) for models loading (VOX)
-*       [raudio] dr_wav (David Reid) for WAV audio file loading
-*       [raudio] dr_flac (David Reid) for FLAC audio file loading
-*       [raudio] dr_mp3 (David Reid) for MP3 audio file loading
-*       [raudio] stb_vorbis (Sean Barrett) for OGG audio loading
-*       [raudio] jar_xm (Joshua Reisenauer) for XM audio module loading
-*       [raudio] jar_mod (Joshua Reisenauer) for MOD audio module loading
-*       [raudio] qoa (Dominic Szablewski - https://phoboslab.org) for QOA audio management
-*
-*
-*   LICENSE: zlib/libpng
-*
-*   raylib is licensed under an unmodified zlib/libpng license, which is an OSI-certified,
-*   BSD-like license that allows static linking with closed source software:
-*
-*   Copyright (c) 2013-2026 Ramon Santamaria (@raysan5)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*
-**********************************************************************************************/
-// Declares module functions
-/**********************************************************************************************
-*
-*   raylib configuration flags
-*
-*   This file defines the configuration flags for different raylib features per-module
-*
-*   NOTE: Additional values are configured per-module and can be set on compile time
-*
-*   LICENSE: zlib/libpng
-*
-*   Copyright (c) 2018-2026 Ahmad Fatoum and Ramon Santamaria (@raysan5)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*
-**********************************************************************************************/
-// Defines module configuration flags
-/**********************************************************************************************
-*
-*   rlgl v6.0 - A multi-OpenGL abstraction layer with an immediate-mode style API
-*
-*   DESCRIPTION:
-*       An abstraction layer for multiple OpenGL versions (1.1, 2.1, 3.3 Core, 4.3 Core, ES 2.0, ES 3.0)
-*       that provides a pseudo-OpenGL 1.1 immediate-mode style API (rlVertex, rlTranslate, rlRotate...)
-*
-*   ADDITIONAL NOTES:
-*       When choosing an OpenGL backend different than OpenGL 1.1, some internal buffers are
-*       initialized on rlglInit() to accumulate vertex data
-*
-*       When an internal state change is required all the stored vertex data is rendered in a batch,
-*       additionally, rlDrawRenderBatchActive() could be called to force flushing of the batch
-*
-*       Some resources are also loaded for convenience, here the complete list:
-*          - Default batch (RLGL.defaultBatch): RenderBatch system to accumulate vertex data
-*          - Default texture (RLGL.defaultTextureId): 1x1 white pixel R8G8B8A8
-*          - Default shader (RLGL.State.defaultShaderId, RLGL.State.defaultShaderLocs)
-*
-*       Internal buffer (and resources) must be manually unloaded calling rlglClose()
-*
-*   CONFIGURATION:
-*       #define GRAPHICS_API_OPENGL_SOFTWARE
-*       #define GRAPHICS_API_OPENGL_11
-*       #define GRAPHICS_API_OPENGL_21
-*       #define GRAPHICS_API_OPENGL_33
-*       #define GRAPHICS_API_OPENGL_43
-*       #define GRAPHICS_API_OPENGL_ES2
-*       #define GRAPHICS_API_OPENGL_ES3
-*           Use selected OpenGL graphics backend, should be supported by platform
-*           Those preprocessor defines are only used on the rlgl module, if OpenGL version is
-*           required by any other module, use rlGetVersion() to check it
-*
-*       #define RLGL_IMPLEMENTATION
-*           Generates the implementation of the library into the included file
-*           If not defined, the library is in header only mode and can be included in other headers
-*           or source files without problems. But only ONE file should hold the implementation
-*
-*       #if RLGL_SHOW_GL_DETAILS_INFO
-*           Show OpenGL extensions and capabilities detailed logs on init
-*
-*       #if RLGL_ENABLE_OPENGL_DEBUG_CONTEXT
-*           Enable debug context (only available on OpenGL 4.3)
-*
-*       rlgl capabilities could be customized defining some internal
-*       values before library inclusion (default values listed):
-*
-*       #define RL_DEFAULT_BATCH_BUFFER_ELEMENTS   8192    // Default internal render batch elements limits
-*       #define RL_DEFAULT_BATCH_BUFFERS              1    // Default number of batch buffers (multi-buffering)
-*       #define RL_DEFAULT_BATCH_DRAWCALLS          256    // Default number of batch draw calls (by state changes: mode, texture)
-*       #define RL_DEFAULT_BATCH_MAX_TEXTURE_UNITS    4    // Maximum number of texture units that can be activated on batch drawing (SetShaderValueTexture())
-*
-*       #define RL_MAX_MATRIX_STACK_SIZE             32    // Maximum size of internal Matrix stack
-*       #define RL_MAX_SHADER_LOCATIONS              32    // Maximum number of shader locations supported
-*       #define RL_CULL_DISTANCE_NEAR              0.05    // Default projection matrix near cull distance
-*       #define RL_CULL_DISTANCE_FAR             4000.0    // Default projection matrix far cull distance
-*
-*       When loading a shader, the following vertex attributes and uniform
-*       location names are tried to be set automatically:
-*
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_POSITION     "vertexPosition"    // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_POSITION
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD     "vertexTexCoord"    // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_NORMAL       "vertexNormal"      // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_NORMAL
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_COLOR        "vertexColor"       // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_COLOR
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_TANGENT      "vertexTangent"     // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_TANGENT
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD2    "vertexTexCoord2"   // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD2
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_BONEINDICES  "vertexBoneIndices" // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEINDICES
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_BONEWEIGHTS  "vertexBoneWeights" // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEWEIGHTS
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_MVP         "mvp"               // model-view-projection matrix
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_VIEW        "matView"           // view matrix
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_PROJECTION  "matProjection"     // projection matrix
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_MODEL       "matModel"          // model matrix
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_NORMAL      "matNormal"         // normal matrix (transpose(inverse(matModelView)))
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_COLOR       "colDiffuse"        // color diffuse (base tint color, multiplied by texture color)
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_BONEMATRICES "boneMatrices"     // bone matrices
-*       #define RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE0  "texture0"          // texture0 (texture slot active 0)
-*       #define RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE1  "texture1"          // texture1 (texture slot active 1)
-*       #define RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE2  "texture2"          // texture2 (texture slot active 2)
-*
-*   DEPENDENCIES:
-*      - OpenGL libraries (depending on platform and OpenGL version selected)
-*      - GLAD OpenGL extensions loading library (only for OpenGL 3.3 Core, 4.3 Core)
-*
-*
-*   LICENSE: zlib/libpng
-*
-*   Copyright (c) 2014-2026 Ramon Santamaria (@raysan5)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*
-**********************************************************************************************/
-/***********************************************************************************
-*
-*   RLGL IMPLEMENTATION
-*
-************************************************************************************/
-// OpenGL abstraction layer to OpenGL 1.1, 2.1, 3.3+ or ES2 -> Only DrawTextPro()
 // stb_truetype.h - v1.26 - public domain
 // authored from 2009-2021 by Sean Barrett / RAD Game Tools
 //
@@ -2462,7 +1769,6 @@ struct GesturesData {
     } Pinch;
 }
 
-// Camera system functionality
 /*
 # Small Deflate
 `sdefl` is a small bare bone lossless compression library in ANSI C (ISO C90)
@@ -2590,7 +1896,6 @@ struct sinfl_gen {
     i16* sorted;
 }
 
-// Deflate (RFC 1951) decompressor
 /*# Small Deflate
 `sdefl` is a small bare bone lossless compression library in ANSI C (ISO C90)
 which implements the Deflate (RFC 1951) compressed data format specification standard.
@@ -3001,12 +2306,12 @@ struct stbi__png {
     i32 depth;
 }
 
-unsafe_union __anon_raylib_wasm_lib_struct_27 {
+private unsafe_union uni_t {
     f32 fm;
     u32 ui;
 }
 
-unsafe_union __anon_raylib_wasm_lib_struct_28 {
+private unsafe_union uni_t2 {
     f32 fm;
     u32 ui;
 }
@@ -3263,30 +2568,6 @@ struct stbrp_rect {
     i32 was_packed;
 }
 
-/* The raylib publishable library — every module the dist ships, in one
-   translation unit. Each transpiled `.c` re-emits the shared header
-   types, so we go through the unity-build route (one TU, types emit
-   once). Mirrors what test/raylib_demo/main.c does, minus a `main()`.
-
-   Transpile recipe (mirrored in `build.ps1 publish`):
-     transminc test/raylib_lib/lib.c --target <os>
-       -I test/raylib_lib -I ext/raylib -I ext/glfw
-       --include ext/win32_types.h         (windows only)
-       --include ext/gl/glad_shim.h --include ext/gl/gl_core33.h
-       --include ext/cfile_shim.h --include ext/cmath_shim.h
-       --gate-include glad.h
-       -D PLATFORM_DESKTOP -D GRAPHICS_API_OPENGL_33
-       -D RLGL_IMPLEMENTATION -D "TRACELOG(level,...)="
-       -D "stat(p,b)=rl_fstat(p,b)"
-       -o lib/raylib.mc
-
-   config.h selects which raylib modules are in. */
-/* rlgl is a single-header library — its implementation block is
-   gated by RLGL_IMPLEMENTATION. Each raylib .c file we include below
-   re-includes rlgl.h, so we define RLGL_IMPLEMENTATION only around
-   the FIRST inclusion and #undef immediately after. Without this,
-   the rlgl implementation would be emitted 5 times (once per .c)
-   instead of once. */
 /**********************************************************************************************
 *
 *   rcore - Window/display management, Graphic device/context management and input management
@@ -3380,10 +2661,6 @@ struct stbrp_rect {
 //----------------------------------------------------------------------------------
 // Feature Test Macros required for this module
 //----------------------------------------------------------------------------------
-when defined(PLATFORM_WEB) || defined(PLATFORM_WEB_RGFW) {
-}
-when defined(PLATFORM_WEB) || defined(PLATFORM_WEB_RGFW) {
-}
 /**********************************************************************************************
 *
 *   raylib v6.1-dev - A simple and easy-to-use library to enjoy videogames programming (www.raylib.com)
@@ -3469,10 +2746,6 @@ when defined(PLATFORM_WEB) || defined(PLATFORM_WEB_RGFW) {
 // Function specifiers in case library is build/used as a shared library
 // NOTE: Microsoft specifiers to tell compiler that symbols are imported/exported from a .dll
 // NOTE: visibility("default") attribute makes symbols "visible" when compiled with -fvisibility=hidden
-when defined(BUILD_LIBTYPE_SHARED) {
-}
-// Detach audio stream processor from the entire audio pipeline
-// Declares module functions
 /**********************************************************************************************
 *
 *   raylib configuration flags
@@ -3508,33 +2781,9 @@ when defined(BUILD_LIBTYPE_SHARED) {
 //------------------------------------------------------------------------------------
 // Module: rcore - Configuration Flags
 //------------------------------------------------------------------------------------
-when !(defined(SUPPORT_TRACELOG)) {
-}
-when !(defined(SUPPORT_CAMERA_SYSTEM)) {
-}
-when !(defined(SUPPORT_GESTURES_SYSTEM)) {
-}
-when !(defined(SUPPORT_RPRAND_GENERATOR)) {
-}
-when !(defined(SUPPORT_MOUSE_GESTURES)) {
-}
-when !(defined(SUPPORT_SSH_KEYBOARD_RPI)) {
-}
-when !(defined(SUPPORT_WINMM_HIGHRES_TIMER)) {
-}
 // Use busy wait loop for timing sync, if not defined, a high-resolution timer is set up and used
 // Use a partial-busy wait loop, in this case frame sleeps for most of the time,
 // but then runs a busy loop at the end for accuracy
-when !(defined(SUPPORT_SCREEN_CAPTURE)) {
-}
-when !(defined(SUPPORT_COMPRESSION_API)) {
-}
-when !(defined(SUPPORT_AUTOMATION_EVENTS)) {
-}
-when !(defined(SUPPORT_CUSTOM_FRAME_CONTROL)) {
-}
-when !(defined(SUPPORT_CLIPBOARD_IMAGE)) {
-}
 // rcore: Configuration values
 // NOTE: Below values are already defined inside [rcore.c] so there is no need to be
 // redefined here, in case it must be done, uncomment the required line and update
@@ -3558,10 +2807,6 @@ when !(defined(SUPPORT_CLIPBOARD_IMAGE)) {
 //------------------------------------------------------------------------------------
 // Module: rlgl - Configuration values
 //------------------------------------------------------------------------------------
-when !(defined(RLGL_ENABLE_OPENGL_DEBUG_CONTEXT)) {
-}
-when !(defined(RLGL_SHOW_GL_DETAILS_INFO)) {
-}
 // rlgl: Configuration values
 // NOTE: Below values are already defined inside [rlgl.h] so there is no need to be
 // redefined here, in case it must be done, uncomment the required line and update
@@ -3612,18 +2857,10 @@ when !(defined(RLGL_SHOW_GL_DETAILS_INFO)) {
 //------------------------------------------------------------------------------------
 // Module: rshapes - Configuration Flags
 //------------------------------------------------------------------------------------
-when !(defined(SUPPORT_QUADS_DRAW_MODE)) {
-}
 //------------------------------------------------------------------------------------
 // Module: rtextures - Configuration Flags
 //------------------------------------------------------------------------------------
 // Selected desired fileformats to be supported for image data loading
-when !(defined(SUPPORT_FILEFORMAT_BMP)) {
-}
-when !(defined(SUPPORT_IMAGE_EXPORT)) {
-}
-when !(defined(SUPPORT_IMAGE_GENERATION)) {
-}
 //------------------------------------------------------------------------------------
 // Module: rtext - Configuration Flags
 //------------------------------------------------------------------------------------
@@ -3632,31 +2869,7 @@ when !(defined(SUPPORT_IMAGE_GENERATION)) {
 // Module: rmodels - Configuration Flags
 //------------------------------------------------------------------------------------
 // Selected desired model fileformats to be supported for loading
-when !(defined(SUPPORT_MESH_GENERATION)) {
-}
-when !(defined(SUPPORT_GPU_SKINNING)) {
-}
-//------------------------------------------------------------------------------------
-// Module: raudio - Configuration Flags
-//------------------------------------------------------------------------------------
-// Desired audio fileformats to be supported for loading
-// raudio: Configuration values
-// NOTE: Below values are already defined inside [rlgl.h] so there is no need to be
-// redefined here, in case it must be done, uncomment the required line and update
-// the value; it can also be done on compilation with -DVALUE_TO_REDEFINE=128
-//------------------------------------------------------------------------------------
-//#define AUDIO_DEVICE_FORMAT     ma_format_f32    // Device output format (miniaudio: float-32bit)
-//#define AUDIO_DEVICE_CHANNELS               2    // Device output channels: stereo
-//#define AUDIO_DEVICE_SAMPLE_RATE            0    // Device sample rate (device default)
-//#define AUDIO_DEVICE_PERIOD_SIZE_IN_FRAMES  0    // Device period size (controls latency, 0 defaults to 10ms)
-//#define MAX_AUDIO_BUFFER_POOL_CHANNELS     16    // Maximum number of audio pool channels
-//------------------------------------------------------------------------------------
-// NOTE: Following macro depends on config flag that can
-// be externally defined, so, it needs to be outside EXTERNAL_CONFIG_FLAGS
-//#define TRACELOG(level, ...) (void)0
 // Defines module configuration flags
-when defined(PLATFORM_MEMORY) || defined(PLATFORM_WEB) {
-}
 /**********************************************************************************************
 *
 *   rlgl v6.0 - A multi-OpenGL abstraction layer with an immediate-mode style API
@@ -3771,12 +2984,8 @@ when defined(PLATFORM_MEMORY) || defined(PLATFORM_WEB) {
 // Security check in case no GRAPHICS_API_OPENGL_* defined
 // Security check in case multiple GRAPHICS_API_OPENGL_* defined
 when defined(GRAPHICS_API_OPENGL_SOFTWARE) {
-when defined(GRAPHICS_API_OPENGL_ES2) {
-}
 }
 // Software implementation uses OpenGL 1.1 functionality
-when defined(GRAPHICS_API_OPENGL_SOFTWARE) {
-}
 // OpenGL 2.1 uses most of OpenGL 3.3 Core functionality
 // WARNING: Specific parts are checked with #if defines
 // OpenGL 4.3 uses OpenGL 3.3 Core functionality
@@ -3785,8 +2994,6 @@ when defined(GRAPHICS_API_OPENGL_SOFTWARE) {
 // Defines and Macros
 //----------------------------------------------------------------------------------
 // Default internal render batch elements limits
-when !(defined(RL_DEFAULT_BATCH_BUFFER_ELEMENTS)) {
-}
 // Load and draw a quad
 /***********************************************************************************
 *
@@ -3794,39 +3001,42 @@ when !(defined(RL_DEFAULT_BATCH_BUFFER_ELEMENTS)) {
 *
 ************************************************************************************/
 // Expose OpenGL functions from glad in raylib
-when defined(BUILD_LIBTYPE_SHARED) {
-}
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-private { bool isGpuReady = false; }
-private { f64 rlCullDistanceNear = 0.05; }
-private { f64 rlCullDistanceFar = 4000.0; }
-private { rlglData RLGL; }
+private {
+bool isGpuReady = false;
+f64 rlCullDistanceNear = 0.05;
+f64 rlCullDistanceFar = 4000.0;
+rlglData RLGL;
+}
+
 // Invert provided matrix
 //----------------------------------------------------------------------------------
 // Module Functions Definition - Matrix operations
 //----------------------------------------------------------------------------------
 // Choose the current matrix to be transformed
 void rlMatrixMode(i32 mode) {
-    if mode == 5889 {
+    if mode == 0x1701 {
         RLGL.State.currentMatrix = &RLGL.State.projection;
-    } else if mode == 5888 {
+    } else if mode == 0x1700 {
         RLGL.State.currentMatrix = &RLGL.State.modelview;
     }
     RLGL.State.currentMatrixMode = mode;
 }
+
 // Push the current matrix into RLGL.State.stack
 void rlPushMatrix() {
     if RLGL.State.stackCounter >= 32 {
     }
-    if RLGL.State.currentMatrixMode == 5888 {
+    if RLGL.State.currentMatrixMode == 0x1700 {
         RLGL.State.transformRequired = true;
         RLGL.State.currentMatrix = &RLGL.State.transform;
     }
     RLGL.State.stack[RLGL.State.stackCounter] = *RLGL.State.currentMatrix;
     RLGL.State.stackCounter++;
 }
+
 // Pop latest inserted matrix from RLGL.State.stack
 void rlPopMatrix() {
     if RLGL.State.stackCounter > 0 {
@@ -3834,15 +3044,17 @@ void rlPopMatrix() {
         *RLGL.State.currentMatrix = mat;
         RLGL.State.stackCounter--;
     }
-    if RLGL.State.stackCounter == 0 && RLGL.State.currentMatrixMode == 5888 {
+    if RLGL.State.stackCounter == 0 && RLGL.State.currentMatrixMode == 0x1700 {
         RLGL.State.currentMatrix = &RLGL.State.modelview;
         RLGL.State.transformRequired = false;
     }
 }
+
 // Reset current matrix to identity matrix
 void rlLoadIdentity() {
     *RLGL.State.currentMatrix = rlMatrixIdentity();
 }
+
 // Multiply the current matrix by a translation matrix
 void rlTranslatef(f32 x, f32 y, f32 z) {
     Matrix matTranslation = rlMatrixIdentity();
@@ -3851,6 +3063,7 @@ void rlTranslatef(f32 x, f32 y, f32 z) {
     matTranslation.m14 = z;
     *RLGL.State.currentMatrix = rlMatrixMultiply(matTranslation, *RLGL.State.currentMatrix);
 }
+
 // Multiply the current matrix by a rotation matrix
 // NOTE: The provided angle must be in degrees
 void rlRotatef(f32 angle, f32 x, f32 y, f32 z) {
@@ -3883,6 +3096,7 @@ void rlRotatef(f32 angle, f32 x, f32 y, f32 z) {
     matRotation.m15 = 1.0f;
     *RLGL.State.currentMatrix = rlMatrixMultiply(matRotation, *RLGL.State.currentMatrix);
 }
+
 // Multiply the current matrix by a scaling matrix
 void rlScalef(f32 x, f32 y, f32 z) {
     Matrix matScale = rlMatrixIdentity();
@@ -3891,11 +3105,16 @@ void rlScalef(f32 x, f32 y, f32 z) {
     matScale.m10 = z;
     *RLGL.State.currentMatrix = rlMatrixMultiply(matScale, *RLGL.State.currentMatrix);
 }
+
 // Multiply the current matrix by another matrix
 void rlMultMatrixf(f32* matf) {
-    var mat = Matrix{matf[0], matf[4], matf[8], matf[12], matf[1], matf[5], matf[9], matf[13], matf[2], matf[6], matf[10], matf[14], matf[3], matf[7], matf[11], matf[15]};
+    var mat = Matrix{
+        matf[0], matf[4], matf[8], matf[12], matf[1], matf[5], matf[9], matf[13], matf[2], matf[6],
+        matf[10], matf[14], matf[3], matf[7], matf[11], matf[15],
+    };
     *RLGL.State.currentMatrix = rlMatrixMultiply(mat, *RLGL.State.currentMatrix);
 }
+
 // Multiply the current matrix by a perspective matrix generated by parameters
 void rlFrustum(f64 left, f64 right, f64 bottom, f64 top, f64 znear, f64 zfar) {
     Matrix matFrustum;
@@ -3920,6 +3139,7 @@ void rlFrustum(f64 left, f64 right, f64 bottom, f64 top, f64 znear, f64 zfar) {
     matFrustum.m15 = 0.0f;
     *RLGL.State.currentMatrix = rlMatrixMultiply(*RLGL.State.currentMatrix, matFrustum);
 }
+
 // Multiply the current matrix by an orthographic matrix generated by parameters
 void rlOrtho(f64 left, f64 right, f64 bottom, f64 top, f64 znear, f64 zfar) {
     Matrix matOrtho;
@@ -3944,23 +3164,28 @@ void rlOrtho(f64 left, f64 right, f64 bottom, f64 top, f64 znear, f64 zfar) {
     matOrtho.m15 = 1.0f;
     *RLGL.State.currentMatrix = rlMatrixMultiply(*RLGL.State.currentMatrix, matOrtho);
 }
+
 // Set the viewport area (transformation from normalized device coordinates to window coordinates)
 void rlViewport(i32 x, i32 y, i32 width, i32 height) {
     glViewport(x, y, width, height);
 }
+
 // Set clip planes distances
 void rlSetClipPlanes(f64 nearPlane, f64 farPlane) {
     rlCullDistanceNear = nearPlane;
     rlCullDistanceFar = farPlane;
 }
+
 // Get cull plane distance near
 f64 rlGetCullDistanceNear() {
     return rlCullDistanceNear;
 }
+
 // Get cull plane distance far
 f64 rlGetCullDistanceFar() {
     return rlCullDistanceFar;
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition - Vertex level operations
 //----------------------------------------------------------------------------------
@@ -3968,9 +3193,9 @@ f64 rlGetCullDistanceFar() {
 void rlBegin(i32 mode) {
     if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].mode != mode {
         if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount > 0 {
-            if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].mode == 1 {
+            if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].mode == 0x0001 {
                 RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexAlignment = RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount < 4 ? RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount : RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount % 4;
-            } else if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].mode == 4 {
+            } else if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].mode == 0x0004 {
                 RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexAlignment = RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount < 4 ? 1 : 4 - RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount % 4;
             } else {
                 RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexAlignment = 0;
@@ -3988,10 +3213,12 @@ void rlBegin(i32 mode) {
         RLGL.State.currentTextureId = RLGL.State.defaultTextureId;
     }
 }
+
 // Finish vertex providing
 void rlEnd() {
     RLGL.currentBatch.currentDepth += 1.0f / 20000.0f;
 }
+
 // Define one vertex (position)
 // NOTE: Vertex position data is the basic information required for drawing
 void rlVertex3f(f32 x, f32 y, f32 z) {
@@ -4004,11 +3231,11 @@ void rlVertex3f(f32 x, f32 y, f32 z) {
         tz = RLGL.State.transform.m2 * x + RLGL.State.transform.m6 * y + RLGL.State.transform.m10 * z + RLGL.State.transform.m14;
     }
     if RLGL.State.vertexCounter > RLGL.currentBatch.vertexBuffer[RLGL.currentBatch.currentBuffer].elementCount * 4 - 4 {
-        if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].mode == 1 && RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount % 2 == 0 {
+        if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].mode == 0x0001 && RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount % 2 == 0 {
             rlCheckRenderBatchLimit(2 + 1);
-        } else if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].mode == 4 && RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount % 3 == 0 {
+        } else if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].mode == 0x0004 && RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount % 3 == 0 {
             rlCheckRenderBatchLimit(3 + 1);
-        } else if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].mode == 7 && RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount % 4 == 0 {
+        } else if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].mode == 0x0007 && RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount % 4 == 0 {
             rlCheckRenderBatchLimit(4 + 1);
         }
     }
@@ -4027,20 +3254,24 @@ void rlVertex3f(f32 x, f32 y, f32 z) {
     RLGL.State.vertexCounter++;
     RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount++;
 }
+
 // Define one vertex (position)
 void rlVertex2f(f32 x, f32 y) {
     rlVertex3f(x, y, RLGL.currentBatch.currentDepth);
 }
+
 // Define one vertex (position)
 void rlVertex2i(i32 x, i32 y) {
     rlVertex3f(cast(f32, x), cast(f32, y), RLGL.currentBatch.currentDepth);
 }
+
 // Define one vertex (texture coordinate)
 // NOTE: Texture coordinates are limited to QUADS only
 void rlTexCoord2f(f32 x, f32 y) {
     RLGL.State.texcoordx = x;
     RLGL.State.texcoordy = y;
 }
+
 // Define one vertex (normal)
 // NOTE: Normals limited to TRIANGLES only?
 void rlNormal3f(f32 x, f32 y, f32 z) {
@@ -4056,6 +3287,7 @@ void rlNormal3f(f32 x, f32 y, f32 z) {
     RLGL.State.normaly = normaly;
     RLGL.State.normalz = normalz;
 }
+
 // Define one vertex (color)
 void rlColor4ub(u8 x, u8 y, u8 z, u8 w) {
     RLGL.State.colorr = x;
@@ -4063,14 +3295,17 @@ void rlColor4ub(u8 x, u8 y, u8 z, u8 w) {
     RLGL.State.colorb = z;
     RLGL.State.colora = w;
 }
+
 // Define one vertex (color)
 void rlColor4f(f32 r, f32 g, f32 b, f32 a) {
     rlColor4ub(cast(u8, r * 255.0f), cast(u8, g * 255.0f), cast(u8, b * 255.0f), cast(u8, a * 255.0f));
 }
+
 // Define one vertex (color)
 void rlColor3f(f32 x, f32 y, f32 z) {
     rlColor4ub(cast(u8, x * 255.0f), cast(u8, y * 255.0f), cast(u8, z * 255.0f), 255);
 }
+
 //--------------------------------------------------------------------------------------
 // Module Functions Definition - OpenGL style functions (common to 1.1, 3.3+, ES2)
 //--------------------------------------------------------------------------------------
@@ -4085,9 +3320,9 @@ void rlSetTexture(u32 id) {
         RLGL.State.currentTextureId = id;
         if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].textureId != id {
             if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount > 0 {
-                if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].mode == 1 {
+                if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].mode == 0x0001 {
                     RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexAlignment = RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount < 4 ? RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount : RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount % 4;
-                } else if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].mode == 4 {
+                } else if RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].mode == 0x0004 {
                     RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexAlignment = RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount < 4 ? 1 : 4 - RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexCount % 4;
                 } else {
                     RLGL.currentBatch.draws[RLGL.currentBatch.drawCounter - 1].vertexAlignment = 0;
@@ -4106,33 +3341,39 @@ void rlSetTexture(u32 id) {
         }
     }
 }
+
 // Select and active a texture slot
 void rlActiveTextureSlot(i32 slot) {
     glActiveTexture(cast(u32, GL_TEXTURE0 + slot));
 }
+
 // Enable texture
 void rlEnableTexture(u32 id) {
     glBindTexture(GL_TEXTURE_2D, id);
 }
+
 // Disable texture
 void rlDisableTexture() {
     glBindTexture(GL_TEXTURE_2D, 0);
 }
+
 // Enable texture cubemap
 void rlEnableTextureCubemap(u32 id) {
     glBindTexture(GL_TEXTURE_CUBE_MAP, id);
 }
+
 // Disable texture cubemap
 void rlDisableTextureCubemap() {
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
+
 // Set texture parameters (wrap mode/filter mode)
 void rlTextureParameters(u32 id, i32 param, i32 value) {
     glBindTexture(GL_TEXTURE_2D, id);
     switch param {
-        case 10242, 10243: {
+        case 0x2802, 0x2803: {
             {
-                if value == 34626 {
+                if value == 0x8742 {
                     if RLGL.ExtSupported.texMirrorClamp != 0 {
                         glTexParameteri(GL_TEXTURE_2D, cast(u32, param), value);
                     } else {
@@ -4142,16 +3383,16 @@ void rlTextureParameters(u32 id, i32 param, i32 value) {
                 }
             }
         }
-        case 10240, 10241: {
+        case 0x2800, 0x2801: {
             glTexParameteri(GL_TEXTURE_2D, cast(u32, param), value);
         }
-        case 12288: {
+        case 0x3000: {
             {
-                glTexParameterf(GL_TEXTURE_2D, 34046, 1.0f);
+                glTexParameterf(GL_TEXTURE_2D, 0x84FE, 1.0f);
                 if cast(f32, value) <= RLGL.ExtSupported.maxAnisotropyLevel {
-                    glTexParameterf(GL_TEXTURE_2D, 34046, cast(f32, value));
+                    glTexParameterf(GL_TEXTURE_2D, 0x84FE, cast(f32, value));
                 } else if RLGL.ExtSupported.maxAnisotropyLevel > 0.0f {
-                    glTexParameterf(GL_TEXTURE_2D, 34046, cast(f32, value));
+                    glTexParameterf(GL_TEXTURE_2D, 0x84FE, cast(f32, value));
                 } else {
                 }
             }
@@ -4161,14 +3402,15 @@ void rlTextureParameters(u32 id, i32 param, i32 value) {
     }
     glBindTexture(GL_TEXTURE_2D, 0);
 }
+
 // Set cubemap parameters (wrap mode/filter mode)
 void rlCubemapParameters(u32 id, i32 param, i32 value) {
     glBindTexture(GL_TEXTURE_CUBE_MAP, id);
-    glTexParameterf(GL_TEXTURE_CUBE_MAP, 34046, 1.0f);
+    glTexParameterf(GL_TEXTURE_CUBE_MAP, 0x84FE, 1.0f);
     switch param {
-        case 10242, 10243: {
+        case 0x2802, 0x2803: {
             {
-                if value == 34626 {
+                if value == 0x8742 {
                     if RLGL.ExtSupported.texMirrorClamp != 0 {
                         glTexParameteri(GL_TEXTURE_CUBE_MAP, cast(u32, param), value);
                     } else {
@@ -4178,15 +3420,15 @@ void rlCubemapParameters(u32 id, i32 param, i32 value) {
                 }
             }
         }
-        case 10240, 10241: {
+        case 0x2800, 0x2801: {
             glTexParameteri(GL_TEXTURE_CUBE_MAP, cast(u32, param), value);
         }
-        case 12288: {
+        case 0x3000: {
             {
                 if cast(f32, value) <= RLGL.ExtSupported.maxAnisotropyLevel {
-                    glTexParameterf(GL_TEXTURE_CUBE_MAP, 34046, cast(f32, value));
+                    glTexParameterf(GL_TEXTURE_CUBE_MAP, 0x84FE, cast(f32, value));
                 } else if RLGL.ExtSupported.maxAnisotropyLevel > 0.0f {
-                    glTexParameterf(GL_TEXTURE_CUBE_MAP, 34046, cast(f32, value));
+                    glTexParameterf(GL_TEXTURE_CUBE_MAP, 0x84FE, cast(f32, value));
                 } else {
                 }
             }
@@ -4196,48 +3438,61 @@ void rlCubemapParameters(u32 id, i32 param, i32 value) {
     }
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
+
 // Enable shader program
 void rlEnableShader(u32 id) {
     glUseProgram(id);
 }
+
 // Disable shader program
 void rlDisableShader() {
     glUseProgram(0);
 }
+
 // Enable rendering to texture (fbo)
 void rlEnableFramebuffer(u32 id) {
     glBindFramebuffer(GL_FRAMEBUFFER, id);
 }
+
 // return the active render texture (fbo)
 u32 rlGetActiveFramebuffer() {
     i32 fboId = 0;
     glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &fboId);
     return cast(u32, fboId);
 }
+
 // Disable rendering to texture
 void rlDisableFramebuffer() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
+
 // Blit active framebuffer to main framebuffer
 void rlBlitFramebuffer(i32 srcX, i32 srcY, i32 srcWidth, i32 srcHeight, i32 dstX, i32 dstY, i32 dstWidth, i32 dstHeight, i32 bufferMask) {
     glBlitFramebuffer(srcX, srcY, srcWidth, srcHeight, dstX, dstY, dstWidth, dstHeight, cast(u32, bufferMask), GL_NEAREST);
 }
+
 // Bind framebuffer object (fbo)
 void rlBindFramebuffer(u32 target, u32 framebuffer) {
     glBindFramebuffer(target, framebuffer);
 }
+
 // Activate multiple draw color buffers
 // NOTE: One color buffer is always active by default
 void rlActiveDrawBuffers(i32 count) {
     if count > 0 {
         if count > 8 {
         } else {
-            u32[8] buffers = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5, GL_COLOR_ATTACHMENT6, GL_COLOR_ATTACHMENT7};
+            u32[8] buffers = {
+                GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2,
+                GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5,
+                GL_COLOR_ATTACHMENT6, GL_COLOR_ATTACHMENT7,
+            };
             glDrawBuffers(count, buffers);
         }
     } else {
     }
 }
+
 //----------------------------------------------------------------------------------
 // General render state configuration
 //----------------------------------------------------------------------------------
@@ -4245,38 +3500,47 @@ void rlActiveDrawBuffers(i32 count) {
 void rlEnableColorBlend() {
     glEnable(GL_BLEND);
 }
+
 // Disable color blending
 void rlDisableColorBlend() {
     glDisable(GL_BLEND);
 }
+
 // Enable depth test
 void rlEnableDepthTest() {
     glEnable(GL_DEPTH_TEST);
 }
+
 // Disable depth test
 void rlDisableDepthTest() {
     glDisable(GL_DEPTH_TEST);
 }
+
 // Enable depth write
 void rlEnableDepthMask() {
     glDepthMask(GL_TRUE);
 }
+
 // Disable depth write
 void rlDisableDepthMask() {
     glDepthMask(GL_FALSE);
 }
+
 // Enable backface culling
 void rlEnableBackfaceCulling() {
     glEnable(GL_CULL_FACE);
 }
+
 // Disable backface culling
 void rlDisableBackfaceCulling() {
     glDisable(GL_CULL_FACE);
 }
+
 // Set color mask active for screen read/draw
 void rlColorMask(bool r, bool g, bool b, bool a) {
     glColorMask(cast(u8, r), cast(u8, g), cast(u8, b), cast(u8, a));
 }
+
 // Set face culling mode
 void rlSetCullFace(i32 mode) {
     switch mode {
@@ -4290,66 +3554,83 @@ void rlSetCullFace(i32 mode) {
         }
     }
 }
+
 // Enable scissor test
 void rlEnableScissorTest() {
     glEnable(GL_SCISSOR_TEST);
 }
+
 // Disable scissor test
 void rlDisableScissorTest() {
     glDisable(GL_SCISSOR_TEST);
 }
+
 // Scissor test
 void rlScissor(i32 x, i32 y, i32 width, i32 height) {
     glScissor(x, y, width, height);
 }
+
 // Enable wire mode
 void rlEnableWireMode() {
 }
+
 // Disable wire mode
 void rlDisableWireMode() {
 }
+
 // Enable point mode
 void rlEnablePointMode() {
 }
+
 // Disable point mode
 void rlDisablePointMode() {
 }
+
 // Set the line drawing width
 void rlSetLineWidth(f32 width) {
     glLineWidth(width);
 }
+
 // Get the line drawing width
 f32 rlGetLineWidth() {
     f32 width = 0.0f;
-    glGetFloatv(2849, &width);
+    glGetFloatv(0x0B21, &width);
     return width;
 }
+
 // Set the point drawing size
 void rlSetPointSize(f32 size) {
 }
+
 // Get the point drawing size
 f32 rlGetPointSize() {
     f32 size = 1.0f;
     return size;
 }
+
 // Enable line aliasing
 void rlEnableSmoothLines() {
 }
+
 // Disable line aliasing
 void rlDisableSmoothLines() {
 }
+
 // Enable stereo rendering
 void rlEnableStereoRender() {
     RLGL.State.stereoRender = true;
 }
+
 // Disable stereo rendering
 void rlDisableStereoRender() {
     RLGL.State.stereoRender = false;
 }
+
 // Check if stereo render is enabled
 bool rlIsStereoRenderEnabled() {
     return RLGL.State.stereoRender;
 }
+
 // Clear color buffer with color
 void rlClearColor(u8 r, u8 g, u8 b, u8 a) {
     f32 cr = cast(f32, r) / 255.0f;
@@ -4358,10 +3639,12 @@ void rlClearColor(u8 r, u8 g, u8 b, u8 a) {
     f32 ca = cast(f32, a) / 255.0f;
     glClearColor(cr, cg, cb, ca);
 }
+
 // Clear used screen buffers (color and depth)
 void rlClearScreenBuffers() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
+
 // Check and log OpenGL error codes
 void rlCheckErrors() {
     i32 check = 1;
@@ -4371,25 +3654,26 @@ void rlCheckErrors() {
             case GL_NO_ERROR: {
                 check = 0;
             }
-            case 1280: {
+            case 0x0500: {
             }
-            case 1281: {
+            case 0x0501: {
             }
-            case 1282: {
+            case 0x0502: {
             }
-            case 1283: {
+            case 0x0503: {
             }
-            case 1284: {
+            case 0x0504: {
             }
-            case 1285: {
+            case 0x0505: {
             }
-            case 1286: {
+            case 0x0506: {
             }
             default: {
             }
         }
     }
 }
+
 // Set blend mode
 void rlSetBlendMode(i32 mode) {
     if RLGL.State.currentBlendMode != mode || (mode == RL_BLEND_CUSTOM || mode == RL_BLEND_CUSTOM_SEPARATE) && RLGL.State.glCustomBlendModeModified {
@@ -4438,6 +3722,7 @@ void rlSetBlendMode(i32 mode) {
         RLGL.State.glCustomBlendModeModified = false;
     }
 }
+
 // Set blending mode factor and equation
 void rlSetBlendFactors(i32 glSrcFactor, i32 glDstFactor, i32 glEquation) {
     if RLGL.State.glBlendSrcFactor != glSrcFactor || RLGL.State.glBlendDstFactor != glDstFactor || RLGL.State.glBlendEquation != glEquation {
@@ -4447,6 +3732,7 @@ void rlSetBlendFactors(i32 glSrcFactor, i32 glDstFactor, i32 glEquation) {
         RLGL.State.glCustomBlendModeModified = true;
     }
 }
+
 // Set blending mode factor and equation separately for RGB and alpha
 void rlSetBlendFactorsSeparate(i32 glSrcRGB, i32 glDstRGB, i32 glSrcAlpha, i32 glDstAlpha, i32 glEqRGB, i32 glEqAlpha) {
     if RLGL.State.glBlendSrcFactorRGB != glSrcRGB || RLGL.State.glBlendDestFactorRGB != glDstRGB || RLGL.State.glBlendSrcFactorAlpha != glSrcAlpha || RLGL.State.glBlendDestFactorAlpha != glDstAlpha || RLGL.State.glBlendEquationRGB != glEqRGB || RLGL.State.glBlendEquationAlpha != glEqAlpha {
@@ -4459,6 +3745,7 @@ void rlSetBlendFactorsSeparate(i32 glSrcRGB, i32 glDstRGB, i32 glSrcAlpha, i32 g
         RLGL.State.glCustomBlendModeModified = true;
     }
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition - OpenGL Debug
 //----------------------------------------------------------------------------------
@@ -4501,6 +3788,7 @@ void rlglInit(i32 width, i32 height) {
     glClearDepthf(1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
+
 // Vertex Buffer Object deinitialization (memory free)
 void rlglClose() {
     rlUnloadRenderBatch(RLGL.defaultBatch);
@@ -4508,6 +3796,7 @@ void rlglClose() {
     glDeleteTextures(1, &RLGL.State.defaultTextureId);
     isGpuReady = false;
 }
+
 // Load OpenGL extensions
 // NOTE: External loader function must be provided
 void rlLoadExtensions(void* loader) {
@@ -4522,7 +3811,7 @@ void rlLoadExtensions(void* loader) {
     RLGL.ExtSupported.texAnisoFilter = true;
     RLGL.ExtSupported.texMirrorClamp = true;
     RLGL.loader = cast(rlglLoadProc, loader);
-    glGetFloatv(34047, &RLGL.ExtSupported.maxAnisotropyLevel);
+    glGetFloatv(0x84FF, &RLGL.ExtSupported.maxAnisotropyLevel);
     if RLGL.ExtSupported.vao != 0 {
     } else {
     }
@@ -4544,12 +3833,14 @@ void rlLoadExtensions(void* loader) {
     if RLGL.ExtSupported.ssbo != 0 {
     }
 }
+
 // Get OpenGL procedure address
 void* rlGetProcAddress(u8* procName) {
     void* func = null;
     func = RLGL.loader(procName);
     return func;
 }
+
 // Get current OpenGL version
 i32 rlGetVersion() {
     i32 glVersion = 0;
@@ -4561,26 +3852,31 @@ i32 rlGetVersion() {
     glVersion = RL_OPENGL_ES_30;
     return glVersion;
 }
+
 // Set current framebuffer width
 void rlSetFramebufferWidth(i32 width) {
     RLGL.State.framebufferWidth = width;
 }
+
 // Set current framebuffer height
 void rlSetFramebufferHeight(i32 height) {
     RLGL.State.framebufferHeight = height;
 }
+
 // Get default framebuffer width
 i32 rlGetFramebufferWidth() {
     i32 width = 0;
     width = RLGL.State.framebufferWidth;
     return width;
 }
+
 // Get default framebuffer height
 i32 rlGetFramebufferHeight() {
     i32 height = 0;
     height = RLGL.State.framebufferHeight;
     return height;
 }
+
 // Get default internal texture (white texture)
 // NOTE: Default texture is a 1x1 pixel UNCOMPRESSED_R8G8B8A8
 u32 rlGetTextureIdDefault() {
@@ -4588,18 +3884,21 @@ u32 rlGetTextureIdDefault() {
     id = RLGL.State.defaultTextureId;
     return id;
 }
+
 // Get default shader id
 u32 rlGetShaderIdDefault() {
     u32 id = 0;
     id = RLGL.State.defaultShaderId;
     return id;
 }
+
 // Get default shader locs
 i32* rlGetShaderLocsDefault() {
     i32* locs = null;
     locs = RLGL.State.defaultShaderLocs;
     return locs;
 }
+
 // Render batch management
 //------------------------------------------------------------------------------------------------
 // Load render batch
@@ -4674,7 +3973,7 @@ rlRenderBatch rlLoadRenderBatch(i32 numBuffers, i32 bufferElements) {
     }
     batch.draws = new(rlDrawCall[256]);
     for i32 i = 0; i < 256; i++ {
-        batch.draws[i].mode = 7;
+        batch.draws[i].mode = 0x0007;
         batch.draws[i].vertexCount = 0;
         batch.draws[i].vertexAlignment = 0;
         batch.draws[i].textureId = RLGL.State.defaultTextureId;
@@ -4684,6 +3983,7 @@ rlRenderBatch rlLoadRenderBatch(i32 numBuffers, i32 bufferElements) {
     batch.currentDepth = -1.0f;
     return batch;
 }
+
 // Unload default internal buffers vertex data from CPU and GPU
 void rlUnloadRenderBatch(rlRenderBatch batch) {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -4714,6 +4014,7 @@ void rlUnloadRenderBatch(rlRenderBatch batch) {
     free(batch.vertexBuffer);
     free(batch.draws);
 }
+
 // Draw render batch
 // NOTE: Batch is reseted and current buffer is updated (for multi-buffer config)
 void rlDrawRenderBatch(rlRenderBatch* batch) {
@@ -4792,7 +4093,7 @@ void rlDrawRenderBatch(rlRenderBatch* batch) {
                 i32 vertexOffset = 0;
                 for ; i < batch.drawCounter; i++ {
                     glBindTexture(GL_TEXTURE_2D, batch.draws[i].textureId);
-                    if batch.draws[i].mode == 1 || batch.draws[i].mode == 4 {
+                    if batch.draws[i].mode == 0x0001 || batch.draws[i].mode == 0x0004 {
                         glDrawArrays(cast(u32, batch.draws[i].mode), vertexOffset, batch.draws[i].vertexCount);
                     } else {
                         glDrawElements(GL_TRIANGLES, batch.draws[i].vertexCount / 4 * 6, GL_UNSIGNED_SHORT, cast(void*, vertexOffset / 4 * 6 * sizeof(u16)));
@@ -4819,7 +4120,7 @@ void rlDrawRenderBatch(rlRenderBatch* batch) {
     RLGL.State.projection = matProjection;
     RLGL.State.modelview = matModelView;
     for i32 i = 0; i < 256; i++ {
-        batch.draws[i].mode = 7;
+        batch.draws[i].mode = 0x0007;
         batch.draws[i].vertexCount = 0;
         batch.draws[i].textureId = RLGL.State.defaultTextureId;
     }
@@ -4832,6 +4133,7 @@ void rlDrawRenderBatch(rlRenderBatch* batch) {
         batch.currentBuffer = 0;
     }
 }
+
 // Set the active render batch for rlgl
 void rlSetRenderBatchActive(rlRenderBatch* batch) {
     rlDrawRenderBatch(RLGL.currentBatch);
@@ -4841,10 +4143,12 @@ void rlSetRenderBatchActive(rlRenderBatch* batch) {
         RLGL.currentBatch = &RLGL.defaultBatch;
     }
 }
+
 // Update and draw internal render batch
 void rlDrawRenderBatchActive() {
     rlDrawRenderBatch(RLGL.currentBatch);
 }
+
 // Check internal buffer overflow for a given number of vertex
 // and force a rlRenderBatch draw call if required
 bool rlCheckRenderBatchLimit(i32 vCount) {
@@ -4859,6 +4163,7 @@ bool rlCheckRenderBatchLimit(i32 vCount) {
     }
     return overflow;
 }
+
 // Textures data management
 //-----------------------------------------------------------------------------------------
 // Convert image data to OpenGL texture (returns OpenGL valid Id)
@@ -4939,6 +4244,7 @@ u32 rlLoadTexture(void* data, i32 width, i32 height, i32 format_var, i32 mipmapC
     }
     return id;
 }
+
 // Load depth texture/renderbuffer (to be attached to fbo)
 // WARNING: OpenGL ES 2.0 requires GL_OES_depth_texture and WebGL requires WEBGL_depth_texture extensions
 u32 rlLoadTextureDepth(i32 width, i32 height, bool useRenderBuffer) {
@@ -4981,6 +4287,7 @@ u32 rlLoadTextureDepth(i32 width, i32 height, bool useRenderBuffer) {
     }
     return id;
 }
+
 // Load texture cubemap
 // NOTE: Cubemap data is expected to be 6 images in a single data array (one after the other),
 // expected the following convention: +X, -X, +Y, -Y, +Z, -Z
@@ -5046,6 +4353,7 @@ u32 rlLoadTextureCubemap(void* data, i32 size, i32 format_var, i32 mipmapCount) 
     }
     return id;
 }
+
 // Update already loaded texture in GPU with new data
 // WARNING: Not possible to know safely if internal texture format is the expected one...
 void rlUpdateTexture(u32 id, i32 offsetX, i32 offsetY, i32 width, i32 height, i32 format_var, void* data) {
@@ -5059,6 +4367,7 @@ void rlUpdateTexture(u32 id, i32 offsetX, i32 offsetY, i32 width, i32 height, i3
     } else {
     }
 }
+
 // Get OpenGL internal formats and data type from raylib PixelFormat
 void rlGetGlTextureFormats(i32 format_var, u32* glInternalFormat, u32* glFormat, u32* glType) {
     *glInternalFormat = 0;
@@ -5144,67 +4453,69 @@ void rlGetGlTextureFormats(i32 format_var, u32* glInternalFormat, u32* glFormat,
         }
         case RL_PIXELFORMAT_COMPRESSED_DXT1_RGB: {
             if RLGL.ExtSupported.texCompDXT != 0 {
-                *glInternalFormat = 33776;
+                *glInternalFormat = 0x83F0;
             }
         }
         case RL_PIXELFORMAT_COMPRESSED_DXT1_RGBA: {
             if RLGL.ExtSupported.texCompDXT != 0 {
-                *glInternalFormat = 33777;
+                *glInternalFormat = 0x83F1;
             }
         }
         case RL_PIXELFORMAT_COMPRESSED_DXT3_RGBA: {
             if RLGL.ExtSupported.texCompDXT != 0 {
-                *glInternalFormat = 33778;
+                *glInternalFormat = 0x83F2;
             }
         }
         case RL_PIXELFORMAT_COMPRESSED_DXT5_RGBA: {
             if RLGL.ExtSupported.texCompDXT != 0 {
-                *glInternalFormat = 33779;
+                *glInternalFormat = 0x83F3;
             }
         }
         case RL_PIXELFORMAT_COMPRESSED_ETC1_RGB: {
             if RLGL.ExtSupported.texCompETC1 != 0 {
-                *glInternalFormat = 36196;
+                *glInternalFormat = 0x8D64;
             }
         }
         case RL_PIXELFORMAT_COMPRESSED_ETC2_RGB: {
             if RLGL.ExtSupported.texCompETC2 != 0 {
-                *glInternalFormat = 37492;
+                *glInternalFormat = 0x9274;
             }
         }
         case RL_PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA: {
             if RLGL.ExtSupported.texCompETC2 != 0 {
-                *glInternalFormat = 37496;
+                *glInternalFormat = 0x9278;
             }
         }
         case RL_PIXELFORMAT_COMPRESSED_PVRT_RGB: {
             if RLGL.ExtSupported.texCompPVRT != 0 {
-                *glInternalFormat = 35840;
+                *glInternalFormat = 0x8C00;
             }
         }
         case RL_PIXELFORMAT_COMPRESSED_PVRT_RGBA: {
             if RLGL.ExtSupported.texCompPVRT != 0 {
-                *glInternalFormat = 35842;
+                *glInternalFormat = 0x8C02;
             }
         }
         case RL_PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA: {
             if RLGL.ExtSupported.texCompASTC != 0 {
-                *glInternalFormat = 37808;
+                *glInternalFormat = 0x93b0;
             }
         }
         case RL_PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA: {
             if RLGL.ExtSupported.texCompASTC != 0 {
-                *glInternalFormat = 37815;
+                *glInternalFormat = 0x93b7;
             }
         }
         default: {
         }
     }
 }
+
 // Unload texture from GPU memory
 void rlUnloadTexture(u32 id) {
     glDeleteTextures(1, &id);
 }
+
 // Generate mipmap data for selected texture
 // NOTE: Only supports GPU mipmap generation
 void rlGenTextureMipmaps(u32 id, i32 width, i32 height, i32 format_var, i32* mipmaps) {
@@ -5223,6 +4534,7 @@ void rlGenTextureMipmaps(u32 id, i32 width, i32 height, i32 format_var, i32* mip
     }
     glBindTexture(GL_TEXTURE_2D, 0);
 }
+
 // Read texture pixel data
 void* rlReadTexturePixels(u32 id, i32 width, i32 height, i32 format_var) {
     void* pixels = null;
@@ -5236,12 +4548,15 @@ void* rlReadTexturePixels(u32 id, i32 width, i32 height, i32 format_var) {
     rlUnloadFramebuffer(fboId);
     return pixels;
 }
+
 // Copy framebuffer pixel data to internal buffer
 void rlCopyFramebuffer(i32 x, i32 y, i32 width, i32 height, i32 format_var, void* pixels) {
 }
+
 // Resize internal framebuffer
 void rlResizeFramebuffer(i32 width, i32 height) {
 }
+
 // Read screen pixel data (color buffer)
 u8* rlReadScreenPixels(i32 width, i32 height) {
     var imgData = new(u8[width * height * 4]);
@@ -5265,6 +4580,7 @@ u8* rlReadScreenPixels(i32 width, i32 height) {
     }
     return imgData;
 }
+
 // Framebuffer management (fbo)
 //-----------------------------------------------------------------------------------------
 // Load a framebuffer to be used for rendering
@@ -5278,6 +4594,7 @@ u32 rlLoadFramebuffer() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return fboId;
 }
+
 // Attach color buffer texture to a framebuffer object (unloads previous attachment)
 // NOTE: Attach type: 0-Color, 1-Depth renderbuffer, 2-Depth texture
 void rlFramebufferAttach(u32 id, u32 texId, i32 attachType, i32 texType, i32 mipLevel) {
@@ -5317,6 +4634,7 @@ void rlFramebufferAttach(u32 id, u32 texId, i32 attachType, i32 texType, i32 mip
     }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
+
 // Verify render texture is complete
 bool rlFramebufferComplete(u32 id) {
     bool result = false;
@@ -5340,6 +4658,7 @@ bool rlFramebufferComplete(u32 id) {
     result = status == GL_FRAMEBUFFER_COMPLETE;
     return result;
 }
+
 // Unload framebuffer from GPU memory
 // NOTE: All attached textures/cubemaps/renderbuffers are also deleted
 void rlUnloadFramebuffer(u32 id) {
@@ -5357,6 +4676,7 @@ void rlUnloadFramebuffer(u32 id) {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glDeleteFramebuffers(1, &id);
 }
+
 // Vertex data management
 //-----------------------------------------------------------------------------------------
 // Load a new attributes buffer
@@ -5370,6 +4690,7 @@ u32 rlLoadVertexBuffer(void* buffer, i32 size, bool dynamic) {
     glBufferData(GL_ARRAY_BUFFER, size, buffer, dynamic != 0 ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
     return id;
 }
+
 // Load a new attributes element buffer
 u32 rlLoadVertexBufferElement(void* buffer, i32 size, bool dynamic) {
     u32 id = 0;
@@ -5381,34 +4702,41 @@ u32 rlLoadVertexBufferElement(void* buffer, i32 size, bool dynamic) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, buffer, dynamic != 0 ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
     return id;
 }
+
 // Enable vertex buffer (VBO)
 void rlEnableVertexBuffer(u32 id) {
     glBindBuffer(GL_ARRAY_BUFFER, id);
 }
+
 // Disable vertex buffer (VBO)
 void rlDisableVertexBuffer() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
+
 // Enable vertex buffer element (VBO element)
 void rlEnableVertexBufferElement(u32 id) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
 }
+
 // Disable vertex buffer element (VBO element)
 void rlDisableVertexBufferElement() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
+
 // Update vertex buffer with new data
 // NOTE: dataSize and offset must be provided in bytes
 void rlUpdateVertexBuffer(u32 id, void* data, i32 dataSize, i32 offset) {
     glBindBuffer(GL_ARRAY_BUFFER, id);
     glBufferSubData(GL_ARRAY_BUFFER, offset, dataSize, data);
 }
+
 // Update vertex buffer elements with new data
 // NOTE: dataSize and offset must be provided in bytes
 void rlUpdateVertexBufferElements(u32 id, void* data, i32 dataSize, i32 offset) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
     glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, dataSize, data);
 }
+
 // Enable vertex array object (VAO)
 bool rlEnableVertexArray(u32 vaoId) {
     bool result = false;
@@ -5418,24 +4746,29 @@ bool rlEnableVertexArray(u32 vaoId) {
     }
     return result;
 }
+
 // Disable vertex array object (VAO)
 void rlDisableVertexArray() {
     if RLGL.ExtSupported.vao != 0 {
         glBindVertexArray(0);
     }
 }
+
 // Enable vertex attribute index
 void rlEnableVertexAttribute(u32 index) {
     glEnableVertexAttribArray(index);
 }
+
 // Disable vertex attribute index
 void rlDisableVertexAttribute(u32 index) {
     glDisableVertexAttribArray(index);
 }
+
 // Draw vertex array
 void rlDrawVertexArray(i32 offset, i32 count) {
     glDrawArrays(GL_TRIANGLES, offset, count);
 }
+
 // Draw vertex array elements
 void rlDrawVertexArrayElements(i32 offset, i32 count, void* buffer) {
     var bufferPtr = cast(u16*, buffer);
@@ -5444,10 +4777,12 @@ void rlDrawVertexArrayElements(i32 offset, i32 count, void* buffer) {
     }
     glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_SHORT, bufferPtr);
 }
+
 // Draw vertex array instanced
 void rlDrawVertexArrayInstanced(i32 offset, i32 count, i32 instances) {
     glDrawArraysInstanced(GL_TRIANGLES, offset, count, instances);
 }
+
 // Draw vertex array elements instanced
 void rlDrawVertexArrayElementsInstanced(i32 offset, i32 count, void* buffer, i32 instances) {
     var bufferPtr = cast(u16*, buffer);
@@ -5456,12 +4791,15 @@ void rlDrawVertexArrayElementsInstanced(i32 offset, i32 count, void* buffer, i32
     }
     glDrawElementsInstanced(GL_TRIANGLES, count, GL_UNSIGNED_SHORT, bufferPtr, instances);
 }
+
 // Enable vertex state pointer
 void rlEnableStatePointer(i32 vertexAttribType, void* buffer) {
 }
+
 // Disable vertex state pointer
 void rlDisableStatePointer(i32 vertexAttribType) {
 }
+
 // Load vertex array object (VAO)
 u32 rlLoadVertexArray() {
     u32 vaoId = 0;
@@ -5473,15 +4811,18 @@ u32 rlLoadVertexArray() {
     }
     return vaoId;
 }
+
 // Set vertex attribute
 void rlSetVertexAttribute(u32 index, i32 compSize, i32 type, bool normalized, i32 stride, i32 offset) {
     var offsetNative = cast(u64, offset);
     glVertexAttribPointer(index, compSize, cast(u32, type), cast(u8, normalized), stride, cast(void*, offsetNative));
 }
+
 // Set vertex attribute divisor
 void rlSetVertexAttributeDivisor(u32 index, i32 divisor) {
     glVertexAttribDivisor(index, cast(u32, divisor));
 }
+
 // Unload vertex array object (VAO)
 void rlUnloadVertexArray(u32 vaoId) {
     if RLGL.ExtSupported.vao != 0 {
@@ -5489,10 +4830,12 @@ void rlUnloadVertexArray(u32 vaoId) {
         glDeleteVertexArrays(1, &vaoId);
     }
 }
+
 // Unload vertex buffer (VBO)
 void rlUnloadVertexBuffer(u32 vboId) {
     glDeleteBuffers(1, &vboId);
 }
+
 // Shaders management
 //-----------------------------------------------------------------------------------------------
 // Load (compile) shader and return shader id
@@ -5534,6 +4877,7 @@ u32 rlLoadShader(u8* code, i32 type) {
     }
     return shaderId;
 }
+
 // Load shader program from code strings
 // NOTE: If shader string is NULL, using default vertex/fragment shaders
 u32 rlLoadShaderProgram(u8* vsCode, u8* fsCode) {
@@ -5575,6 +4919,7 @@ u32 rlLoadShaderProgram(u8* vsCode, u8* fsCode) {
     }
     return id;
 }
+
 // Load shader program from already loaded shader ids
 u32 rlLoadShaderProgramEx(u32 vsId, u32 fsId) {
     u32 programId = 0;
@@ -5611,19 +4956,23 @@ u32 rlLoadShaderProgramEx(u32 vsId, u32 fsId) {
     }
     return programId;
 }
+
 // Load compute shader program
 u32 rlLoadShaderProgramCompute(u32 csId) {
     u32 programId = 0;
     return programId;
 }
+
 // Delete shader
 void rlUnloadShader(u32 id) {
     glDeleteShader(id);
 }
+
 // Unload shader program
 void rlUnloadShaderProgram(u32 id) {
     glDeleteProgram(id);
 }
+
 // Get shader location uniform
 // NOTE: First parameter refers to shader program id
 i32 rlGetLocationUniform(u32 id, u8* uniformName) {
@@ -5631,6 +4980,7 @@ i32 rlGetLocationUniform(u32 id, u8* uniformName) {
     location = glGetUniformLocation(id, uniformName);
     return location;
 }
+
 // Get shader location attribute
 // NOTE: First parameter refers to shader program id
 i32 rlGetLocationAttrib(u32 id, u8* attribName) {
@@ -5638,6 +4988,7 @@ i32 rlGetLocationAttrib(u32 id, u8* attribName) {
     location = glGetAttribLocation(id, attribName);
     return location;
 }
+
 // Set shader value uniform
 void rlSetUniform(i32 locIndex, void* value, i32 uniformType, i32 count) {
     switch uniformType {
@@ -5672,6 +5023,7 @@ void rlSetUniform(i32 locIndex, void* value, i32 uniformType, i32 count) {
         }
     }
 }
+
 // Set shader value attribute
 void rlSetVertexAttributeDefault(i32 locIndex, void* value, i32 attribType, i32 count) {
     switch attribType {
@@ -5699,14 +5051,17 @@ void rlSetVertexAttributeDefault(i32 locIndex, void* value, i32 attribType, i32 
         }
     }
 }
+
 // Set shader value uniform matrix
 void rlSetUniformMatrix(i32 locIndex, Matrix mat) {
     glUniformMatrix4fv(locIndex, 1, false, rlMatrixToFloatV(mat).v);
 }
+
 // Set shader value uniform matrix
 void rlSetUniformMatrices(i32 locIndex, Matrix* matrices, i32 count) {
     glUniformMatrix4fv(locIndex, count, false, cast(f32*, matrices));
 }
+
 // Set shader value uniform sampler
 void rlSetUniformSampler(i32 locIndex, u32 textureId) {
     for i32 i = 0; i < 4; i++ {
@@ -5723,6 +5078,7 @@ void rlSetUniformSampler(i32 locIndex, u32 textureId) {
         }
     }
 }
+
 // Set shader currently active (id and locations)
 void rlSetShader(u32 id, i32* locs) {
     if RLGL.State.currentShaderId != id {
@@ -5731,37 +5087,47 @@ void rlSetShader(u32 id, i32* locs) {
         RLGL.State.currentShaderLocs = locs;
     }
 }
+
 // Dispatch compute shader (equivalent to *draw* for graphics pilepine)
 void rlComputeShaderDispatch(u32 groupX, u32 groupY, u32 groupZ) {
 }
+
 // Load shader storage buffer object (SSBO)
 u32 rlLoadShaderBuffer(u32 size, void* data, i32 usageHint) {
     u32 ssbo = 0;
     return ssbo;
 }
+
 // Unload shader storage buffer object (SSBO)
 void rlUnloadShaderBuffer(u32 ssboId) {
 }
+
 // Update SSBO buffer data
 void rlUpdateShaderBuffer(u32 id, void* data, u32 dataSize, u32 offset) {
 }
+
 // Get SSBO buffer size
 u32 rlGetShaderBufferSize(u32 id) {
     u32 result = 0;
     return result;
 }
+
 // Read SSBO buffer data (GPU->CPU)
 void rlReadShaderBuffer(u32 id, void* dest, u32 count, u32 offset) {
 }
+
 // Bind SSBO buffer
 void rlBindShaderBuffer(u32 id, u32 index) {
 }
+
 // Copy SSBO buffer data
 void rlCopyShaderBuffer(u32 destId, u32 srcId, u32 destOffset, u32 srcOffset, u32 count) {
 }
+
 // Bind image texture
 void rlBindImageTexture(u32 id, u32 index, i32 format_var, bool readonly) {
 }
+
 // Matrix state management
 //-----------------------------------------------------------------------------------------
 // Get internal modelview matrix
@@ -5770,51 +5136,63 @@ Matrix rlGetMatrixModelview() {
     matrix = RLGL.State.modelview;
     return matrix;
 }
+
 // Get internal projection matrix
 Matrix rlGetMatrixProjection() {
     return RLGL.State.projection;
 }
+
 // Get internal accumulated transform matrix
 Matrix rlGetMatrixTransform() {
     Matrix mat = rlMatrixIdentity();
     mat = RLGL.State.transform;
     return mat;
 }
+
 // Get internal projection matrix for stereo render (selected eye)
 Matrix rlGetMatrixProjectionStereo(i32 eye) {
     Matrix mat = rlMatrixIdentity();
     mat = RLGL.State.projectionStereo[eye];
     return mat;
 }
+
 // Get internal view offset matrix for stereo render (selected eye)
 Matrix rlGetMatrixViewOffsetStereo(i32 eye) {
     Matrix mat = rlMatrixIdentity();
     mat = RLGL.State.viewOffsetStereo[eye];
     return mat;
 }
+
 // Set a custom modelview matrix (replaces internal modelview matrix)
 void rlSetMatrixModelview(Matrix view) {
     RLGL.State.modelview = view;
 }
+
 // Set a custom projection matrix (replaces internal projection matrix)
 void rlSetMatrixProjection(Matrix projection) {
     RLGL.State.projection = projection;
 }
+
 // Set eyes projection matrices for stereo rendering
 void rlSetMatrixProjectionStereo(Matrix right, Matrix left) {
     RLGL.State.projectionStereo[0] = right;
     RLGL.State.projectionStereo[1] = left;
 }
+
 // Set eyes view offsets matrices for stereo rendering
 void rlSetMatrixViewOffsetStereo(Matrix right, Matrix left) {
     RLGL.State.viewOffsetStereo[0] = right;
     RLGL.State.viewOffsetStereo[1] = left;
 }
+
 // Load and draw a quad in NDC
 void rlLoadDrawQuad() {
     u32 quadVAO = 0;
     u32 quadVBO = 0;
-    f32[20] vertices = {-1.0f, 1.0f, 0.0f, 0.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f};
+    f32[20] vertices = {
+        -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+        1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+    };
     glGenVertexArrays(1, &quadVAO);
     glBindVertexArray(quadVAO);
     glGenBuffers(1, &quadVBO);
@@ -5830,11 +5208,33 @@ void rlLoadDrawQuad() {
     glDeleteBuffers(1, &quadVBO);
     glDeleteVertexArrays(1, &quadVAO);
 }
+
 // Load and draw a cube in NDC
 void rlLoadDrawCube() {
     u32 cubeVAO = 0;
     u32 cubeVBO = 0;
-    f32[288] vertices = {-1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, -1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, -1.0f, -1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, -1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, -1.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f};
+    f32[288] vertices = {
+        -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, -1.0f,
+        1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f, 1.0f, 1.0f, -1.0f, 0.0f,
+        0.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 1.0f,
+        -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+        1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+        0.0f, 1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f, -1.0f,
+        0.0f, 0.0f, 1.0f, 0.0f, -1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+        -1.0f, -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, -1.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f,
+        0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f,
+        1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+        -1.0f, -1.0f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 1.0f,
+        0.0f, 1.0f, -1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, -1.0f, -1.0f, 1.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, 0.0f, -1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, -1.0f,
+        0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+        -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, -1.0f,
+        1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+    };
     glGenVertexArrays(1, &cubeVAO);
     glBindVertexArray(cubeVAO);
     glGenBuffers(1, &cubeVBO);
@@ -5855,6 +5255,7 @@ void rlLoadDrawCube() {
     glDeleteBuffers(1, &cubeVBO);
     glDeleteVertexArrays(1, &cubeVAO);
 }
+
 // Get name string for pixel format
 u8* rlGetPixelFormatName(u32 format_var) {
     switch format_var {
@@ -5935,6 +5336,7 @@ u8* rlGetPixelFormatName(u32 format_var) {
         }
     }
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition
 //----------------------------------------------------------------------------------
@@ -5962,6 +5364,7 @@ void rlLoadShaderDefault() {
     } else {
     }
 }
+
 // Unload default shader
 // NOTE: Unloads: RLGL.State.defaultShaderId, RLGL.State.defaultShaderLocs
 void rlUnloadShaderDefault() {
@@ -5973,6 +5376,7 @@ void rlUnloadShaderDefault() {
     glDeleteProgram(RLGL.State.defaultShaderId);
     free(RLGL.State.defaultShaderLocs);
 }
+
 // Get pixel data size in bytes (image or texture)
 // NOTE: Size depends on pixel format
 i32 rlGetPixelDataSize(i32 width, i32 height, i32 format_var) {
@@ -6039,6 +5443,7 @@ i32 rlGetPixelDataSize(i32 width, i32 height, i32 format_var) {
     }
     return dataSize;
 }
+
 // Auxiliar math functions
 //-------------------------------------------------------------------------------
 // Get identity matrix
@@ -6050,6 +5455,7 @@ Matrix rlMatrixIdentity() {
     matIdentity.m15 = 1.0f;
     return matIdentity;
 }
+
 // Get float array of matrix data
 // Explicit conversion to column-major memory layout
 rl_float16 rlMatrixToFloatV(Matrix mat) {
@@ -6072,6 +5478,7 @@ rl_float16 rlMatrixToFloatV(Matrix mat) {
     result.v[15] = mat.m15;
     return result;
 }
+
 // Get two matrix multiplication
 // NOTE: When multiplying matrices... the order matters!
 Matrix rlMatrixMultiply(Matrix left, Matrix right) {
@@ -6094,6 +5501,7 @@ Matrix rlMatrixMultiply(Matrix left, Matrix right) {
     result.m15 = left.m12 * right.m3 + left.m13 * right.m7 + left.m14 * right.m11 + left.m15 * right.m15;
     return result;
 }
+
 // Transposes provided matrix
 Matrix rlMatrixTranspose(Matrix mat) {
     Matrix result;
@@ -6115,6 +5523,7 @@ Matrix rlMatrixTranspose(Matrix mat) {
     result.m15 = mat.m15;
     return result;
 }
+
 // Invert provided matrix
 Matrix rlMatrixInvert(Matrix mat) {
     Matrix result;
@@ -6166,7 +5575,6 @@ Matrix rlMatrixInvert(Matrix mat) {
     return result;
 }
 }
-// OpenGL abstraction layer to OpenGL 1.1, 3.3+ or ES2
 /**********************************************************************************************
 *
 *   raymath v2.0 - Math functions to work with Vector2, Vector3, Vector4, Matrix and Quaternions
@@ -6224,8 +5632,7 @@ Matrix rlMatrixInvert(Matrix mat) {
 *     3. This notice may not be removed or altered from any source distribution.
 *
 **********************************************************************************************/
-when defined(RAYMATH_STATIC_INLINE) {
-}
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition - Utils math
 //----------------------------------------------------------------------------------
@@ -6237,31 +5644,37 @@ f32 Clamp(f32 value, f32 min, f32 max) {
     }
     return result;
 }
+
 // Calculate linear interpolation between two floats
 f32 Lerp(f32 start, f32 end, f32 amount) {
     f32 result = start + amount * (end - start);
     return result;
 }
+
 // Normalize input value within input range
 f32 Normalize(f32 value, f32 start, f32 end) {
     f32 result = (value - start) / (end - start);
     return result;
 }
+
 // Remap input value within input range to output range
 f32 Remap(f32 value, f32 inputStart, f32 inputEnd, f32 outputStart, f32 outputEnd) {
     f32 result = (value - inputStart) / (inputEnd - inputStart) * (outputEnd - outputStart) + outputStart;
     return result;
 }
+
 // Wrap input value from min to max
 f32 Wrap(f32 value, f32 min, f32 max) {
     f32 result = value - (max - min) * floorf((value - min) / (max - min));
     return result;
 }
+
 // Check whether two given floats are almost equal
 i32 FloatEquals(f32 x, f32 y) {
-    i32 result = fabsf(x - y) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(x), fabsf(y)));
+    i32 result = fabsf(x - y) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(x), fabsf(y)));
     return result;
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition - Vector2 math
 //----------------------------------------------------------------------------------
@@ -6270,61 +5683,73 @@ Vector2 Vector2Zero() {
     var result = Vector2{0.0f, 0.0f};
     return result;
 }
+
 // Vector with components value 1.0f
 Vector2 Vector2One() {
     var result = Vector2{1.0f, 1.0f};
     return result;
 }
+
 // Add two vectors (v1 + v2)
 Vector2 Vector2Add(Vector2 v1, Vector2 v2) {
     var result = Vector2{v1.x + v2.x, v1.y + v2.y};
     return result;
 }
+
 // Add vector and float value
 Vector2 Vector2AddValue(Vector2 v, f32 add) {
     var result = Vector2{v.x + add, v.y + add};
     return result;
 }
+
 // Subtract two vectors (v1 - v2)
 Vector2 Vector2Subtract(Vector2 v1, Vector2 v2) {
     var result = Vector2{v1.x - v2.x, v1.y - v2.y};
     return result;
 }
+
 // Subtract vector by float value
 Vector2 Vector2SubtractValue(Vector2 v, f32 sub) {
     var result = Vector2{v.x - sub, v.y - sub};
     return result;
 }
+
 // Calculate vector length
 f32 Vector2Length(Vector2 v) {
     f32 result = sqrtf(v.x * v.x + v.y * v.y);
     return result;
 }
+
 // Calculate vector square length
 f32 Vector2LengthSqr(Vector2 v) {
     f32 result = v.x * v.x + v.y * v.y;
     return result;
 }
+
 // Calculate two vectors dot product
 f32 Vector2DotProduct(Vector2 v1, Vector2 v2) {
     f32 result = v1.x * v2.x + v1.y * v2.y;
     return result;
 }
+
 // Calculate two vectors cross product
 f32 Vector2CrossProduct(Vector2 v1, Vector2 v2) {
     f32 result = v1.x * v2.y - v1.y * v2.x;
     return result;
 }
+
 // Calculate distance between two vectors
 f32 Vector2Distance(Vector2 v1, Vector2 v2) {
     f32 result = sqrtf((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y));
     return result;
 }
+
 // Calculate square distance between two vectors
 f32 Vector2DistanceSqr(Vector2 v1, Vector2 v2) {
     f32 result = (v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y);
     return result;
 }
+
 // Calculate the signed angle from v1 to v2, relative to the origin (0, 0)
 // NOTE: Coordinate system convention: positive X right, positive Y down
 // positive angles appear clockwise, and negative angles appear counterclockwise
@@ -6335,6 +5760,7 @@ f32 Vector2Angle(Vector2 v1, Vector2 v2) {
     result = atan2f(det, dot);
     return result;
 }
+
 // Calculate angle defined by a two vectors line
 // NOTE: Parameters need to be normalized
 // Current implementation should be aligned with glm::angle
@@ -6343,26 +5769,31 @@ f32 Vector2LineAngle(Vector2 start, Vector2 end) {
     result = -atan2f(end.y - start.y, end.x - start.x);
     return result;
 }
+
 // Scale vector (multiply by value)
 Vector2 Vector2Scale(Vector2 v, f32 scale) {
     var result = Vector2{v.x * scale, v.y * scale};
     return result;
 }
+
 // Multiply vector by vector
 Vector2 Vector2Multiply(Vector2 v1, Vector2 v2) {
     var result = Vector2{v1.x * v2.x, v1.y * v2.y};
     return result;
 }
+
 // Negate vector
 Vector2 Vector2Negate(Vector2 v) {
     var result = Vector2{-v.x, -v.y};
     return result;
 }
+
 // Divide vector by vector
 Vector2 Vector2Divide(Vector2 v1, Vector2 v2) {
     var result = Vector2{v1.x / v2.x, v1.y / v2.y};
     return result;
 }
+
 // Normalize provided vector
 Vector2 Vector2Normalize(Vector2 v) {
     Vector2 result;
@@ -6374,6 +5805,7 @@ Vector2 Vector2Normalize(Vector2 v) {
     }
     return result;
 }
+
 // Transforms a Vector2 by a given Matrix
 Vector2 Vector2Transform(Vector2 v, Matrix mat) {
     Vector2 result;
@@ -6384,6 +5816,7 @@ Vector2 Vector2Transform(Vector2 v, Matrix mat) {
     result.y = mat.m1 * x + mat.m5 * y + mat.m9 * z + mat.m13;
     return result;
 }
+
 // Calculate linear interpolation between two vectors
 Vector2 Vector2Lerp(Vector2 v1, Vector2 v2, f32 amount) {
     Vector2 result;
@@ -6391,6 +5824,7 @@ Vector2 Vector2Lerp(Vector2 v1, Vector2 v2, f32 amount) {
     result.y = v1.y + amount * (v2.y - v1.y);
     return result;
 }
+
 // Calculate reflected vector to normal
 Vector2 Vector2Reflect(Vector2 v, Vector2 normal) {
     Vector2 result;
@@ -6399,6 +5833,7 @@ Vector2 Vector2Reflect(Vector2 v, Vector2 normal) {
     result.y = v.y - 2.0f * normal.y * dotProduct;
     return result;
 }
+
 // Get min value for each pair of components
 Vector2 Vector2Min(Vector2 v1, Vector2 v2) {
     Vector2 result;
@@ -6406,6 +5841,7 @@ Vector2 Vector2Min(Vector2 v1, Vector2 v2) {
     result.y = fminf(v1.y, v2.y);
     return result;
 }
+
 // Get max value for each pair of components
 Vector2 Vector2Max(Vector2 v1, Vector2 v2) {
     Vector2 result;
@@ -6413,6 +5849,7 @@ Vector2 Vector2Max(Vector2 v1, Vector2 v2) {
     result.y = fmaxf(v1.y, v2.y);
     return result;
 }
+
 // Rotate vector by angle
 Vector2 Vector2Rotate(Vector2 v, f32 angle) {
     Vector2 result;
@@ -6422,6 +5859,7 @@ Vector2 Vector2Rotate(Vector2 v, f32 angle) {
     result.y = v.x * sinres + v.y * cosres;
     return result;
 }
+
 // Move Vector towards target
 Vector2 Vector2MoveTowards(Vector2 v, Vector2 target, f32 maxDistance) {
     Vector2 result;
@@ -6436,11 +5874,13 @@ Vector2 Vector2MoveTowards(Vector2 v, Vector2 target, f32 maxDistance) {
     result.y = v.y + dy / dist * maxDistance;
     return result;
 }
+
 // Invert the given vector
 Vector2 Vector2Invert(Vector2 v) {
     var result = Vector2{1.0f / v.x, 1.0f / v.y};
     return result;
 }
+
 // Clamp the components of the vector between
 // min and max values specified by the given vectors
 Vector2 Vector2Clamp(Vector2 v, Vector2 min, Vector2 max) {
@@ -6449,6 +5889,7 @@ Vector2 Vector2Clamp(Vector2 v, Vector2 min, Vector2 max) {
     result.y = fminf(max.y, fmaxf(min.y, v.y));
     return result;
 }
+
 // Clamp the magnitude of the vector between two min and max values
 Vector2 Vector2ClampValue(Vector2 v, f32 min, f32 max) {
     Vector2 result = v;
@@ -6466,11 +5907,13 @@ Vector2 Vector2ClampValue(Vector2 v, f32 min, f32 max) {
     }
     return result;
 }
+
 // Check whether two given vectors are almost equal
 i32 Vector2Equals(Vector2 p, Vector2 q) {
-    i32 result = fabsf(p.x - q.x) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))) && fabsf(p.y - q.y) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y)));
+    i32 result = fabsf(p.x - q.x) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))) && fabsf(p.y - q.y) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y)));
     return result;
 }
+
 // Compute the direction of a refracted ray
 // v: normalized direction of the incoming ray
 // n: normalized normal vector of the interface of two optical media
@@ -6488,6 +5931,7 @@ Vector2 Vector2Refract(Vector2 v, Vector2 n, f32 r) {
     }
     return result;
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition - Vector3 math
 //----------------------------------------------------------------------------------
@@ -6496,46 +5940,57 @@ Vector3 Vector3Zero() {
     var result = Vector3{0.0f, 0.0f, 0.0f};
     return result;
 }
+
 // Vector with components value 1.0f
 Vector3 Vector3One() {
     var result = Vector3{1.0f, 1.0f, 1.0f};
     return result;
 }
+
 // Add two vectors
 Vector3 Vector3Add(Vector3 v1, Vector3 v2) {
     var result = Vector3{v1.x + v2.x, v1.y + v2.y, v1.z + v2.z};
     return result;
 }
+
 // Add vector and float value
 Vector3 Vector3AddValue(Vector3 v, f32 add) {
     var result = Vector3{v.x + add, v.y + add, v.z + add};
     return result;
 }
+
 // Subtract two vectors
 Vector3 Vector3Subtract(Vector3 v1, Vector3 v2) {
     var result = Vector3{v1.x - v2.x, v1.y - v2.y, v1.z - v2.z};
     return result;
 }
+
 // Subtract vector by float value
 Vector3 Vector3SubtractValue(Vector3 v, f32 sub) {
     var result = Vector3{v.x - sub, v.y - sub, v.z - sub};
     return result;
 }
+
 // Multiply vector by scalar
 Vector3 Vector3Scale(Vector3 v, f32 scalar) {
     var result = Vector3{v.x * scalar, v.y * scalar, v.z * scalar};
     return result;
 }
+
 // Multiply vector by vector
 Vector3 Vector3Multiply(Vector3 v1, Vector3 v2) {
     var result = Vector3{v1.x * v2.x, v1.y * v2.y, v1.z * v2.z};
     return result;
 }
+
 // Calculate two vectors cross product
 Vector3 Vector3CrossProduct(Vector3 v1, Vector3 v2) {
-    var result = Vector3{v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x};
+    var result = Vector3{
+        v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x,
+    };
     return result;
 }
+
 // Calculate one vector perpendicular vector
 Vector3 Vector3Perpendicular(Vector3 v) {
     Vector3 result;
@@ -6555,21 +6010,25 @@ Vector3 Vector3Perpendicular(Vector3 v) {
     result.z = v.x * cardinalAxis.y - v.y * cardinalAxis.x;
     return result;
 }
+
 // Calculate vector length
 f32 Vector3Length(Vector3 v) {
     f32 result = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
     return result;
 }
+
 // Calculate vector square length
 f32 Vector3LengthSqr(Vector3 v) {
     f32 result = v.x * v.x + v.y * v.y + v.z * v.z;
     return result;
 }
+
 // Calculate two vectors dot product
 f32 Vector3DotProduct(Vector3 v1, Vector3 v2) {
     f32 result = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
     return result;
 }
+
 // Calculate distance between two vectors
 f32 Vector3Distance(Vector3 v1, Vector3 v2) {
     f32 result = 0.0f;
@@ -6579,6 +6038,7 @@ f32 Vector3Distance(Vector3 v1, Vector3 v2) {
     result = sqrtf(dx * dx + dy * dy + dz * dz);
     return result;
 }
+
 // Calculate square distance between two vectors
 f32 Vector3DistanceSqr(Vector3 v1, Vector3 v2) {
     f32 result = 0.0f;
@@ -6588,25 +6048,31 @@ f32 Vector3DistanceSqr(Vector3 v1, Vector3 v2) {
     result = dx * dx + dy * dy + dz * dz;
     return result;
 }
+
 // Calculate angle between two vectors
 f32 Vector3Angle(Vector3 v1, Vector3 v2) {
     f32 result = 0.0f;
-    var cross = Vector3{v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x};
+    var cross = Vector3{
+        v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x,
+    };
     f32 len = sqrtf(cross.x * cross.x + cross.y * cross.y + cross.z * cross.z);
     f32 dot = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
     result = atan2f(len, dot);
     return result;
 }
+
 // Negate provided vector (invert direction)
 Vector3 Vector3Negate(Vector3 v) {
     var result = Vector3{-v.x, -v.y, -v.z};
     return result;
 }
+
 // Divide vector by vector
 Vector3 Vector3Divide(Vector3 v1, Vector3 v2) {
     var result = Vector3{v1.x / v2.x, v1.y / v2.y, v1.z / v2.z};
     return result;
 }
+
 // Normalize provided vector
 Vector3 Vector3Normalize(Vector3 v) {
     Vector3 result = v;
@@ -6619,6 +6085,7 @@ Vector3 Vector3Normalize(Vector3 v) {
     }
     return result;
 }
+
 //Calculate the projection of the vector v1 on to v2
 Vector3 Vector3Project(Vector3 v1, Vector3 v2) {
     Vector3 result;
@@ -6630,6 +6097,7 @@ Vector3 Vector3Project(Vector3 v1, Vector3 v2) {
     result.z = v2.z * mag;
     return result;
 }
+
 //Calculate the rejection of the vector v1 on to v2
 Vector3 Vector3Reject(Vector3 v1, Vector3 v2) {
     Vector3 result;
@@ -6641,6 +6109,7 @@ Vector3 Vector3Reject(Vector3 v1, Vector3 v2) {
     result.z = v1.z - v2.z * mag;
     return result;
 }
+
 // Orthonormalize provided vectors
 // Makes vectors normalized and orthogonal to each other
 // Gram-Schmidt function implementation
@@ -6656,7 +6125,9 @@ void Vector3OrthoNormalize(Vector3* v1, Vector3* v2) {
     v1.x *= ilength;
     v1.y *= ilength;
     v1.z *= ilength;
-    var vn1 = Vector3{v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x};
+    var vn1 = Vector3{
+        v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x,
+    };
     v = vn1;
     length = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
     if length == 0.0f {
@@ -6666,9 +6137,12 @@ void Vector3OrthoNormalize(Vector3* v1, Vector3* v2) {
     vn1.x *= ilength;
     vn1.y *= ilength;
     vn1.z *= ilength;
-    var vn2 = Vector3{vn1.y * v1.z - vn1.z * v1.y, vn1.z * v1.x - vn1.x * v1.z, vn1.x * v1.y - vn1.y * v1.x};
+    var vn2 = Vector3{
+        vn1.y * v1.z - vn1.z * v1.y, vn1.z * v1.x - vn1.x * v1.z, vn1.x * v1.y - vn1.y * v1.x,
+    };
     *v2 = vn2;
 }
+
 // Transforms a Vector3 by a given Matrix
 Vector3 Vector3Transform(Vector3 v, Matrix mat) {
     Vector3 result;
@@ -6680,6 +6154,7 @@ Vector3 Vector3Transform(Vector3 v, Matrix mat) {
     result.z = mat.m2 * x + mat.m6 * y + mat.m10 * z + mat.m14;
     return result;
 }
+
 // Transform a vector by quaternion rotation
 Vector3 Vector3RotateByQuaternion(Vector3 v, Quaternion q) {
     Vector3 result;
@@ -6688,6 +6163,7 @@ Vector3 Vector3RotateByQuaternion(Vector3 v, Quaternion q) {
     result.z = v.x * (-2.0f * q.w * q.y + 2.0f * q.x * q.z) + v.y * (2.0f * q.w * q.x + 2.0f * q.y * q.z) + v.z * (q.w * q.w - q.x * q.x - q.y * q.y + q.z * q.z);
     return result;
 }
+
 // Rotates a vector around an axis
 Vector3 Vector3RotateByAxisAngle(Vector3 v, Vector3 axis, f32 angle) {
     Vector3 result = v;
@@ -6723,6 +6199,7 @@ Vector3 Vector3RotateByAxisAngle(Vector3 v, Vector3 axis, f32 angle) {
     result.z += wwv.z;
     return result;
 }
+
 // Move Vector towards target
 Vector3 Vector3MoveTowards(Vector3 v, Vector3 target, f32 maxDistance) {
     Vector3 result;
@@ -6739,6 +6216,7 @@ Vector3 Vector3MoveTowards(Vector3 v, Vector3 target, f32 maxDistance) {
     result.z = v.z + dz / dist * maxDistance;
     return result;
 }
+
 // Calculate linear interpolation between two vectors
 Vector3 Vector3Lerp(Vector3 v1, Vector3 v2, f32 amount) {
     Vector3 result;
@@ -6747,6 +6225,7 @@ Vector3 Vector3Lerp(Vector3 v1, Vector3 v2, f32 amount) {
     result.z = v1.z + amount * (v2.z - v1.z);
     return result;
 }
+
 // Calculate cubic hermite interpolation between two vectors and their tangents
 // as described in the GLTF 2.0 specification: https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#interpolation-cubic
 Vector3 Vector3CubicHermite(Vector3 v1, Vector3 tangent1, Vector3 v2, Vector3 tangent2, f32 amount) {
@@ -6758,6 +6237,7 @@ Vector3 Vector3CubicHermite(Vector3 v1, Vector3 tangent1, Vector3 v2, Vector3 ta
     result.z = (2.0f * amountPow3 - 3.0f * amountPow2 + 1.0f) * v1.z + (amountPow3 - 2.0f * amountPow2 + amount) * tangent1.z + (-2.0f * amountPow3 + 3.0f * amountPow2) * v2.z + (amountPow3 - amountPow2) * tangent2.z;
     return result;
 }
+
 // Calculate reflected vector to normal
 Vector3 Vector3Reflect(Vector3 v, Vector3 normal) {
     Vector3 result;
@@ -6767,6 +6247,7 @@ Vector3 Vector3Reflect(Vector3 v, Vector3 normal) {
     result.z = v.z - 2.0f * normal.z * dotProduct;
     return result;
 }
+
 // Get min value for each pair of components
 Vector3 Vector3Min(Vector3 v1, Vector3 v2) {
     Vector3 result;
@@ -6775,6 +6256,7 @@ Vector3 Vector3Min(Vector3 v1, Vector3 v2) {
     result.z = fminf(v1.z, v2.z);
     return result;
 }
+
 // Get max value for each pair of components
 Vector3 Vector3Max(Vector3 v1, Vector3 v2) {
     Vector3 result;
@@ -6783,6 +6265,7 @@ Vector3 Vector3Max(Vector3 v1, Vector3 v2) {
     result.z = fmaxf(v1.z, v2.z);
     return result;
 }
+
 // Compute barycenter coordinates (u, v, w) for point p with respect to triangle (a, b, c)
 // NOTE: Assumes P is on the plane of the triangle
 Vector3 Vector3Barycenter(Vector3 p, Vector3 a, Vector3 b, Vector3 c) {
@@ -6801,11 +6284,29 @@ Vector3 Vector3Barycenter(Vector3 p, Vector3 a, Vector3 b, Vector3 c) {
     result.x = 1.0f - (result.z + result.y);
     return result;
 }
+
 // Projects a Vector3 from screen space into object space
 // NOTE: Self-contained function, no other raymath functions are called
 Vector3 Vector3Unproject(Vector3 source, Matrix projection, Matrix view) {
     Vector3 result;
-    var matViewProj = Matrix{view.m0 * projection.m0 + view.m1 * projection.m4 + view.m2 * projection.m8 + view.m3 * projection.m12, view.m0 * projection.m1 + view.m1 * projection.m5 + view.m2 * projection.m9 + view.m3 * projection.m13, view.m0 * projection.m2 + view.m1 * projection.m6 + view.m2 * projection.m10 + view.m3 * projection.m14, view.m0 * projection.m3 + view.m1 * projection.m7 + view.m2 * projection.m11 + view.m3 * projection.m15, view.m4 * projection.m0 + view.m5 * projection.m4 + view.m6 * projection.m8 + view.m7 * projection.m12, view.m4 * projection.m1 + view.m5 * projection.m5 + view.m6 * projection.m9 + view.m7 * projection.m13, view.m4 * projection.m2 + view.m5 * projection.m6 + view.m6 * projection.m10 + view.m7 * projection.m14, view.m4 * projection.m3 + view.m5 * projection.m7 + view.m6 * projection.m11 + view.m7 * projection.m15, view.m8 * projection.m0 + view.m9 * projection.m4 + view.m10 * projection.m8 + view.m11 * projection.m12, view.m8 * projection.m1 + view.m9 * projection.m5 + view.m10 * projection.m9 + view.m11 * projection.m13, view.m8 * projection.m2 + view.m9 * projection.m6 + view.m10 * projection.m10 + view.m11 * projection.m14, view.m8 * projection.m3 + view.m9 * projection.m7 + view.m10 * projection.m11 + view.m11 * projection.m15, view.m12 * projection.m0 + view.m13 * projection.m4 + view.m14 * projection.m8 + view.m15 * projection.m12, view.m12 * projection.m1 + view.m13 * projection.m5 + view.m14 * projection.m9 + view.m15 * projection.m13, view.m12 * projection.m2 + view.m13 * projection.m6 + view.m14 * projection.m10 + view.m15 * projection.m14, view.m12 * projection.m3 + view.m13 * projection.m7 + view.m14 * projection.m11 + view.m15 * projection.m15};
+    var matViewProj = Matrix{
+        view.m0 * projection.m0 + view.m1 * projection.m4 + view.m2 * projection.m8 + view.m3 * projection.m12,
+        view.m0 * projection.m1 + view.m1 * projection.m5 + view.m2 * projection.m9 + view.m3 * projection.m13,
+        view.m0 * projection.m2 + view.m1 * projection.m6 + view.m2 * projection.m10 + view.m3 * projection.m14,
+        view.m0 * projection.m3 + view.m1 * projection.m7 + view.m2 * projection.m11 + view.m3 * projection.m15,
+        view.m4 * projection.m0 + view.m5 * projection.m4 + view.m6 * projection.m8 + view.m7 * projection.m12,
+        view.m4 * projection.m1 + view.m5 * projection.m5 + view.m6 * projection.m9 + view.m7 * projection.m13,
+        view.m4 * projection.m2 + view.m5 * projection.m6 + view.m6 * projection.m10 + view.m7 * projection.m14,
+        view.m4 * projection.m3 + view.m5 * projection.m7 + view.m6 * projection.m11 + view.m7 * projection.m15,
+        view.m8 * projection.m0 + view.m9 * projection.m4 + view.m10 * projection.m8 + view.m11 * projection.m12,
+        view.m8 * projection.m1 + view.m9 * projection.m5 + view.m10 * projection.m9 + view.m11 * projection.m13,
+        view.m8 * projection.m2 + view.m9 * projection.m6 + view.m10 * projection.m10 + view.m11 * projection.m14,
+        view.m8 * projection.m3 + view.m9 * projection.m7 + view.m10 * projection.m11 + view.m11 * projection.m15,
+        view.m12 * projection.m0 + view.m13 * projection.m4 + view.m14 * projection.m8 + view.m15 * projection.m12,
+        view.m12 * projection.m1 + view.m13 * projection.m5 + view.m14 * projection.m9 + view.m15 * projection.m13,
+        view.m12 * projection.m2 + view.m13 * projection.m6 + view.m14 * projection.m10 + view.m15 * projection.m14,
+        view.m12 * projection.m3 + view.m13 * projection.m7 + view.m14 * projection.m11 + view.m15 * projection.m15,
+    };
     f32 a00 = matViewProj.m0;
     f32 a01 = matViewProj.m1;
     f32 a02 = matViewProj.m2;
@@ -6835,14 +6336,29 @@ Vector3 Vector3Unproject(Vector3 source, Matrix projection, Matrix view) {
     f32 b10 = a21 * a33 - a23 * a31;
     f32 b11 = a22 * a33 - a23 * a32;
     f32 invDet = 1.0f / (b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06);
-    var matViewProjInv = Matrix{(a11 * b11 - a12 * b10 + a13 * b09) * invDet, (-a01 * b11 + a02 * b10 - a03 * b09) * invDet, (a31 * b05 - a32 * b04 + a33 * b03) * invDet, (-a21 * b05 + a22 * b04 - a23 * b03) * invDet, (-a10 * b11 + a12 * b08 - a13 * b07) * invDet, (a00 * b11 - a02 * b08 + a03 * b07) * invDet, (-a30 * b05 + a32 * b02 - a33 * b01) * invDet, (a20 * b05 - a22 * b02 + a23 * b01) * invDet, (a10 * b10 - a11 * b08 + a13 * b06) * invDet, (-a00 * b10 + a01 * b08 - a03 * b06) * invDet, (a30 * b04 - a31 * b02 + a33 * b00) * invDet, (-a20 * b04 + a21 * b02 - a23 * b00) * invDet, (-a10 * b09 + a11 * b07 - a12 * b06) * invDet, (a00 * b09 - a01 * b07 + a02 * b06) * invDet, (-a30 * b03 + a31 * b01 - a32 * b00) * invDet, (a20 * b03 - a21 * b01 + a22 * b00) * invDet};
+    var matViewProjInv = Matrix{
+        (a11 * b11 - a12 * b10 + a13 * b09) * invDet, (-a01 * b11 + a02 * b10 - a03 * b09) * invDet,
+        (a31 * b05 - a32 * b04 + a33 * b03) * invDet, (-a21 * b05 + a22 * b04 - a23 * b03) * invDet,
+        (-a10 * b11 + a12 * b08 - a13 * b07) * invDet, (a00 * b11 - a02 * b08 + a03 * b07) * invDet,
+        (-a30 * b05 + a32 * b02 - a33 * b01) * invDet, (a20 * b05 - a22 * b02 + a23 * b01) * invDet,
+        (a10 * b10 - a11 * b08 + a13 * b06) * invDet, (-a00 * b10 + a01 * b08 - a03 * b06) * invDet,
+        (a30 * b04 - a31 * b02 + a33 * b00) * invDet, (-a20 * b04 + a21 * b02 - a23 * b00) * invDet,
+        (-a10 * b09 + a11 * b07 - a12 * b06) * invDet, (a00 * b09 - a01 * b07 + a02 * b06) * invDet,
+        (-a30 * b03 + a31 * b01 - a32 * b00) * invDet, (a20 * b03 - a21 * b01 + a22 * b00) * invDet,
+    };
     var quat = Quaternion{source.x, source.y, source.z, 1.0f};
-    var qtransformed = Quaternion{matViewProjInv.m0 * quat.x + matViewProjInv.m4 * quat.y + matViewProjInv.m8 * quat.z + matViewProjInv.m12 * quat.w, matViewProjInv.m1 * quat.x + matViewProjInv.m5 * quat.y + matViewProjInv.m9 * quat.z + matViewProjInv.m13 * quat.w, matViewProjInv.m2 * quat.x + matViewProjInv.m6 * quat.y + matViewProjInv.m10 * quat.z + matViewProjInv.m14 * quat.w, matViewProjInv.m3 * quat.x + matViewProjInv.m7 * quat.y + matViewProjInv.m11 * quat.z + matViewProjInv.m15 * quat.w};
+    var qtransformed = Quaternion{
+        matViewProjInv.m0 * quat.x + matViewProjInv.m4 * quat.y + matViewProjInv.m8 * quat.z + matViewProjInv.m12 * quat.w,
+        matViewProjInv.m1 * quat.x + matViewProjInv.m5 * quat.y + matViewProjInv.m9 * quat.z + matViewProjInv.m13 * quat.w,
+        matViewProjInv.m2 * quat.x + matViewProjInv.m6 * quat.y + matViewProjInv.m10 * quat.z + matViewProjInv.m14 * quat.w,
+        matViewProjInv.m3 * quat.x + matViewProjInv.m7 * quat.y + matViewProjInv.m11 * quat.z + matViewProjInv.m15 * quat.w,
+    };
     result.x = qtransformed.x / qtransformed.w;
     result.y = qtransformed.y / qtransformed.w;
     result.z = qtransformed.z / qtransformed.w;
     return result;
 }
+
 // Get Vector3 as float array
 c_float3 Vector3ToFloatV(Vector3 v) {
     c_float3 buffer;
@@ -6851,11 +6367,13 @@ c_float3 Vector3ToFloatV(Vector3 v) {
     buffer.v[2] = v.z;
     return buffer;
 }
+
 // Invert the given vector
 Vector3 Vector3Invert(Vector3 v) {
     var result = Vector3{1.0f / v.x, 1.0f / v.y, 1.0f / v.z};
     return result;
 }
+
 // Clamp the components of the vector between
 // min and max values specified by the given vectors
 Vector3 Vector3Clamp(Vector3 v, Vector3 min, Vector3 max) {
@@ -6865,6 +6383,7 @@ Vector3 Vector3Clamp(Vector3 v, Vector3 min, Vector3 max) {
     result.z = fminf(max.z, fmaxf(min.z, v.z));
     return result;
 }
+
 // Clamp the magnitude of the vector between two values
 Vector3 Vector3ClampValue(Vector3 v, f32 min, f32 max) {
     Vector3 result = v;
@@ -6883,11 +6402,13 @@ Vector3 Vector3ClampValue(Vector3 v, f32 min, f32 max) {
     }
     return result;
 }
+
 // Check whether two given vectors are almost equal
 i32 Vector3Equals(Vector3 p, Vector3 q) {
-    i32 result = fabsf(p.x - q.x) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))) && fabsf(p.y - q.y) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))) && fabsf(p.z - q.z) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z)));
+    i32 result = fabsf(p.x - q.x) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))) && fabsf(p.y - q.y) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))) && fabsf(p.z - q.z) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z)));
     return result;
 }
+
 // Compute the direction of a refracted ray
 // v: normalized direction of the incoming ray
 // n: normalized normal vector of the interface of two optical media
@@ -6906,6 +6427,7 @@ Vector3 Vector3Refract(Vector3 v, Vector3 n, f32 r) {
     }
     return result;
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition - Vector4 math
 //----------------------------------------------------------------------------------
@@ -6914,76 +6436,91 @@ Vector4 Vector4Zero() {
     var result = Vector4{0.0f, 0.0f, 0.0f, 0.0f};
     return result;
 }
+
 // Get vector one
 Vector4 Vector4One() {
     var result = Vector4{1.0f, 1.0f, 1.0f, 1.0f};
     return result;
 }
+
 // Add two vectors
 Vector4 Vector4Add(Vector4 v1, Vector4 v2) {
     var result = Vector4{v1.x + v2.x, v1.y + v2.y, v1.z + v2.z, v1.w + v2.w};
     return result;
 }
+
 // Add value to vector components
 Vector4 Vector4AddValue(Vector4 v, f32 add) {
     var result = Vector4{v.x + add, v.y + add, v.z + add, v.w + add};
     return result;
 }
+
 // Substract vectors
 Vector4 Vector4Subtract(Vector4 v1, Vector4 v2) {
     var result = Vector4{v1.x - v2.x, v1.y - v2.y, v1.z - v2.z, v1.w - v2.w};
     return result;
 }
+
 // Substract value from vector components
 Vector4 Vector4SubtractValue(Vector4 v, f32 add) {
     var result = Vector4{v.x - add, v.y - add, v.z - add, v.w - add};
     return result;
 }
+
 // Vector length
 f32 Vector4Length(Vector4 v) {
     f32 result = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w);
     return result;
 }
+
 // Vector square length
 f32 Vector4LengthSqr(Vector4 v) {
     f32 result = v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w;
     return result;
 }
+
 // Vectors dot product
 f32 Vector4DotProduct(Vector4 v1, Vector4 v2) {
     f32 result = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z + v1.w * v2.w;
     return result;
 }
+
 // Calculate distance between two vectors
 f32 Vector4Distance(Vector4 v1, Vector4 v2) {
     f32 result = sqrtf((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) + (v1.z - v2.z) * (v1.z - v2.z) + (v1.w - v2.w) * (v1.w - v2.w));
     return result;
 }
+
 // Calculate square distance between two vectors
 f32 Vector4DistanceSqr(Vector4 v1, Vector4 v2) {
     f32 result = (v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) + (v1.z - v2.z) * (v1.z - v2.z) + (v1.w - v2.w) * (v1.w - v2.w);
     return result;
 }
+
 // Scale vector components by value (multiply)
 Vector4 Vector4Scale(Vector4 v, f32 scale) {
     var result = Vector4{v.x * scale, v.y * scale, v.z * scale, v.w * scale};
     return result;
 }
+
 // Multiply vector by vector
 Vector4 Vector4Multiply(Vector4 v1, Vector4 v2) {
     var result = Vector4{v1.x * v2.x, v1.y * v2.y, v1.z * v2.z, v1.w * v2.w};
     return result;
 }
+
 // Negate vector
 Vector4 Vector4Negate(Vector4 v) {
     var result = Vector4{-v.x, -v.y, -v.z, -v.w};
     return result;
 }
+
 // Divide vector by vector
 Vector4 Vector4Divide(Vector4 v1, Vector4 v2) {
     var result = Vector4{v1.x / v2.x, v1.y / v2.y, v1.z / v2.z, v1.w / v2.w};
     return result;
 }
+
 // Normalize provided vector
 Vector4 Vector4Normalize(Vector4 v) {
     Vector4 result;
@@ -6997,6 +6534,7 @@ Vector4 Vector4Normalize(Vector4 v) {
     }
     return result;
 }
+
 // Get min value for each pair of components
 Vector4 Vector4Min(Vector4 v1, Vector4 v2) {
     Vector4 result;
@@ -7006,6 +6544,7 @@ Vector4 Vector4Min(Vector4 v1, Vector4 v2) {
     result.w = fminf(v1.w, v2.w);
     return result;
 }
+
 // Get max value for each pair of components
 Vector4 Vector4Max(Vector4 v1, Vector4 v2) {
     Vector4 result;
@@ -7015,6 +6554,7 @@ Vector4 Vector4Max(Vector4 v1, Vector4 v2) {
     result.w = fmaxf(v1.w, v2.w);
     return result;
 }
+
 // Calculate linear interpolation between two vectors
 Vector4 Vector4Lerp(Vector4 v1, Vector4 v2, f32 amount) {
     Vector4 result;
@@ -7024,6 +6564,7 @@ Vector4 Vector4Lerp(Vector4 v1, Vector4 v2, f32 amount) {
     result.w = v1.w + amount * (v2.w - v1.w);
     return result;
 }
+
 // Move Vector towards target
 Vector4 Vector4MoveTowards(Vector4 v, Vector4 target, f32 maxDistance) {
     Vector4 result;
@@ -7042,16 +6583,19 @@ Vector4 Vector4MoveTowards(Vector4 v, Vector4 target, f32 maxDistance) {
     result.w = v.w + dw / dist * maxDistance;
     return result;
 }
+
 // Invert the given vector
 Vector4 Vector4Invert(Vector4 v) {
     var result = Vector4{1.0f / v.x, 1.0f / v.y, 1.0f / v.z, 1.0f / v.w};
     return result;
 }
+
 // Check whether two given vectors are almost equal
 i32 Vector4Equals(Vector4 p, Vector4 q) {
-    i32 result = fabsf(p.x - q.x) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))) && fabsf(p.y - q.y) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))) && fabsf(p.z - q.z) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z))) && fabsf(p.w - q.w) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.w), fabsf(q.w)));
+    i32 result = fabsf(p.x - q.x) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))) && fabsf(p.y - q.y) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))) && fabsf(p.z - q.z) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z))) && fabsf(p.w - q.w) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.w), fabsf(q.w)));
     return result;
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition - Matrix math
 //----------------------------------------------------------------------------------
@@ -7077,11 +6621,13 @@ f32 MatrixDeterminant(Matrix mat) {
     result = m0 * (m5 * (m10 * m15 - m11 * m14) - m9 * (m6 * m15 - m7 * m14) + m13 * (m6 * m11 - m7 * m10)) - m4 * (m1 * (m10 * m15 - m11 * m14) - m9 * (m2 * m15 - m3 * m14) + m13 * (m2 * m11 - m3 * m10)) + m8 * (m1 * (m6 * m15 - m7 * m14) - m5 * (m2 * m15 - m3 * m14) + m13 * (m2 * m7 - m3 * m6)) - m12 * (m1 * (m6 * m11 - m7 * m10) - m5 * (m2 * m11 - m3 * m10) + m9 * (m2 * m7 - m3 * m6));
     return result;
 }
+
 // Get the trace of the matrix (sum of the values along the diagonal)
 f32 MatrixTrace(Matrix mat) {
     f32 result = mat.m0 + mat.m5 + mat.m10 + mat.m15;
     return result;
 }
+
 // Transposes provided matrix
 Matrix MatrixTranspose(Matrix mat) {
     Matrix result;
@@ -7103,6 +6649,7 @@ Matrix MatrixTranspose(Matrix mat) {
     result.m15 = mat.m15;
     return result;
 }
+
 // Invert provided matrix
 Matrix MatrixInvert(Matrix mat) {
     Matrix result;
@@ -7153,11 +6700,16 @@ Matrix MatrixInvert(Matrix mat) {
     result.m15 = (a20 * b03 - a21 * b01 + a22 * b00) * invDet;
     return result;
 }
+
 // Get identity matrix
 Matrix MatrixIdentity() {
-    var result = Matrix{1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
+    var result = Matrix{
+        1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+        1.0f,
+    };
     return result;
 }
+
 // Add two matrices
 Matrix MatrixAdd(Matrix left, Matrix right) {
     Matrix result;
@@ -7179,6 +6731,7 @@ Matrix MatrixAdd(Matrix left, Matrix right) {
     result.m15 = left.m15 + right.m15;
     return result;
 }
+
 // Subtract two matrices (left - right)
 Matrix MatrixSubtract(Matrix left, Matrix right) {
     Matrix result;
@@ -7200,6 +6753,7 @@ Matrix MatrixSubtract(Matrix left, Matrix right) {
     result.m15 = left.m15 - right.m15;
     return result;
 }
+
 // Get two matrix multiplication
 // NOTE: When multiplying matrices... the order matters!
 Matrix MatrixMultiply(Matrix left, Matrix right) {
@@ -7222,16 +6776,26 @@ Matrix MatrixMultiply(Matrix left, Matrix right) {
     result.m15 = left.m12 * right.m3 + left.m13 * right.m7 + left.m14 * right.m11 + left.m15 * right.m15;
     return result;
 }
+
 // Multiply matrix components by value
 Matrix MatrixMultiplyValue(Matrix left, f32 value) {
-    var result = Matrix{left.m0 * value, left.m4 * value, left.m8 * value, left.m12 * value, left.m1 * value, left.m5 * value, left.m9 * value, left.m13 * value, left.m2 * value, left.m6 * value, left.m10 * value, left.m14 * value, left.m3 * value, left.m7 * value, left.m11 * value, left.m15 * value};
+    var result = Matrix{
+        left.m0 * value, left.m4 * value, left.m8 * value, left.m12 * value, left.m1 * value,
+        left.m5 * value, left.m9 * value, left.m13 * value, left.m2 * value, left.m6 * value,
+        left.m10 * value, left.m14 * value, left.m3 * value, left.m7 * value, left.m11 * value,
+        left.m15 * value,
+    };
     return result;
 }
+
 // Get translation matrix
 Matrix MatrixTranslate(f32 x, f32 y, f32 z) {
-    var result = Matrix{1.0f, 0.0f, 0.0f, x, 0.0f, 1.0f, 0.0f, y, 0.0f, 0.0f, 1.0f, z, 0.0f, 0.0f, 0.0f, 1.0f};
+    var result = Matrix{
+        1.0f, 0.0f, 0.0f, x, 0.0f, 1.0f, 0.0f, y, 0.0f, 0.0f, 1.0f, z, 0.0f, 0.0f, 0.0f, 1.0f,
+    };
     return result;
 }
+
 // Create rotation matrix from axis and angle
 // NOTE: Angle should be provided in radians
 Matrix MatrixRotate(Vector3 axis, f32 angle) {
@@ -7267,10 +6831,14 @@ Matrix MatrixRotate(Vector3 axis, f32 angle) {
     result.m15 = 1.0f;
     return result;
 }
+
 // Get x-rotation matrix
 // NOTE: Angle must be provided in radians
 Matrix MatrixRotateX(f32 angle) {
-    var result = Matrix{1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
+    var result = Matrix{
+        1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+        1.0f,
+    };
     f32 cosres = cosf(angle);
     f32 sinres = sinf(angle);
     result.m5 = cosres;
@@ -7279,10 +6847,14 @@ Matrix MatrixRotateX(f32 angle) {
     result.m10 = cosres;
     return result;
 }
+
 // Get y-rotation matrix
 // NOTE: Angle must be provided in radians
 Matrix MatrixRotateY(f32 angle) {
-    var result = Matrix{1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
+    var result = Matrix{
+        1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+        1.0f,
+    };
     f32 cosres = cosf(angle);
     f32 sinres = sinf(angle);
     result.m0 = cosres;
@@ -7291,10 +6863,14 @@ Matrix MatrixRotateY(f32 angle) {
     result.m10 = cosres;
     return result;
 }
+
 // Get z-rotation matrix
 // NOTE: Angle must be provided in radians
 Matrix MatrixRotateZ(f32 angle) {
-    var result = Matrix{1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
+    var result = Matrix{
+        1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+        1.0f,
+    };
     f32 cosres = cosf(angle);
     f32 sinres = sinf(angle);
     result.m0 = cosres;
@@ -7303,10 +6879,14 @@ Matrix MatrixRotateZ(f32 angle) {
     result.m5 = cosres;
     return result;
 }
+
 // Get xyz-rotation matrix
 // NOTE: Angle must be provided in radians
 Matrix MatrixRotateXYZ(Vector3 angle) {
-    var result = Matrix{1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
+    var result = Matrix{
+        1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+        1.0f,
+    };
     f32 cosz = cosf(-angle.z);
     f32 sinz = sinf(-angle.z);
     f32 cosy = cosf(-angle.y);
@@ -7324,6 +6904,7 @@ Matrix MatrixRotateXYZ(Vector3 angle) {
     result.m10 = cosy * cosx;
     return result;
 }
+
 // Get zyx-rotation matrix
 // NOTE: Angle must be provided in radians
 Matrix MatrixRotateZYX(Vector3 angle) {
@@ -7352,11 +6933,15 @@ Matrix MatrixRotateZYX(Vector3 angle) {
     result.m15 = 1.0f;
     return result;
 }
+
 // Get scaling matrix
 Matrix MatrixScale(f32 x, f32 y, f32 z) {
-    var result = Matrix{x, 0.0f, 0.0f, 0.0f, 0.0f, y, 0.0f, 0.0f, 0.0f, 0.0f, z, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
+    var result = Matrix{
+        x, 0.0f, 0.0f, 0.0f, 0.0f, y, 0.0f, 0.0f, 0.0f, 0.0f, z, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+    };
     return result;
 }
+
 // Get perspective projection matrix
 Matrix MatrixFrustum(f64 left, f64 right, f64 bottom, f64 top, f64 nearPlane, f64 farPlane) {
     Matrix result;
@@ -7381,6 +6966,7 @@ Matrix MatrixFrustum(f64 left, f64 right, f64 bottom, f64 top, f64 nearPlane, f6
     result.m15 = 0.0f;
     return result;
 }
+
 // Get perspective projection matrix
 // NOTE: Fovy angle must be provided in radians
 Matrix MatrixPerspective(f64 fovY, f64 aspect, f64 nearPlane, f64 farPlane) {
@@ -7401,6 +6987,7 @@ Matrix MatrixPerspective(f64 fovY, f64 aspect, f64 nearPlane, f64 farPlane) {
     result.m14 = -(cast(f32, farPlane) * cast(f32, nearPlane) * 2.0f) / fn_var;
     return result;
 }
+
 // Get orthographic projection matrix
 Matrix MatrixOrtho(f64 left, f64 right, f64 bottom, f64 top, f64 nearPlane, f64 farPlane) {
     Matrix result;
@@ -7425,6 +7012,7 @@ Matrix MatrixOrtho(f64 left, f64 right, f64 bottom, f64 top, f64 nearPlane, f64 
     result.m15 = 1.0f;
     return result;
 }
+
 // Get camera look-at matrix (view matrix)
 Matrix MatrixLookAt(Vector3 eye, Vector3 target, Vector3 up) {
     Matrix result;
@@ -7440,7 +7028,9 @@ Matrix MatrixLookAt(Vector3 eye, Vector3 target, Vector3 up) {
     vz.x *= ilength;
     vz.y *= ilength;
     vz.z *= ilength;
-    var vx = Vector3{up.y * vz.z - up.z * vz.y, up.z * vz.x - up.x * vz.z, up.x * vz.y - up.y * vz.x};
+    var vx = Vector3{
+        up.y * vz.z - up.z * vz.y, up.z * vz.x - up.x * vz.z, up.x * vz.y - up.y * vz.x,
+    };
     v = vx;
     length = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
     if length == 0.0f {
@@ -7450,7 +7040,9 @@ Matrix MatrixLookAt(Vector3 eye, Vector3 target, Vector3 up) {
     vx.x *= ilength;
     vx.y *= ilength;
     vx.z *= ilength;
-    var vy = Vector3{vz.y * vx.z - vz.z * vx.y, vz.z * vx.x - vz.x * vx.z, vz.x * vx.y - vz.y * vx.x};
+    var vy = Vector3{
+        vz.y * vx.z - vz.z * vx.y, vz.z * vx.x - vz.x * vx.z, vz.x * vx.y - vz.y * vx.x,
+    };
     result.m0 = vx.x;
     result.m1 = vy.x;
     result.m2 = vz.x;
@@ -7469,6 +7061,7 @@ Matrix MatrixLookAt(Vector3 eye, Vector3 target, Vector3 up) {
     result.m15 = 1.0f;
     return result;
 }
+
 // Get float array of matrix data
 c_float16 MatrixToFloatV(Matrix mat) {
     c_float16 result;
@@ -7490,6 +7083,7 @@ c_float16 MatrixToFloatV(Matrix mat) {
     result.v[15] = mat.m15;
     return result;
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition - Quaternion math
 //----------------------------------------------------------------------------------
@@ -7498,31 +7092,37 @@ Quaternion QuaternionAdd(Quaternion q1, Quaternion q2) {
     var result = Quaternion{q1.x + q2.x, q1.y + q2.y, q1.z + q2.z, q1.w + q2.w};
     return result;
 }
+
 // Add quaternion and float value
 Quaternion QuaternionAddValue(Quaternion q, f32 add) {
     var result = Quaternion{q.x + add, q.y + add, q.z + add, q.w + add};
     return result;
 }
+
 // Subtract two quaternions
 Quaternion QuaternionSubtract(Quaternion q1, Quaternion q2) {
     var result = Quaternion{q1.x - q2.x, q1.y - q2.y, q1.z - q2.z, q1.w - q2.w};
     return result;
 }
+
 // Subtract quaternion and float value
 Quaternion QuaternionSubtractValue(Quaternion q, f32 sub) {
     var result = Quaternion{q.x - sub, q.y - sub, q.z - sub, q.w - sub};
     return result;
 }
+
 // Get identity quaternion
 Quaternion QuaternionIdentity() {
     var result = Quaternion{0.0f, 0.0f, 0.0f, 1.0f};
     return result;
 }
+
 // Computes the length of a quaternion
 f32 QuaternionLength(Quaternion q) {
     f32 result = sqrtf(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
     return result;
 }
+
 // Normalize provided quaternion
 Quaternion QuaternionNormalize(Quaternion q) {
     Quaternion result;
@@ -7537,6 +7137,7 @@ Quaternion QuaternionNormalize(Quaternion q) {
     result.w = q.w * ilength;
     return result;
 }
+
 // Invert provided quaternion
 Quaternion QuaternionInvert(Quaternion q) {
     Quaternion result = q;
@@ -7550,6 +7151,7 @@ Quaternion QuaternionInvert(Quaternion q) {
     }
     return result;
 }
+
 // Calculate two quaternion multiplication
 Quaternion QuaternionMultiply(Quaternion q1, Quaternion q2) {
     Quaternion result;
@@ -7567,6 +7169,7 @@ Quaternion QuaternionMultiply(Quaternion q1, Quaternion q2) {
     result.w = qaw * qbw - qax * qbx - qay * qby - qaz * qbz;
     return result;
 }
+
 // Scale quaternion by float value
 Quaternion QuaternionScale(Quaternion q, f32 mul) {
     Quaternion result;
@@ -7576,11 +7179,13 @@ Quaternion QuaternionScale(Quaternion q, f32 mul) {
     result.w = q.w * mul;
     return result;
 }
+
 // Divide two quaternions
 Quaternion QuaternionDivide(Quaternion q1, Quaternion q2) {
     var result = Quaternion{q1.x / q2.x, q1.y / q2.y, q1.z / q2.z, q1.w / q2.w};
     return result;
 }
+
 // Calculate linear interpolation between two quaternions
 Quaternion QuaternionLerp(Quaternion q1, Quaternion q2, f32 amount) {
     Quaternion result;
@@ -7590,6 +7195,7 @@ Quaternion QuaternionLerp(Quaternion q1, Quaternion q2, f32 amount) {
     result.w = q1.w + amount * (q2.w - q1.w);
     return result;
 }
+
 // Calculate slerp-optimized interpolation between two quaternions
 Quaternion QuaternionNlerp(Quaternion q1, Quaternion q2, f32 amount) {
     Quaternion result;
@@ -7609,6 +7215,7 @@ Quaternion QuaternionNlerp(Quaternion q1, Quaternion q2, f32 amount) {
     result.w = q.w * ilength;
     return result;
 }
+
 // Calculates spherical linear interpolation between two quaternions
 Quaternion QuaternionSlerp(Quaternion q1, Quaternion q2, f32 amount) {
     Quaternion result;
@@ -7622,12 +7229,12 @@ Quaternion QuaternionSlerp(Quaternion q1, Quaternion q2, f32 amount) {
     }
     if fabsf(cosHalfTheta) >= 1.0f {
         result = q1;
-    } else if cosHalfTheta > 0.9500000000000001f {
+    } else if cosHalfTheta > 0.95f {
         result = QuaternionNlerp(q1, q2, amount);
     } else {
         f32 halfTheta = acosf(cosHalfTheta);
         f32 sinHalfTheta = sqrtf(1.0f - cosHalfTheta * cosHalfTheta);
-        if fabsf(sinHalfTheta) < 1.0000000000000002e-6f {
+        if fabsf(sinHalfTheta) < 1.0e-6f {
             result.x = q1.x * 0.5f + q2.x * 0.5f;
             result.y = q1.y * 0.5f + q2.y * 0.5f;
             result.z = q1.z * 0.5f + q2.z * 0.5f;
@@ -7643,6 +7250,7 @@ Quaternion QuaternionSlerp(Quaternion q1, Quaternion q2, f32 amount) {
     }
     return result;
 }
+
 // Calculate quaternion cubic spline interpolation using Cubic Hermite Spline algorithm
 // as described in the GLTF 2.0 specification: https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#interpolation-cubic
 Quaternion QuaternionCubicHermiteSpline(Quaternion q1, Quaternion outTangent1, Quaternion q2, Quaternion inTangent2, f32 t) {
@@ -7663,11 +7271,15 @@ Quaternion QuaternionCubicHermiteSpline(Quaternion q1, Quaternion outTangent1, Q
     result = QuaternionNormalize(result);
     return result;
 }
+
 // Calculate quaternion based on the rotation from one vector to another
 Quaternion QuaternionFromVector3ToVector3(Vector3 from_var, Vector3 to) {
     Quaternion result;
     f32 cos2Theta = from_var.x * to.x + from_var.y * to.y + from_var.z * to.z;
-    var cross = Vector3{from_var.y * to.z - from_var.z * to.y, from_var.z * to.x - from_var.x * to.z, from_var.x * to.y - from_var.y * to.x};
+    var cross = Vector3{
+        from_var.y * to.z - from_var.z * to.y, from_var.z * to.x - from_var.x * to.z,
+        from_var.x * to.y - from_var.y * to.x,
+    };
     result.x = cross.x;
     result.y = cross.y;
     result.z = cross.z;
@@ -7684,6 +7296,7 @@ Quaternion QuaternionFromVector3ToVector3(Vector3 from_var, Vector3 to) {
     result.w = q.w * ilength;
     return result;
 }
+
 // Get a quaternion for a given rotation matrix
 Quaternion QuaternionFromMatrix(Matrix mat) {
     Quaternion result;
@@ -7735,9 +7348,13 @@ Quaternion QuaternionFromMatrix(Matrix mat) {
     }
     return result;
 }
+
 // Get a matrix for a given quaternion
 Matrix QuaternionToMatrix(Quaternion q) {
-    var result = Matrix{1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
+    var result = Matrix{
+        1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+        1.0f,
+    };
     f32 a2 = q.x * q.x;
     f32 b2 = q.y * q.y;
     f32 c2 = q.z * q.z;
@@ -7758,6 +7375,7 @@ Matrix QuaternionToMatrix(Quaternion q) {
     result.m10 = 1.0f - 2.0f * (a2 + b2);
     return result;
 }
+
 // Get rotation quaternion for an angle and axis
 // NOTE: Angle must be provided in radians
 Quaternion QuaternionFromAxisAngle(Vector3 axis, f32 angle) {
@@ -7788,6 +7406,7 @@ Quaternion QuaternionFromAxisAngle(Vector3 axis, f32 angle) {
     }
     return result;
 }
+
 // Get the rotation angle and axis for a given quaternion
 void QuaternionToAxisAngle(Quaternion q, Vector3* outAxis, f32* outAngle) {
     if fabsf(q.w) > 1.0f {
@@ -7804,7 +7423,7 @@ void QuaternionToAxisAngle(Quaternion q, Vector3* outAxis, f32* outAngle) {
     var resAxis = Vector3{0.0f, 0.0f, 0.0f};
     f32 resAngle = 2.0f * acosf(q.w);
     f32 den = sqrtf(1.0f - q.w * q.w);
-    if den > 1.0000000000000002e-6f {
+    if den > 1.0e-6f {
         resAxis.x = q.x / den;
         resAxis.y = q.y / den;
         resAxis.z = q.z / den;
@@ -7814,6 +7433,7 @@ void QuaternionToAxisAngle(Quaternion q, Vector3* outAxis, f32* outAngle) {
     *outAxis = resAxis;
     *outAngle = resAngle;
 }
+
 // Get the quaternion equivalent to Euler angles
 // NOTE: Rotation order is ZYX
 Quaternion QuaternionFromEuler(f32 pitch, f32 yaw, f32 roll) {
@@ -7830,6 +7450,7 @@ Quaternion QuaternionFromEuler(f32 pitch, f32 yaw, f32 roll) {
     result.w = x0 * y0 * z0 + x1 * y1 * z1;
     return result;
 }
+
 // Get the Euler angles equivalent to quaternion (roll, pitch, yaw)
 // NOTE: Angles are returned in a Vector3 struct in radians
 Vector3 QuaternionToEuler(Quaternion q) {
@@ -7846,6 +7467,7 @@ Vector3 QuaternionToEuler(Quaternion q) {
     result.z = atan2f(z0, z1);
     return result;
 }
+
 // Transform a quaternion given a transformation matrix
 Quaternion QuaternionTransform(Quaternion q, Matrix mat) {
     Quaternion result;
@@ -7855,11 +7477,13 @@ Quaternion QuaternionTransform(Quaternion q, Matrix mat) {
     result.w = mat.m3 * q.x + mat.m7 * q.y + mat.m11 * q.z + mat.m15 * q.w;
     return result;
 }
+
 // Check whether two given quaternions are almost equal
 i32 QuaternionEquals(Quaternion p, Quaternion q) {
-    i32 result = fabsf(p.x - q.x) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))) && fabsf(p.y - q.y) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))) && fabsf(p.z - q.z) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z))) && fabsf(p.w - q.w) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.w), fabsf(q.w))) || fabsf(p.x + q.x) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))) && fabsf(p.y + q.y) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))) && fabsf(p.z + q.z) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z))) && fabsf(p.w + q.w) <= 1.0000000000000002e-6f * fmaxf(1.0f, fmaxf(fabsf(p.w), fabsf(q.w)));
+    i32 result = fabsf(p.x - q.x) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))) && fabsf(p.y - q.y) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))) && fabsf(p.z - q.z) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z))) && fabsf(p.w - q.w) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.w), fabsf(q.w))) || fabsf(p.x + q.x) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))) && fabsf(p.y + q.y) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))) && fabsf(p.z + q.z) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z))) && fabsf(p.w + q.w) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.w), fabsf(q.w)));
     return result;
 }
+
 // Compose a transformation matrix from rotational, translational and scaling components
 // TODO: This function is not following raymath conventions defined in header: NOT self-contained
 Matrix MatrixCompose(Vector3 translation, Quaternion rotation, Vector3 scale) {
@@ -7872,17 +7496,25 @@ Matrix MatrixCompose(Vector3 translation, Quaternion rotation, Vector3 scale) {
     right = Vector3RotateByQuaternion(right, rotation);
     up = Vector3RotateByQuaternion(up, rotation);
     forward = Vector3RotateByQuaternion(forward, rotation);
-    var result = Matrix{right.x, up.x, forward.x, translation.x, right.y, up.y, forward.y, translation.y, right.z, up.z, forward.z, translation.z, 0.0f, 0.0f, 0.0f, 1.0f};
+    var result = Matrix{
+        right.x, up.x, forward.x, translation.x, right.y, up.y, forward.y, translation.y, right.z,
+        up.z, forward.z, translation.z, 0.0f, 0.0f, 0.0f, 1.0f,
+    };
     return result;
 }
+
 // Decompose a transformation matrix into its rotational, translational and scaling components and remove shear
 // TODO: This function is not following raymath conventions defined in header: NOT self-contained
 void MatrixDecompose(Matrix mat, Vector3* translation, Quaternion* rotation, Vector3* scale) {
-    var eps = cast(f32, 1.0000000000000003e-9);
+    var eps = cast(f32, 1.0e-9);
     translation.x = mat.m12;
     translation.y = mat.m13;
     translation.z = mat.m14;
-    Vector3[3] matColumns = {Vector3{mat.m0, mat.m4, mat.m8}, Vector3{mat.m1, mat.m5, mat.m9}, Vector3{mat.m2, mat.m6, mat.m10}};
+    Vector3[3] matColumns = {
+        Vector3{mat.m0, mat.m4, mat.m8},
+        Vector3{mat.m1, mat.m5, mat.m9},
+        Vector3{mat.m2, mat.m6, mat.m10},
+    };
     f32[3] shear;
     Vector3 scl;
     f32 stabilizer = eps;
@@ -7922,13 +7554,24 @@ void MatrixDecompose(Matrix mat, Vector3* translation, Quaternion* rotation, Vec
         matColumns[2] = Vector3Negate(matColumns[2]);
     }
     *scale = Vector3Scale(scl, stabilizer);
-    var rotationMatrix = Matrix{matColumns[0].x, matColumns[0].y, matColumns[0].z, 0.0f, matColumns[1].x, matColumns[1].y, matColumns[1].z, 0.0f, matColumns[2].x, matColumns[2].y, matColumns[2].z, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
+    var rotationMatrix = Matrix{
+        matColumns[0].x, matColumns[0].y, matColumns[0].z, 0.0f, matColumns[1].x, matColumns[1].y,
+        matColumns[1].z, 0.0f, matColumns[2].x, matColumns[2].y, matColumns[2].z, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f,
+    };
     *rotation = QuaternionFromMatrix(rotationMatrix);
 }
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-private { GesturesData GESTURES = GesturesData{.current = cast(u32, GESTURE_NONE), .Touch = {.firstId = -1}, .enabledFlags = 1023}; }
+private {
+GesturesData GESTURES = GesturesData{
+    .current = cast(u32, GESTURE_NONE),
+    .Touch = {.firstId = -1},
+    .enabledFlags = 1023,
+};
+}
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition
 //----------------------------------------------------------------------------------
@@ -7936,6 +7579,7 @@ private { GesturesData GESTURES = GesturesData{.current = cast(u32, GESTURE_NONE
 void SetGesturesEnabled(u32 flags) {
     GESTURES.enabledFlags = flags;
 }
+
 // Check if a gesture have been detected
 bool IsGestureDetected(u32 gesture) {
     if (GESTURES.enabledFlags & GESTURES.current) == gesture {
@@ -7944,13 +7588,14 @@ bool IsGestureDetected(u32 gesture) {
         return false;
     }
 }
+
 // Process gesture event and translate it into gestures
 void ProcessGestureEvent(GestureEvent event) {
     GESTURES.Touch.pointCount = event.pointCount;
     if GESTURES.Touch.pointCount == 1 {
         if event.touchAction == TOUCH_ACTION_DOWN {
             GESTURES.Touch.tapCounter++;
-            if GESTURES.current == cast(u32, GESTURE_NONE) && GESTURES.Touch.tapCounter >= 2 && rgGetCurrentTime() - GESTURES.Touch.eventTime < 0.30000000000000004f && rgVector2Distance(GESTURES.Touch.downPositionA, event.position[0]) < 0.03f {
+            if GESTURES.current == cast(u32, GESTURE_NONE) && GESTURES.Touch.tapCounter >= 2 && rgGetCurrentTime() - GESTURES.Touch.eventTime < 0.3f && rgVector2Distance(GESTURES.Touch.downPositionA, event.position[0]) < 0.03f {
                 GESTURES.current = cast(u32, GESTURE_DOUBLETAP);
                 GESTURES.Touch.tapCounter = 0;
             } else {
@@ -7997,7 +7642,7 @@ void ProcessGestureEvent(GestureEvent event) {
                     GESTURES.Touch.downPositionA = event.position[0];
                 }
                 GESTURES.Hold.resetRequired = false;
-                if rgGetCurrentTime() - GESTURES.Touch.eventTime > 0.30000000000000004f {
+                if rgGetCurrentTime() - GESTURES.Touch.eventTime > 0.3f {
                     GESTURES.Touch.eventTime = rgGetCurrentTime();
                     GESTURES.current = cast(u32, GESTURE_DRAG);
                 }
@@ -8042,6 +7687,7 @@ void ProcessGestureEvent(GestureEvent event) {
     } else if GESTURES.Touch.pointCount > 2 {
     }
 }
+
 // Update gestures detected (must be called every frame)
 void UpdateGestures() {
     if (GESTURES.current == cast(u32, GESTURE_TAP) || GESTURES.current == cast(u32, GESTURE_DOUBLETAP)) && GESTURES.Touch.pointCount < 2 {
@@ -8052,10 +7698,12 @@ void UpdateGestures() {
         GESTURES.current = cast(u32, GESTURE_NONE);
     }
 }
+
 // Get latest detected gesture
 i32 GetGestureDetected() {
     return cast(i32, GESTURES.enabledFlags & GESTURES.current);
 }
+
 // Hold time measured in seconds
 f32 GetGestureHoldDuration() {
     f64 time = 0.0;
@@ -8064,24 +7712,29 @@ f32 GetGestureHoldDuration() {
     }
     return cast(f32, time);
 }
+
 // Get drag vector (between initial touch point to current)
 Vector2 GetGestureDragVector() {
     return GESTURES.Drag.vector;
 }
+
 // Get drag angle
 // NOTE: Angle in degrees, horizontal-right is 0, counterclockwise
 f32 GetGestureDragAngle() {
     return GESTURES.Drag.angle;
 }
+
 // Get distance between two pinch points
 Vector2 GetGesturePinchVector() {
     return GESTURES.Pinch.vector;
 }
+
 // Get angle between two pinch points
 // NOTE: Angle in degrees, horizontal-right is 0, counterclockwise
 f32 GetGesturePinchAngle() {
     return GESTURES.Pinch.angle;
 }
+
 //----------------------------------------------------------------------------------
 // Module Internal Functions Definition
 //----------------------------------------------------------------------------------
@@ -8094,6 +7747,7 @@ f32 rgVector2Angle(Vector2 v1, Vector2 v2) {
     }
     return angle;
 }
+
 // Calculate distance between two Vector2
 f32 rgVector2Distance(Vector2 v1, Vector2 v2) {
     f32 result;
@@ -8102,6 +7756,7 @@ f32 rgVector2Distance(Vector2 v1, Vector2 v2) {
     result = cast(f32, sqrt(dx * dx + dy * dy));
     return result;
 }
+
 // Time measure returned are seconds
 f64 rgGetCurrentTime() {
     f64 time = 0.0;
@@ -8109,68 +7764,7 @@ f64 rgGetCurrentTime() {
     return time;
 }
 }
-/***********************************************************************************
-*
-*   CAMERA IMPLEMENTATION
-*
-************************************************************************************/
-/**********************************************************************************************
-*
-*   raymath v2.0 - Math functions to work with Vector2, Vector3, Vector4, Matrix and Quaternions
-*
-*   CONVENTIONS:
-*     - Matrix structure is defined as row-major (memory layout) but parameters naming AND all
-*       math operations performed by the library consider the structure as it was column-major
-*       It is like transposed versions of the matrices are used for all the maths
-*       It benefits some functions making them cache-friendly and also avoids matrix
-*       transpositions sometimes required by OpenGL
-*       Example: In memory order, row0 is [m0 m4 m8 m12] but in semantic math row0 is [m0 m1 m2 m3]
-*     - Functions are always self-contained, no function use another raymath function inside,
-*       required code is directly re-implemented inside
-*     - Functions input parameters are always received by value (2 unavoidable exceptions)
-*     - Functions use always a "result" variable for return (except C++ operators)
-*     - Functions are always defined inline
-*     - Angles are always in radians (DEG2RAD/RAD2DEG macros provided for convenience)
-*     - No compound literals used to make sure the library is compatible with C++
-*
-*   CONFIGURATION:
-*       #define RAYMATH_IMPLEMENTATION
-*           Generates the implementation of the library into the included file
-*           If not defined, the library is in header only mode and can be included in other headers
-*           or source files without problems. But only ONE file should hold the implementation
-*
-*       #define RAYMATH_STATIC_INLINE
-*           Define static inline functions code, so #include header suffices for use
-*           This may use up lots of memory
-*
-*       #define RAYMATH_DISABLE_CPP_OPERATORS
-*           Disables C++ operator overloads for raymath types.
-*
-*       #define RAYMATH_USE_SIMD_INTRINSICS   1
-*           Try to enable SIMD intrinsics for MatrixMultiply()
-*           Note that users enabling it must be aware of the target platform where application will
-*           run to support the selected SIMD intrinsic, for now, only SSE is supported
-*
-*   LICENSE: zlib/libpng
-*
-*   Copyright (c) 2015-2026 Ramon Santamaria (@raysan5)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*
-**********************************************************************************************/
+
 // Required for vector maths:
 // Vector3Add()
 // Vector3Subtract()
@@ -8215,24 +7809,27 @@ f64 rgGetCurrentTime() {
 Vector3 GetCameraForward(Camera* camera) {
     return Vector3Normalize(Vector3Subtract(camera.target, camera.position));
 }
+
 // Returns the cameras up vector (normalized)
 // Note: The up vector might not be perpendicular to the forward vector
 Vector3 GetCameraUp(Camera* camera) {
     return Vector3Normalize(camera.up);
 }
+
 // Returns the cameras right vector (normalized)
 Vector3 GetCameraRight(Camera* camera) {
     Vector3 forward = GetCameraForward(camera);
     Vector3 up = GetCameraUp(camera);
     return Vector3Normalize(Vector3CrossProduct(forward, up));
 }
+
 // Moves the camera in its forward direction
 void CameraMoveForward(Camera* camera, f32 distance, bool moveInWorldPlane) {
     Vector3 forward = GetCameraForward(camera);
     if moveInWorldPlane != 0 {
-        if fabsf(camera.up.z) > 0.7071000000000001f {
+        if fabsf(camera.up.z) > 0.7071f {
             forward.z = 0.0f;
-        } else if fabsf(camera.up.x) > 0.7071000000000001f {
+        } else if fabsf(camera.up.x) > 0.7071f {
             forward.x = 0.0f;
         } else {
             forward.y = 0.0f;
@@ -8243,6 +7840,7 @@ void CameraMoveForward(Camera* camera, f32 distance, bool moveInWorldPlane) {
     camera.position = Vector3Add(camera.position, forward);
     camera.target = Vector3Add(camera.target, forward);
 }
+
 // Moves the camera in its up direction
 void CameraMoveUp(Camera* camera, f32 distance) {
     Vector3 up = GetCameraUp(camera);
@@ -8250,13 +7848,14 @@ void CameraMoveUp(Camera* camera, f32 distance) {
     camera.position = Vector3Add(camera.position, up);
     camera.target = Vector3Add(camera.target, up);
 }
+
 // Moves the camera target in its current right direction
 void CameraMoveRight(Camera* camera, f32 distance, bool moveInWorldPlane) {
     Vector3 right = GetCameraRight(camera);
     if moveInWorldPlane != 0 {
-        if fabsf(camera.up.z) > 0.7071000000000001f {
+        if fabsf(camera.up.z) > 0.7071f {
             right.z = 0.0f;
-        } else if fabsf(camera.up.x) > 0.7071000000000001f {
+        } else if fabsf(camera.up.x) > 0.7071f {
             right.x = 0.0f;
         } else {
             right.y = 0.0f;
@@ -8267,6 +7866,7 @@ void CameraMoveRight(Camera* camera, f32 distance, bool moveInWorldPlane) {
     camera.position = Vector3Add(camera.position, right);
     camera.target = Vector3Add(camera.target, right);
 }
+
 // Moves the camera position closer/farther to/from the camera target
 void CameraMoveToTarget(Camera* camera, f32 delta) {
     f32 distance = Vector3Distance(camera.position, camera.target);
@@ -8277,6 +7877,7 @@ void CameraMoveToTarget(Camera* camera, f32 delta) {
     Vector3 forward = GetCameraForward(camera);
     camera.position = Vector3Add(camera.target, Vector3Scale(forward, -distance));
 }
+
 // Rotates the camera around its up vector
 // Yaw is "looking left and right"
 // If rotateAroundTarget is false, the camera rotates around its position
@@ -8291,6 +7892,7 @@ void CameraYaw(Camera* camera, f32 angle, bool rotateAroundTarget) {
         camera.target = Vector3Add(camera.position, targetPosition);
     }
 }
+
 // Rotates the camera around its right vector, pitch is "looking up and down"
 //  - lockView prevents camera overrotation (aka "somersaults")
 //  - rotateAroundTarget defines if rotation is around target or around its position
@@ -8323,6 +7925,7 @@ void CameraPitch(Camera* camera, f32 angle, bool lockView, bool rotateAroundTarg
         camera.up = Vector3RotateByAxisAngle(camera.up, right, angle);
     }
 }
+
 // Rotates the camera around its forward vector
 // Roll is "turning your head sideways to the left or right"
 // Note: angle must be provided in radians
@@ -8330,10 +7933,12 @@ void CameraRoll(Camera* camera, f32 angle) {
     Vector3 forward = GetCameraForward(camera);
     camera.up = Vector3RotateByAxisAngle(camera.up, forward, angle);
 }
+
 // Returns the camera view matrix
 Matrix GetCameraViewMatrix(Camera* camera) {
     return MatrixLookAt(camera.position, camera.target, camera.up);
 }
+
 // Returns the camera projection matrix
 Matrix GetCameraProjectionMatrix(Camera* camera, f32 aspect) {
     if camera.projection == CAMERA_PERSPECTIVE {
@@ -8345,6 +7950,7 @@ Matrix GetCameraProjectionMatrix(Camera* camera, f32 aspect) {
     }
     return MatrixIdentity();
 }
+
 // Update camera position for selected mode
 // Camera mode: CAMERA_FREE, CAMERA_FIRST_PERSON, CAMERA_THIRD_PERSON, CAMERA_ORBITAL or CUSTOM
 void UpdateCamera(Camera* camera, i32 mode) {
@@ -8447,6 +8053,7 @@ void UpdateCamera(Camera* camera, i32 mode) {
         }
     }
 }
+
 // Update camera movement, movement/rotation values should be provided by user
 void UpdateCameraPro(Camera* camera, Vector3 movement, Vector3 rotation, f32 zoom) {
     bool lockView = true;
@@ -8461,24 +8068,29 @@ void UpdateCameraPro(Camera* camera, Vector3 movement, Vector3 rotation, f32 zoo
     CameraMoveUp(camera, movement.z);
     CameraMoveToTarget(camera, zoom);
 }
+
 private {
 i32 sinfl_bsr(u32 n) {
     return 31 - __builtin_clz(n);
 }
+
 u64 sinfl_read64(void* p) {
     u64 n;
     memcpy(&n, p, cast(u64, 8));
     return n;
 }
+
 void sinfl_copy64(u8** dst, u8** src) {
     memcpy(*dst, *src, cast(u64, 8));
     *dst += 8;
     *src += 8;
 }
+
 u8* sinfl_write64(u8* dst, u64 w) {
     memcpy(dst, &w, cast(u64, 8));
     return dst + 8;
 }
+
 void sinfl_refill(sinfl* s) {
     if cast(i64, s.bitend - s.bitptr) >= 8 {
         s.bitbuf |= sinfl_read64(s.bitptr) << cast(u64, s.bitcnt);
@@ -8495,22 +8107,27 @@ void sinfl_refill(sinfl* s) {
         s.bitcnt += bytesuse << 3;
     }
 }
+
 i32 sinfl_peek(sinfl* s, i32 cnt) {
     return cast(i32, s.bitbuf & cast(u64, (1 << cnt) - 1));
 }
+
 void sinfl_eat(sinfl* s, i32 cnt) {
     s.bitbuf >>= cast(u64, cnt);
     s.bitcnt -= cnt;
 }
+
 i32 sinfl__get(sinfl* s, i32 cnt) {
     i32 res = sinfl_peek(s, cnt);
     sinfl_eat(s, cnt);
     return res;
 }
+
 i32 sinfl_get(sinfl* s, i32 cnt) {
     sinfl_refill(s);
     return sinfl__get(s, cnt);
 }
+
 i32 sinfl_build_tbl(sinfl_gen* gen, u32* tbl, i32 tbl_bits, i32* cnt) {
     i32 tbl_end = 0;
     while true {
@@ -8548,6 +8165,7 @@ i32 sinfl_build_tbl(sinfl_gen* gen, u32* tbl, i32 tbl_bits, i32* cnt) {
     }
     return 0;
 }
+
 void sinfl_build_subtbl(sinfl_gen* gen, u32* tbl, i32 tbl_bits, i32* cnt) {
     i32 sub_bits = 0;
     i32 sub_start = 0;
@@ -8569,9 +8187,9 @@ void sinfl_build_subtbl(sinfl_gen* gen, u32* tbl, i32 tbl_bits, i32* cnt) {
                 used = (used << 1) + cnt[tbl_bits + sub_bits];
             }
             tbl_end = sub_start + (1 << sub_bits);
-            tbl[sub_prefix] = cast(u32, sub_start << 16 | 16 | sub_bits & 15);
+            tbl[sub_prefix] = cast(u32, sub_start << 16 | 0x10 | sub_bits & 0xf);
         }
-        entry = cast(u32, cast(i32, *gen.sorted) << 16 | gen.len - tbl_bits & 15);
+        entry = cast(u32, cast(i32, *gen.sorted) << 16 | gen.len - tbl_bits & 0xf);
         gen.sorted++;
         i = sub_start + (gen.word >> tbl_bits);
         stride = 1 << gen.len - tbl_bits;
@@ -8592,6 +8210,7 @@ void sinfl_build_subtbl(sinfl_gen* gen, u32* tbl, i32 tbl_bits, i32* cnt) {
         }
     }
 }
+
 void sinfl_build(u32* tbl, u8* lens, i32 tbl_bits, i32 maxlen, i32 symcnt) {
     i32 i;
     i32 used = 0;
@@ -8624,18 +8243,20 @@ void sinfl_build(u32* tbl, u8* lens, i32 tbl_bits, i32 maxlen, i32 symcnt) {
         sinfl_build_subtbl(&gen, tbl, tbl_bits, cnt);
     }
 }
+
 i32 sinfl_decode(sinfl* s, u32* tbl, i32 bit_len) {
     i32 idx = sinfl_peek(s, bit_len);
     u32 key = tbl[idx];
-    if (key & 16) != 0 {
-        var len = cast(i32, key & 15);
+    if (key & 0x10) != 0 {
+        var len = cast(i32, key & 0x0f);
         sinfl_eat(s, bit_len);
         idx = sinfl_peek(s, len);
-        key = tbl[(key >> 16 & 65535) + cast(u32, idx)];
+        key = tbl[(key >> 16 & 0xffff) + cast(u32, idx)];
     }
-    sinfl_eat(s, cast(i32, key & 15));
-    return cast(i32, key >> 16 & 4095);
+    sinfl_eat(s, cast(i32, key & 0x0f));
+    return cast(i32, key >> 16 & 0x0fff);
 }
+
 i32 sinfl_decompress(u8* out, i32 cap, u8* in, i32 size) {
     u8* oe = out + cap;
     u8* e = in + size;
@@ -8657,13 +8278,13 @@ i32 sinfl_decompress(u8* out, i32 cap, u8* in, i32 size) {
                         default: {
                             return cast(i32, cast(i64, out - o));
                         }
-                        case 0: {
+                        case 0x00: {
                             state = stored;
                         }
-                        case 1: {
+                        case 0x01: {
                             state = fixed;
                         }
-                        case 2: {
+                        case 0x02: {
                             state = dyn;
                         }
                     }
@@ -8850,13 +8471,15 @@ i32 sinfl_decompress(u8* out, i32 cap, u8* in, i32 size) {
     return cast(i32, cast(i64, out - o));
 }
 }
+
 i32 sinflate(void* out, i32 cap, void* in, i32 size) {
     return sinfl_decompress(cast(u8*, out), cap, cast(u8*, in), size);
 }
+
 private {
 u32 sinfl_adler32(u32 adler32, u8* in, i32 in_len) {
     u32 ADLER_MOD = 65521;
-    u32 s1 = adler32 & 65535;
+    u32 s1 = adler32 & 0xffff;
     u32 s2 = adler32 >> 16;
     u32 blk_len;
     u32 i;
@@ -8893,6 +8516,7 @@ u32 sinfl_adler32(u32 adler32, u8* in, i32 in_len) {
     return (s2 << 16) + s1;
 }
 }
+
 i32 zsinflate(void* out, i32 cap, void* mem, i32 size) {
     var in = cast(u8*, mem);
     if size >= 6 {
@@ -8905,6 +8529,7 @@ i32 zsinflate(void* out, i32 cap, void* mem, i32 size) {
         return -1;
     }
 }
+
 private {
 i32 sdefl_ilog2(i32 n) {
     if n == 0 {
@@ -8912,26 +8537,30 @@ i32 sdefl_ilog2(i32 n) {
     }
     return cast(i32, sizeof(u64)) * CHAR_BIT - 1 - __builtin_clzl(cast(u64, n));
 }
+
 u32 sdefl_uload32(void* p) {
     u32 n = 0;
     memcpy(&n, p, cast(u64, sizeof(n)));
     return n;
 }
+
 u32 sdefl_hash32(void* p) {
     u32 n = sdefl_uload32(p);
-    return n * 2654435721 >> cast(u32, 32 - 15);
+    return n * 0x9E377989 >> cast(u32, 32 - 15);
 }
+
 void sdefl_put(u8** dst, sdefl* s, i32 code, i32 bitcnt) {
     s.bits |= code << s.bitcnt;
     s.bitcnt += bitcnt;
     while s.bitcnt >= 8 {
         u8* tar = *dst;
-        *tar = cast(u8, s.bits & 255);
+        *tar = cast(u8, s.bits & 0xFF);
         s.bits >>= 8;
         s.bitcnt -= 8;
         *dst = *dst + 1;
     }
 }
+
 void sdefl_heap_sub(u32* A, u32 len, u32 sub) {
     u32 c;
     u32 p = sub;
@@ -8952,12 +8581,14 @@ void sdefl_heap_sub(u32* A, u32 len, u32 sub) {
     }
     A[p] = v;
 }
+
 void sdefl_heap_array(u32* A, u32 len) {
     u32 sub;
     for sub = len >> 1; sub >= 1; sub-- {
         sdefl_heap_sub(A, len, sub);
     }
 }
+
 void sdefl_heap_sort(u32* A, u32 n) {
     A--;
     sdefl_heap_array(A, n);
@@ -8968,6 +8599,7 @@ void sdefl_heap_sort(u32* A, u32 n) {
         sdefl_heap_sub(A, n, 1);
     }
 }
+
 u32 sdefl_sort_sym(u32 sym_cnt, u32* freqs, u8* lens, u32* sym_out) {
     u32[288] cnts;
     u32 cnt_num = sym_cnt + cast(u32, 3 / 4) + 3 & cast(u32, ~3);
@@ -8994,6 +8626,7 @@ u32 sdefl_sort_sym(u32 sym_cnt, u32* freqs, u8* lens, u32* sym_out) {
     sdefl_heap_sort(sym_out + cnts[cnt_num - 2], cnts[cnt_num - 1] - cnts[cnt_num - 2]);
     return used_sym;
 }
+
 void sdefl_build_tree(u32* A, u32 sym_cnt) {
     u32 i = 0;
     u32 b = 0;
@@ -9019,6 +8652,7 @@ void sdefl_build_tree(u32* A, u32 sym_cnt) {
         if !(sym_cnt - ++e > 1) { break; }
     }
 }
+
 void sdefl_gen_len_cnt(u32* A, u32 root, u32* len_cnt, u32 max_code_len) {
     i32 n;
     u32 i;
@@ -9044,6 +8678,7 @@ void sdefl_gen_len_cnt(u32* A, u32 root, u32* len_cnt, u32 max_code_len) {
         len_cnt[len + 1] += 2;
     }
 }
+
 void sdefl_gen_codes(u32* A, u8* lens, u32* len_cnt, u32 max_code_word_len, u32 sym_cnt) {
     u32 i;
     u32 sym;
@@ -9067,13 +8702,15 @@ void sdefl_gen_codes(u32* A, u8* lens, u32* len_cnt, u32 max_code_word_len, u32 
         A[sym] = nxt[lens[sym]]++;
     }
 }
+
 u32 sdefl_rev(u32 c, u8 n) {
-    c = (c & 21845) << 1 | (c & 43690) >> 1;
-    c = (c & 13107) << 2 | (c & 52428) >> 2;
-    c = (c & 3855) << 4 | (c & 61680) >> 4;
-    c = (c & 255) << 8 | (c & 65280) >> 8;
+    c = (c & 0x5555) << 1 | (c & 0xAAAA) >> 1;
+    c = (c & 0x3333) << 2 | (c & 0xCCCC) >> 2;
+    c = (c & 0x0F0F) << 4 | (c & 0xF0F0) >> 4;
+    c = (c & 0x00FF) << 8 | (c & 0xFF00) >> 8;
     return c >> 16 - n;
 }
+
 void sdefl_huff(u8* lens, u32* codes, u32* freqs, u32 num_syms, u32 max_code_len) {
     u32 c;
     u32* A = codes;
@@ -9098,6 +8735,7 @@ void sdefl_huff(u8* lens, u32* codes, u32* freqs, u32 num_syms, u32 max_code_len
         codes[c] = sdefl_rev(codes[c], lens[c]);
     }
 }
+
 void sdefl_precode(sdefl_symcnt* cnt, u32* freqs, u32* items, u8* litlen, u8* offlen) {
     u32* at = items;
     u32 run_start = 0;
@@ -9126,14 +8764,14 @@ void sdefl_precode(sdefl_symcnt* cnt, u32* freqs, u32* items, u8* litlen, u8* of
         if len == 0 {
             while run_end - run_start >= 11 {
                 u32 n = run_end - run_start - 11;
-                u32 xbits = n < 127 ? n : 127;
+                u32 xbits = n < 0x7f ? n : 0x7f;
                 freqs[18]++;
                 *at++ = 18 | xbits << 5;
                 run_start += 11 + xbits;
             }
             if run_end - run_start >= 3 {
                 u32 n = run_end - run_start - 3;
-                u32 xbits = n < 7 ? n : 7;
+                u32 xbits = n < 0x7 ? n : 0x7;
                 freqs[17]++;
                 *at++ = 17 | xbits << 5;
                 run_start += 3 + xbits;
@@ -9144,7 +8782,7 @@ void sdefl_precode(sdefl_symcnt* cnt, u32* freqs, u32* items, u8* litlen, u8* of
             run_start++;
             while true {
                 u32 xbits = run_end - run_start - 3;
-                xbits = xbits < 3 ? xbits : 3;
+                xbits = xbits < 0x03 ? xbits : 0x03;
                 *at++ = 16 | xbits << 5;
                 run_start += 3 + xbits;
                 freqs[16]++;
@@ -9160,6 +8798,7 @@ void sdefl_precode(sdefl_symcnt* cnt, u32* freqs, u32* items, u8* litlen, u8* of
     }
     cnt.items = cast(i32, cast(i64, at - items));
 }
+
 void sdefl_match_codes(sdefl_match_codest* cod, i32 dist, i32 len) {
     assert(len <= 258);
     assert(dist <= 32768);
@@ -9169,6 +8808,7 @@ void sdefl_match_codes(sdefl_match_codest* cod, i32 dist, i32 len) {
     cod.dx = sdefl_ilog2(1 << sdefl_ilog2(dist - 1) + 1 >> 2);
     cod.dc = cod.dx != 0 ? (cod.dx + 1 << 1) + cast(i32, dist > sdefl_match_codes__dxmax[cod.dx]) : dist - 1;
 }
+
 sdefl_blk_type sdefl_blk_type_v(sdefl* s, i32 blk_len, i32 pre_item_len, u32* pre_freq, u8* pre_len) {
     i32 dyn_cost = 0;
     i32 fix_cost = 0;
@@ -9190,12 +8830,14 @@ sdefl_blk_type sdefl_blk_type_v(sdefl* s, i32 blk_len, i32 pre_item_len, u32* pr
     fix_cost += 8 * (5 * ((blk_len + (65535 - 1)) / 65535) + blk_len + 1 + 2);
     return dyn_cost < fix_cost ? SDEFL_BLK_DYN : SDEFL_BLK_UCOMPR;
 }
+
 void sdefl_put16(u8** dst, u16 x) {
     u8* val = *dst;
-    val[0] = cast(u8, x & 255);
+    val[0] = cast(u8, x & 0xff);
     val[1] = cast(u8, cast(i32, x) >> 8);
     *dst = val + 2;
 }
+
 void sdefl_match_v(u8** dst, sdefl* s, i32 dist, i32 len) {
     noinit sdefl_match_codest cod;
     sdefl_match_codes(&cod, dist, len);
@@ -9204,6 +8846,7 @@ void sdefl_match_v(u8** dst, sdefl* s, i32 dist, i32 len) {
     sdefl_put(dst, s, cast(i32, s.cod.word.off[cod.dc]), cast(i32, s.cod.len.off[cod.dc]));
     sdefl_put(dst, s, dist - sdefl_match_v__dmin[cod.dc], cod.dx);
 }
+
 void sdefl_flush(u8** dst, sdefl* s, i32 is_last, u8* in, i32 blk_begin, i32 blk_end) {
     i32 blk_len = blk_end - blk_begin;
     i32 j;
@@ -9232,9 +8875,9 @@ void sdefl_flush(u8** dst, sdefl* s, i32 is_last, u8* in, i32 blk_begin, i32 blk
                     i32 fin = is_last && i + 1 == n;
                     i32 amount = blk_len < 65535 ? blk_len : 65535;
                     sdefl_put(dst, s, !!fin, 1);
-                    sdefl_put(dst, s, 0, 2);
+                    sdefl_put(dst, s, 0x00, 2);
                     if s.bitcnt != 0 {
-                        sdefl_put(dst, s, 0, 8 - s.bitcnt);
+                        sdefl_put(dst, s, 0x00, 8 - s.bitcnt);
                     }
                     assert(s.bitcnt == 0);
                     sdefl_put16(dst, cast(u16, amount));
@@ -9248,7 +8891,7 @@ void sdefl_flush(u8** dst, sdefl* s, i32 is_last, u8* in, i32 blk_begin, i32 blk
         case SDEFL_BLK_DYN: {
             {
                 sdefl_put(dst, s, !!is_last, 1);
-                sdefl_put(dst, s, 2, 2);
+                sdefl_put(dst, s, 0x02, 2);
                 sdefl_put(dst, s, symcnt.lit - 257, 5);
                 sdefl_put(dst, s, symcnt.off - 1, 5);
                 sdefl_put(dst, s, item_cnt - 4, 4);
@@ -9256,7 +8899,7 @@ void sdefl_flush(u8** dst, sdefl* s, i32 is_last, u8* in, i32 blk_begin, i32 blk
                     sdefl_put(dst, s, cast(i32, lens[sdefl_flush__perm[i]]), 3);
                 }
                 for i = 0; i < symcnt.items; ++i {
-                    u32 sym = items[i] & 31;
+                    u32 sym = items[i] & 0x1F;
                     sdefl_put(dst, s, cast(i32, codes[sym]), cast(i32, lens[sym]));
                     if sym < 16 {
                         continue;
@@ -9286,12 +8929,14 @@ void sdefl_flush(u8** dst, sdefl* s, i32 is_last, u8* in, i32 blk_begin, i32 blk
     memset(&s.freq, 0, cast(u64, sizeof(s.freq)));
     s.seq_cnt = 0;
 }
+
 void sdefl_seq(sdefl* s, i32 off, i32 len) {
     assert(s.seq_cnt + 2 < (256 * 1024 + 2) / 3);
     s.seq[s.seq_cnt].off = off;
     s.seq[s.seq_cnt].len = len;
     s.seq_cnt++;
 }
+
 void sdefl_reg_match(sdefl* s, i32 off, i32 len) {
     noinit sdefl_match_codest cod;
     sdefl_match_codes(&cod, off, len);
@@ -9300,6 +8945,7 @@ void sdefl_reg_match(sdefl* s, i32 off, i32 len) {
     s.freq.lit[cod.lc]++;
     s.freq.off[cod.dc]++;
 }
+
 void sdefl_fnd(sdefl_match* m, sdefl* s, i32 chain_len, i32 max_match, u8* in, i32 p, i32 e) {
     i32 i = s.tbl[sdefl_hash32(in + p)];
     i32 limit = p - (1 << 15) < -1 ? -1 : p - (1 << 15);
@@ -9331,6 +8977,7 @@ void sdefl_fnd(sdefl_match* m, sdefl* s, i32 chain_len, i32 max_match, u8* in, i
         i = s.prv[i & (1 << 15) - 1];
     }
 }
+
 i32 sdefl_compr(sdefl* s, u8* out, u8* in, i32 in_len, i32 lvl) {
     u8* q = out;
     i32 max_chain = lvl < 8 ? 1 << lvl + 1 : 1 << 13;
@@ -9397,21 +9044,23 @@ i32 sdefl_compr(sdefl* s, u8* out, u8* in, i32 in_len, i32 lvl) {
         if !(i < in_len) { break; }
     }
     if s.bitcnt != 0 {
-        sdefl_put(&q, s, 0, 8 - s.bitcnt);
+        sdefl_put(&q, s, 0x00, 8 - s.bitcnt);
     }
     assert(s.bitcnt == 0);
     return cast(i32, cast(i64, q - out));
 }
 }
+
 i32 sdeflate(sdefl* s, void* out, void* in, i32 n, i32 lvl) {
     s.bitcnt = 0;
     s.bits = s.bitcnt;
     return sdefl_compr(s, cast(u8*, out), cast(u8*, in), n, lvl);
 }
+
 private {
 u32 sdefl_adler32(u32 adler32, u8* in, i32 in_len) {
     u32 ADLER_MOD = 65521;
-    u32 s1 = adler32 & 65535;
+    u32 s1 = adler32 & 0xffff;
     u32 s2 = adler32 >> 16;
     u32 blk_len;
     u32 i;
@@ -9448,28 +9097,29 @@ u32 sdefl_adler32(u32 adler32, u8* in, i32 in_len) {
     return (s2 << 16) + s1;
 }
 }
+
 i32 zsdeflate(sdefl* s, void* out, void* in, i32 n, i32 lvl) {
     i32 p = 0;
     u32 a = 0;
     var q = cast(u8*, out);
     s.bitcnt = 0;
     s.bits = s.bitcnt;
-    sdefl_put(&q, s, 120, 8);
-    sdefl_put(&q, s, 1, 8);
+    sdefl_put(&q, s, 0x78, 8);
+    sdefl_put(&q, s, 0x01, 8);
     q += sdefl_compr(s, q, cast(u8*, in), n, lvl);
     a = sdefl_adler32(1, cast(u8*, in), n);
     for p = 0; p < 4; ++p {
-        sdefl_put(&q, s, cast(i32, a >> 24 & 255), 8);
+        sdefl_put(&q, s, cast(i32, a >> 24 & 0xFF), 8);
         a <<= 8;
     }
     return cast(i32, cast(i64, q - cast(u8*, out)));
 }
+
 i32 sdefl_bound(i32 len) {
     i32 max_blocks = 1 + (len + (65535 - 1)) / 65535;
     i32 bound = 5 * max_blocks + len + 1 + 4 + 8;
     return bound;
 }
-// Deflate (RFC 1951) compressor
 /**********************************************************************************************
 *
 *   rprand v1.1 - A simple and easy-to-use pseudo-random numbers generator (PRNG)
@@ -9539,9 +9189,6 @@ i32 sdefl_bound(i32 len) {
 // Allow custom memory allocators
 // Simple log system to avoid log calls if required
 // NOTE: Avoiding those calls, also avoids const strings memory usage
-when defined(RPNG_SHOW_LOG_INFO) {
-} else {
-}
 // Unload pseudo-random numbers sequence
 /***********************************************************************************
 *
@@ -9555,9 +9202,12 @@ when defined(RPNG_SHOW_LOG_INFO) {
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-private { u64 rprand_seed = 2864434397; }
+private {
+u64 rprand_seed = 0xAABBCCDD;
 // SplitMix64 default seed (aligned to rprand_state)
-private { u32[4] rprand_state = {2531951553, 562766309, 2861694653, 2539918548}; }
+u32[4] rprand_state = {0x96ea83c1, 0x218b21e5, 0xaa91febd, 0x976414d4};
+}
+
 // SplitMix64 generator (uses seed to generate rprand_state)
 //----------------------------------------------------------------------------------
 // Module Functions Definition
@@ -9566,20 +9216,23 @@ private { u32[4] rprand_state = {2531951553, 562766309, 2861694653, 2539918548};
 // NOTE: We use a custom generation algorithm using SplitMix64
 void rprand_set_seed(u64 seed) {
     rprand_seed = cast(u64, seed);
-    rprand_state[0] = cast(u32, rprand_splitmix64() & 4294967295);
-    rprand_state[1] = cast(u32, (rprand_splitmix64() & -4294967296) >> 32);
-    rprand_state[2] = cast(u32, rprand_splitmix64() & 4294967295);
-    rprand_state[3] = cast(u32, (rprand_splitmix64() & -4294967296) >> 32);
+    rprand_state[0] = cast(u32, rprand_splitmix64() & 0xffffffff);
+    rprand_state[1] = cast(u32, (rprand_splitmix64() & 0xffffffff00000000) >> 32);
+    rprand_state[2] = cast(u32, rprand_splitmix64() & 0xffffffff);
+    rprand_state[3] = cast(u32, (rprand_splitmix64() & 0xffffffff00000000) >> 32);
 }
+
 // Get random value within a range, min and max included
 i32 rprand_get_value(i32 min, i32 max) {
     var value = cast(i32, rprand_xoshiro() % cast(u32, abs(max - min) + 1) + cast(u32, min));
     return value;
 }
+
 i32 rprand_get_value_raw() {
     var value = cast(i32, rprand_xoshiro());
     return value;
 }
+
 // Load pseudo-random numbers sequence with no duplicates, min and max included
 i32* rprand_load_sequence(u32 count, i32 min, i32 max) {
     i32* sequence = null;
@@ -9606,11 +9259,13 @@ i32* rprand_load_sequence(u32 count, i32 min, i32 max) {
     }
     return sequence;
 }
+
 // Unload pseudo-random numbers sequence
 void rprand_unload_sequence(i32* sequence) {
     free(sequence);
     sequence = null;
 }
+
 //----------------------------------------------------------------------------------
 // Module Internal Functions Definition
 //----------------------------------------------------------------------------------
@@ -9619,6 +9274,7 @@ u32 rprand_rotate_left(u32 x, i32 k) {
     return x << cast(u32, k) | x >> cast(u32, 32 - k);
 }
 }
+
 // Xoshiro128** generator info:
 //
 //   Written in 2018 by David Blackman and Sebastiano Vigna (vigna@acm.org)
@@ -9653,6 +9309,7 @@ u32 rprand_xoshiro() {
     rprand_state[3] = rprand_rotate_left(rprand_state[3], 11);
     return result;
 }
+
 // SplitMix64 generator info:
 //
 //   Written in 2015 by Sebastiano Vigna (vigna@acm.org)
@@ -9671,15 +9328,13 @@ u32 rprand_xoshiro() {
 //   It is a very fast generator passing BigCrush, and it can be useful if
 //   for some reason you absolutely want 64 bits of state.
 u64 rprand_splitmix64() {
-    rprand_seed += -7046029254386353131;
+    rprand_seed += 0x9e3779b97f4a7c15;
     u64 z = rprand_seed;
-    z = (z ^ z >> 30) * -4658895280553007687;
-    z = (z ^ z >> 27) * -7723592293110705685;
+    z = (z ^ z >> 30) * 0xbf58476d1ce4e5b9;
+    z = (z ^ z >> 27) * 0x94d049bb133111eb;
     return z ^ z >> 31;
 }
 // Platform specific defines to handle GetApplicationDirectory()
-when !defined(S_ISREG) && defined(S_IFMT) && defined(S_IFREG) {
-}
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
@@ -9687,40 +9342,38 @@ u8* raylib_version = "6.1-dev";
 // raylib version exported symbol, required for some bindings
 CoreData CORE;
 // Global CORE state context
-private { i32 logTypeLevel = LOG_INFO; }
+private {
+i32 logTypeLevel = LOG_INFO;
 // Minimum log type level
-private { TraceLogCallback traceLog = null; }
+TraceLogCallback traceLog = null;
 // TraceLog callback function pointer
-private { LoadFileDataCallback loadFileData = null; }
+LoadFileDataCallback loadFileData = null;
 // LoadFileData callback function pointer
-private { SaveFileDataCallback saveFileData = null; }
+SaveFileDataCallback saveFileData = null;
 // SaveFileText callback function pointer
-private { LoadFileTextCallback loadFileText = null; }
+LoadFileTextCallback loadFileText = null;
 // LoadFileText callback function pointer
-private { SaveFileTextCallback saveFileText = null; }
+SaveFileTextCallback saveFileText = null;
 // Event type name strings, required for export
-private { u8*[24] autoEventTypeName = {"EVENT_NONE", "INPUT_KEY_UP", "INPUT_KEY_DOWN", "INPUT_KEY_PRESSED", "INPUT_KEY_RELEASED", "INPUT_MOUSE_BUTTON_UP", "INPUT_MOUSE_BUTTON_DOWN", "INPUT_MOUSE_POSITION", "INPUT_MOUSE_WHEEL_MOTION", "INPUT_GAMEPAD_CONNECT", "INPUT_GAMEPAD_DISCONNECT", "INPUT_GAMEPAD_BUTTON_UP", "INPUT_GAMEPAD_BUTTON_DOWN", "INPUT_GAMEPAD_AXIS_MOTION", "INPUT_TOUCH_UP", "INPUT_TOUCH_DOWN", "INPUT_TOUCH_POSITION", "INPUT_GESTURE", "WINDOW_CLOSE", "WINDOW_MAXIMIZE", "WINDOW_MINIMIZE", "WINDOW_RESIZE", "ACTION_TAKE_SCREENSHOT", "ACTION_SETTARGETFPS"}; }
-private { AutomationEventList* currentEventList = null; }
+u8*[24] autoEventTypeName = {
+    "EVENT_NONE", "INPUT_KEY_UP", "INPUT_KEY_DOWN", "INPUT_KEY_PRESSED", "INPUT_KEY_RELEASED",
+    "INPUT_MOUSE_BUTTON_UP", "INPUT_MOUSE_BUTTON_DOWN", "INPUT_MOUSE_POSITION",
+    "INPUT_MOUSE_WHEEL_MOTION", "INPUT_GAMEPAD_CONNECT", "INPUT_GAMEPAD_DISCONNECT",
+    "INPUT_GAMEPAD_BUTTON_UP", "INPUT_GAMEPAD_BUTTON_DOWN", "INPUT_GAMEPAD_AXIS_MOTION",
+    "INPUT_TOUCH_UP", "INPUT_TOUCH_DOWN", "INPUT_TOUCH_POSITION", "INPUT_GESTURE", "WINDOW_CLOSE",
+    "WINDOW_MAXIMIZE", "WINDOW_MINIMIZE", "WINDOW_RESIZE", "ACTION_TAKE_SCREENSHOT",
+    "ACTION_SETTARGETFPS",
+};
+AutomationEventList* currentEventList = null;
 // Current automation events list, set by user, keep internal pointer
-private { bool automationEventRecording = false; }
+bool automationEventRecording = false;
+}
 extern { i32 InitPlatform(); }
 extern { void ClosePlatform(); }
 // Record frame events (to internal events array)
 // NOTE: PLATFORM_DESKTOP defaults to GLFW backend
-when defined(PLATFORM_DESKTOP) {
-}
 // Include platform-specific submodules
-when defined(PLATFORM_DESKTOP_GLFW) {
-// TODO transminc: untranslatable platform branch
-} else when defined(PLATFORM_DESKTOP_SDL) {
-} else when defined(PLATFORM_DESKTOP_RGFW) || defined(PLATFORM_WEB_RGFW) {
-} else when defined(PLATFORM_DESKTOP_WIN32) {
-} else when defined(PLATFORM_WEB) {
-} else when defined(PLATFORM_DRM) {
-} else when defined(PLATFORM_ANDROID) {
-} else when defined(PLATFORM_MEMORY) {
-} else {
-}
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Window and Graphics Device
 //----------------------------------------------------------------------------------
@@ -9801,12 +9454,15 @@ void InitWindow(i32 width, i32 height, u8* title) {
     if (CORE.Window.flags & cast(u32, FLAG_MSAA_4X_HINT)) == cast(u32, FLAG_MSAA_4X_HINT) {
         SetShapesTexture(GetFontDefault().texture, Rectangle{rec.x + 2.0f, rec.y + 2.0f, 1.0f, 1.0f});
     } else {
-        SetShapesTexture(GetFontDefault().texture, Rectangle{rec.x + 1.0f, rec.y + 1.0f, rec.width - 2.0f, rec.height - 2.0f});
+        SetShapesTexture(GetFontDefault().texture, Rectangle{
+            rec.x + 1.0f, rec.y + 1.0f, rec.width - 2.0f, rec.height - 2.0f,
+        });
     }
     CORE.Time.frameCounter = 0;
     CORE.Window.shouldClose = false;
     SetRandomSeed(cast(u32, time(null)));
 }
+
 // Close window and unload OpenGL context
 void CloseWindow() {
     UnloadFontDefault();
@@ -9814,46 +9470,57 @@ void CloseWindow() {
     ClosePlatform();
     CORE.Window.ready = false;
 }
+
 // Check if window has been initialized successfully
 bool IsWindowReady() {
     return CORE.Window.ready;
 }
+
 // Check if window is currently fullscreen
 bool IsWindowFullscreen() {
     return (CORE.Window.flags & cast(u32, FLAG_FULLSCREEN_MODE)) == cast(u32, FLAG_FULLSCREEN_MODE);
 }
+
 // Check if window is currently hidden
 bool IsWindowHidden() {
     return (CORE.Window.flags & cast(u32, FLAG_WINDOW_HIDDEN)) == cast(u32, FLAG_WINDOW_HIDDEN);
 }
+
 // Check if window has been minimized
 bool IsWindowMinimized() {
     return (CORE.Window.flags & cast(u32, FLAG_WINDOW_MINIMIZED)) == cast(u32, FLAG_WINDOW_MINIMIZED);
 }
+
 // Check if window has been maximized
 bool IsWindowMaximized() {
     return (CORE.Window.flags & cast(u32, FLAG_WINDOW_MAXIMIZED)) == cast(u32, FLAG_WINDOW_MAXIMIZED);
 }
+
 // Check if window has the focus
 bool IsWindowFocused() {
     return !((CORE.Window.flags & cast(u32, FLAG_WINDOW_UNFOCUSED)) == cast(u32, FLAG_WINDOW_UNFOCUSED));
 }
+
 // Check if window has been resizedLastFrame
 bool IsWindowResized() {
     return CORE.Window.resizedLastFrame;
 }
+
 // Check if one specific window flag is enabled
 bool IsWindowState(u32 flag) {
     return (CORE.Window.flags & flag) == flag;
 }
+
 // Get current screen width
 i32 GetScreenWidth() {
     return cast(i32, CORE.Window.screen.width);
 }
+
 // Get current screen height
 i32 GetScreenHeight() {
     return cast(i32, CORE.Window.screen.height);
 }
+
 // Get current render width which is equal to screen width*dpi scale
 i32 GetRenderWidth() {
     i32 width = 0;
@@ -9864,6 +9531,7 @@ i32 GetRenderWidth() {
     }
     return width;
 }
+
 // Get current screen height which is equal to screen height*dpi scale
 i32 GetRenderHeight() {
     i32 height = 0;
@@ -9874,22 +9542,27 @@ i32 GetRenderHeight() {
     }
     return height;
 }
+
 // Enable waiting for events on EndDrawing(), no automatic event polling
 void EnableEventWaiting() {
     CORE.Window.eventWaiting = true;
 }
+
 // Disable waiting for events on EndDrawing(), automatic events polling
 void DisableEventWaiting() {
     CORE.Window.eventWaiting = false;
 }
+
 // Check if cursor is not visible
 bool IsCursorHidden() {
     return CORE.Input.Mouse.cursorHidden;
 }
+
 // Check if cursor is on the current screen
 bool IsCursorOnScreen() {
     return CORE.Input.Mouse.cursorOnScreen;
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Screen Drawing
 //----------------------------------------------------------------------------------
@@ -9898,6 +9571,7 @@ void ClearBackground(Color color) {
     rlClearColor(color.r, color.g, color.b, color.a);
     rlClearScreenBuffers();
 }
+
 // Begin canvas (framebuffer) drawing
 void BeginDrawing() {
     CORE.Time.current = GetTime();
@@ -9906,6 +9580,7 @@ void BeginDrawing() {
     rlLoadIdentity();
     rlMultMatrixf(MatrixToFloatV(CORE.Window.screenScale).v);
 }
+
 // End canvas (framebuffer) drawing and swap buffers (double buffering)
 void EndDrawing() {
     rlDrawRenderBatchActive();
@@ -9927,12 +9602,14 @@ void EndDrawing() {
     PollInputEvents();
     CORE.Time.frameCounter++;
 }
+
 // Initialize 2D mode with custom camera (2D)
 void BeginMode2D(Camera2D camera) {
     rlDrawRenderBatchActive();
     rlLoadIdentity();
     rlMultMatrixf(MatrixToFloatV(GetCameraMatrix2D(camera)).v);
 }
+
 // End 2D mode with custom camera
 void EndMode2D() {
     rlDrawRenderBatchActive();
@@ -9941,10 +9618,11 @@ void EndMode2D() {
         rlMultMatrixf(MatrixToFloatV(CORE.Window.screenScale).v);
     }
 }
+
 // Initializes 3D mode with custom camera (3D)
 void BeginMode3D(Camera camera) {
     rlDrawRenderBatchActive();
-    rlMatrixMode(5889);
+    rlMatrixMode(0x1701);
     rlPushMatrix();
     rlLoadIdentity();
     f32 aspect = cast(f32, CORE.Window.currentFbo.width) / cast(f32, CORE.Window.currentFbo.height);
@@ -9957,24 +9635,26 @@ void BeginMode3D(Camera camera) {
         f64 right = top * aspect;
         rlOrtho(-right, right, -top, top, rlGetCullDistanceNear(), rlGetCullDistanceFar());
     }
-    rlMatrixMode(5888);
+    rlMatrixMode(0x1700);
     rlLoadIdentity();
     Matrix matView = MatrixLookAt(camera.position, camera.target, camera.up);
     rlMultMatrixf(MatrixToFloatV(matView).v);
     rlEnableDepthTest();
 }
+
 // End 3D mode and returns to default 2D orthographic mode
 void EndMode3D() {
     rlDrawRenderBatchActive();
-    rlMatrixMode(5889);
+    rlMatrixMode(0x1701);
     rlPopMatrix();
-    rlMatrixMode(5888);
+    rlMatrixMode(0x1700);
     rlLoadIdentity();
     if rlGetActiveFramebuffer() == 0 {
         rlMultMatrixf(MatrixToFloatV(CORE.Window.screenScale).v);
     }
     rlDisableDepthTest();
 }
+
 // Initializes render texture for drawing
 void BeginTextureMode(RenderTexture2D target) {
     rlDrawRenderBatchActive();
@@ -9982,44 +9662,50 @@ void BeginTextureMode(RenderTexture2D target) {
     rlViewport(0, 0, target.texture.width, target.texture.height);
     rlSetFramebufferWidth(target.texture.width);
     rlSetFramebufferHeight(target.texture.height);
-    rlMatrixMode(5889);
+    rlMatrixMode(0x1701);
     rlLoadIdentity();
     rlOrtho(0.0, cast(f64, target.texture.width), cast(f64, target.texture.height), 0.0, 0.0, 1.0);
-    rlMatrixMode(5888);
+    rlMatrixMode(0x1700);
     rlLoadIdentity();
     CORE.Window.currentFbo.width = cast(u32, target.texture.width);
     CORE.Window.currentFbo.height = cast(u32, target.texture.height);
     CORE.Window.usingFbo = true;
 }
+
 // End drawing to render texture
 void EndTextureMode() {
     rlDrawRenderBatchActive();
     rlDisableFramebuffer();
     SetupViewport(cast(i32, CORE.Window.render.width), cast(i32, CORE.Window.render.height));
-    rlMatrixMode(5888);
+    rlMatrixMode(0x1700);
     rlLoadIdentity();
     rlMultMatrixf(MatrixToFloatV(CORE.Window.screenScale).v);
     CORE.Window.currentFbo.width = CORE.Window.render.width;
     CORE.Window.currentFbo.height = CORE.Window.render.height;
     CORE.Window.usingFbo = false;
 }
+
 // Begin custom shader mode
 void BeginShaderMode(Shader shader) {
     rlSetShader(shader.id, shader.locs);
 }
+
 // End custom shader mode (returns to default shader)
 void EndShaderMode() {
     rlSetShader(rlGetShaderIdDefault(), rlGetShaderLocsDefault());
 }
+
 // Begin blending mode (alpha, additive, multiplied, subtract, custom)
 // NOTE: Blend modes supported are enumerated in BlendMode enum
 void BeginBlendMode(i32 mode) {
     rlSetBlendMode(mode);
 }
+
 // End blending mode (reset to default: alpha blending)
 void EndBlendMode() {
     rlSetBlendMode(BLEND_ALPHA);
 }
+
 // Begin scissor mode (define screen area for following drawing)
 // NOTE: Scissor rec refers to bottom-left corner, changing it to upper-left
 void BeginScissorMode(i32 x, i32 y, i32 width, i32 height) {
@@ -10032,11 +9718,13 @@ void BeginScissorMode(i32 x, i32 y, i32 width, i32 height) {
         rlScissor(x, cast(i32, CORE.Window.currentFbo.height - cast(u32, y + height)), width, height);
     }
 }
+
 // End scissor mode
 void EndScissorMode() {
     rlDrawRenderBatchActive();
     rlDisableScissorTest();
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: VR Stereo Rendering
 //----------------------------------------------------------------------------------
@@ -10046,10 +9734,12 @@ void BeginVrStereoMode(VrStereoConfig config) {
     rlSetMatrixProjectionStereo(config.projection[0], config.projection[1]);
     rlSetMatrixViewOffsetStereo(config.viewOffset[0], config.viewOffset[1]);
 }
+
 // End VR drawing process (and desktop mirror)
 void EndVrStereoMode() {
     rlDisableStereoRender();
 }
+
 // Load VR stereo config for VR simulator device parameters
 VrStereoConfig LoadVrStereoConfig(VrDeviceInfo device) {
     VrStereoConfig config;
@@ -10084,9 +9774,11 @@ VrStereoConfig LoadVrStereoConfig(VrDeviceInfo device) {
     }
     return config;
 }
+
 // Unload VR stereo config properties
 void UnloadVrStereoConfig(VrStereoConfig config) {
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Shaders Management
 //----------------------------------------------------------------------------------
@@ -10109,6 +9801,7 @@ Shader LoadShader(u8* vsFileName, u8* fsFileName) {
     UnloadFileText(fShaderStr);
     return shader;
 }
+
 // Load shader from code strings and bind default locations
 Shader LoadShaderFromMemory(u8* vsCode, u8* fsCode) {
     Shader shader;
@@ -10147,10 +9840,12 @@ Shader LoadShaderFromMemory(u8* vsCode, u8* fsCode) {
     }
     return shader;
 }
+
 // Check if a shader is valid (loaded on GPU)
 bool IsShaderValid(Shader shader) {
     return shader.id > 0 && shader.locs != null;
 }
+
 // Unload shader from GPU memory (VRAM)
 void UnloadShader(Shader shader) {
     if shader.id != rlGetShaderIdDefault() {
@@ -10158,18 +9853,22 @@ void UnloadShader(Shader shader) {
         free(shader.locs);
     }
 }
+
 // Get shader uniform location
 i32 GetShaderLocation(Shader shader, u8* uniformName) {
     return rlGetLocationUniform(shader.id, uniformName);
 }
+
 // Get shader attribute location
 i32 GetShaderLocationAttrib(Shader shader, u8* attribName) {
     return rlGetLocationAttrib(shader.id, attribName);
 }
+
 // Set shader uniform value
 void SetShaderValue(Shader shader, i32 locIndex, void* value, i32 uniformType) {
     SetShaderValueV(shader, locIndex, value, uniformType, 1);
 }
+
 // Set shader uniform value vector
 void SetShaderValueV(Shader shader, i32 locIndex, void* value, i32 uniformType, i32 count) {
     if locIndex > -1 {
@@ -10177,6 +9876,7 @@ void SetShaderValueV(Shader shader, i32 locIndex, void* value, i32 uniformType, 
         rlSetUniform(locIndex, value, uniformType, count);
     }
 }
+
 // Set shader uniform value (matrix 4x4)
 void SetShaderValueMatrix(Shader shader, i32 locIndex, Matrix mat) {
     if locIndex > -1 {
@@ -10184,6 +9884,7 @@ void SetShaderValueMatrix(Shader shader, i32 locIndex, Matrix mat) {
         rlSetUniformMatrix(locIndex, mat);
     }
 }
+
 // Set shader uniform value for texture
 void SetShaderValueTexture(Shader shader, i32 locIndex, Texture2D texture) {
     if locIndex > -1 {
@@ -10191,6 +9892,7 @@ void SetShaderValueTexture(Shader shader, i32 locIndex, Texture2D texture) {
         rlSetUniformSampler(locIndex, texture.id);
     }
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Screen-space Queries
 //----------------------------------------------------------------------------------
@@ -10199,6 +9901,7 @@ Ray GetScreenToWorldRay(Vector2 position, Camera camera) {
     Ray ray = GetScreenToWorldRayEx(position, camera, GetScreenWidth(), GetScreenHeight());
     return ray;
 }
+
 // Get a ray trace from the screen position (i.e mouse) within a specific section of the screen
 Ray GetScreenToWorldRayEx(Vector2 position, Camera camera, i32 width, i32 height) {
     Ray ray;
@@ -10228,11 +9931,13 @@ Ray GetScreenToWorldRayEx(Vector2 position, Camera camera, i32 width, i32 height
     ray.direction = direction;
     return ray;
 }
+
 // Get transform matrix for camera
 Matrix GetCameraMatrix(Camera camera) {
     Matrix mat = MatrixLookAt(camera.position, camera.target, camera.up);
     return mat;
 }
+
 // Get camera 2d transform matrix
 Matrix GetCameraMatrix2D(Camera2D camera) {
     Matrix matTransform;
@@ -10243,11 +9948,13 @@ Matrix GetCameraMatrix2D(Camera2D camera) {
     matTransform = MatrixMultiply(MatrixMultiply(matOrigin, MatrixMultiply(matScale, matRotation)), matTranslation);
     return matTransform;
 }
+
 // Get screen space position from a 3d world space position
 Vector2 GetWorldToScreen(Vector3 position, Camera camera) {
     Vector2 screenPosition = GetWorldToScreenEx(position, camera, GetScreenWidth(), GetScreenHeight());
     return screenPosition;
 }
+
 // Get sized screen space position for a 3d world space position (useful for texture drawing)
 Vector2 GetWorldToScreenEx(Vector3 position, Camera camera, i32 width, i32 height) {
     Matrix matProj = MatrixIdentity();
@@ -10264,21 +9971,26 @@ Vector2 GetWorldToScreenEx(Vector3 position, Camera camera, i32 width, i32 heigh
     worldPos = QuaternionTransform(worldPos, matView);
     worldPos = QuaternionTransform(worldPos, matProj);
     var ndcPos = Vector3{worldPos.x / worldPos.w, -worldPos.y / worldPos.w, worldPos.z / worldPos.w};
-    var screenPosition = Vector2{(ndcPos.x + 1.0f) / 2.0f * cast(f32, width), (ndcPos.y + 1.0f) / 2.0f * cast(f32, height)};
+    var screenPosition = Vector2{
+        (ndcPos.x + 1.0f) / 2.0f * cast(f32, width), (ndcPos.y + 1.0f) / 2.0f * cast(f32, height),
+    };
     return screenPosition;
 }
+
 // Get screen space position for a 2d camera world space position
 Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera) {
     Matrix matCamera = GetCameraMatrix2D(camera);
     Vector3 transform = Vector3Transform(Vector3{position.x, position.y, 0.0f}, matCamera);
     return Vector2{transform.x, transform.y};
 }
+
 // Get world space position for a 2d camera screen space position
 Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera) {
     Matrix invMatCamera = MatrixInvert(GetCameraMatrix2D(camera));
     Vector3 transform = Vector3Transform(Vector3{position.x, position.y, 0.0f}, invMatCamera);
     return Vector2{transform.x, transform.y};
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Timing
 //----------------------------------------------------------------------------------
@@ -10292,6 +10004,7 @@ void SetTargetFPS(i32 fps) {
         CORE.Time.target = 1.0 / cast(f64, fps);
     }
 }
+
 // Get current FPS
 // NOTE: Calculating an average framerate
 i32 GetFPS() {
@@ -10319,10 +10032,12 @@ i32 GetFPS() {
     }
     return fps;
 }
+
 // Get time in seconds for last frame drawn (delta time)
 f32 GetFrameTime() {
     return cast(f32, CORE.Time.frame);
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Custom frame control
 //----------------------------------------------------------------------------------
@@ -10351,6 +10066,7 @@ void WaitTime(f64 seconds) {
     while GetTime() < destinationTime {
     }
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Misc
 //----------------------------------------------------------------------------------
@@ -10360,6 +10076,7 @@ void WaitTime(f64 seconds) {
 void SetRandomSeed(u32 seed) {
     rprand_set_seed(cast(u64, seed));
 }
+
 // Get a random value between min and max included
 i32 GetRandomValue(i32 min, i32 max) {
     i32 value = 0;
@@ -10371,16 +10088,19 @@ i32 GetRandomValue(i32 min, i32 max) {
     value = rprand_get_value(min, max);
     return value;
 }
+
 // Load random values sequence, no values repeated, min and max included
 i32* LoadRandomSequence(u32 count, i32 min, i32 max) {
     i32* values = null;
     values = rprand_load_sequence(count, min, max);
     return values;
 }
+
 // Unload random values sequence
 void UnloadRandomSequence(i32* sequence) {
     rprand_unload_sequence(sequence);
 }
+
 // Takes a screenshot of current screen
 // NOTE: Provided fileName should not contain paths, saving to working directory
 void TakeScreenshot(u8* fileName) {
@@ -10392,7 +10112,11 @@ void TakeScreenshot(u8* fileName) {
         scale = GetWindowScaleDPI();
     }
     u8* imgData = rlReadScreenPixels(cast(i32, cast(f32, CORE.Window.render.width) * scale.x), cast(i32, cast(f32, CORE.Window.render.height) * scale.y));
-    var image = Image{imgData, cast(i32, cast(f32, CORE.Window.render.width) * scale.x), cast(i32, cast(f32, CORE.Window.render.height) * scale.y), 1, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8};
+    var image = Image{
+        imgData, cast(i32, cast(f32, CORE.Window.render.width) * scale.x),
+        cast(i32, cast(f32, CORE.Window.render.height) * scale.y), 1,
+        PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
+    };
     u8[4096] path;
     strncpy(path, TextFormat("%s/%s", CORE.Storage.basePath, fileName), cast(u64, 4096 - 1));
     ExportImage(image, path);
@@ -10401,6 +10125,7 @@ void TakeScreenshot(u8* fileName) {
     } else {
     }
 }
+
 // Set up window configuration flags (view FLAGS)
 // NOTE: This function is expected to be called before window creation,
 // because it sets up some flags for the window creation process
@@ -10410,6 +10135,7 @@ void SetConfigFlags(u32 flags) {
     }
     CORE.Window.flags |= flags;
 }
+
 // void OpenURL(const char *url);   // Defined per platform
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Logging system
@@ -10418,13 +10144,16 @@ void SetConfigFlags(u32 flags) {
 void SetTraceLogLevel(i32 logType) {
     logTypeLevel = logType;
 }
+
 // Show trace log messages (LOG_INFO, LOG_WARNING, LOG_ERROR, LOG_DEBUG)
 void TraceLog(i32 logType, u8* text, ...) {
 }
+
 // Set custom trace log
 void SetTraceLogCallback(TraceLogCallback callback) {
     traceLog = callback;
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Memory management
 //----------------------------------------------------------------------------------
@@ -10434,15 +10163,18 @@ void* MemAlloc(u32 size) {
     var ptr = cast(void*, new(u8[size]));
     return ptr;
 }
+
 // Internal memory reallocator
 void* MemRealloc(void* ptr, u32 size) {
     void* ret = realloc(ptr, cast(u64, size));
     return ret;
 }
+
 // Internal memory free
 void MemFree(void* ptr) {
     free(ptr);
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: File System management
 //----------------------------------------------------------------------------------
@@ -10483,10 +10215,12 @@ u8* LoadFileData(u8* fileName, i32* dataSize) {
     }
     return data;
 }
+
 // Unload file data allocated by LoadFileData()
 void UnloadFileData(u8* data) {
     free(data);
 }
+
 // Save data to file from buffer
 bool SaveFileData(u8* fileName, void* data, i32 dataSize) {
     bool result = false;
@@ -10511,6 +10245,7 @@ bool SaveFileData(u8* fileName, void* data, i32 dataSize) {
     }
     return result;
 }
+
 // Export data to code (.h), returns true on success
 bool ExportDataAsCode(u8* data, i32 dataSize, u8* fileName) {
     bool result = false;
@@ -10548,6 +10283,7 @@ bool ExportDataAsCode(u8* data, i32 dataSize, u8* fileName) {
     }
     return result;
 }
+
 // Load text data from file, returns a '\0' terminated string
 // NOTE: text chars array should be freed manually
 u8* LoadFileText(u8* fileName) {
@@ -10580,10 +10316,12 @@ u8* LoadFileText(u8* fileName) {
     }
     return text;
 }
+
 // Unload file text data allocated by LoadFileText()
 void UnloadFileText(u8* text) {
     free(text);
 }
+
 // Save text data to file (write), string must be '\0' terminated
 bool SaveFileText(u8* fileName, u8* text) {
     bool result = false;
@@ -10607,24 +10345,29 @@ bool SaveFileText(u8* fileName, u8* text) {
     }
     return result;
 }
+
 // File access custom callbacks
 // WARNING: Callbacks setup is intended for advanced users
 // Set custom file binary data loader
 void SetLoadFileDataCallback(LoadFileDataCallback callback) {
     loadFileData = callback;
 }
+
 // Set custom file binary data saver
 void SetSaveFileDataCallback(SaveFileDataCallback callback) {
     saveFileData = callback;
 }
+
 // Set custom file text data loader
 void SetLoadFileTextCallback(LoadFileTextCallback callback) {
     loadFileText = callback;
 }
+
 // Set custom file text data saver
 void SetSaveFileTextCallback(SaveFileTextCallback callback) {
     saveFileText = callback;
 }
+
 // Rename file (if exists)
 // NOTE: Only rename file name required, not full path
 i32 FileRename(u8* fileName, u8* fileRename) {
@@ -10636,6 +10379,7 @@ i32 FileRename(u8* fileName, u8* fileRename) {
     }
     return result;
 }
+
 // Remove file (if exists)
 i32 FileRemove(u8* fileName) {
     i32 result = 0;
@@ -10646,6 +10390,7 @@ i32 FileRemove(u8* fileName) {
     }
     return result;
 }
+
 // Copy file from one path to another
 // NOTE: If destination path does not exist, it is created!
 i32 FileCopy(u8* srcPath, u8* dstPath) {
@@ -10663,6 +10408,7 @@ i32 FileCopy(u8* srcPath, u8* dstPath) {
     UnloadFileData(srcFileData);
     return result;
 }
+
 // Move file from one directory to another
 // NOTE: If dst directories do not exists they are created
 i32 FileMove(u8* srcPath, u8* dstPath) {
@@ -10677,6 +10423,7 @@ i32 FileMove(u8* srcPath, u8* dstPath) {
     }
     return result;
 }
+
 // Replace text in an existing file
 // WARNING: DEPENDENCY: [rtext] module
 i32 FileTextReplace(u8* fileName, u8* search, u8* replacement) {
@@ -10692,6 +10439,7 @@ i32 FileTextReplace(u8* fileName, u8* search, u8* replacement) {
     }
     return result;
 }
+
 // Find text index position in existing file
 // WARNING: DEPENDENCY: [rtext] module
 i32 FileTextFindIndex(u8* fileName, u8* search) {
@@ -10706,6 +10454,7 @@ i32 FileTextFindIndex(u8* fileName, u8* search) {
     }
     return result;
 }
+
 // Check if the file exists
 bool FileExists(u8* fileName) {
     bool result = false;
@@ -10714,6 +10463,7 @@ bool FileExists(u8* fileName) {
     }
     return result;
 }
+
 // Check file extension
 bool IsFileExtension(u8* fileName, u8* ext) {
     bool result = false;
@@ -10760,6 +10510,7 @@ bool IsFileExtension(u8* fileName, u8* ext) {
     }
     return result;
 }
+
 // Check if a directory path exists
 bool DirectoryExists(u8* dirPath) {
     bool result = false;
@@ -10770,6 +10521,7 @@ bool DirectoryExists(u8* dirPath) {
     }
     return result;
 }
+
 // Get file length in bytes
 // NOTE: GetFileSize() conflicts with windows.h
 i32 GetFileLength(u8* fileName) {
@@ -10786,6 +10538,7 @@ i32 GetFileLength(u8* fileName) {
     }
     return size;
 }
+
 // Get file modification time (last write time)
 i64 GetFileModTime(u8* fileName) {
     stat result;
@@ -10796,6 +10549,7 @@ i64 GetFileModTime(u8* fileName) {
     }
     return modTime;
 }
+
 // Get pointer to extension for a filename string (includes the dot: .png)
 // WARNING: Getting the pointer to the input string extension position (not a string copy)
 u8* GetFileExtension(u8* fileName) {
@@ -10805,6 +10559,7 @@ u8* GetFileExtension(u8* fileName) {
     }
     return dot;
 }
+
 // String pointer reverse break: returns right-most occurrence of charset in s
 private {
 u8* strprbrk(u8* text, u8* charset) {
@@ -10818,6 +10573,7 @@ u8* strprbrk(u8* text, u8* charset) {
     return latestMatch;
 }
 }
+
 // Get pointer to filename for a path string
 u8* GetFileName(u8* filePath) {
     u8* fileName = null;
@@ -10829,6 +10585,7 @@ u8* GetFileName(u8* filePath) {
     }
     return fileName + 1;
 }
+
 // Get filename string without extension (uses static string)
 u8* GetFileNameWithoutExt(u8* filePath) {
     memset(GetFileNameWithoutExt__fileName, 0, cast(u64, 256));
@@ -10844,6 +10601,7 @@ u8* GetFileNameWithoutExt(u8* filePath) {
     }
     return GetFileNameWithoutExt__fileName;
 }
+
 // Get directory for a given filePath
 u8* GetDirectoryPath(u8* filePath) {
     u8* lastSlash = null;
@@ -10868,6 +10626,7 @@ u8* GetDirectoryPath(u8* filePath) {
     }
     return GetDirectoryPath__dirPath;
 }
+
 // Get previous directory path for a given path
 u8* GetPrevDirectoryPath(u8* dirPath) {
     memset(GetPrevDirectoryPath__prevDirPath, 0, cast(u64, 4096));
@@ -10886,12 +10645,14 @@ u8* GetPrevDirectoryPath(u8* dirPath) {
     }
     return GetPrevDirectoryPath__prevDirPath;
 }
+
 // Get current working directory
 u8* GetWorkingDirectory() {
     memset(GetWorkingDirectory__currentDir, 0, cast(u64, 4096));
     u8* path = getcwd(GetWorkingDirectory__currentDir, 4096);
     return path;
 }
+
 u8* GetApplicationDirectory() {
     memset(GetApplicationDirectory__appDir, 0, cast(u64, 4096));
     when os(windows) {
@@ -10904,6 +10665,7 @@ u8* GetApplicationDirectory() {
     }
     return GetApplicationDirectory__appDir;
 }
+
 // Load directory filepaths
 // NOTE: Base path is prepended to the scanned filepaths
 // WARNING: Directory is scanned twice, first time to get paths count
@@ -10911,6 +10673,7 @@ u8* GetApplicationDirectory() {
 FilePathList LoadDirectoryFiles(u8* dirPath) {
     return LoadDirectoryFilesEx(dirPath, "*.*", false);
 }
+
 // Load directory filepaths with extension filtering and recursive directory scan
 // Use "*.*" to include all files and directories on scan
 // Use "FILES*" to include only files on scan
@@ -10935,6 +10698,7 @@ FilePathList LoadDirectoryFilesEx(u8* basePath, u8* filter, bool scanSubdirs) {
     }
     return files;
 }
+
 // Unload directory filepaths
 // WARNING: files.count is not reseted to 0 after unloading
 void UnloadDirectoryFiles(FilePathList files) {
@@ -10945,6 +10709,7 @@ void UnloadDirectoryFiles(FilePathList files) {
         free(files.paths);
     }
 }
+
 // Create directories (including full path requested), returns 0 on success
 i32 MakeDirectory(u8* dirPath) {
     if dirPath == null || dirPath[0] == 0 {
@@ -10978,6 +10743,7 @@ i32 MakeDirectory(u8* dirPath) {
     }
     return 0;
 }
+
 // Change working directory, returns true on success
 bool ChangeDirectory(u8* dirPath) {
     bool result = chdir(dirPath) != 0;
@@ -10986,12 +10752,14 @@ bool ChangeDirectory(u8* dirPath) {
     }
     return result == 0;
 }
+
 // Check if a given path point to a file
 bool IsPathFile(u8* path) {
     stat result;
     rl_fstat(path, &result);
     return (result.st_mode & S_IFMT) == S_IFREG;
 }
+
 // Check if fileName is valid for the platform/OS
 bool IsFileNameValid(u8* fileName) {
     bool valid = true;
@@ -11017,6 +10785,7 @@ bool IsFileNameValid(u8* fileName) {
     }
     return valid;
 }
+
 // Check if a file has been dropped into window
 bool IsFileDropped() {
     bool result = false;
@@ -11025,6 +10794,7 @@ bool IsFileDropped() {
     }
     return result;
 }
+
 // Load dropped filepaths
 FilePathList LoadDroppedFiles() {
     FilePathList files;
@@ -11032,6 +10802,7 @@ FilePathList LoadDroppedFiles() {
     files.paths = CORE.Window.dropFilepaths;
     return files;
 }
+
 // Unload dropped filepaths
 void UnloadDroppedFiles(FilePathList files) {
     if files.count > 0 {
@@ -11043,10 +10814,12 @@ void UnloadDroppedFiles(FilePathList files) {
         CORE.Window.dropFilepaths = null;
     }
 }
+
 // Get the file count in a directory
 u32 GetDirectoryFileCount(u8* dirPath) {
     return GetDirectoryFileCountEx(dirPath, "*.*", false);
 }
+
 // Get the file count in a directory with extension filtering and recursive directory scan. Use 'FILE_FILTER_TAG_DIR_ONLY' in the filter string to include directories in the result
 u32 GetDirectoryFileCountEx(u8* basePath, u8* filter, bool scanSubdirs) {
     u32 fileCounter = 0;
@@ -11081,6 +10854,7 @@ u32 GetDirectoryFileCountEx(u8* basePath, u8* filter, bool scanSubdirs) {
     }
     return fileCounter;
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Compression and Encoding
 //----------------------------------------------------------------------------------
@@ -11094,6 +10868,7 @@ u8* CompressData(u8* data, i32 dataSize, i32* compDataSize) {
     free(sdefl_v);
     return compData;
 }
+
 // Decompress data (DEFLATE algorithm)
 u8* DecompressData(u8* compData, i32 compDataSize, i32* dataSize) {
     u8* data = null;
@@ -11106,6 +10881,7 @@ u8* DecompressData(u8* compData, i32 compDataSize, i32* dataSize) {
     *dataSize = size;
     return data;
 }
+
 // Encode data to Base64 string
 // NOTE: Returned string includes NULL terminator, considered on outputSize
 u8* EncodeDataBase64(u8* data, i32 dataSize, i32* outputSize) {
@@ -11131,10 +10907,10 @@ u8* EncodeDataBase64(u8* data, i32 dataSize, i32* outputSize) {
         octetB = i + 1 < dataSize ? data[i + 1] : 0;
         octetC = i + 2 < dataSize ? data[i + 2] : 0;
         octetPack = octetA << 16 | octetB << 8 | octetC;
-        encodedData[outputCount + 0] = cast(u8, cast(u8, EncodeDataBase64__base64EncodeTable[octetPack >> 18 & 63]));
-        encodedData[outputCount + 1] = cast(u8, cast(u8, EncodeDataBase64__base64EncodeTable[octetPack >> 12 & 63]));
-        encodedData[outputCount + 2] = cast(u8, cast(u8, EncodeDataBase64__base64EncodeTable[octetPack >> 6 & 63]));
-        encodedData[outputCount + 3] = cast(u8, cast(u8, EncodeDataBase64__base64EncodeTable[octetPack & 63]));
+        encodedData[outputCount + 0] = cast(u8, cast(u8, EncodeDataBase64__base64EncodeTable[octetPack >> 18 & 0x3f]));
+        encodedData[outputCount + 1] = cast(u8, cast(u8, EncodeDataBase64__base64EncodeTable[octetPack >> 12 & 0x3f]));
+        encodedData[outputCount + 2] = cast(u8, cast(u8, EncodeDataBase64__base64EncodeTable[octetPack >> 6 & 0x3f]));
+        encodedData[outputCount + 3] = cast(u8, cast(u8, EncodeDataBase64__base64EncodeTable[octetPack & 0x3f]));
         outputCount += 4;
         i += 3;
     }
@@ -11148,6 +10924,7 @@ u8* EncodeDataBase64(u8* data, i32 dataSize, i32* outputSize) {
     *outputSize = estimatedOutputSize;
     return encodedData;
 }
+
 // Decode Base64 string (expected NULL terminated)
 u8* DecodeDataBase64(u8* text, i32* outputSize) {
     *outputSize = 0;
@@ -11181,9 +10958,9 @@ u8* DecodeDataBase64(u8* text, i32* outputSize) {
         if outputCount + 3 > maxOutputSize {
             break;
         }
-        decodedData[outputCount + 0] = cast(u8, octetPack >> 16 & 255);
-        decodedData[outputCount + 1] = cast(u8, octetPack >> 8 & 255);
-        decodedData[outputCount + 2] = cast(u8, octetPack & 255);
+        decodedData[outputCount + 0] = cast(u8, octetPack >> 16 & 0xff);
+        decodedData[outputCount + 1] = cast(u8, octetPack >> 8 & 0xff);
+        decodedData[outputCount + 2] = cast(u8, octetPack & 0xff);
         outputCount += 3;
         i += 4;
     }
@@ -11192,23 +10969,40 @@ u8* DecodeDataBase64(u8* text, i32* outputSize) {
     *outputSize = estimatedOutputSize;
     return decodedData;
 }
+
 // Compute CRC32 hash code
 u32 ComputeCRC32(u8* data, i32 dataSize) {
     var crc = cast(u32, ~0);
     for i32 i = 0; i < dataSize; i++ {
-        crc = crc >> 8 ^ ComputeCRC32__crcTable[data[i] ^ crc & 255];
+        crc = crc >> 8 ^ ComputeCRC32__crcTable[data[i] ^ crc & 0xff];
     }
     return ~crc;
 }
+
 // Compute MD5 hash code
 // NOTE: Returns a static int[4] array (16 bytes)
 u32* ComputeMD5(u8* data, i32 dataSize) {
-    u32[64] r = {7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21};
-    u32[64] k = {3614090360, 3905402710, 606105819, 3250441966, 4118548399, 1200080426, 2821735955, 4249261313, 1770035416, 2336552879, 4294925233, 2304563134, 1804603682, 4254626195, 2792965006, 1236535329, 4129170786, 3225465664, 643717713, 3921069994, 3593408605, 38016083, 3634488961, 3889429448, 568446438, 3275163606, 4107603335, 1163531501, 2850285829, 4243563512, 1735328473, 2368359562, 4294588738, 2272392833, 1839030562, 4259657740, 2763975236, 1272893353, 4139469664, 3200236656, 681279174, 3936430074, 3572445317, 76029189, 3654602809, 3873151461, 530742520, 3299628645, 4096336452, 1126891415, 2878612391, 4237533241, 1700485571, 2399980690, 4293915773, 2240044497, 1873313359, 4264355552, 2734768916, 1309151649, 4149444226, 3174756917, 718787259, 3951481745};
-    ComputeMD5__hash[0] = 1732584193;
-    ComputeMD5__hash[1] = 4023233417;
-    ComputeMD5__hash[2] = 2562383102;
-    ComputeMD5__hash[3] = 271733878;
+    u32[64] r = {
+        7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 5, 9, 14, 20, 5, 9, 14, 20, 5,
+        9, 14, 20, 5, 9, 14, 20, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 6, 10,
+        15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21,
+    };
+    u32[64] k = {
+        0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee, 0xf57c0faf, 0x4787c62a, 0xa8304613,
+        0xfd469501, 0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be, 0x6b901122, 0xfd987193,
+        0xa679438e, 0x49b40821, 0xf61e2562, 0xc040b340, 0x265e5a51, 0xe9b6c7aa, 0xd62f105d,
+        0x02441453, 0xd8a1e681, 0xe7d3fbc8, 0x21e1cde6, 0xc33707d6, 0xf4d50d87, 0x455a14ed,
+        0xa9e3e905, 0xfcefa3f8, 0x676f02d9, 0x8d2a4c8a, 0xfffa3942, 0x8771f681, 0x6d9d6122,
+        0xfde5380c, 0xa4beea44, 0x4bdecfa9, 0xf6bb4b60, 0xbebfbc70, 0x289b7ec6, 0xeaa127fa,
+        0xd4ef3085, 0x04881d05, 0xd9d4d039, 0xe6db99e5, 0x1fa27cf8, 0xc4ac5665, 0xf4292244,
+        0x432aff97, 0xab9423a7, 0xfc93a039, 0x655b59c3, 0x8f0ccc92, 0xffeff47d, 0x85845dd1,
+        0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1, 0xf7537e82, 0xbd3af235, 0x2ad7d2bb,
+        0xeb86d391,
+    };
+    ComputeMD5__hash[0] = 0x67452301;
+    ComputeMD5__hash[1] = 0xefcdab89;
+    ComputeMD5__hash[2] = 0x98badcfe;
+    ComputeMD5__hash[3] = 0x10325476;
     i32 newDataSize = ((dataSize + 8) / 64 + 1) * 64 - 8;
     var msg = cast(u8*, new(u8[newDataSize + 64]));
     memcpy(msg, data, cast(u64, dataSize));
@@ -11251,14 +11045,15 @@ u32* ComputeMD5(u8* data, i32 dataSize) {
     free(msg);
     return ComputeMD5__hash;
 }
+
 // Compute SHA-1 hash code
 // NOTE: Returns a static int[5] array (20 bytes)
 u32* ComputeSHA1(u8* data, i32 dataSize) {
-    ComputeSHA1__hash[0] = 1732584193;
-    ComputeSHA1__hash[1] = 4023233417;
-    ComputeSHA1__hash[2] = 2562383102;
-    ComputeSHA1__hash[3] = 271733878;
-    ComputeSHA1__hash[4] = 3285377520;
+    ComputeSHA1__hash[0] = 0x67452301;
+    ComputeSHA1__hash[1] = 0xEFCDAB89;
+    ComputeSHA1__hash[2] = 0x98BADCFE;
+    ComputeSHA1__hash[3] = 0x10325476;
+    ComputeSHA1__hash[4] = 0xC3D2E1F0;
     i32 newDataSize = ((dataSize + 8) / 64 + 1) * 64;
     var msg = cast(u8*, new(u8[newDataSize]));
     memcpy(msg, data, cast(u64, dataSize));
@@ -11290,16 +11085,16 @@ u32* ComputeSHA1(u8* data, i32 dataSize) {
             u32 k = 0;
             if i < 20 {
                 f = b & c | ~b & d;
-                k = 1518500249;
+                k = 0x5A827999;
             } else if i < 40 {
                 f = b ^ c ^ d;
-                k = 1859775393;
+                k = 0x6ED9EBA1;
             } else if i < 60 {
                 f = b & c | b & d | c & d;
-                k = 2400959708;
+                k = 0x8F1BBCDC;
             } else {
                 f = b ^ c ^ d;
-                k = 3395469782;
+                k = 0xCA62C1D6;
             }
             u32 temp = (a << 5 | a >> cast(u32, 32 - 5)) + f + e + k + w[i];
             e = d;
@@ -11317,25 +11112,26 @@ u32* ComputeSHA1(u8* data, i32 dataSize) {
     free(msg);
     return ComputeSHA1__hash;
 }
+
 // Compute SHA-256 hash code
 // NOTE: Returns a static int[8] array (32 bytes)
 u32* ComputeSHA256(u8* data, i32 dataSize) {
-    ComputeSHA256__hash[0] = 1779033703;
-    ComputeSHA256__hash[1] = 3144134277;
-    ComputeSHA256__hash[2] = 1013904242;
-    ComputeSHA256__hash[3] = 2773480762;
-    ComputeSHA256__hash[4] = 1359893119;
-    ComputeSHA256__hash[5] = 2600822924;
-    ComputeSHA256__hash[6] = 528734635;
-    ComputeSHA256__hash[7] = 1541459225;
+    ComputeSHA256__hash[0] = 0x6A09e667;
+    ComputeSHA256__hash[1] = 0xbb67ae85;
+    ComputeSHA256__hash[2] = 0x3c6ef372;
+    ComputeSHA256__hash[3] = 0xa54ff53a;
+    ComputeSHA256__hash[4] = 0x510e527f;
+    ComputeSHA256__hash[5] = 0x9b05688c;
+    ComputeSHA256__hash[6] = 0x1f83d9ab;
+    ComputeSHA256__hash[7] = 0x5be0cd19;
     var bitLen = cast(u64, 8 * dataSize);
     var paddedSize = cast(u64, dataSize + sizeof(dataSize));
     paddedSize += 64 - paddedSize % 64;
     var buffer = new(u8[paddedSize]);
     memcpy(buffer, data, cast(u64, dataSize));
-    buffer[dataSize] = 128;
+    buffer[dataSize] = 0x80;
     for i32 i = 1; i <= sizeof(bitLen); i++ {
-        buffer[paddedSize - cast(u64, sizeof(bitLen)) + cast(u64, i - 1)] = cast(u8, bitLen >> cast(u64, 8 * (sizeof(bitLen) - i)) & 255);
+        buffer[paddedSize - cast(u64, sizeof(bitLen)) + cast(u64, i - 1)] = cast(u8, bitLen >> cast(u64, 8 * (sizeof(bitLen) - i)) & 0xFF);
     }
     for u64 blockN = 0; blockN < paddedSize / 64; blockN++ {
         u32 a = ComputeSHA256__hash[0];
@@ -11382,6 +11178,7 @@ u32* ComputeSHA256(u8* data, i32 dataSize) {
     free(buffer);
     return ComputeSHA256__hash;
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Automation Events Recording and Playing
 //----------------------------------------------------------------------------------
@@ -11426,10 +11223,12 @@ AutomationEventList LoadAutomationEventList(u8* fileName) {
     }
     return list;
 }
+
 // Unload automation events list from file
 void UnloadAutomationEventList(AutomationEventList list) {
     free(list.events);
 }
+
 // Export automation events list as text file
 bool ExportAutomationEventList(AutomationEventList list, u8* fileName) {
     bool result = false;
@@ -11454,22 +11253,27 @@ bool ExportAutomationEventList(AutomationEventList list, u8* fileName) {
     free(txtData);
     return result;
 }
+
 // Setup automation event list to record to
 void SetAutomationEventList(AutomationEventList* list) {
     currentEventList = list;
 }
+
 // Set automation event internal base frame to start recording
 void SetAutomationEventBaseFrame(i32 frame) {
     CORE.Time.frameCounter = cast(u32, frame);
 }
+
 // Start recording automation events (AutomationEventList must be set)
 void StartAutomationEventRecording() {
     automationEventRecording = true;
 }
+
 // Stop recording automation events
 void StopAutomationEventRecording() {
     automationEventRecording = false;
 }
+
 // Play a recorded automation event
 void PlayAutomationEvent(AutomationEvent event) {
     if automationEventRecording == 0 {
@@ -11558,6 +11362,7 @@ void PlayAutomationEvent(AutomationEvent event) {
         }
     }
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Input Handling: Keyboard
 //----------------------------------------------------------------------------------
@@ -11571,6 +11376,7 @@ bool IsKeyPressed(i32 key) {
     }
     return pressed;
 }
+
 // Check if a key has been pressed again
 bool IsKeyPressedRepeat(i32 key) {
     bool repeat = false;
@@ -11581,6 +11387,7 @@ bool IsKeyPressedRepeat(i32 key) {
     }
     return repeat;
 }
+
 // Check if a key is being pressed (key held down)
 bool IsKeyDown(i32 key) {
     bool down = false;
@@ -11591,6 +11398,7 @@ bool IsKeyDown(i32 key) {
     }
     return down;
 }
+
 // Check if a key has been released once
 bool IsKeyReleased(i32 key) {
     bool released = false;
@@ -11601,6 +11409,7 @@ bool IsKeyReleased(i32 key) {
     }
     return released;
 }
+
 // Check if a key is NOT being pressed (key not held down)
 bool IsKeyUp(i32 key) {
     bool up = false;
@@ -11611,6 +11420,7 @@ bool IsKeyUp(i32 key) {
     }
     return up;
 }
+
 // Get the last key pressed
 i32 GetKeyPressed() {
     i32 value = 0;
@@ -11624,6 +11434,7 @@ i32 GetKeyPressed() {
     }
     return value;
 }
+
 // Get the last char pressed
 i32 GetCharPressed() {
     i32 value = 0;
@@ -11637,11 +11448,13 @@ i32 GetCharPressed() {
     }
     return value;
 }
+
 // Set a custom key to exit program
 // NOTE: default exitKey is set to ESCAPE
 void SetExitKey(i32 key) {
     CORE.Input.Keyboard.exitKey = key;
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Input Handling: Gamepad
 //----------------------------------------------------------------------------------
@@ -11655,10 +11468,12 @@ bool IsGamepadAvailable(i32 gamepad) {
     }
     return result;
 }
+
 // Get gamepad internal name id
 u8* GetGamepadName(i32 gamepad) {
     return CORE.Input.Gamepad.name[gamepad];
 }
+
 // Check if a gamepad button has been pressed once
 bool IsGamepadButtonPressed(i32 gamepad, i32 button) {
     bool pressed = false;
@@ -11669,6 +11484,7 @@ bool IsGamepadButtonPressed(i32 gamepad, i32 button) {
     }
     return pressed;
 }
+
 // Check if a gamepad button is being pressed
 bool IsGamepadButtonDown(i32 gamepad, i32 button) {
     bool down = false;
@@ -11679,6 +11495,7 @@ bool IsGamepadButtonDown(i32 gamepad, i32 button) {
     }
     return down;
 }
+
 // Check if a gamepad button has NOT been pressed once
 bool IsGamepadButtonReleased(i32 gamepad, i32 button) {
     bool released = false;
@@ -11689,6 +11506,7 @@ bool IsGamepadButtonReleased(i32 gamepad, i32 button) {
     }
     return released;
 }
+
 // Check if a gamepad button is NOT being pressed
 bool IsGamepadButtonUp(i32 gamepad, i32 button) {
     bool up = false;
@@ -11699,15 +11517,18 @@ bool IsGamepadButtonUp(i32 gamepad, i32 button) {
     }
     return up;
 }
+
 // Get the last gamepad button pressed
 // NOTE: Returns last gamepad button down, down->up change not considered
 i32 GetGamepadButtonPressed() {
     return CORE.Input.Gamepad.lastButtonPressed;
 }
+
 // Get gamepad axis count
 i32 GetGamepadAxisCount(i32 gamepad) {
     return CORE.Input.Gamepad.axisCount[gamepad];
 }
+
 // Get axis movement vector for a gamepad
 f32 GetGamepadAxisMovement(i32 gamepad, i32 axis) {
     f32 value = axis == GAMEPAD_AXIS_LEFT_TRIGGER || axis == GAMEPAD_AXIS_RIGHT_TRIGGER ? -1.0f : 0.0f;
@@ -11719,6 +11540,7 @@ f32 GetGamepadAxisMovement(i32 gamepad, i32 axis) {
     }
     return value;
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Input Handling: Mouse
 //----------------------------------------------------------------------------------
@@ -11738,6 +11560,7 @@ bool IsMouseButtonPressed(i32 button) {
     }
     return pressed;
 }
+
 // Check if a mouse button is being pressed
 bool IsMouseButtonDown(i32 button) {
     bool down = false;
@@ -11751,6 +11574,7 @@ bool IsMouseButtonDown(i32 button) {
     }
     return down;
 }
+
 // Check if a mouse button has been released once
 bool IsMouseButtonReleased(i32 button) {
     bool released = false;
@@ -11764,6 +11588,7 @@ bool IsMouseButtonReleased(i32 button) {
     }
     return released;
 }
+
 // Check if a mouse button is NOT being pressed
 bool IsMouseButtonUp(i32 button) {
     bool up = false;
@@ -11777,16 +11602,19 @@ bool IsMouseButtonUp(i32 button) {
     }
     return up;
 }
+
 // Get mouse position X
 i32 GetMouseX() {
     var mouseX = cast(i32, (CORE.Input.Mouse.currentPosition.x + CORE.Input.Mouse.offset.x) * CORE.Input.Mouse.scale.x);
     return mouseX;
 }
+
 // Get mouse position Y
 i32 GetMouseY() {
     var mouseY = cast(i32, (CORE.Input.Mouse.currentPosition.y + CORE.Input.Mouse.offset.y) * CORE.Input.Mouse.scale.y);
     return mouseY;
 }
+
 // Get mouse position XY
 Vector2 GetMousePosition() {
     Vector2 position;
@@ -11794,6 +11622,7 @@ Vector2 GetMousePosition() {
     position.y = (CORE.Input.Mouse.currentPosition.y + CORE.Input.Mouse.offset.y) * CORE.Input.Mouse.scale.y;
     return position;
 }
+
 // Get mouse delta between frames
 Vector2 GetMouseDelta() {
     Vector2 delta;
@@ -11801,16 +11630,19 @@ Vector2 GetMouseDelta() {
     delta.y = (CORE.Input.Mouse.currentPosition.y - CORE.Input.Mouse.previousPosition.y) * CORE.Input.Mouse.scale.y;
     return delta;
 }
+
 // Set mouse offset
 // NOTE: Useful when rendering to different size targets
 void SetMouseOffset(i32 offsetX, i32 offsetY) {
     CORE.Input.Mouse.offset = Vector2{cast(f32, offsetX), cast(f32, offsetY)};
 }
+
 // Set mouse scaling
 // NOTE: Useful when rendering to different size targets
 void SetMouseScale(f32 scaleX, f32 scaleY) {
     CORE.Input.Mouse.scale = Vector2{scaleX, scaleY};
 }
+
 // Get mouse wheel movement Y
 f32 GetMouseWheelMove() {
     f32 result = 0.0f;
@@ -11821,12 +11653,14 @@ f32 GetMouseWheelMove() {
     }
     return result;
 }
+
 // Get mouse wheel movement X/Y as a vector
 Vector2 GetMouseWheelMoveV() {
     Vector2 result;
     result = CORE.Input.Mouse.currentWheelMove;
     return result;
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition: Input Handling: Touch
 //----------------------------------------------------------------------------------
@@ -11835,11 +11669,13 @@ i32 GetTouchX() {
     var touchX = cast(i32, CORE.Input.Touch.position[0].x);
     return touchX;
 }
+
 // Get touch position Y for touch point 0 (relative to screen size)
 i32 GetTouchY() {
     var touchY = cast(i32, CORE.Input.Touch.position[0].y);
     return touchY;
 }
+
 // Get touch position XY for a touch point index (relative to screen size)
 Vector2 GetTouchPosition(i32 index) {
     var position = Vector2{-1.0f, -1.0f};
@@ -11849,6 +11685,7 @@ Vector2 GetTouchPosition(i32 index) {
     }
     return position;
 }
+
 // Get touch point identifier for given index
 i32 GetTouchPointId(i32 index) {
     i32 id = -1;
@@ -11857,10 +11694,12 @@ i32 GetTouchPointId(i32 index) {
     }
     return id;
 }
+
 // Get number of touch points
 i32 GetTouchPointCount() {
     return CORE.Input.Touch.pointCount;
 }
+
 //----------------------------------------------------------------------------------
 // Module Internal Functions Definition
 //----------------------------------------------------------------------------------
@@ -11876,17 +11715,19 @@ void InitTimer() {
     }
     CORE.Time.previous = GetTime();
 }
+
 // Set viewport for a provided width and height
 void SetupViewport(i32 width, i32 height) {
     CORE.Window.render.width = cast(u32, width);
     CORE.Window.render.height = cast(u32, height);
     rlViewport(CORE.Window.renderOffset.x / 2, CORE.Window.renderOffset.y / 2, cast(i32, CORE.Window.render.width), cast(i32, CORE.Window.render.height));
-    rlMatrixMode(5889);
+    rlMatrixMode(0x1701);
     rlLoadIdentity();
     rlOrtho(0.0, cast(f64, CORE.Window.render.width), cast(f64, CORE.Window.render.height), 0.0, 0.0, 1.0);
-    rlMatrixMode(5888);
+    rlMatrixMode(0x1700);
     rlLoadIdentity();
 }
+
 // Scan all files and directories in a base path
 // WARNING: files.paths[] must be previously allocated and
 // contain enough space to store all required paths
@@ -11927,6 +11768,7 @@ void ScanDirectoryFiles(u8* basePath, FilePathList* files, u8* filter, u32 expec
     } else {
     }
 }
+
 // Automation event recording
 // Checking events in current frame and save them into currentEventList
 // NOTE: Recording is by default done at EndDrawing(), before PollInputEvents()
@@ -12092,279 +11934,10 @@ void RecordAutomationEvent() {
     }
 }
 }
-/**********************************************************************************************
-*
-*   rshapes - Basic functions to draw 2d shapes and check collisions
-*
-*   ADDITIONAL NOTES:
-*       Shapes can be draw using 3 types of primitives: LINES, TRIANGLES and QUADS
-*       Some functions implement two drawing options: TRIANGLES and QUADS, by default TRIANGLES
-*       are used but QUADS implementation can be selected with SUPPORT_QUADS_DRAW_MODE define
-*
-*       Some functions define texture coordinates (rlTexCoord2f()) for the shapes and use a
-*       user-provided texture with SetShapesTexture(), the purpose of this implementation
-*       is allowing to reduce draw calls when combined with a texture-atlas
-*
-*       By default, raylib sets the default texture and rectangle at InitWindow()[rcore] to one
-*       white character of default font [rtext], this way, raylib text and shapes can be drawn with
-*       a single draw call and it also allows users to configure it the same way with their own fonts
-*
-*   CONFIGURATION:
-*       #define SUPPORT_MODULE_RSHAPES      1
-*           rshapes module is included in the build
-*
-*       #define SUPPORT_QUADS_DRAW_MODE     1
-*           Use QUADS instead of TRIANGLES for drawing when possible. Lines-based shapes still use LINES
-*
-*
-*   LICENSE: zlib/libpng
-*
-*   Copyright (c) 2013-2026 Ramon Santamaria (@raysan5)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*
-**********************************************************************************************/
-/**********************************************************************************************
-*
-*   raylib v6.1-dev - A simple and easy-to-use library to enjoy videogames programming (www.raylib.com)
-*
-*   FEATURES:
-*       - NO external dependencies, all required libraries included with raylib
-*       - Multiplatform: Windows, Linux, macOS, FreeBSD, Web, Android, Raspberry Pi, DRM native...
-*       - Written in plain C code (C99) in PascalCase/camelCase notation
-*       - Hardware accelerated with OpenGL (1.1, 2.1, 3.3, 4.3, ES2, ES3 - choose at compile)
-*       - Software renderer optional, for systems with no GPU: [rlsw]
-*       - Custom OpenGL abstraction layer (usable as standalone module): [rlgl]
-*       - Multiple Fonts formats supported (TTF, OTF, FNT, BDF, Sprite fonts)
-*       - Many texture formats supported, including compressed formats (DXT, ETC, ASTC)
-*       - Full 3d support for 3d Shapes, Models, Billboards, Heightmaps and more!
-*       - Flexible Materials system, supporting classic maps and PBR maps
-*       - Animated 3D models supported (skeletal bones animation) (IQM, M3D, GLTF)
-*       - Shaders support, including Model shaders and Postprocessing shaders
-*       - Powerful math module for Vector, Matrix and Quaternion operations: [raymath]
-*       - Audio loading and playing with streaming support (WAV, OGG, MP3, FLAC, QOA, XM, MOD)
-*       - VR stereo rendering with configurable HMD device parameters
-*       - Bindings to multiple programming languages available!
-*
-*   NOTES:
-*       - One default Font is loaded on InitWindow()->LoadFontDefault() [core, text]
-*       - One default Texture2D is loaded on rlglInit(), 1x1 white pixel R8G8B8A8 [rlgl] (OpenGL 3.3 or ES2)
-*       - One default Shader is loaded on rlglInit()->rlLoadShaderDefault() [rlgl] (OpenGL 3.3 or ES2)
-*       - One default RenderBatch is loaded on rlglInit()->rlLoadRenderBatch() [rlgl] (OpenGL 3.3 or ES2)
-*
-*   DEPENDENCIES:
-*       [rcore] Depends on the selected platform backend, check rcore.c header for details
-*       [rlgl] glad/glad_gles2 (David Herberth - github.com/Dav1dde/glad) for OpenGL extensions loading
-*       [raudio] miniaudio (David Reid - github.com/mackron/miniaudio) for audio device/context management
-*
-*   OPTIONAL DEPENDENCIES (included):
-*       [rcore] sinfl (Micha Mettke) for DEFLATE decompression algorithm
-*       [rcore] sdefl (Micha Mettke) for DEFLATE compression algorithm
-*       [rcore] rprand (Ramon Santamaria) for pseudo-random numbers generation
-*       [rtextures] qoi (Dominic Szablewski - https://phoboslab.org) for QOI image management
-*       [rtextures] stb_image (Sean Barrett) for images loading (BMP, TGA, PNG, JPEG, HDR...)
-*       [rtextures] stb_image_write (Sean Barrett) for image writing (BMP, TGA, PNG, JPG)
-*       [rtextures] stb_image_resize2 (Sean Barrett) for image resizing algorithms
-*       [rtextures] stb_perlin (Sean Barrett) for Perlin Noise image generation
-*       [rtextures] rltexgpu (Ramon Santamaria) for GPU-compressed texture formats
-*       [rtext] stb_truetype (Sean Barrett) for ttf fonts loading
-*       [rtext] stb_rect_pack (Sean Barrett) for rectangles packing
-*       [rmodels] par_shapes (Philip Rideout) for parametric 3d shapes generation
-*       [rmodels] tinyobj_loader_c (Syoyo Fujita) for models loading (OBJ, MTL)
-*       [rmodels] cgltf (Johannes Kuhlmann) for models loading (glTF)
-*       [rmodels] m3d (bzt) for models loading (M3D, https://bztsrc.gitlab.io/model3d)
-*       [rmodels] vox_loader (Johann Nadalutti) for models loading (VOX)
-*       [raudio] dr_wav (David Reid) for WAV audio file loading
-*       [raudio] dr_flac (David Reid) for FLAC audio file loading
-*       [raudio] dr_mp3 (David Reid) for MP3 audio file loading
-*       [raudio] stb_vorbis (Sean Barrett) for OGG audio loading
-*       [raudio] jar_xm (Joshua Reisenauer) for XM audio module loading
-*       [raudio] jar_mod (Joshua Reisenauer) for MOD audio module loading
-*       [raudio] qoa (Dominic Szablewski - https://phoboslab.org) for QOA audio management
-*
-*
-*   LICENSE: zlib/libpng
-*
-*   raylib is licensed under an unmodified zlib/libpng license, which is an OSI-certified,
-*   BSD-like license that allows static linking with closed source software:
-*
-*   Copyright (c) 2013-2026 Ramon Santamaria (@raysan5)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*
-**********************************************************************************************/
-// Declares module functions
-/**********************************************************************************************
-*
-*   raylib configuration flags
-*
-*   This file defines the configuration flags for different raylib features per-module
-*
-*   NOTE: Additional values are configured per-module and can be set on compile time
-*
-*   LICENSE: zlib/libpng
-*
-*   Copyright (c) 2018-2026 Ahmad Fatoum and Ramon Santamaria (@raysan5)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*
-**********************************************************************************************/
-// Defines module configuration flags
-/**********************************************************************************************
-*
-*   rlgl v6.0 - A multi-OpenGL abstraction layer with an immediate-mode style API
-*
-*   DESCRIPTION:
-*       An abstraction layer for multiple OpenGL versions (1.1, 2.1, 3.3 Core, 4.3 Core, ES 2.0, ES 3.0)
-*       that provides a pseudo-OpenGL 1.1 immediate-mode style API (rlVertex, rlTranslate, rlRotate...)
-*
-*   ADDITIONAL NOTES:
-*       When choosing an OpenGL backend different than OpenGL 1.1, some internal buffers are
-*       initialized on rlglInit() to accumulate vertex data
-*
-*       When an internal state change is required all the stored vertex data is rendered in a batch,
-*       additionally, rlDrawRenderBatchActive() could be called to force flushing of the batch
-*
-*       Some resources are also loaded for convenience, here the complete list:
-*          - Default batch (RLGL.defaultBatch): RenderBatch system to accumulate vertex data
-*          - Default texture (RLGL.defaultTextureId): 1x1 white pixel R8G8B8A8
-*          - Default shader (RLGL.State.defaultShaderId, RLGL.State.defaultShaderLocs)
-*
-*       Internal buffer (and resources) must be manually unloaded calling rlglClose()
-*
-*   CONFIGURATION:
-*       #define GRAPHICS_API_OPENGL_SOFTWARE
-*       #define GRAPHICS_API_OPENGL_11
-*       #define GRAPHICS_API_OPENGL_21
-*       #define GRAPHICS_API_OPENGL_33
-*       #define GRAPHICS_API_OPENGL_43
-*       #define GRAPHICS_API_OPENGL_ES2
-*       #define GRAPHICS_API_OPENGL_ES3
-*           Use selected OpenGL graphics backend, should be supported by platform
-*           Those preprocessor defines are only used on the rlgl module, if OpenGL version is
-*           required by any other module, use rlGetVersion() to check it
-*
-*       #define RLGL_IMPLEMENTATION
-*           Generates the implementation of the library into the included file
-*           If not defined, the library is in header only mode and can be included in other headers
-*           or source files without problems. But only ONE file should hold the implementation
-*
-*       #if RLGL_SHOW_GL_DETAILS_INFO
-*           Show OpenGL extensions and capabilities detailed logs on init
-*
-*       #if RLGL_ENABLE_OPENGL_DEBUG_CONTEXT
-*           Enable debug context (only available on OpenGL 4.3)
-*
-*       rlgl capabilities could be customized defining some internal
-*       values before library inclusion (default values listed):
-*
-*       #define RL_DEFAULT_BATCH_BUFFER_ELEMENTS   8192    // Default internal render batch elements limits
-*       #define RL_DEFAULT_BATCH_BUFFERS              1    // Default number of batch buffers (multi-buffering)
-*       #define RL_DEFAULT_BATCH_DRAWCALLS          256    // Default number of batch draw calls (by state changes: mode, texture)
-*       #define RL_DEFAULT_BATCH_MAX_TEXTURE_UNITS    4    // Maximum number of texture units that can be activated on batch drawing (SetShaderValueTexture())
-*
-*       #define RL_MAX_MATRIX_STACK_SIZE             32    // Maximum size of internal Matrix stack
-*       #define RL_MAX_SHADER_LOCATIONS              32    // Maximum number of shader locations supported
-*       #define RL_CULL_DISTANCE_NEAR              0.05    // Default projection matrix near cull distance
-*       #define RL_CULL_DISTANCE_FAR             4000.0    // Default projection matrix far cull distance
-*
-*       When loading a shader, the following vertex attributes and uniform
-*       location names are tried to be set automatically:
-*
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_POSITION     "vertexPosition"    // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_POSITION
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD     "vertexTexCoord"    // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_NORMAL       "vertexNormal"      // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_NORMAL
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_COLOR        "vertexColor"       // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_COLOR
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_TANGENT      "vertexTangent"     // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_TANGENT
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD2    "vertexTexCoord2"   // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD2
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_BONEINDICES  "vertexBoneIndices" // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEINDICES
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_BONEWEIGHTS  "vertexBoneWeights" // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEWEIGHTS
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_MVP         "mvp"               // model-view-projection matrix
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_VIEW        "matView"           // view matrix
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_PROJECTION  "matProjection"     // projection matrix
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_MODEL       "matModel"          // model matrix
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_NORMAL      "matNormal"         // normal matrix (transpose(inverse(matModelView)))
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_COLOR       "colDiffuse"        // color diffuse (base tint color, multiplied by texture color)
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_BONEMATRICES "boneMatrices"     // bone matrices
-*       #define RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE0  "texture0"          // texture0 (texture slot active 0)
-*       #define RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE1  "texture1"          // texture1 (texture slot active 1)
-*       #define RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE2  "texture2"          // texture2 (texture slot active 2)
-*
-*   DEPENDENCIES:
-*      - OpenGL libraries (depending on platform and OpenGL version selected)
-*      - GLAD OpenGL extensions loading library (only for OpenGL 3.3 Core, 4.3 Core)
-*
-*
-*   LICENSE: zlib/libpng
-*
-*   Copyright (c) 2014-2026 Ramon Santamaria (@raysan5)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*
-**********************************************************************************************/
-/***********************************************************************************
-*
-*   RLGL IMPLEMENTATION
-*
-************************************************************************************/
 // OpenGL abstraction layer to OpenGL 1.1, 2.1, 3.3+ or ES2
 //----------------------------------------------------------------------------------
 // Defines and Macros
 //----------------------------------------------------------------------------------
-when !(defined(SMOOTH_CIRCLE_ERROR_RATE)) {
-}
 //----------------------------------------------------------------------------------
 // Types and Structures Definition
 //----------------------------------------------------------------------------------
@@ -12372,9 +11945,12 @@ when !(defined(SMOOTH_CIRCLE_ERROR_RATE)) {
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-private { Texture2D texShapes = Texture2D{1, 1, 1, 1, 7}; }
+private {
+Texture2D texShapes = Texture2D{1, 1, 1, 1, 7};
 // Texture used on shapes drawing (white pixel loaded by rlgl)
-private { Rectangle texShapesRec = Rectangle{0.0f, 0.0f, 1.0f, 1.0f}; }
+Rectangle texShapesRec = Rectangle{0.0f, 0.0f, 1.0f, 1.0f};
+}
+
 // Cubic easing
 //----------------------------------------------------------------------------------
 // Module Functions Definition
@@ -12391,23 +11967,27 @@ void SetShapesTexture(Texture2D texture, Rectangle source) {
         texShapesRec = source;
     }
 }
+
 // Get texture that is used for shapes drawing
 Texture2D GetShapesTexture() {
     return texShapes;
 }
+
 // Get texture source rectangle that is used for shapes drawing
 Rectangle GetShapesTextureRectangle() {
     return texShapesRec;
 }
+
 // Draw a pixel
 void DrawPixel(i32 posX, i32 posY, Color color) {
     DrawPixelV(Vector2{cast(f32, posX), cast(f32, posY)}, color);
 }
+
 // Draw a pixel (Vector version)
 void DrawPixelV(Vector2 position, Color color) {
     rlSetTexture(GetShapesTexture().id);
     Rectangle shapeRect = GetShapesTextureRectangle();
-    rlBegin(7);
+    rlBegin(0x0007);
     rlNormal3f(0.0f, 0.0f, 1.0f);
     rlColor4ub(color.r, color.g, color.b, color.a);
     rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
@@ -12421,14 +12001,16 @@ void DrawPixelV(Vector2 position, Color color) {
     rlEnd();
     rlSetTexture(0);
 }
+
 // Draw a line (using gl lines)
 void DrawLine(i32 startPosX, i32 startPosY, i32 endPosX, i32 endPosY, Color color) {
-    rlBegin(1);
+    rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     rlVertex2f(cast(f32, startPosX), cast(f32, startPosY));
     rlVertex2f(cast(f32, endPosX), cast(f32, endPosY));
     rlEnd();
 }
+
 // Draw a line defining thickness
 void DrawLineEx(Vector2 startPos, Vector2 endPos, f32 thick, Color color) {
     var delta = Vector2{endPos.x - startPos.x, endPos.y - startPos.y};
@@ -12436,24 +12018,31 @@ void DrawLineEx(Vector2 startPos, Vector2 endPos, f32 thick, Color color) {
     if length > 0.0f && thick > 0.0f {
         f32 scale = thick / (2.0f * length);
         var radius = Vector2{-scale * delta.y, scale * delta.x};
-        Vector2[4] strip = {Vector2{startPos.x - radius.x, startPos.y - radius.y}, Vector2{startPos.x + radius.x, startPos.y + radius.y}, Vector2{endPos.x - radius.x, endPos.y - radius.y}, Vector2{endPos.x + radius.x, endPos.y + radius.y}};
+        Vector2[4] strip = {
+            Vector2{startPos.x - radius.x, startPos.y - radius.y},
+            Vector2{startPos.x + radius.x, startPos.y + radius.y},
+            Vector2{endPos.x - radius.x, endPos.y - radius.y},
+            Vector2{endPos.x + radius.x, endPos.y + radius.y},
+        };
         DrawTriangleStrip(strip, 4, color);
     }
 }
+
 // Draw a line (using gl lines)
 void DrawLineV(Vector2 startPos, Vector2 endPos, Color color) {
-    rlBegin(1);
+    rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     rlVertex2f(startPos.x, startPos.y);
     rlVertex2f(endPos.x, endPos.y);
     rlEnd();
 }
+
 // Draw lines sequuence (using gl lines)
 void DrawLineStrip(Vector2* points, i32 pointCount, Color color) {
     if pointCount < 2 {
         return;
     }
-    rlBegin(1);
+    rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     for i32 i = 0; i < pointCount - 1; i++ {
         rlVertex2f(points[i].x, points[i].y);
@@ -12461,6 +12050,7 @@ void DrawLineStrip(Vector2* points, i32 pointCount, Color color) {
     }
     rlEnd();
 }
+
 // Draw line using cubic-bezier spline, in-out interpolation, no control points
 void DrawLineBezier(Vector2 startPos, Vector2 endPos, f32 thick, Color color) {
     Vector2 previous = startPos;
@@ -12486,6 +12076,7 @@ void DrawLineBezier(Vector2 startPos, Vector2 endPos, f32 thick, Color color) {
     }
     DrawTriangleStrip(points, 2 * 24 + 2, color);
 }
+
 // Draw a dashed line
 void DrawLineDashed(Vector2 startPos, Vector2 endPos, i32 dashSize, i32 spaceSize, Color color) {
     f32 dx = endPos.x - startPos.x;
@@ -12500,7 +12091,7 @@ void DrawLineDashed(Vector2 startPos, Vector2 endPos, i32 dashSize, i32 spaceSiz
     f32 dirY = dy * invLineLength;
     Vector2 currentPos = startPos;
     f32 distanceTraveled = 0.0f;
-    rlBegin(1);
+    rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     while distanceTraveled < lineLength {
         f32 dashEndDist = distanceTraveled + cast(f32, dashSize);
@@ -12516,18 +12107,21 @@ void DrawLineDashed(Vector2 startPos, Vector2 endPos, i32 dashSize, i32 spaceSiz
     }
     rlEnd();
 }
+
 // Draw a color-filled circle
 void DrawCircle(i32 centerX, i32 centerY, f32 radius, Color color) {
     DrawCircleV(Vector2{cast(f32, centerX), cast(f32, centerY)}, radius, color);
 }
+
 // Draw a color-filled circle (Vector version)
 // NOTE: On OpenGL 3.3 and ES2 using QUADS to avoid drawing order issues
 void DrawCircleV(Vector2 center, f32 radius, Color color) {
     DrawCircleSector(center, radius, 0.0f, 360.0f, 36, color);
 }
+
 // Draw a gradient-filled circle
 void DrawCircleGradient(Vector2 center, f32 radius, Color inner, Color outer) {
-    rlBegin(4);
+    rlBegin(0x0004);
     for i32 i = 0; i < 360; i += 10 {
         rlColor4ub(inner.r, inner.g, inner.b, inner.a);
         rlVertex2f(center.x, center.y);
@@ -12538,6 +12132,7 @@ void DrawCircleGradient(Vector2 center, f32 radius, Color inner, Color outer) {
     }
     rlEnd();
 }
+
 // Draw a piece of a circle
 void DrawCircleSector(Vector2 center, f32 radius, f32 startAngle, f32 endAngle, i32 segments, Color color) {
     if startAngle == endAngle {
@@ -12563,7 +12158,7 @@ void DrawCircleSector(Vector2 center, f32 radius, f32 startAngle, f32 endAngle, 
     f32 angle = startAngle;
     rlSetTexture(GetShapesTexture().id);
     Rectangle shapeRect = GetShapesTextureRectangle();
-    rlBegin(7);
+    rlBegin(0x0007);
     for i32 i = 0; i < segments / 2; i++ {
         rlColor4ub(color.r, color.g, color.b, color.a);
         rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
@@ -12590,6 +12185,7 @@ void DrawCircleSector(Vector2 center, f32 radius, f32 startAngle, f32 endAngle, 
     rlEnd();
     rlSetTexture(0);
 }
+
 // Draw a piece of a circle outlines
 void DrawCircleSectorLines(Vector2 center, f32 radius, f32 startAngle, f32 endAngle, i32 segments, Color color) {
     if startAngle == endAngle {
@@ -12614,7 +12210,7 @@ void DrawCircleSectorLines(Vector2 center, f32 radius, f32 startAngle, f32 endAn
     f32 stepLength = (endAngle - startAngle) / cast(f32, segments);
     f32 angle = startAngle;
     bool showCapLines = true;
-    rlBegin(1);
+    rlBegin(0x0001);
     if showCapLines != 0 {
         rlColor4ub(color.r, color.g, color.b, color.a);
         rlVertex2f(center.x, center.y);
@@ -12633,13 +12229,15 @@ void DrawCircleSectorLines(Vector2 center, f32 radius, f32 startAngle, f32 endAn
     }
     rlEnd();
 }
+
 // Draw circle outline
 void DrawCircleLines(i32 centerX, i32 centerY, f32 radius, Color color) {
     DrawCircleLinesV(Vector2{cast(f32, centerX), cast(f32, centerY)}, radius, color);
 }
+
 // Draw circle outline (Vector version)
 void DrawCircleLinesV(Vector2 center, f32 radius, Color color) {
-    rlBegin(1);
+    rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     for i32 i = 0; i < 360; i += 10 {
         rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * cast(f32, i)) * radius, center.y + sinf(3.141592653589793f / 180.0f * cast(f32, i)) * radius);
@@ -12647,13 +12245,15 @@ void DrawCircleLinesV(Vector2 center, f32 radius, Color color) {
     }
     rlEnd();
 }
+
 // Draw ellipse
 void DrawEllipse(i32 centerX, i32 centerY, f32 radiusH, f32 radiusV, Color color) {
     DrawEllipseV(Vector2{cast(f32, centerX), cast(f32, centerY)}, radiusH, radiusV, color);
 }
+
 // Draw ellipse (Vector version)
 void DrawEllipseV(Vector2 center, f32 radiusH, f32 radiusV, Color color) {
-    rlBegin(4);
+    rlBegin(0x0004);
     for i32 i = 0; i < 360; i += 10 {
         rlColor4ub(color.r, color.g, color.b, color.a);
         rlVertex2f(center.x, center.y);
@@ -12662,13 +12262,15 @@ void DrawEllipseV(Vector2 center, f32 radiusH, f32 radiusV, Color color) {
     }
     rlEnd();
 }
+
 // Draw ellipse outline
 void DrawEllipseLines(i32 centerX, i32 centerY, f32 radiusH, f32 radiusV, Color color) {
     DrawEllipseLinesV(Vector2{cast(f32, centerX), cast(f32, centerY)}, radiusH, radiusV, color);
 }
+
 // Draw ellipse outline
 void DrawEllipseLinesV(Vector2 center, f32 radiusH, f32 radiusV, Color color) {
-    rlBegin(1);
+    rlBegin(0x0001);
     for i32 i = 0; i < 360; i += 10 {
         rlColor4ub(color.r, color.g, color.b, color.a);
         rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radiusH, center.y + sinf(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radiusV);
@@ -12676,6 +12278,7 @@ void DrawEllipseLinesV(Vector2 center, f32 radiusH, f32 radiusV, Color color) {
     }
     rlEnd();
 }
+
 // Draw ring
 void DrawRing(Vector2 center, f32 innerRadius, f32 outerRadius, f32 startAngle, f32 endAngle, i32 segments, Color color) {
     if startAngle == endAngle {
@@ -12710,7 +12313,7 @@ void DrawRing(Vector2 center, f32 innerRadius, f32 outerRadius, f32 startAngle, 
     f32 angle = startAngle;
     rlSetTexture(GetShapesTexture().id);
     Rectangle shapeRect = GetShapesTextureRectangle();
-    rlBegin(7);
+    rlBegin(0x0007);
     for i32 i = 0; i < segments; i++ {
         rlColor4ub(color.r, color.g, color.b, color.a);
         rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
@@ -12726,6 +12329,7 @@ void DrawRing(Vector2 center, f32 innerRadius, f32 outerRadius, f32 startAngle, 
     rlEnd();
     rlSetTexture(0);
 }
+
 // Draw ring outline
 void DrawRingLines(Vector2 center, f32 innerRadius, f32 outerRadius, f32 startAngle, f32 endAngle, i32 segments, Color color) {
     if startAngle == endAngle {
@@ -12759,7 +12363,7 @@ void DrawRingLines(Vector2 center, f32 innerRadius, f32 outerRadius, f32 startAn
     f32 stepLength = (endAngle - startAngle) / cast(f32, segments);
     f32 angle = startAngle;
     bool showCapLines = true;
-    rlBegin(1);
+    rlBegin(0x0001);
     if showCapLines != 0 {
         rlColor4ub(color.r, color.g, color.b, color.a);
         rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * outerRadius, center.y + sinf(3.141592653589793f / 180.0f * angle) * outerRadius);
@@ -12780,19 +12384,23 @@ void DrawRingLines(Vector2 center, f32 innerRadius, f32 outerRadius, f32 startAn
     }
     rlEnd();
 }
+
 // Draw a color-filled rectangle
 void DrawRectangle(i32 posX, i32 posY, i32 width, i32 height, Color color) {
     DrawRectangleV(Vector2{cast(f32, posX), cast(f32, posY)}, Vector2{cast(f32, width), cast(f32, height)}, color);
 }
+
 // Draw a color-filled rectangle (Vector version)
 // NOTE: On OpenGL 3.3 and ES2 using QUADS to avoid drawing order issues
 void DrawRectangleV(Vector2 position, Vector2 size, Color color) {
     DrawRectanglePro(Rectangle{position.x, position.y, size.x, size.y}, Vector2{0.0f, 0.0f}, 0.0f, color);
 }
+
 // Draw a color-filled rectangle
 void DrawRectangleRec(Rectangle rec, Color color) {
     DrawRectanglePro(rec, Vector2{0.0f, 0.0f}, 0.0f, color);
 }
+
 // Draw a color-filled rectangle with pro parameters
 void DrawRectanglePro(Rectangle rec, Vector2 origin, f32 rotation, Color color) {
     Vector2 topLeft;
@@ -12824,7 +12432,7 @@ void DrawRectanglePro(Rectangle rec, Vector2 origin, f32 rotation, Color color) 
     }
     rlSetTexture(GetShapesTexture().id);
     Rectangle shapeRect = GetShapesTextureRectangle();
-    rlBegin(7);
+    rlBegin(0x0007);
     rlNormal3f(0.0f, 0.0f, 1.0f);
     rlColor4ub(color.r, color.g, color.b, color.a);
     rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
@@ -12838,19 +12446,26 @@ void DrawRectanglePro(Rectangle rec, Vector2 origin, f32 rotation, Color color) 
     rlEnd();
     rlSetTexture(0);
 }
+
 // Draw a vertical-gradient-filled rectangle
 void DrawRectangleGradientV(i32 posX, i32 posY, i32 width, i32 height, Color top, Color bottom) {
-    DrawRectangleGradientEx(Rectangle{cast(f32, posX), cast(f32, posY), cast(f32, width), cast(f32, height)}, top, bottom, bottom, top);
+    DrawRectangleGradientEx(Rectangle{
+        cast(f32, posX), cast(f32, posY), cast(f32, width), cast(f32, height),
+    }, top, bottom, bottom, top);
 }
+
 // Draw a horizontal-gradient-filled rectangle
 void DrawRectangleGradientH(i32 posX, i32 posY, i32 width, i32 height, Color left, Color right) {
-    DrawRectangleGradientEx(Rectangle{cast(f32, posX), cast(f32, posY), cast(f32, width), cast(f32, height)}, left, left, right, right);
+    DrawRectangleGradientEx(Rectangle{
+        cast(f32, posX), cast(f32, posY), cast(f32, width), cast(f32, height),
+    }, left, left, right, right);
 }
+
 // Draw a gradient-filled rectangle
 void DrawRectangleGradientEx(Rectangle rec, Color topLeft, Color bottomLeft, Color bottomRight, Color topRight) {
     rlSetTexture(GetShapesTexture().id);
     Rectangle shapeRect = GetShapesTextureRectangle();
-    rlBegin(7);
+    rlBegin(0x0007);
     rlNormal3f(0.0f, 0.0f, 1.0f);
     rlColor4ub(topLeft.r, topLeft.g, topLeft.b, topLeft.a);
     rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
@@ -12867,6 +12482,7 @@ void DrawRectangleGradientEx(Rectangle rec, Color topLeft, Color bottomLeft, Col
     rlEnd();
     rlSetTexture(0);
 }
+
 // Draw rectangle outline
 // WARNING: All Draw*Lines() functions use RL_LINES for drawing,
 // it implies flushing the current batch and changing draw mode to RL_LINES
@@ -12875,7 +12491,7 @@ void DrawRectangleLines(i32 posX, i32 posY, i32 width, i32 height, Color color) 
     Matrix mat = rlGetMatrixTransform();
     f32 xOffset = 0.5f / mat.m0;
     f32 yOffset = 0.5f / mat.m5;
-    rlBegin(1);
+    rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     rlVertex2f(cast(f32, posX) + xOffset, cast(f32, posY) + yOffset);
     rlVertex2f(cast(f32, posX) + cast(f32, width) - xOffset, cast(f32, posY) + yOffset);
@@ -12887,6 +12503,7 @@ void DrawRectangleLines(i32 posX, i32 posY, i32 width, i32 height, Color color) 
     rlVertex2f(cast(f32, posX) + xOffset, cast(f32, posY) + yOffset);
     rlEnd();
 }
+
 // Draw rectangle outline with extended parameters
 void DrawRectangleLinesEx(Rectangle rec, f32 lineThick, Color color) {
     if lineThick > rec.width || lineThick > rec.height {
@@ -12899,12 +12516,15 @@ void DrawRectangleLinesEx(Rectangle rec, f32 lineThick, Color color) {
     var top = Rectangle{rec.x, rec.y, rec.width, lineThick};
     var bottom = Rectangle{rec.x, rec.y - lineThick + rec.height, rec.width, lineThick};
     var left = Rectangle{rec.x, rec.y + lineThick, lineThick, rec.height - lineThick * 2.0f};
-    var right = Rectangle{rec.x - lineThick + rec.width, rec.y + lineThick, lineThick, rec.height - lineThick * 2.0f};
+    var right = Rectangle{
+        rec.x - lineThick + rec.width, rec.y + lineThick, lineThick, rec.height - lineThick * 2.0f,
+    };
     DrawRectangleRec(top, color);
     DrawRectangleRec(bottom, color);
     DrawRectangleRec(left, color);
     DrawRectangleRec(right, color);
 }
+
 // Draw rectangle with rounded edges
 void DrawRectangleRounded(Rectangle rec, f32 roundness, i32 segments, Color color) {
     if roundness <= 0.0f {
@@ -12926,12 +12546,25 @@ void DrawRectangleRounded(Rectangle rec, f32 roundness, i32 segments, Color colo
         }
     }
     f32 stepLength = 90.0f / cast(f32, segments);
-    Vector2[12] point = {Vector2{rec.x + radius, rec.y}, Vector2{rec.x + rec.width - radius, rec.y}, Vector2{rec.x + rec.width, rec.y + radius}, Vector2{rec.x + rec.width, rec.y + rec.height - radius}, Vector2{rec.x + rec.width - radius, rec.y + rec.height}, Vector2{rec.x + radius, rec.y + rec.height}, Vector2{rec.x, rec.y + rec.height - radius}, Vector2{rec.x, rec.y + radius}, Vector2{rec.x + radius, rec.y + radius}, Vector2{rec.x + rec.width - radius, rec.y + radius}, Vector2{rec.x + rec.width - radius, rec.y + rec.height - radius}, Vector2{rec.x + radius, rec.y + rec.height - radius}};
+    Vector2[12] point = {
+        Vector2{rec.x + radius, rec.y},
+        Vector2{rec.x + rec.width - radius, rec.y},
+        Vector2{rec.x + rec.width, rec.y + radius},
+        Vector2{rec.x + rec.width, rec.y + rec.height - radius},
+        Vector2{rec.x + rec.width - radius, rec.y + rec.height},
+        Vector2{rec.x + radius, rec.y + rec.height},
+        Vector2{rec.x, rec.y + rec.height - radius},
+        Vector2{rec.x, rec.y + radius},
+        Vector2{rec.x + radius, rec.y + radius},
+        Vector2{rec.x + rec.width - radius, rec.y + radius},
+        Vector2{rec.x + rec.width - radius, rec.y + rec.height - radius},
+        Vector2{rec.x + radius, rec.y + rec.height - radius},
+    };
     Vector2[4] centers = {point[8], point[9], point[10], point[11]};
     f32[4] angles = {180.0f, 270.0f, 0.0f, 90.0f};
     rlSetTexture(GetShapesTexture().id);
     Rectangle shapeRect = GetShapesTextureRectangle();
-    rlBegin(7);
+    rlBegin(0x0007);
     for i32 k = 0; k < 4; ++k {
         f32 angle = angles[k];
         Vector2 center = centers[k];
@@ -13007,17 +12640,22 @@ void DrawRectangleRounded(Rectangle rec, f32 roundness, i32 segments, Color colo
     rlEnd();
     rlSetTexture(0);
 }
+
 // Draw rectangle with rounded edges
 void DrawRectangleRoundedLines(Rectangle rec, f32 roundness, i32 segments, Color color) {
     DrawRectangleRoundedLinesEx(rec, roundness, segments, 1.0f, color);
 }
+
 // Draw rectangle with rounded edges outline
 void DrawRectangleRoundedLinesEx(Rectangle rec, f32 roundness, i32 segments, f32 lineThick, Color color) {
     if lineThick < 0.0f {
         lineThick = 0.0f;
     }
     if roundness <= 0.0f {
-        DrawRectangleLinesEx(Rectangle{rec.x - lineThick, rec.y - lineThick, rec.width + 2.0f * lineThick, rec.height + 2.0f * lineThick}, lineThick, color);
+        DrawRectangleLinesEx(Rectangle{
+            rec.x - lineThick, rec.y - lineThick, rec.width + 2.0f * lineThick,
+            rec.height + 2.0f * lineThick,
+        }, lineThick, color);
         return;
     }
     if roundness >= 1.0f {
@@ -13037,13 +12675,35 @@ void DrawRectangleRoundedLinesEx(Rectangle rec, f32 roundness, i32 segments, f32
     f32 stepLength = 90.0f / cast(f32, segments);
     f32 outerRadius = radius + lineThick;
     f32 innerRadius = radius;
-    Vector2[16] point = {Vector2{rec.x + innerRadius + 0.5f, rec.y - lineThick + 0.5f}, Vector2{rec.x + rec.width - innerRadius - 0.5f, rec.y - lineThick + 0.5f}, Vector2{rec.x + rec.width + lineThick - 0.5f, rec.y + innerRadius + 0.5f}, Vector2{rec.x + rec.width + lineThick - 0.5f, rec.y + rec.height - innerRadius - 0.5f}, Vector2{rec.x + rec.width - innerRadius - 0.5f, rec.y + rec.height + lineThick - 0.5f}, Vector2{rec.x + innerRadius + 0.5f, rec.y + rec.height + lineThick - 0.5f}, Vector2{rec.x - lineThick + 0.5f, rec.y + rec.height - innerRadius - 0.5f}, Vector2{rec.x - lineThick + 0.5f, rec.y + innerRadius + 0.5f}, Vector2{rec.x + innerRadius + 0.5f, rec.y + 0.5f}, Vector2{rec.x + rec.width - innerRadius - 0.5f, rec.y + 0.5f}, Vector2{rec.x + rec.width - 0.5f, rec.y + innerRadius + 0.5f}, Vector2{rec.x + rec.width - 0.5f, rec.y + rec.height - innerRadius - 0.5f}, Vector2{rec.x + rec.width - innerRadius - 0.5f, rec.y + rec.height - 0.5f}, Vector2{rec.x + innerRadius + 0.5f, rec.y + rec.height - 0.5f}, Vector2{rec.x + 0.5f, rec.y + rec.height - innerRadius - 0.5f}, Vector2{rec.x + 0.5f, rec.y + innerRadius + 0.5f}};
-    Vector2[4] centers = {Vector2{rec.x + innerRadius + 0.5f, rec.y + innerRadius + 0.5f}, Vector2{rec.x + rec.width - innerRadius - 0.5f, rec.y + innerRadius + 0.5f}, Vector2{rec.x + rec.width - innerRadius - 0.5f, rec.y + rec.height - innerRadius - 0.5f}, Vector2{rec.x + innerRadius + 0.5f, rec.y + rec.height - innerRadius - 0.5f}};
+    Vector2[16] point = {
+        Vector2{rec.x + innerRadius + 0.5f, rec.y - lineThick + 0.5f},
+        Vector2{rec.x + rec.width - innerRadius - 0.5f, rec.y - lineThick + 0.5f},
+        Vector2{rec.x + rec.width + lineThick - 0.5f, rec.y + innerRadius + 0.5f},
+        Vector2{rec.x + rec.width + lineThick - 0.5f, rec.y + rec.height - innerRadius - 0.5f},
+        Vector2{rec.x + rec.width - innerRadius - 0.5f, rec.y + rec.height + lineThick - 0.5f},
+        Vector2{rec.x + innerRadius + 0.5f, rec.y + rec.height + lineThick - 0.5f},
+        Vector2{rec.x - lineThick + 0.5f, rec.y + rec.height - innerRadius - 0.5f},
+        Vector2{rec.x - lineThick + 0.5f, rec.y + innerRadius + 0.5f},
+        Vector2{rec.x + innerRadius + 0.5f, rec.y + 0.5f},
+        Vector2{rec.x + rec.width - innerRadius - 0.5f, rec.y + 0.5f},
+        Vector2{rec.x + rec.width - 0.5f, rec.y + innerRadius + 0.5f},
+        Vector2{rec.x + rec.width - 0.5f, rec.y + rec.height - innerRadius - 0.5f},
+        Vector2{rec.x + rec.width - innerRadius - 0.5f, rec.y + rec.height - 0.5f},
+        Vector2{rec.x + innerRadius + 0.5f, rec.y + rec.height - 0.5f},
+        Vector2{rec.x + 0.5f, rec.y + rec.height - innerRadius - 0.5f},
+        Vector2{rec.x + 0.5f, rec.y + innerRadius + 0.5f},
+    };
+    Vector2[4] centers = {
+        Vector2{rec.x + innerRadius + 0.5f, rec.y + innerRadius + 0.5f},
+        Vector2{rec.x + rec.width - innerRadius - 0.5f, rec.y + innerRadius + 0.5f},
+        Vector2{rec.x + rec.width - innerRadius - 0.5f, rec.y + rec.height - innerRadius - 0.5f},
+        Vector2{rec.x + innerRadius + 0.5f, rec.y + rec.height - innerRadius - 0.5f},
+    };
     f32[4] angles = {180.0f, 270.0f, 0.0f, 90.0f};
     if lineThick > 1.0f {
         rlSetTexture(GetShapesTexture().id);
         Rectangle shapeRect = GetShapesTextureRectangle();
-        rlBegin(7);
+        rlBegin(0x0007);
         for i32 k = 0; k < 4; ++k {
             f32 angle = angles[k];
             Vector2 center = centers[k];
@@ -13099,7 +12759,7 @@ void DrawRectangleRoundedLinesEx(Rectangle rec, f32 roundness, i32 segments, f32
         rlEnd();
         rlSetTexture(0);
     } else {
-        rlBegin(1);
+        rlBegin(0x0001);
         for i32 k = 0; k < 4; ++k {
             f32 angle = angles[k];
             Vector2 center = centers[k];
@@ -13118,16 +12778,18 @@ void DrawRectangleRoundedLinesEx(Rectangle rec, f32 roundness, i32 segments, f32
         rlEnd();
     }
 }
+
 // Draw a triangle
 // NOTE: Vertex must be provided in counter-clockwise order
 void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color) {
     DrawTriangleGradient(v1, v2, v3, color, color, color);
 }
+
 // Draw triangle with interpolated colors (vertex in counter-clockwise order!)
 void DrawTriangleGradient(Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3) {
     rlSetTexture(GetShapesTexture().id);
     Rectangle shapeRect = GetShapesTextureRectangle();
-    rlBegin(7);
+    rlBegin(0x0007);
     rlNormal3f(0.0f, 0.0f, 1.0f);
     rlColor4ub(c1.r, c1.g, c1.b, c1.a);
     rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
@@ -13144,10 +12806,11 @@ void DrawTriangleGradient(Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2
     rlEnd();
     rlSetTexture(0);
 }
+
 // Draw a triangle using lines
 // NOTE: Vertex must be provided in counter-clockwise order
 void DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, Color color) {
-    rlBegin(1);
+    rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     rlVertex2f(v1.x, v1.y);
     rlVertex2f(v2.x, v2.y);
@@ -13157,6 +12820,7 @@ void DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, Color color) {
     rlVertex2f(v1.x, v1.y);
     rlEnd();
 }
+
 // Draw a triangle fan defined by points
 // NOTE: First vertex provided is the center, shared by all triangles
 // By default, following vertex should be provided in counter-clockwise order
@@ -13164,7 +12828,7 @@ void DrawTriangleFan(Vector2* points, i32 pointCount, Color color) {
     if pointCount >= 3 {
         rlSetTexture(GetShapesTexture().id);
         Rectangle shapeRect = GetShapesTextureRectangle();
-        rlBegin(7);
+        rlBegin(0x0007);
         rlColor4ub(color.r, color.g, color.b, color.a);
         for i32 i = 1; i < pointCount - 1; i++ {
             rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
@@ -13180,11 +12844,12 @@ void DrawTriangleFan(Vector2* points, i32 pointCount, Color color) {
         rlSetTexture(0);
     }
 }
+
 // Draw a triangle strip defined by points
 // NOTE: Every new vertex connects with previous two
 void DrawTriangleStrip(Vector2* points, i32 pointCount, Color color) {
     if pointCount >= 3 {
-        rlBegin(4);
+        rlBegin(0x0004);
         rlColor4ub(color.r, color.g, color.b, color.a);
         for i32 i = 2; i < pointCount; i++ {
             if i % 2 == 0 {
@@ -13200,6 +12865,7 @@ void DrawTriangleStrip(Vector2* points, i32 pointCount, Color color) {
         rlEnd();
     }
 }
+
 // Draw a polygon of n sides
 void DrawPoly(Vector2 center, i32 sides, f32 radius, f32 rotation, Color color) {
     if sides < 3 {
@@ -13209,7 +12875,7 @@ void DrawPoly(Vector2 center, i32 sides, f32 radius, f32 rotation, Color color) 
     f32 angleStep = 360.0f / cast(f32, sides) * (3.141592653589793f / 180.0f);
     rlSetTexture(GetShapesTexture().id);
     Rectangle shapeRect = GetShapesTextureRectangle();
-    rlBegin(7);
+    rlBegin(0x0007);
     for i32 i = 0; i < sides; i++ {
         rlColor4ub(color.r, color.g, color.b, color.a);
         f32 nextAngle = centralAngle + angleStep;
@@ -13226,6 +12892,7 @@ void DrawPoly(Vector2 center, i32 sides, f32 radius, f32 rotation, Color color) 
     rlEnd();
     rlSetTexture(0);
 }
+
 // Draw a polygon outline of n sides
 void DrawPolyLines(Vector2 center, i32 sides, f32 radius, f32 rotation, Color color) {
     if sides < 3 {
@@ -13233,7 +12900,7 @@ void DrawPolyLines(Vector2 center, i32 sides, f32 radius, f32 rotation, Color co
     }
     f32 centralAngle = rotation * (3.141592653589793f / 180.0f);
     f32 angleStep = 360.0f / cast(f32, sides) * (3.141592653589793f / 180.0f);
-    rlBegin(1);
+    rlBegin(0x0001);
     for i32 i = 0; i < sides; i++ {
         rlColor4ub(color.r, color.g, color.b, color.a);
         rlVertex2f(center.x + cosf(centralAngle) * radius, center.y + sinf(centralAngle) * radius);
@@ -13242,6 +12909,7 @@ void DrawPolyLines(Vector2 center, i32 sides, f32 radius, f32 rotation, Color co
     }
     rlEnd();
 }
+
 void DrawPolyLinesEx(Vector2 center, i32 sides, f32 radius, f32 rotation, f32 lineThick, Color color) {
     if sides < 3 {
         sides = 3;
@@ -13251,7 +12919,7 @@ void DrawPolyLinesEx(Vector2 center, i32 sides, f32 radius, f32 rotation, f32 li
     f32 innerRadius = radius - lineThick * cosf(3.141592653589793f / 180.0f * exteriorAngle / 2.0f);
     rlSetTexture(GetShapesTexture().id);
     Rectangle shapeRect = GetShapesTextureRectangle();
-    rlBegin(7);
+    rlBegin(0x0007);
     for i32 i = 0; i < sides; i++ {
         rlColor4ub(color.r, color.g, color.b, color.a);
         f32 nextAngle = centralAngle + exteriorAngle;
@@ -13268,6 +12936,7 @@ void DrawPolyLinesEx(Vector2 center, i32 sides, f32 radius, f32 rotation, f32 li
     rlEnd();
     rlSetTexture(0);
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition - Splines functions
 //----------------------------------------------------------------------------------
@@ -13286,10 +12955,16 @@ void DrawSplineLinear(Vector2* points, i32 pointCount, f32 thick, Color color) {
             scale = thick / (2.0f * length);
         }
         var radius = Vector2{-scale * delta.y, scale * delta.x};
-        Vector2[4] strip = {Vector2{points[i].x - radius.x, points[i].y - radius.y}, Vector2{points[i].x + radius.x, points[i].y + radius.y}, Vector2{points[i + 1].x - radius.x, points[i + 1].y - radius.y}, Vector2{points[i + 1].x + radius.x, points[i + 1].y + radius.y}};
+        Vector2[4] strip = {
+            Vector2{points[i].x - radius.x, points[i].y - radius.y},
+            Vector2{points[i].x + radius.x, points[i].y + radius.y},
+            Vector2{points[i + 1].x - radius.x, points[i + 1].y - radius.y},
+            Vector2{points[i + 1].x + radius.x, points[i + 1].y + radius.y},
+        };
         DrawTriangleStrip(strip, 4, color);
     }
 }
+
 // Draw spline: B-Spline, minimum 4 points
 void DrawSplineBasis(Vector2* points, i32 pointCount, f32 thick, Color color) {
     if pointCount < 4 {
@@ -13351,6 +13026,7 @@ void DrawSplineBasis(Vector2* points, i32 pointCount, f32 thick, Color color) {
     }
     DrawCircleV(currentPoint, thick / 2.0f, color);
 }
+
 // Draw spline: Catmull-Rom, minimum 4 points
 void DrawSplineCatmullRom(Vector2* points, i32 pointCount, f32 thick, Color color) {
     if pointCount < 4 {
@@ -13402,6 +13078,7 @@ void DrawSplineCatmullRom(Vector2* points, i32 pointCount, f32 thick, Color colo
     }
     DrawCircleV(currentPoint, thick / 2.0f, color);
 }
+
 // Draw spline: Quadratic Bezier, minimum 3 points (1 control point): [p1, c2, p3, c4...]
 void DrawSplineBezierQuadratic(Vector2* points, i32 pointCount, f32 thick, Color color) {
     if pointCount >= 3 {
@@ -13410,6 +13087,7 @@ void DrawSplineBezierQuadratic(Vector2* points, i32 pointCount, f32 thick, Color
         }
     }
 }
+
 // Draw spline: Cubic Bezier, minimum 4 points (2 control points): [p1, c2, c3, p4, c5, c6...]
 void DrawSplineBezierCubic(Vector2* points, i32 pointCount, f32 thick, Color color) {
     if pointCount >= 4 {
@@ -13418,6 +13096,7 @@ void DrawSplineBezierCubic(Vector2* points, i32 pointCount, f32 thick, Color col
         }
     }
 }
+
 // Draw spline segment: Linear, 2 points
 void DrawSplineSegmentLinear(Vector2 p1, Vector2 p2, f32 thick, Color color) {
     var delta = Vector2{p2.x - p1.x, p2.y - p1.y};
@@ -13425,10 +13104,16 @@ void DrawSplineSegmentLinear(Vector2 p1, Vector2 p2, f32 thick, Color color) {
     if length > 0.0f && thick > 0.0f {
         f32 scale = thick / (2.0f * length);
         var radius = Vector2{-scale * delta.y, scale * delta.x};
-        Vector2[4] strip = {Vector2{p1.x - radius.x, p1.y - radius.y}, Vector2{p1.x + radius.x, p1.y + radius.y}, Vector2{p2.x - radius.x, p2.y - radius.y}, Vector2{p2.x + radius.x, p2.y + radius.y}};
+        Vector2[4] strip = {
+            Vector2{p1.x - radius.x, p1.y - radius.y},
+            Vector2{p1.x + radius.x, p1.y + radius.y},
+            Vector2{p2.x - radius.x, p2.y - radius.y},
+            Vector2{p2.x + radius.x, p2.y + radius.y},
+        };
         DrawTriangleStrip(strip, 4, color);
     }
 }
+
 // Draw spline segment: B-Spline, 4 points
 void DrawSplineSegmentBasis(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, f32 thick, Color color) {
     f32 step = 1.0f / 24.0f;
@@ -13469,6 +13154,7 @@ void DrawSplineSegmentBasis(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, f32 
     }
     DrawTriangleStrip(points, 2 * 24 + 2, color);
 }
+
 // Draw spline segment: Catmull-Rom, 4 points
 void DrawSplineSegmentCatmullRom(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, f32 thick, Color color) {
     f32 step = 1.0f / 24.0f;
@@ -13501,6 +13187,7 @@ void DrawSplineSegmentCatmullRom(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4,
     }
     DrawTriangleStrip(points, 2 * 24 + 2, color);
 }
+
 // Draw spline segment: Quadratic Bezier, 2 points, 1 control point
 void DrawSplineSegmentBezierQuadratic(Vector2 p1, Vector2 c2, Vector2 p3, f32 thick, Color color) {
     f32 step = 1.0f / 24.0f;
@@ -13532,6 +13219,7 @@ void DrawSplineSegmentBezierQuadratic(Vector2 p1, Vector2 c2, Vector2 p3, f32 th
     }
     DrawTriangleStrip(points, 2 * 24 + 2, color);
 }
+
 // Draw spline segment: Cubic Bezier, 2 points, 2 control points
 void DrawSplineSegmentBezierCubic(Vector2 p1, Vector2 c2, Vector2 c3, Vector2 p4, f32 thick, Color color) {
     f32 step = 1.0f / 24.0f;
@@ -13564,6 +13252,7 @@ void DrawSplineSegmentBezierCubic(Vector2 p1, Vector2 c2, Vector2 c3, Vector2 p4
     }
     DrawTriangleStrip(points, 2 * 24 + 2, color);
 }
+
 // Get spline point for a given t [0.0f .. 1.0f], Linear
 Vector2 GetSplinePointLinear(Vector2 startPos, Vector2 endPos, f32 t) {
     Vector2 point;
@@ -13571,6 +13260,7 @@ Vector2 GetSplinePointLinear(Vector2 startPos, Vector2 endPos, f32 t) {
     point.y = startPos.y * (1.0f - t) + endPos.y * t;
     return point;
 }
+
 // Get spline point for a given t [0.0f .. 1.0f], B-Spline
 Vector2 GetSplinePointBasis(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, f32 t) {
     Vector2 point;
@@ -13588,6 +13278,7 @@ Vector2 GetSplinePointBasis(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, f32 
     point.y = b[3] + t * (b[2] + t * (b[1] + t * b[0]));
     return point;
 }
+
 // Get spline point for a given t [0.0f .. 1.0f], Catmull-Rom
 Vector2 GetSplinePointCatmullRom(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, f32 t) {
     Vector2 point;
@@ -13599,6 +13290,7 @@ Vector2 GetSplinePointCatmullRom(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4,
     point.y = 0.5f * (p1.y * q0 + p2.y * q1 + p3.y * q2 + p4.y * q3);
     return point;
 }
+
 // Get spline point for a given t [0.0f .. 1.0f], Quadratic Bezier
 Vector2 GetSplinePointBezierQuadratic(Vector2 startPos, Vector2 controlPos, Vector2 endPos, f32 t) {
     Vector2 point;
@@ -13609,6 +13301,7 @@ Vector2 GetSplinePointBezierQuadratic(Vector2 startPos, Vector2 controlPos, Vect
     point.x = a * startPos.x + b * controlPos.x + c * endPos.x;
     return point;
 }
+
 // Get spline point for a given t [0.0f .. 1.0f], Cubic Bezier
 Vector2 GetSplinePointBezierCubic(Vector2 startPos, Vector2 startControlPos, Vector2 endControlPos, Vector2 endPos, f32 t) {
     Vector2 point;
@@ -13620,6 +13313,7 @@ Vector2 GetSplinePointBezierCubic(Vector2 startPos, Vector2 startControlPos, Vec
     point.x = a * startPos.x + b * startControlPos.x + c * endControlPos.x + d * endPos.x;
     return point;
 }
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition - Collision Detection functions
 //----------------------------------------------------------------------------------
@@ -13631,6 +13325,7 @@ bool CheckCollisionPointRec(Vector2 point, Rectangle rec) {
     }
     return collision;
 }
+
 // Check if point is inside circle
 bool CheckCollisionPointCircle(Vector2 point, Vector2 center, f32 radius) {
     bool collision = false;
@@ -13640,6 +13335,7 @@ bool CheckCollisionPointCircle(Vector2 point, Vector2 center, f32 radius) {
     }
     return collision;
 }
+
 // Check if point is inside a triangle defined by three points (p1, p2, p3)
 bool CheckCollisionPointTriangle(Vector2 point, Vector2 p1, Vector2 p2, Vector2 p3) {
     bool collision = false;
@@ -13651,6 +13347,7 @@ bool CheckCollisionPointTriangle(Vector2 point, Vector2 p1, Vector2 p2, Vector2 
     }
     return collision;
 }
+
 // Check if point is within a polygon described by array of vertices
 // NOTE: Based on http://jeffreythompson.org/collision-detection/poly-point.php
 bool CheckCollisionPointPoly(Vector2 point, Vector2* points, i32 pointCount) {
@@ -13668,6 +13365,7 @@ bool CheckCollisionPointPoly(Vector2 point, Vector2* points, i32 pointCount) {
     }
     return collision;
 }
+
 // Check collision between two rectangles
 bool CheckCollisionRecs(Rectangle rec1, Rectangle rec2) {
     bool collision = false;
@@ -13676,6 +13374,7 @@ bool CheckCollisionRecs(Rectangle rec1, Rectangle rec2) {
     }
     return collision;
 }
+
 // Check collision between two circles
 bool CheckCollisionCircles(Vector2 center1, f32 radius1, Vector2 center2, f32 radius2) {
     bool collision = false;
@@ -13686,6 +13385,7 @@ bool CheckCollisionCircles(Vector2 center1, f32 radius1, Vector2 center2, f32 ra
     collision = distanceSquared <= radiusSum * radiusSum;
     return collision;
 }
+
 // Check collision between circle and rectangle
 // NOTE: Reviewed version to take into account corner limit case
 bool CheckCollisionCircleRec(Vector2 center, f32 radius, Rectangle rec) {
@@ -13706,6 +13406,7 @@ bool CheckCollisionCircleRec(Vector2 center, f32 radius, Rectangle rec) {
     }
     return collision;
 }
+
 // Check the collision between two lines defined by two points each, returns collision point by reference
 // REF: https://en.wikipedia.org/wiki/Line–line_intersection#Given_two_points_on_each_line_segment
 bool CheckCollisionLines(Vector2 startPos1, Vector2 endPos1, Vector2 startPos2, Vector2 endPos2, Vector2* collisionPoint) {
@@ -13730,6 +13431,7 @@ bool CheckCollisionLines(Vector2 startPos1, Vector2 endPos1, Vector2 startPos2, 
     }
     return collision;
 }
+
 // Check if point belongs to line created between two points [p1] and [p2] with defined margin in pixels [threshold]
 bool CheckCollisionPointLine(Vector2 point, Vector2 p1, Vector2 p2, i32 threshold) {
     bool collision = false;
@@ -13747,6 +13449,7 @@ bool CheckCollisionPointLine(Vector2 point, Vector2 p1, Vector2 p2, i32 threshol
     }
     return collision;
 }
+
 // Check if circle collides with a line created between two points [p1] and [p2]
 bool CheckCollisionCircleLine(Vector2 center, f32 radius, Vector2 p1, Vector2 p2) {
     bool collision = false;
@@ -13771,6 +13474,7 @@ bool CheckCollisionCircleLine(Vector2 center, f32 radius, Vector2 p1, Vector2 p2
     }
     return collision;
 }
+
 // Get collision rectangle for two rectangles collision
 Rectangle GetCollisionRec(Rectangle rec1, Rectangle rec2) {
     Rectangle overlap;
@@ -13790,6 +13494,7 @@ Rectangle GetCollisionRec(Rectangle rec1, Rectangle rec2) {
     }
     return overlap;
 }
+
 //----------------------------------------------------------------------------------
 // Module Internal Functions Definition
 //----------------------------------------------------------------------------------
@@ -13808,8 +13513,6 @@ f32 EaseCubicInOut(f32 t, f32 b, f32 c, f32 d) {
     return result;
 }
 }
-when !(defined(STBIDEF)) {
-}
 when defined(STBI_WINDOWS_UTF8) {
 }
 ////////////////////////////////////
@@ -13824,40 +13527,11 @@ when !(defined(STBI_NO_LINEAR)) {
 //
 ////   end header file   /////////////////////////////////////////////////////
 when defined(STBI_ONLY_JPEG) || defined(STBI_ONLY_PNG) || defined(STBI_ONLY_BMP) || defined(STBI_ONLY_TGA) || defined(STBI_ONLY_GIF) || defined(STBI_ONLY_PSD) || defined(STBI_ONLY_HDR) || defined(STBI_ONLY_PIC) || defined(STBI_ONLY_PNM) || defined(STBI_ONLY_ZLIB) {
-when !(defined(STBI_ONLY_JPEG)) {
-}
-when !(defined(STBI_ONLY_PNG)) {
-}
-when !(defined(STBI_ONLY_BMP)) {
-}
-when !(defined(STBI_ONLY_PSD)) {
-}
-when !(defined(STBI_ONLY_TGA)) {
-}
-when !(defined(STBI_ONLY_GIF)) {
-}
-when !(defined(STBI_ONLY_HDR)) {
-}
-when !(defined(STBI_ONLY_PIC)) {
-}
-when !(defined(STBI_ONLY_PNM)) {
-}
-}
-when defined(STBI_NO_PNG) && !defined(STBI_SUPPORT_ZLIB) && !defined(STBI_NO_ZLIB) {
-}
-when defined(STBI_HAS_LROTL) {
-} else {
 }
 // ok
 // x86/x64 detection
-when arch(x64) || arch(x64) {
-} else when arch(x86) {
-}
-when defined(STBI__X86_TARGET) && !defined(STBI_NO_SIMD) {
-}
 // ARM NEON
-when defined(STBI_NO_SIMD) && defined(STBI_NEON) {
-}
+
 // initialize a memory-decode context
 private {
 void stbi__start_mem(stbi__context* s, stbi_uc* buffer, i32 len) {
@@ -13869,6 +13543,7 @@ void stbi__start_mem(stbi__context* s, stbi_uc* buffer, i32 len) {
     s.img_buffer_original_end = buffer + len;
     s.img_buffer_end = s.img_buffer_original_end;
 }
+
 // initialize a callback-based context
 void stbi__start_callbacks(stbi__context* s, stbi_io_callbacks* c, void* user) {
     s.io = *c;
@@ -13881,6 +13556,7 @@ void stbi__start_callbacks(stbi__context* s, stbi_io_callbacks* c, void* user) {
     stbi__refill_buffer(s);
     s.img_buffer_original_end = s.img_buffer_end;
 }
+
 void stbi__rewind(stbi__context* s) {
     s.img_buffer = s.img_buffer_original;
     s.img_buffer_end = s.img_buffer_original_end;
@@ -13893,10 +13569,12 @@ when !(defined(STBI_NO_PNG)) {
 // can't parse as a single decl. We compile with STBI_NO_THREAD_LOCALS,
 // so the conditional always evaluates to empty — collapsed to one line.
 private { u8* stbi__g_failure_reason; }
+
 u8* stbi_failure_reason() {
     return stbi__g_failure_reason;
 }
 when !(defined(STBI_NO_FAILURE_STRINGS)) {
+
 private {
 i32 stbi__err(u8* str_var) {
     stbi__g_failure_reason = str_var;
@@ -13904,10 +13582,12 @@ i32 stbi__err(u8* str_var) {
 }
 }
 }
+
 private {
 void* stbi__malloc(u64 size) {
     return alloc(cast(i64, size));
 }
+
 // stb_image uses ints pervasively, including for offset calculations.
 // therefore the largest decoded image size we can support with the
 // current code, even on 64-bit targets, is INT_MAX. this is not a
@@ -13925,6 +13605,7 @@ i32 stbi__addsizes_valid(i32 a, i32 b) {
     }
     return a <= INT_MAX - b;
 }
+
 // returns 1 if the product is valid, 0 on overflow.
 // negative factors are considered invalid.
 i32 stbi__mul2sizes_valid(i32 a, i32 b) {
@@ -13936,18 +13617,22 @@ i32 stbi__mul2sizes_valid(i32 a, i32 b) {
     }
     return a <= INT_MAX / b;
 }
+
 // returns 1 if "a*b + add" has no negative terms/factors and doesn't overflow
 i32 stbi__mad2sizes_valid(i32 a, i32 b, i32 add) {
     return stbi__mul2sizes_valid(a, b) && stbi__addsizes_valid(a * b, add);
 }
+
 // returns 1 if "a*b*c + add" has no negative terms/factors and doesn't overflow
 i32 stbi__mad3sizes_valid(i32 a, i32 b, i32 c, i32 add) {
     return stbi__mul2sizes_valid(a, b) && stbi__mul2sizes_valid(a * b, c) && stbi__addsizes_valid(a * b * c, add);
 }
+
 // returns 1 if "a*b*c*d + add" has no negative terms/factors and doesn't overflow
 i32 stbi__mad4sizes_valid(i32 a, i32 b, i32 c, i32 d, i32 add) {
     return stbi__mul2sizes_valid(a, b) && stbi__mul2sizes_valid(a * b, c) && stbi__mul2sizes_valid(a * b * c, d) && stbi__addsizes_valid(a * b * c * d, add);
 }
+
 // mallocs with size overflow checking
 void* stbi__malloc_mad2(i32 a, i32 b, i32 add) {
     if stbi__mad2sizes_valid(a, b, add) == 0 {
@@ -13955,18 +13640,21 @@ void* stbi__malloc_mad2(i32 a, i32 b, i32 add) {
     }
     return stbi__malloc(cast(u64, a * b + add));
 }
+
 void* stbi__malloc_mad3(i32 a, i32 b, i32 c, i32 add) {
     if stbi__mad3sizes_valid(a, b, c, add) == 0 {
         return null;
     }
     return stbi__malloc(cast(u64, a * b * c + add));
 }
+
 void* stbi__malloc_mad4(i32 a, i32 b, i32 c, i32 d, i32 add) {
     if stbi__mad4sizes_valid(a, b, c, d, add) == 0 {
         return null;
     }
     return stbi__malloc(cast(u64, a * b * c * d + add));
 }
+
 // returns 1 if the sum of two signed ints is valid (between -2^31 and 2^31-1 inclusive), 0 on overflow.
 i32 stbi__addints_valid(i32 a, i32 b) {
     if a >= 0 != b >= 0 {
@@ -13977,6 +13665,7 @@ i32 stbi__addints_valid(i32 a, i32 b) {
     }
     return a <= INT_MAX - b;
 }
+
 // returns 1 if the product of two ints fits in a signed short, 0 on overflow.
 i32 stbi__mul2shorts_valid(i32 a, i32 b) {
     if b == 0 || b == -1 {
@@ -13994,19 +13683,18 @@ i32 stbi__mul2shorts_valid(i32 a, i32 b) {
 // stbi__err - error
 // stbi__errpf - error returning pointer to float
 // stbi__errpuc - error returning pointer to unsigned char
-when defined(STBI_NO_FAILURE_STRINGS) {
-} else when defined(STBI_FAILURE_USERMSG) {
-} else {
-}
+
 void stbi_image_free(void* retval_from_stbi_load) {
     free(retval_from_stbi_load);
 }
 when !(defined(STBI_NO_LINEAR)) {
 }
 private { i32 stbi__vertically_flip_on_load_global = 0; }
+
 void stbi_set_flip_vertically_on_load(i32 flag_true_if_should_flip) {
     stbi__vertically_flip_on_load_global = flag_true_if_should_flip;
 }
+
 private {
 void* stbi__load_main(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp, stbi__result_info* ri, i32 bpc) {
     memset(ri, 0, cast(u64, sizeof(*ri)));
@@ -14021,6 +13709,7 @@ void* stbi__load_main(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp,
     ignore sizeof(bpc);
     return cast(u8*, cast(u64, stbi__err("unknown image type") != 0 ? null : null));
 }
+
 stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, i32 w, i32 h, i32 channels) {
     i32 i;
     i32 img_len = w * h * channels;
@@ -14030,11 +13719,12 @@ stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, i32 w, i32 h, i32 channels) {
         return cast(u8*, cast(u64, stbi__err("outofmem") != 0 ? null : null));
     }
     for i = 0; i < img_len; ++i {
-        reduced[i] = cast(stbi_uc, cast(i32, orig[i]) >> 8 & 255);
+        reduced[i] = cast(stbi_uc, cast(i32, orig[i]) >> 8 & 0xFF);
     }
     free(orig);
     return reduced;
 }
+
 stbi__uint16* stbi__convert_8_to_16(stbi_uc* orig, i32 w, i32 h, i32 channels) {
     i32 i;
     i32 img_len = w * h * channels;
@@ -14049,6 +13739,7 @@ stbi__uint16* stbi__convert_8_to_16(stbi_uc* orig, i32 w, i32 h, i32 channels) {
     free(orig);
     return enlarged;
 }
+
 void stbi__vertical_flip(void* image, i32 w, i32 h, i32 bytes_per_pixel) {
     i32 row;
     u64 bytes_per_row = cast(u64, w) * cast(u64, bytes_per_pixel);
@@ -14069,6 +13760,7 @@ void stbi__vertical_flip(void* image, i32 w, i32 h, i32 bytes_per_pixel) {
         }
     }
 }
+
 u8* stbi__load_and_postprocess_8bit(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp) {
     noinit stbi__result_info ri;
     void* result = stbi__load_main(s, x, y, comp, req_comp, &ri, 8);
@@ -14086,6 +13778,7 @@ u8* stbi__load_and_postprocess_8bit(stbi__context* s, i32* x, i32* y, i32* comp,
     }
     return cast(u8*, result);
 }
+
 stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp) {
     noinit stbi__result_info ri;
     void* result = stbi__load_main(s, x, y, comp, req_comp, &ri, 16);
@@ -14104,27 +13797,32 @@ stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, i32* x, i32* y,
     return cast(stbi__uint16*, result);
 }
 }
+
 stbi_us* stbi_load_16_from_memory(stbi_uc* buffer, i32 len, i32* x, i32* y, i32* channels_in_file, i32 desired_channels) {
     noinit stbi__context s;
     stbi__start_mem(&s, buffer, len);
     return stbi__load_and_postprocess_16bit(&s, x, y, channels_in_file, desired_channels);
 }
+
 stbi_us* stbi_load_16_from_callbacks(stbi_io_callbacks* clbk, void* user, i32* x, i32* y, i32* channels_in_file, i32 desired_channels) {
     noinit stbi__context s;
     stbi__start_callbacks(&s, clbk, user);
     return stbi__load_and_postprocess_16bit(&s, x, y, channels_in_file, desired_channels);
 }
+
 stbi_uc* stbi_load_from_memory(stbi_uc* buffer, i32 len, i32* x, i32* y, i32* comp, i32 req_comp) {
     noinit stbi__context s;
     stbi__start_mem(&s, buffer, len);
     return stbi__load_and_postprocess_8bit(&s, x, y, comp, req_comp);
 }
+
 stbi_uc* stbi_load_from_callbacks(stbi_io_callbacks* clbk, void* user, i32* x, i32* y, i32* comp, i32 req_comp) {
     noinit stbi__context s;
     stbi__start_callbacks(&s, clbk, user);
     return stbi__load_and_postprocess_8bit(&s, x, y, comp, req_comp);
 }
 when !(defined(STBI_NO_LINEAR)) {
+
 private {
 f32* stbi__loadf_main(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp) {
     u8* data;
@@ -14135,17 +13833,20 @@ f32* stbi__loadf_main(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp)
     return cast(f32*, cast(u64, stbi__err("unknown image type") != 0 ? null : null));
 }
 }
+
 f32* stbi_loadf_from_memory(stbi_uc* buffer, i32 len, i32* x, i32* y, i32* comp, i32 req_comp) {
     noinit stbi__context s;
     stbi__start_mem(&s, buffer, len);
     return stbi__loadf_main(&s, x, y, comp, req_comp);
 }
+
 f32* stbi_loadf_from_callbacks(stbi_io_callbacks* clbk, void* user, i32* x, i32* y, i32* comp, i32 req_comp) {
     noinit stbi__context s;
     stbi__start_callbacks(&s, clbk, user);
     return stbi__loadf_main(&s, x, y, comp, req_comp);
 }
 }
+
 // these is-hdr-or-not is defined independent of whether STBI_NO_LINEAR is
 // defined, for API simplicity; if STBI_NO_LINEAR is defined, it always
 // reports false!
@@ -14154,6 +13855,7 @@ i32 stbi_is_hdr_from_memory(stbi_uc* buffer, i32 len) {
     ignore sizeof(len);
     return 0;
 }
+
 i32 stbi_is_hdr_from_callbacks(stbi_io_callbacks* clbk, void* user) {
     ignore sizeof(clbk);
     ignore sizeof(user);
@@ -14162,21 +13864,26 @@ i32 stbi_is_hdr_from_callbacks(stbi_io_callbacks* clbk, void* user) {
 when !(defined(STBI_NO_LINEAR)) {
 private { f32 stbi__l2h_gamma = 2.2f; }
 private { f32 stbi__l2h_scale = 1.0f; }
+
 void stbi_ldr_to_hdr_gamma(f32 gamma) {
     stbi__l2h_gamma = gamma;
 }
+
 void stbi_ldr_to_hdr_scale(f32 scale) {
     stbi__l2h_scale = scale;
 }
 }
 private { f32 stbi__h2l_gamma_i = 1.0f / 2.2f; }
 private { f32 stbi__h2l_scale_i = 1.0f; }
+
 void stbi_hdr_to_ldr_gamma(f32 gamma) {
     stbi__h2l_gamma_i = 1.0f / gamma;
 }
+
 void stbi_hdr_to_ldr_scale(f32 scale) {
     stbi__h2l_scale_i = 1.0f / scale;
 }
+
 private {
 void stbi__refill_buffer(stbi__context* s) {
     i32 n = s.io.read(s.io_user_data, cast(u8*, s.buffer_start), s.buflen);
@@ -14191,6 +13898,7 @@ void stbi__refill_buffer(stbi__context* s) {
         s.img_buffer_end = s.buffer_start + n;
     }
 }
+
 stbi_uc stbi__get8(stbi__context* s) {
     if s.img_buffer < s.img_buffer_end {
         return *s.img_buffer++;
@@ -14205,6 +13913,7 @@ stbi_uc stbi__get8(stbi__context* s) {
 // nothing
 when defined(STBI_NO_PNG) {
 } else {
+
 private {
 void stbi__skip(stbi__context* s, i32 n) {
     if n == 0 {
@@ -14228,6 +13937,7 @@ void stbi__skip(stbi__context* s, i32 n) {
 }
 when defined(STBI_NO_PNG) {
 } else {
+
 private {
 i32 stbi__getn(stbi__context* s, stbi_uc* buffer, i32 n) {
     if s.io.read != null {
@@ -14254,6 +13964,7 @@ i32 stbi__getn(stbi__context* s, stbi_uc* buffer, i32 n) {
 }
 when defined(STBI_NO_PNG) {
 } else {
+
 private {
 i32 stbi__get16be(stbi__context* s) {
     var z = cast(i32, stbi__get8(s));
@@ -14263,6 +13974,7 @@ i32 stbi__get16be(stbi__context* s) {
 }
 when defined(STBI_NO_PNG) {
 } else {
+
 private {
 stbi__uint32 stbi__get32be(stbi__context* s) {
     var z = cast(stbi__uint32, stbi__get16be(s));
@@ -14273,6 +13985,7 @@ stbi__uint32 stbi__get32be(stbi__context* s) {
 // nothing
 when defined(STBI_NO_PNG) {
 } else {
+
 //////////////////////////////////////////////////////////////////////////////
 //
 //  generic converter from built-in img_n to req_comp
@@ -14291,6 +14004,7 @@ stbi_uc stbi__compute_y(i32 r, i32 g, i32 b) {
 }
 when defined(STBI_NO_PNG) {
 } else {
+
 private {
 u8* stbi__convert_format(u8* data, i32 img_n, i32 req_comp, u32 x, u32 y) {
     i32 i;
@@ -14426,6 +14140,7 @@ u8* stbi__convert_format(u8* data, i32 img_n, i32 req_comp, u32 x, u32 y) {
 }
 when defined(STBI_NO_PNG) {
 } else {
+
 private {
 stbi__uint16 stbi__compute_y_16(i32 r, i32 g, i32 b) {
     return cast(stbi__uint16, r * 77 + g * 150 + 29 * b >> 8);
@@ -14434,6 +14149,7 @@ stbi__uint16 stbi__compute_y_16(i32 r, i32 g, i32 b) {
 }
 when defined(STBI_NO_PNG) {
 } else {
+
 private {
 stbi__uint16* stbi__convert_format16(stbi__uint16* data, i32 img_n, i32 req_comp, u32 x, u32 y) {
     i32 i;
@@ -14455,7 +14171,7 @@ stbi__uint16* stbi__convert_format16(stbi__uint16* data, i32 img_n, i32 req_comp
             case 1 * 8 + 2: {
                 for i = cast(i32, x - 1); i >= 0; --i {
                     dest[0] = src[0];
-                    dest[1] = 65535;
+                    dest[1] = 0xffff;
                     src += 1;
                     dest += 2;
                 }
@@ -14474,7 +14190,7 @@ stbi__uint16* stbi__convert_format16(stbi__uint16* data, i32 img_n, i32 req_comp
                     dest[2] = src[0];
                     dest[1] = dest[2];
                     dest[0] = dest[1];
-                    dest[3] = 65535;
+                    dest[3] = 0xffff;
                     src += 1;
                     dest += 4;
                 }
@@ -14510,7 +14226,7 @@ stbi__uint16* stbi__convert_format16(stbi__uint16* data, i32 img_n, i32 req_comp
                     dest[0] = src[0];
                     dest[1] = src[1];
                     dest[2] = src[2];
-                    dest[3] = 65535;
+                    dest[3] = 0xffff;
                     src += 3;
                     dest += 4;
                 }
@@ -14525,7 +14241,7 @@ stbi__uint16* stbi__convert_format16(stbi__uint16* data, i32 img_n, i32 req_comp
             case 3 * 8 + 2: {
                 for i = cast(i32, x - 1); i >= 0; --i {
                     dest[0] = stbi__compute_y_16(cast(i32, src[0]), cast(i32, src[1]), cast(i32, src[2]));
-                    dest[1] = 65535;
+                    dest[1] = 0xffff;
                     src += 3;
                     dest += 2;
                 }
@@ -14568,6 +14284,7 @@ stbi__uint16* stbi__convert_format16(stbi__uint16* data, i32 img_n, i32 req_comp
 }
 }
 when !(defined(STBI_NO_LINEAR)) {
+
 private {
 f32* stbi__ldr_to_hdr(stbi_uc* data, i32 x, i32 y, i32 comp) {
     i32 i;
@@ -14629,18 +14346,21 @@ f32* stbi__ldr_to_hdr(stbi_uc* data, i32 x, i32 y, i32 comp) {
 //    performance
 //      - fast huffman
 when !(defined(STBI_NO_ZLIB)) {
+
 private {
 i32 stbi__bitreverse16(i32 n) {
-    n = (n & 43690) >> 1 | (n & 21845) << 1;
-    n = (n & 52428) >> 2 | (n & 13107) << 2;
-    n = (n & 61680) >> 4 | (n & 3855) << 4;
-    n = (n & 65280) >> 8 | (n & 255) << 8;
+    n = (n & 0xAAAA) >> 1 | (n & 0x5555) << 1;
+    n = (n & 0xCCCC) >> 2 | (n & 0x3333) << 2;
+    n = (n & 0xF0F0) >> 4 | (n & 0x0F0F) << 4;
+    n = (n & 0xFF00) >> 8 | (n & 0x00FF) << 8;
     return n;
 }
+
 i32 stbi__bit_reverse(i32 v, i32 bits) {
     assert(bits <= 16);
     return stbi__bitreverse16(v) >> 16 - bits;
 }
+
 i32 stbi__zbuild_huffman(stbi__zhuffman* z, stbi_uc* sizelist, i32 num) {
     i32 i;
     i32 k = 0;
@@ -14673,7 +14393,7 @@ i32 stbi__zbuild_huffman(stbi__zhuffman* z, stbi_uc* sizelist, i32 num) {
         code <<= 1;
         k += sizes[i];
     }
-    z.maxcode[16] = 65536;
+    z.maxcode[16] = 0x10000;
     for i = 0; i < num; ++i {
         var s = cast(i32, sizelist[i]);
         if s != 0 {
@@ -14693,12 +14413,15 @@ i32 stbi__zbuild_huffman(stbi__zhuffman* z, stbi_uc* sizelist, i32 num) {
     }
     return 1;
 }
+
 i32 stbi__zeof(stbi__zbuf* z) {
     return z.zbuffer >= z.zbuffer_end;
 }
+
 stbi_uc stbi__zget8(stbi__zbuf* z) {
     return cast(stbi_uc, stbi__zeof(z) != 0 ? 0 : *z.zbuffer++);
 }
+
 void stbi__fill_bits(stbi__zbuf* z) {
     while true {
         if z.code_buffer >= cast(u32, 1 << z.num_bits) {
@@ -14710,6 +14433,7 @@ void stbi__fill_bits(stbi__zbuf* z) {
         if !(z.num_bits <= 24) { break; }
     }
 }
+
 u32 stbi__zreceive(stbi__zbuf* z, i32 n) {
     u32 k;
     if z.num_bits < n {
@@ -14720,6 +14444,7 @@ u32 stbi__zreceive(stbi__zbuf* z, i32 n) {
     z.num_bits -= n;
     return k;
 }
+
 i32 stbi__zhuffman_decode_slowpath(stbi__zbuf* a, stbi__zhuffman* z) {
     i32 b;
     i32 s;
@@ -14744,6 +14469,7 @@ i32 stbi__zhuffman_decode_slowpath(stbi__zbuf* a, stbi__zhuffman* z) {
     a.num_bits -= s;
     return cast(i32, z.value[b]);
 }
+
 i32 stbi__zhuffman_decode(stbi__zbuf* a, stbi__zhuffman* z) {
     i32 b;
     i32 s;
@@ -14768,6 +14494,7 @@ i32 stbi__zhuffman_decode(stbi__zbuf* a, stbi__zhuffman* z) {
     }
     return stbi__zhuffman_decode_slowpath(a, z);
 }
+
 i32 stbi__zexpand(stbi__zbuf* z, u8* zout, i32 n) {
     u8* q;
     u32 cur;
@@ -14799,10 +14526,22 @@ i32 stbi__zexpand(stbi__zbuf* z, u8* zout, i32 n) {
     z.zout_end = q + limit;
     return 1;
 }
-i32[31] stbi__zlength_base = {3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0};
-i32[31] stbi__zlength_extra = {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 0, 0};
-i32[32] stbi__zdist_base = {1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577, 0, 0};
-i32[32] stbi__zdist_extra = {0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 0, 0};
+i32[31] stbi__zlength_base = {
+    3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131,
+    163, 195, 227, 258, 0, 0,
+};
+i32[31] stbi__zlength_extra = {
+    0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 0, 0,
+};
+i32[32] stbi__zdist_base = {
+    1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049,
+    3073, 4097, 6145, 8193, 12289, 16385, 24577, 0, 0,
+};
+i32[32] stbi__zdist_extra = {
+    0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13,
+    13, 0, 0,
+};
+
 i32 stbi__parse_huffman_block(stbi__zbuf* a) {
     u8* zout = a.zout;
     while true {
@@ -14874,6 +14613,7 @@ i32 stbi__parse_huffman_block(stbi__zbuf* a) {
         }
     }
 }
+
 i32 stbi__compute_huffman_codes(stbi__zbuf* a) {
     noinit stbi__zhuffman z_codelength;
     noinit stbi_uc[455] lencodes;
@@ -14933,6 +14673,7 @@ i32 stbi__compute_huffman_codes(stbi__zbuf* a) {
     }
     return 1;
 }
+
 i32 stbi__parse_uncompressed_block(stbi__zbuf* a) {
     noinit stbi_uc[4] header;
     i32 len;
@@ -14955,7 +14696,7 @@ i32 stbi__parse_uncompressed_block(stbi__zbuf* a) {
     }
     len = cast(i32, header[1]) * 256 + header[0];
     nlen = cast(i32, header[3]) * 256 + header[2];
-    if nlen != (len ^ 65535) {
+    if nlen != (len ^ 0xffff) {
         return stbi__err("zlib corrupt");
     }
     if a.zbuffer + len > a.zbuffer_end {
@@ -14971,6 +14712,7 @@ i32 stbi__parse_uncompressed_block(stbi__zbuf* a) {
     a.zout += len;
     return 1;
 }
+
 i32 stbi__parse_zlib_header(stbi__zbuf* a) {
     var cmf = cast(i32, stbi__zget8(a));
     i32 cm = cmf & 15;
@@ -14989,8 +14731,21 @@ i32 stbi__parse_zlib_header(stbi__zbuf* a) {
     }
     return 1;
 }
-stbi_uc[288] stbi__zdefault_length = {8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8};
-stbi_uc[32] stbi__zdefault_distance = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
+stbi_uc[288] stbi__zdefault_length = {
+    8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+    8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+    8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+    8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+    8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+    9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+    9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+    9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+    7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8,
+};
+stbi_uc[32] stbi__zdefault_distance = {
+    5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+};
+
 /*
 Init algorithm:
 {
@@ -15044,6 +14799,7 @@ i32 stbi__parse_zlib(stbi__zbuf* a, i32 parse_header) {
     }
     return 1;
 }
+
 i32 stbi__do_zlib(stbi__zbuf* a, u8* obuf, i32 olen, i32 exp, i32 parse_header) {
     a.zout_start = obuf;
     a.zout = obuf;
@@ -15052,6 +14808,7 @@ i32 stbi__do_zlib(stbi__zbuf* a, u8* obuf, i32 olen, i32 exp, i32 parse_header) 
     return stbi__parse_zlib(a, parse_header);
 }
 }
+
 u8* stbi_zlib_decode_malloc_guesssize(u8* buffer, i32 len, i32 initial_size, i32* outlen) {
     noinit stbi__zbuf a;
     var p = cast(u8*, stbi__malloc(cast(u64, initial_size)));
@@ -15070,9 +14827,11 @@ u8* stbi_zlib_decode_malloc_guesssize(u8* buffer, i32 len, i32 initial_size, i32
         return null;
     }
 }
+
 u8* stbi_zlib_decode_malloc(u8* buffer, i32 len, i32* outlen) {
     return stbi_zlib_decode_malloc_guesssize(buffer, len, 16384, outlen);
 }
+
 u8* stbi_zlib_decode_malloc_guesssize_headerflag(u8* buffer, i32 len, i32 initial_size, i32* outlen, i32 parse_header) {
     noinit stbi__zbuf a;
     var p = cast(u8*, stbi__malloc(cast(u64, initial_size)));
@@ -15091,6 +14850,7 @@ u8* stbi_zlib_decode_malloc_guesssize_headerflag(u8* buffer, i32 len, i32 initia
         return null;
     }
 }
+
 i32 stbi_zlib_decode_buffer(u8* obuffer, i32 olen, u8* ibuffer, i32 ilen) {
     noinit stbi__zbuf a;
     a.zbuffer = cast(stbi_uc*, ibuffer);
@@ -15101,6 +14861,7 @@ i32 stbi_zlib_decode_buffer(u8* obuffer, i32 olen, u8* ibuffer, i32 ilen) {
         return -1;
     }
 }
+
 u8* stbi_zlib_decode_noheader_malloc(u8* buffer, i32 len, i32* outlen) {
     noinit stbi__zbuf a;
     var p = cast(u8*, stbi__malloc(16384));
@@ -15119,6 +14880,7 @@ u8* stbi_zlib_decode_noheader_malloc(u8* buffer, i32 len, i32* outlen) {
         return null;
     }
 }
+
 i32 stbi_zlib_decode_noheader_buffer(u8* obuffer, i32 olen, u8* ibuffer, i32 ilen) {
     noinit stbi__zbuf a;
     a.zbuffer = cast(stbi_uc*, ibuffer);
@@ -15140,6 +14902,7 @@ i32 stbi_zlib_decode_noheader_buffer(u8* obuffer, i32 olen, u8* ibuffer, i32 ile
 //    performance
 //      - uses stb_zlib, a PD zlib implementation with fast huffman decoding
 when !(defined(STBI_NO_PNG)) {
+
 private {
 stbi__pngchunk stbi__get_chunk_header(stbi__context* s) {
     noinit stbi__pngchunk c;
@@ -15147,6 +14910,7 @@ stbi__pngchunk stbi__get_chunk_header(stbi__context* s) {
     c.type = stbi__get32be(s);
     return c;
 }
+
 i32 stbi__check_png_header(stbi__context* s) {
     i32 i;
     for i = 0; i < 8; ++i {
@@ -15157,8 +14921,11 @@ i32 stbi__check_png_header(stbi__context* s) {
     return 1;
 }
 }
-private { stbi_uc[5] first_row_filter = {STBI__F_none, STBI__F_sub, STBI__F_none, STBI__F_avg_first, STBI__F_sub}; }
 private {
+stbi_uc[5] first_row_filter = {
+    STBI__F_none, STBI__F_sub, STBI__F_none, STBI__F_avg_first, STBI__F_sub,
+};
+
 i32 stbi__paeth(i32 a, i32 b, i32 c) {
     i32 thresh = c * 3 - (a + b);
     i32 lo = a < b ? a : b;
@@ -15167,7 +14934,8 @@ i32 stbi__paeth(i32 a, i32 b, i32 c) {
     i32 t1 = thresh <= lo ? hi : t0;
     return t1;
 }
-stbi_uc[9] stbi__depth_scale_table = {0, 255, 85, 0, 17, 0, 0, 0, 1};
+stbi_uc[9] stbi__depth_scale_table = {0, 0xff, 0x55, 0, 0x11, 0, 0, 0, 0x01};
+
 // adds an extra all-255 alpha channel
 // dest == src is legal
 // img_n must be 1 or 3
@@ -15188,6 +14956,7 @@ void stbi__create_png_alpha_expand8(stbi_uc* dest, stbi_uc* src, stbi__uint32 x,
         }
     }
 }
+
 // create the png data from post-deflated data
 i32 stbi__create_png_image_raw(stbi__png* a, stbi_uc* raw, stbi__uint32 raw_len, i32 out_n, stbi__uint32 x, stbi__uint32 y, i32 depth, i32 color) {
     i32 bytes = depth == 16 ? 2 : 1;
@@ -15335,7 +15104,7 @@ i32 stbi__create_png_image_raw(stbi__png* a, stbi_uc* raw, stbi__uint32 raw_len,
                 if img_n == 1 {
                     for i = 0; i < x; ++i {
                         dest16[0] = cast(stbi__uint16, cast(i32, cur[0]) << 8 | cur[1]);
-                        dest16[1] = 65535;
+                        dest16[1] = 0xffff;
                         dest16 += 2;
                         cur += 2;
                     }
@@ -15345,7 +15114,7 @@ i32 stbi__create_png_image_raw(stbi__png* a, stbi_uc* raw, stbi__uint32 raw_len,
                         dest16[0] = cast(stbi__uint16, cast(i32, cur[0]) << 8 | cur[1]);
                         dest16[1] = cast(stbi__uint16, cast(i32, cur[2]) << 8 | cur[3]);
                         dest16[2] = cast(stbi__uint16, cast(i32, cur[4]) << 8 | cur[5]);
-                        dest16[3] = 65535;
+                        dest16[3] = 0xffff;
                         dest16 += 4;
                         cur += 6;
                     }
@@ -15359,6 +15128,7 @@ i32 stbi__create_png_image_raw(stbi__png* a, stbi_uc* raw, stbi__uint32 raw_len,
     }
     return 1;
 }
+
 i32 stbi__create_png_image(stbi__png* a, stbi_uc* image_data, stbi__uint32 image_data_len, i32 out_n, i32 depth, i32 color, i32 interlaced) {
     i32 bytes = depth == 16 ? 2 : 1;
     i32 out_bytes = out_n * bytes;
@@ -15403,6 +15173,7 @@ i32 stbi__create_png_image(stbi__png* a, stbi_uc* image_data, stbi__uint32 image
     a.out = final;
     return 1;
 }
+
 i32 stbi__compute_transparency(stbi__png* z, stbi_uc* tc, i32 out_n) {
     stbi__context* s = z.s;
     stbi__uint32 i;
@@ -15424,6 +15195,7 @@ i32 stbi__compute_transparency(stbi__png* z, stbi_uc* tc, i32 out_n) {
     }
     return 1;
 }
+
 i32 stbi__compute_transparency16(stbi__png* z, stbi__uint16* tc, i32 out_n) {
     stbi__context* s = z.s;
     stbi__uint32 i;
@@ -15445,6 +15217,7 @@ i32 stbi__compute_transparency16(stbi__png* z, stbi__uint16* tc, i32 out_n) {
     }
     return 1;
 }
+
 i32 stbi__expand_png_palette(stbi__png* a, stbi_uc* palette, i32 len, i32 pal_img_n) {
     stbi__uint32 i;
     stbi__uint32 pixel_count = a.s.img_x * a.s.img_y;
@@ -15482,12 +15255,15 @@ i32 stbi__expand_png_palette(stbi__png* a, stbi_uc* palette, i32 len, i32 pal_im
 i32 stbi__unpremultiply_on_load_global = 0;
 i32 stbi__de_iphone_flag_global = 0;
 }
+
 void stbi_set_unpremultiply_on_load(i32 flag_true_if_should_unpremultiply) {
     stbi__unpremultiply_on_load_global = flag_true_if_should_unpremultiply;
 }
+
 void stbi_convert_iphone_png_to_rgb(i32 flag_true_if_should_convert) {
     stbi__de_iphone_flag_global = flag_true_if_should_convert;
 }
+
 private {
 void stbi__de_iphone(stbi__png* z) {
     stbi__context* s = z.s;
@@ -15528,6 +15304,7 @@ void stbi__de_iphone(stbi__png* z) {
         }
     }
 }
+
 i32 stbi__parse_png_file(stbi__png* z, i32 scan, i32 req_comp) {
     noinit stbi_uc[1024] palette;
     stbi_uc pal_img_n = 0;
@@ -15816,6 +15593,7 @@ i32 stbi__parse_png_file(stbi__png* z, i32 scan, i32 req_comp) {
         stbi__get32be(s);
     }
 }
+
 void* stbi__do_png(stbi__png* p, i32* x, i32* y, i32* n, i32 req_comp, stbi__result_info* ri) {
     void* result = null;
     if req_comp < 0 || req_comp > 4 {
@@ -15856,17 +15634,20 @@ void* stbi__do_png(stbi__png* p, i32* x, i32* y, i32* n, i32 req_comp, stbi__res
     p.idata = null;
     return result;
 }
+
 void* stbi__png_load(stbi__context* s, i32* x, i32* y, i32* comp, i32 req_comp, stbi__result_info* ri) {
     noinit stbi__png p;
     p.s = s;
     return stbi__do_png(&p, x, y, comp, req_comp, ri);
 }
+
 i32 stbi__png_test(stbi__context* s) {
     i32 r;
     r = stbi__check_png_header(s);
     stbi__rewind(s);
     return r;
 }
+
 i32 stbi__png_info_raw(stbi__png* p, i32* x, i32* y, i32* comp) {
     if stbi__parse_png_file(p, STBI__SCAN_header, 0) == 0 {
         stbi__rewind(p.s);
@@ -15883,11 +15664,13 @@ i32 stbi__png_info_raw(stbi__png* p, i32* x, i32* y, i32* comp) {
     }
     return 1;
 }
+
 i32 stbi__png_info(stbi__context* s, i32* x, i32* y, i32* comp) {
     noinit stbi__png p;
     p.s = s;
     return stbi__png_info_raw(&p, x, y, comp);
 }
+
 i32 stbi__png_is16(stbi__context* s) {
     noinit stbi__png p;
     p.s = s;
@@ -15902,6 +15685,7 @@ i32 stbi__png_is16(stbi__context* s) {
 }
 }
 }
+
 // Microsoft/Windows BMP image
 // Targa Truevision - TGA
 // by Jonathan Dummer
@@ -15937,6 +15721,7 @@ i32 stbi__info_main(stbi__context* s, i32* x, i32* y, i32* comp) {
     }
     return stbi__err("unknown image type");
 }
+
 i32 stbi__is_16_main(stbi__context* s) {
     when !(defined(STBI_NO_PNG)) {
         if stbi__png_is16(s) != 0 {
@@ -15946,31 +15731,37 @@ i32 stbi__is_16_main(stbi__context* s) {
     return 0;
 }
 }
+
 i32 stbi_info_from_memory(stbi_uc* buffer, i32 len, i32* x, i32* y, i32* comp) {
     noinit stbi__context s;
     stbi__start_mem(&s, buffer, len);
     return stbi__info_main(&s, x, y, comp);
 }
+
 i32 stbi_info_from_callbacks(stbi_io_callbacks* c, void* user, i32* x, i32* y, i32* comp) {
     noinit stbi__context s;
     stbi__start_callbacks(&s, c, user);
     return stbi__info_main(&s, x, y, comp);
 }
+
 i32 stbi_is_16_bit_from_memory(stbi_uc* buffer, i32 len) {
     noinit stbi__context s;
     stbi__start_mem(&s, buffer, len);
     return stbi__is_16_main(&s);
 }
+
 i32 stbi_is_16_bit_from_callbacks(stbi_io_callbacks* c, void* user) {
     noinit stbi__context s;
     stbi__start_callbacks(&s, c, user);
     return stbi__is_16_main(&s);
 }
+
 private {
 u8* stbir_resize_uint8_linear(u8* input_pixels, i32 input_w, i32 input_h, i32 input_stride, u8* output_pixels, i32 output_w, i32 output_h, i32 output_stride, stbir_pixel_layout pixel_layout) {
     return output_pixels;
 }
 }
+
 // Load pixel data from image as Vector4 array (float normalized)
 //----------------------------------------------------------------------------------
 // Module Functions Definition
@@ -15986,6 +15777,7 @@ Image LoadImage(u8* fileName) {
     }
     return image;
 }
+
 // Load an image from RAW file data
 Image LoadImageRaw(u8* fileName, i32 width, i32 height, i32 format_var, i32 headerSize) {
     Image image;
@@ -16009,6 +15801,7 @@ Image LoadImageRaw(u8* fileName, i32 width, i32 height, i32 format_var, i32 head
     }
     return image;
 }
+
 // Load animated image data
 //  - Image.data buffer includes all frames: [image#0][image#1][image#2][...]
 //  - Number of frames is returned through 'frames' parameter
@@ -16025,6 +15818,7 @@ Image LoadImageAnim(u8* fileName, i32* frames) {
     *frames = frameCount;
     return image;
 }
+
 // Load animated image data from memory
 //  - Image.data buffer includes all frames: [image#0][image#1][image#2][...]
 //  - Number of frames is returned through 'frames' parameter
@@ -16044,6 +15838,7 @@ Image LoadImageAnimFromMemory(u8* fileType, u8* fileData, i32 dataSize, i32* fra
     *frames = frameCount;
     return image;
 }
+
 // Load image from memory buffer, fileType refers to extension: i.e. ".png"
 // WARNING: File extension must be provided in lower-case
 Image LoadImageFromMemory(u8* fileType, u8* fileData, i32 dataSize) {
@@ -16078,6 +15873,7 @@ Image LoadImageFromMemory(u8* fileType, u8* fileData, i32 dataSize) {
     }
     return image;
 }
+
 // Load image from GPU texture data
 // NOTE: Compressed texture formats not supported
 Image LoadImageFromTexture(Texture2D texture) {
@@ -16096,6 +15892,7 @@ Image LoadImageFromTexture(Texture2D texture) {
     }
     return image;
 }
+
 // Load image from screen buffer (screenshot)
 Image LoadImageFromScreen() {
     Image image;
@@ -16106,6 +15903,7 @@ Image LoadImageFromScreen() {
     image.data = rlReadScreenPixels(image.width, image.height);
     return image;
 }
+
 // Check if an image is ready
 bool IsImageValid(Image image) {
     bool result = false;
@@ -16114,10 +15912,12 @@ bool IsImageValid(Image image) {
     }
     return result;
 }
+
 // Unload image from CPU memory (RAM)
 void UnloadImage(Image image) {
     free(image.data);
 }
+
 // Export image data to file
 // NOTE: File format depends on fileName extension
 bool ExportImage(Image image, u8* fileName) {
@@ -16130,6 +15930,7 @@ bool ExportImage(Image image, u8* fileName) {
     }
     return result != 0;
 }
+
 // Export image to memory buffer
 u8* ExportImageToMemory(Image image, u8* fileType, i32* dataSize) {
     u8* fileData = null;
@@ -16149,6 +15950,7 @@ u8* ExportImageToMemory(Image image, u8* fileType, i32* dataSize) {
     }
     return fileData;
 }
+
 // Export image as code file (.h) defining an array of bytes
 bool ExportImageAsCode(Image image, u8* fileName) {
     bool result = false;
@@ -16188,6 +15990,7 @@ bool ExportImageAsCode(Image image, u8* fileName) {
     }
     return result;
 }
+
 //------------------------------------------------------------------------------------
 // Image generation functions
 //------------------------------------------------------------------------------------
@@ -16197,9 +16000,16 @@ Image GenImageColor(i32 width, i32 height, Color color) {
     for i32 i = 0; i < width * height; i++ {
         pixels[i] = color;
     }
-    var image = Image{.data = pixels, .width = width, .height = height, .mipmaps = 1, .format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8};
+    var image = Image{
+        .data = pixels,
+        .width = width,
+        .height = height,
+        .mipmaps = 1,
+        .format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
+    };
     return image;
 }
+
 //------------------------------------------------------------------------------------
 // Image manipulation functions
 //------------------------------------------------------------------------------------
@@ -16230,6 +16040,7 @@ Image ImageCopy(Image image) {
     }
     return newImage;
 }
+
 // Create an image from another image piece
 Image ImageFromImage(Image image, Rectangle rec) {
     Image result;
@@ -16244,6 +16055,7 @@ Image ImageFromImage(Image image, Rectangle rec) {
     }
     return result;
 }
+
 // Crop an image to area defined by a rectangle
 // NOTE: Security checks are performed in case rectangle goes out of bounds
 void ImageCrop(Image* image, Rectangle crop) {
@@ -16287,6 +16099,7 @@ void ImageCrop(Image* image, Rectangle crop) {
         image.height = cast(i32, crop.height);
     }
 }
+
 // Convert image data to desired format
 void ImageFormat(Image* image, i32 newFormat) {
     if image.data == null || image.width == 0 || image.height == 0 {
@@ -16491,6 +16304,7 @@ void ImageFormat(Image* image, i32 newFormat) {
         }
     }
 }
+
 // Create an image from text (default font)
 Image ImageText(u8* text, i32 fontSize, Color color) {
     Image imText;
@@ -16502,6 +16316,7 @@ Image ImageText(u8* text, i32 fontSize, Color color) {
     imText = ImageTextEx(GetFontDefault(), text, cast(f32, fontSize), cast(f32, spacing), color);
     return imText;
 }
+
 // Create an image from text (custom sprite font)
 // WARNING: Module required: rtext
 Image ImageTextEx(Font font, u8* text, f32 fontSize, f32 spacing, Color tint) {
@@ -16525,8 +16340,15 @@ Image ImageTextEx(Font font, u8* text, f32 fontSize, f32 spacing, Color tint) {
             textOffsetX = 0;
         } else {
             if codepoint != 32 && codepoint != 9 {
-                var rec = Rectangle{cast(f32, textOffsetX + font.glyphs[index].offsetX), cast(f32, textOffsetY + font.glyphs[index].offsetY), font.recs[index].width, font.recs[index].height};
-                ImageDraw(&imText, font.glyphs[index].image, Rectangle{0.0f, 0.0f, cast(f32, font.glyphs[index].image.width), cast(f32, font.glyphs[index].image.height)}, rec, tint);
+                var rec = Rectangle{
+                    cast(f32, textOffsetX + font.glyphs[index].offsetX),
+                    cast(f32, textOffsetY + font.glyphs[index].offsetY), font.recs[index].width,
+                    font.recs[index].height,
+                };
+                ImageDraw(&imText, font.glyphs[index].image, Rectangle{
+                    0.0f, 0.0f, cast(f32, font.glyphs[index].image.width),
+                    cast(f32, font.glyphs[index].image.height),
+                }, rec, tint);
             }
             if font.glyphs[index].advanceX == 0 {
                 textOffsetX += cast(i32, font.recs[index].width + spacing);
@@ -16546,6 +16368,7 @@ Image ImageTextEx(Font font, u8* text, f32 fontSize, f32 spacing, Color tint) {
     }
     return imText;
 }
+
 // Create an image from a selected channel of another image
 Image ImageFromChannel(Image image, i32 selectedChannel) {
     Image result;
@@ -16693,6 +16516,7 @@ Image ImageFromChannel(Image image, i32 selectedChannel) {
     result.data = pixels;
     return result;
 }
+
 // Resize and image to new size using Nearest-Neighbor scaling algorithm
 void ImageResizeNN(Image* image, i32 newWidth, i32 newHeight) {
     if image.data == null || image.width == 0 || image.height == 0 {
@@ -16720,6 +16544,7 @@ void ImageResizeNN(Image* image, i32 newWidth, i32 newHeight) {
     ImageFormat(image, format_var);
     UnloadImageColors(pixels);
 }
+
 // Resize and image to new size
 // NOTE: Uses stb default scaling filters (both bicubic):
 // STBIR_DEFAULT_FILTER_UPSAMPLE    STBIR_FILTER_CATMULLROM
@@ -16765,6 +16590,7 @@ void ImageResize(Image* image, i32 newWidth, i32 newHeight) {
         ImageFormat(image, format_var);
     }
 }
+
 // Resize canvas and fill with color
 // NOTE: Resize offset is relative to the top-left corner of the original image
 void ImageResizeCanvas(Image* image, i32 newWidth, i32 newHeight, i32 offsetX, i32 offsetY, Color fill) {
@@ -16817,6 +16643,7 @@ void ImageResizeCanvas(Image* image, i32 newWidth, i32 newHeight, i32 offsetX, i
         image.height = newHeight;
     }
 }
+
 // Convert image to POT (power-of-two)
 // NOTE: It could be useful on OpenGL ES 2.0 (RPI, HTML5)
 void ImageToPOT(Image* image, Color fill) {
@@ -16829,6 +16656,7 @@ void ImageToPOT(Image* image, Color fill) {
         ImageResizeCanvas(image, potWidth, potHeight, 0, 0, fill);
     }
 }
+
 // Crop image depending on alpha value
 // NOTE: Threshold is defined as a percentage: 0.0f -> 1.0f
 void ImageAlphaCrop(Image* image, f32 threshold) {
@@ -16840,6 +16668,7 @@ void ImageAlphaCrop(Image* image, f32 threshold) {
         ImageCrop(image, crop);
     }
 }
+
 // Clear alpha channel to desired color
 // NOTE: Threshold defines the alpha limit, 0.0f to 1.0f
 void ImageAlphaClear(Image* image, Color color, f32 threshold) {
@@ -16884,7 +16713,7 @@ void ImageAlphaClear(Image* image, Color color, f32 threshold) {
                     var b = cast(u8, round(cast(f32, color.b) * 15.0f));
                     var a = cast(u8, round(cast(f32, color.a) * 15.0f));
                     for i32 i = 0; i < image.width * image.height; i++ {
-                        if (cast(u16*, image.data)[i] & 15) <= thresholdValue {
+                        if (cast(u16*, image.data)[i] & 0x000f) <= thresholdValue {
                             cast(u16*, image.data)[i] = cast(u16, cast(u16, r) << 12 | cast(u16, g) << 8 | cast(u16, b) << 4 | cast(u16, a));
                         }
                     }
@@ -16932,6 +16761,7 @@ void ImageAlphaClear(Image* image, Color color, f32 threshold) {
         }
     }
 }
+
 // Apply alpha mask to image
 // NOTE 1: Returned image is GRAY_ALPHA (16bit) or RGBA (32bit)
 // NOTE 2: alphaMask should be same size as image
@@ -16973,6 +16803,7 @@ void ImageAlphaMask(Image* image, Image alphaMask) {
         UnloadImage(mask);
     }
 }
+
 // Premultiply alpha channel
 void ImageAlphaPremultiply(Image* image) {
     if image.data == null || image.width == 0 || image.height == 0 {
@@ -16998,6 +16829,7 @@ void ImageAlphaPremultiply(Image* image) {
     image.format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8;
     ImageFormat(image, format_var);
 }
+
 // Apply box blur to image
 void ImageBlurGaussian(Image* image, i32 blurSize) {
     if image.data == null || image.width == 0 || image.height == 0 {
@@ -17103,6 +16935,7 @@ void ImageBlurGaussian(Image* image, i32 blurSize) {
     image.format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8;
     ImageFormat(image, format_var);
 }
+
 // Apply custom square convolution kernel to image
 // NOTE: The convolution kernel matrix is expected to be square
 void ImageKernelConvolution(Image* image, f32* kernel, i32 kernelSize) {
@@ -17210,6 +17043,7 @@ void ImageKernelConvolution(Image* image, f32* kernel, i32 kernelSize) {
     image.format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8;
     ImageFormat(image, format_var);
 }
+
 // Generate all mipmap levels for a provided image
 // NOTE 1: Supports POT and NPOT images
 // NOTE 2: image.data is scaled to include mipmap levels
@@ -17270,6 +17104,7 @@ void ImageMipmaps(Image* image) {
     } else {
     }
 }
+
 // Dither image data to 16bpp or lower (Floyd-Steinberg dithering)
 // NOTE: In case selected bpp do not represent a known 16bit format,
 // dithered data is stored in the LSB part of the unsigned short
@@ -17317,24 +17152,24 @@ void ImageDither(Image* image, i32 rBpp, i32 gBpp, i32 bBpp, i32 aBpp) {
                 bError = cast(i32, oldPixel.b) - (cast(i32, newPixel.b) << 8 - bBpp);
                 pixels[y * image.width + x] = newPixel;
                 if x < image.width - 1 {
-                    pixels[y * image.width + x + 1].r = cast(u8, cast(i32, pixels[y * image.width + x + 1].r) + cast(i32, cast(f32, rError) * 7.0f / 16.0f) < 255 ? cast(i32, pixels[y * image.width + x + 1].r) + cast(i32, cast(f32, rError) * 7.0f / 16.0f) : 255);
-                    pixels[y * image.width + x + 1].g = cast(u8, cast(i32, pixels[y * image.width + x + 1].g) + cast(i32, cast(f32, gError) * 7.0f / 16.0f) < 255 ? cast(i32, pixels[y * image.width + x + 1].g) + cast(i32, cast(f32, gError) * 7.0f / 16.0f) : 255);
-                    pixels[y * image.width + x + 1].b = cast(u8, cast(i32, pixels[y * image.width + x + 1].b) + cast(i32, cast(f32, bError) * 7.0f / 16.0f) < 255 ? cast(i32, pixels[y * image.width + x + 1].b) + cast(i32, cast(f32, bError) * 7.0f / 16.0f) : 255);
+                    pixels[y * image.width + x + 1].r = cast(u8, cast(i32, pixels[y * image.width + x + 1].r) + cast(i32, cast(f32, rError) * 7.0f / 16.0f) < 0xff ? cast(i32, pixels[y * image.width + x + 1].r) + cast(i32, cast(f32, rError) * 7.0f / 16.0f) : 0xff);
+                    pixels[y * image.width + x + 1].g = cast(u8, cast(i32, pixels[y * image.width + x + 1].g) + cast(i32, cast(f32, gError) * 7.0f / 16.0f) < 0xff ? cast(i32, pixels[y * image.width + x + 1].g) + cast(i32, cast(f32, gError) * 7.0f / 16.0f) : 0xff);
+                    pixels[y * image.width + x + 1].b = cast(u8, cast(i32, pixels[y * image.width + x + 1].b) + cast(i32, cast(f32, bError) * 7.0f / 16.0f) < 0xff ? cast(i32, pixels[y * image.width + x + 1].b) + cast(i32, cast(f32, bError) * 7.0f / 16.0f) : 0xff);
                 }
                 if x > 0 && y < image.height - 1 {
-                    pixels[(y + 1) * image.width + x - 1].r = cast(u8, cast(i32, pixels[(y + 1) * image.width + x - 1].r) + cast(i32, cast(f32, rError) * 3.0f / 16.0f) < 255 ? cast(i32, pixels[(y + 1) * image.width + x - 1].r) + cast(i32, cast(f32, rError) * 3.0f / 16.0f) : 255);
-                    pixels[(y + 1) * image.width + x - 1].g = cast(u8, cast(i32, pixels[(y + 1) * image.width + x - 1].g) + cast(i32, cast(f32, gError) * 3.0f / 16.0f) < 255 ? cast(i32, pixels[(y + 1) * image.width + x - 1].g) + cast(i32, cast(f32, gError) * 3.0f / 16.0f) : 255);
-                    pixels[(y + 1) * image.width + x - 1].b = cast(u8, cast(i32, pixels[(y + 1) * image.width + x - 1].b) + cast(i32, cast(f32, bError) * 3.0f / 16.0f) < 255 ? cast(i32, pixels[(y + 1) * image.width + x - 1].b) + cast(i32, cast(f32, bError) * 3.0f / 16.0f) : 255);
+                    pixels[(y + 1) * image.width + x - 1].r = cast(u8, cast(i32, pixels[(y + 1) * image.width + x - 1].r) + cast(i32, cast(f32, rError) * 3.0f / 16.0f) < 0xff ? cast(i32, pixels[(y + 1) * image.width + x - 1].r) + cast(i32, cast(f32, rError) * 3.0f / 16.0f) : 0xff);
+                    pixels[(y + 1) * image.width + x - 1].g = cast(u8, cast(i32, pixels[(y + 1) * image.width + x - 1].g) + cast(i32, cast(f32, gError) * 3.0f / 16.0f) < 0xff ? cast(i32, pixels[(y + 1) * image.width + x - 1].g) + cast(i32, cast(f32, gError) * 3.0f / 16.0f) : 0xff);
+                    pixels[(y + 1) * image.width + x - 1].b = cast(u8, cast(i32, pixels[(y + 1) * image.width + x - 1].b) + cast(i32, cast(f32, bError) * 3.0f / 16.0f) < 0xff ? cast(i32, pixels[(y + 1) * image.width + x - 1].b) + cast(i32, cast(f32, bError) * 3.0f / 16.0f) : 0xff);
                 }
                 if y < image.height - 1 {
-                    pixels[(y + 1) * image.width + x].r = cast(u8, cast(i32, pixels[(y + 1) * image.width + x].r) + cast(i32, cast(f32, rError) * 5.0f / 16.0f) < 255 ? cast(i32, pixels[(y + 1) * image.width + x].r) + cast(i32, cast(f32, rError) * 5.0f / 16.0f) : 255);
-                    pixels[(y + 1) * image.width + x].g = cast(u8, cast(i32, pixels[(y + 1) * image.width + x].g) + cast(i32, cast(f32, gError) * 5.0f / 16.0f) < 255 ? cast(i32, pixels[(y + 1) * image.width + x].g) + cast(i32, cast(f32, gError) * 5.0f / 16.0f) : 255);
-                    pixels[(y + 1) * image.width + x].b = cast(u8, cast(i32, pixels[(y + 1) * image.width + x].b) + cast(i32, cast(f32, bError) * 5.0f / 16.0f) < 255 ? cast(i32, pixels[(y + 1) * image.width + x].b) + cast(i32, cast(f32, bError) * 5.0f / 16.0f) : 255);
+                    pixels[(y + 1) * image.width + x].r = cast(u8, cast(i32, pixels[(y + 1) * image.width + x].r) + cast(i32, cast(f32, rError) * 5.0f / 16.0f) < 0xff ? cast(i32, pixels[(y + 1) * image.width + x].r) + cast(i32, cast(f32, rError) * 5.0f / 16.0f) : 0xff);
+                    pixels[(y + 1) * image.width + x].g = cast(u8, cast(i32, pixels[(y + 1) * image.width + x].g) + cast(i32, cast(f32, gError) * 5.0f / 16.0f) < 0xff ? cast(i32, pixels[(y + 1) * image.width + x].g) + cast(i32, cast(f32, gError) * 5.0f / 16.0f) : 0xff);
+                    pixels[(y + 1) * image.width + x].b = cast(u8, cast(i32, pixels[(y + 1) * image.width + x].b) + cast(i32, cast(f32, bError) * 5.0f / 16.0f) < 0xff ? cast(i32, pixels[(y + 1) * image.width + x].b) + cast(i32, cast(f32, bError) * 5.0f / 16.0f) : 0xff);
                 }
                 if x < image.width - 1 && y < image.height - 1 {
-                    pixels[(y + 1) * image.width + x + 1].r = cast(u8, cast(i32, pixels[(y + 1) * image.width + x + 1].r) + cast(i32, cast(f32, rError) * 1.0f / 16.0f) < 255 ? cast(i32, pixels[(y + 1) * image.width + x + 1].r) + cast(i32, cast(f32, rError) * 1.0f / 16.0f) : 255);
-                    pixels[(y + 1) * image.width + x + 1].g = cast(u8, cast(i32, pixels[(y + 1) * image.width + x + 1].g) + cast(i32, cast(f32, gError) * 1.0f / 16.0f) < 255 ? cast(i32, pixels[(y + 1) * image.width + x + 1].g) + cast(i32, cast(f32, gError) * 1.0f / 16.0f) : 255);
-                    pixels[(y + 1) * image.width + x + 1].b = cast(u8, cast(i32, pixels[(y + 1) * image.width + x + 1].b) + cast(i32, cast(f32, bError) * 1.0f / 16.0f) < 255 ? cast(i32, pixels[(y + 1) * image.width + x + 1].b) + cast(i32, cast(f32, bError) * 1.0f / 16.0f) : 255);
+                    pixels[(y + 1) * image.width + x + 1].r = cast(u8, cast(i32, pixels[(y + 1) * image.width + x + 1].r) + cast(i32, cast(f32, rError) * 1.0f / 16.0f) < 0xff ? cast(i32, pixels[(y + 1) * image.width + x + 1].r) + cast(i32, cast(f32, rError) * 1.0f / 16.0f) : 0xff);
+                    pixels[(y + 1) * image.width + x + 1].g = cast(u8, cast(i32, pixels[(y + 1) * image.width + x + 1].g) + cast(i32, cast(f32, gError) * 1.0f / 16.0f) < 0xff ? cast(i32, pixels[(y + 1) * image.width + x + 1].g) + cast(i32, cast(f32, gError) * 1.0f / 16.0f) : 0xff);
+                    pixels[(y + 1) * image.width + x + 1].b = cast(u8, cast(i32, pixels[(y + 1) * image.width + x + 1].b) + cast(i32, cast(f32, bError) * 1.0f / 16.0f) < 0xff ? cast(i32, pixels[(y + 1) * image.width + x + 1].b) + cast(i32, cast(f32, bError) * 1.0f / 16.0f) : 0xff);
                 }
                 rPixel = cast(u16, newPixel.r);
                 gPixel = cast(u16, newPixel.g);
@@ -17346,6 +17181,7 @@ void ImageDither(Image* image, i32 rBpp, i32 gBpp, i32 bBpp, i32 aBpp) {
         UnloadImageColors(pixels);
     }
 }
+
 // Flip image vertically
 void ImageFlipVertical(Image* image) {
     if image.data == null || image.width == 0 || image.height == 0 {
@@ -17369,6 +17205,7 @@ void ImageFlipVertical(Image* image) {
         image.data = flippedData;
     }
 }
+
 // Flip image horizontally
 void ImageFlipHorizontal(Image* image) {
     if image.data == null || image.width == 0 || image.height == 0 {
@@ -17391,6 +17228,7 @@ void ImageFlipHorizontal(Image* image) {
         image.data = flippedData;
     }
 }
+
 // Rotate image in degrees
 void ImageRotate(Image* image, i32 degrees) {
     if image.data == null || image.width == 0 || image.height == 0 {
@@ -17435,6 +17273,7 @@ void ImageRotate(Image* image, i32 degrees) {
         image.height = height;
     }
 }
+
 // Rotate image clockwise 90deg
 void ImageRotateCW(Image* image) {
     if image.data == null || image.width == 0 || image.height == 0 {
@@ -17461,6 +17300,7 @@ void ImageRotateCW(Image* image) {
         image.height = width;
     }
 }
+
 // Rotate image counter-clockwise 90deg
 void ImageRotateCCW(Image* image) {
     if image.data == null || image.width == 0 || image.height == 0 {
@@ -17487,6 +17327,7 @@ void ImageRotateCCW(Image* image) {
         image.height = width;
     }
 }
+
 // Modify image color: tint
 void ImageColorTint(Image* image, Color color) {
     if image.data == null || image.width == 0 || image.height == 0 {
@@ -17509,6 +17350,7 @@ void ImageColorTint(Image* image, Color color) {
     image.format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8;
     ImageFormat(image, format_var);
 }
+
 // Modify image color: invert
 void ImageColorInvert(Image* image) {
     if image.data == null || image.width == 0 || image.height == 0 {
@@ -17526,10 +17368,12 @@ void ImageColorInvert(Image* image) {
     image.format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8;
     ImageFormat(image, format_var);
 }
+
 // Modify image color: grayscale
 void ImageColorGrayscale(Image* image) {
     ImageFormat(image, PIXELFORMAT_UNCOMPRESSED_GRAYSCALE);
 }
+
 // Modify image color: contrast
 // NOTE: Contrast values between -100 and 100
 void ImageColorContrast(Image* image, i32 contrast) {
@@ -17589,6 +17433,7 @@ void ImageColorContrast(Image* image, i32 contrast) {
     image.format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8;
     ImageFormat(image, format_var);
 }
+
 // Modify image color: brightness
 // NOTE: Brightness values between -255 and 255
 void ImageColorBrightness(Image* image, i32 brightness) {
@@ -17634,6 +17479,7 @@ void ImageColorBrightness(Image* image, i32 brightness) {
     image.format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8;
     ImageFormat(image, format_var);
 }
+
 // Modify image color: replace color
 void ImageColorReplace(Image* image, Color color, Color replace) {
     if image.data == null || image.width == 0 || image.height == 0 {
@@ -17656,6 +17502,7 @@ void ImageColorReplace(Image* image, Color color, Color replace) {
         ImageFormat(image, format_var);
     }
 }
+
 // Load color data from image as a Color array (RGBA - 32bit)
 // NOTE: Memory allocated should be freed using UnloadImageColors();
 Color* LoadImageColors(Image image) {
@@ -17798,6 +17645,7 @@ Color* LoadImageColors(Image image) {
     }
     return pixels;
 }
+
 // Load colors palette from image as a Color array (RGBA - 32bit)
 // NOTE: Memory allocated should be freed using UnloadImagePalette()
 Color* LoadImagePalette(Image image, i32 maxPaletteSize, i32* colorCount) {
@@ -17832,14 +17680,17 @@ Color* LoadImagePalette(Image image, i32 maxPaletteSize, i32* colorCount) {
     *colorCount = palCount;
     return palette;
 }
+
 // Unload color data loaded with LoadImageColors()
 void UnloadImageColors(Color* colors) {
     free(colors);
 }
+
 // Unload colors palette loaded with LoadImagePalette()
 void UnloadImagePalette(Color* colors) {
     free(colors);
 }
+
 // Get image alpha border rectangle
 // NOTE: Threshold is defined as a percentage: 0.0f -> 1.0f
 Rectangle GetImageAlphaBorder(Image image, f32 threshold) {
@@ -17869,12 +17720,16 @@ Rectangle GetImageAlphaBorder(Image image, f32 threshold) {
             }
         }
         if xMin != 65536 && xMax != 65536 {
-            crop = Rectangle{cast(f32, xMin), cast(f32, yMin), cast(f32, xMax + 1 - xMin), cast(f32, yMax + 1 - yMin)};
+            crop = Rectangle{
+                cast(f32, xMin), cast(f32, yMin), cast(f32, xMax + 1 - xMin),
+                cast(f32, yMax + 1 - yMin),
+            };
         }
         UnloadImageColors(pixels);
     }
     return crop;
 }
+
 // Get image pixel color at (x, y) position
 Color GetImageColor(Image image, i32 x, i32 y) {
     Color color;
@@ -17994,6 +17849,7 @@ Color GetImageColor(Image image, i32 x, i32 y) {
     }
     return color;
 }
+
 //------------------------------------------------------------------------------------
 // Image drawing functions
 //------------------------------------------------------------------------------------
@@ -18011,6 +17867,7 @@ void ImageClearBackground(Image* dst, Color color) {
         memcpy(pSrcPixel + i * bytesPerPixel, pSrcPixel, cast(u64, pixelsToCopy * bytesPerPixel));
     }
 }
+
 // Draw pixel within an image
 // NOTE: Compressed image formats not supported
 void ImageDrawPixel(Image* dst, i32 x, i32 y, Color color) {
@@ -18020,14 +17877,20 @@ void ImageDrawPixel(Image* dst, i32 x, i32 y, Color color) {
     switch dst.format {
         case PIXELFORMAT_UNCOMPRESSED_GRAYSCALE: {
             {
-                var coln = Vector3{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f};
+                var coln = Vector3{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f,
+                };
                 var gray = cast(u8, (coln.x * 0.299f + coln.y * 0.587f + coln.z * 0.114f) * 255.0f);
                 cast(u8*, dst.data)[y * dst.width + x] = gray;
             }
         }
         case PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA: {
             {
-                var coln = Vector3{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f};
+                var coln = Vector3{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f,
+                };
                 var gray = cast(u8, (coln.x * 0.299f + coln.y * 0.587f + coln.z * 0.114f) * 255.0f);
                 cast(u8*, dst.data)[(y * dst.width + x) * 2] = gray;
                 cast(u8*, dst.data)[(y * dst.width + x) * 2 + 1] = color.a;
@@ -18035,7 +17898,10 @@ void ImageDrawPixel(Image* dst, i32 x, i32 y, Color color) {
         }
         case PIXELFORMAT_UNCOMPRESSED_R5G6B5: {
             {
-                var coln = Vector3{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f};
+                var coln = Vector3{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f,
+                };
                 var r = cast(u8, round(coln.x * 31.0f));
                 var g = cast(u8, round(coln.y * 63.0f));
                 var b = cast(u8, round(coln.z * 31.0f));
@@ -18044,7 +17910,10 @@ void ImageDrawPixel(Image* dst, i32 x, i32 y, Color color) {
         }
         case PIXELFORMAT_UNCOMPRESSED_R5G5B5A1: {
             {
-                var coln = Vector4{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f, cast(f32, color.a) / 255.0f};
+                var coln = Vector4{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f, cast(f32, color.a) / 255.0f,
+                };
                 var r = cast(u8, round(coln.x * 31.0f));
                 var g = cast(u8, round(coln.y * 31.0f));
                 var b = cast(u8, round(coln.z * 31.0f));
@@ -18054,7 +17923,10 @@ void ImageDrawPixel(Image* dst, i32 x, i32 y, Color color) {
         }
         case PIXELFORMAT_UNCOMPRESSED_R4G4B4A4: {
             {
-                var coln = Vector4{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f, cast(f32, color.a) / 255.0f};
+                var coln = Vector4{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f, cast(f32, color.a) / 255.0f,
+                };
                 var r = cast(u8, round(coln.x * 15.0f));
                 var g = cast(u8, round(coln.y * 15.0f));
                 var b = cast(u8, round(coln.z * 15.0f));
@@ -18079,13 +17951,19 @@ void ImageDrawPixel(Image* dst, i32 x, i32 y, Color color) {
         }
         case PIXELFORMAT_UNCOMPRESSED_R32: {
             {
-                var coln = Vector3{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f};
+                var coln = Vector3{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f,
+                };
                 cast(f32*, dst.data)[y * dst.width + x] = coln.x * 0.299f + coln.y * 0.587f + coln.z * 0.114f;
             }
         }
         case PIXELFORMAT_UNCOMPRESSED_R32G32B32: {
             {
-                var coln = Vector3{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f};
+                var coln = Vector3{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f,
+                };
                 cast(f32*, dst.data)[(y * dst.width + x) * 3] = coln.x;
                 cast(f32*, dst.data)[(y * dst.width + x) * 3 + 1] = coln.y;
                 cast(f32*, dst.data)[(y * dst.width + x) * 3 + 2] = coln.z;
@@ -18093,7 +17971,10 @@ void ImageDrawPixel(Image* dst, i32 x, i32 y, Color color) {
         }
         case PIXELFORMAT_UNCOMPRESSED_R32G32B32A32: {
             {
-                var coln = Vector4{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f, cast(f32, color.a) / 255.0f};
+                var coln = Vector4{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f, cast(f32, color.a) / 255.0f,
+                };
                 cast(f32*, dst.data)[(y * dst.width + x) * 4] = coln.x;
                 cast(f32*, dst.data)[(y * dst.width + x) * 4 + 1] = coln.y;
                 cast(f32*, dst.data)[(y * dst.width + x) * 4 + 2] = coln.z;
@@ -18102,13 +17983,19 @@ void ImageDrawPixel(Image* dst, i32 x, i32 y, Color color) {
         }
         case PIXELFORMAT_UNCOMPRESSED_R16: {
             {
-                var coln = Vector3{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f};
+                var coln = Vector3{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f,
+                };
                 cast(u16*, dst.data)[y * dst.width + x] = FloatToHalf(coln.x * 0.299f + coln.y * 0.587f + coln.z * 0.114f);
             }
         }
         case PIXELFORMAT_UNCOMPRESSED_R16G16B16: {
             {
-                var coln = Vector3{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f};
+                var coln = Vector3{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f,
+                };
                 cast(u16*, dst.data)[(y * dst.width + x) * 3] = FloatToHalf(coln.x);
                 cast(u16*, dst.data)[(y * dst.width + x) * 3 + 1] = FloatToHalf(coln.y);
                 cast(u16*, dst.data)[(y * dst.width + x) * 3 + 2] = FloatToHalf(coln.z);
@@ -18116,7 +18003,10 @@ void ImageDrawPixel(Image* dst, i32 x, i32 y, Color color) {
         }
         case PIXELFORMAT_UNCOMPRESSED_R16G16B16A16: {
             {
-                var coln = Vector4{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f, cast(f32, color.a) / 255.0f};
+                var coln = Vector4{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f, cast(f32, color.a) / 255.0f,
+                };
                 cast(u16*, dst.data)[(y * dst.width + x) * 4] = FloatToHalf(coln.x);
                 cast(u16*, dst.data)[(y * dst.width + x) * 4 + 1] = FloatToHalf(coln.y);
                 cast(u16*, dst.data)[(y * dst.width + x) * 4 + 2] = FloatToHalf(coln.z);
@@ -18127,10 +18017,12 @@ void ImageDrawPixel(Image* dst, i32 x, i32 y, Color color) {
         }
     }
 }
+
 // Draw pixel within an image (Vector version)
 void ImageDrawPixelV(Image* dst, Vector2 position, Color color) {
     ImageDrawPixel(dst, cast(i32, position.x), cast(i32, position.y), color);
 }
+
 // Draw line within an image
 void ImageDrawLine(Image* dst, i32 startPosX, i32 startPosY, i32 endPosX, i32 endPosY, Color color) {
     i32 shortLen = endPosY - startPosY;
@@ -18169,6 +18061,7 @@ void ImageDrawLine(Image* dst, i32 startPosX, i32 startPosY, i32 endPosX, i32 en
         }
     }
 }
+
 // Draw line within an image (Vector version)
 void ImageDrawLineV(Image* dst, Vector2 start, Vector2 end, Color color) {
     var x1 = cast(i32, start.x + 0.5f);
@@ -18177,6 +18070,7 @@ void ImageDrawLineV(Image* dst, Vector2 start, Vector2 end, Color color) {
     var y2 = cast(i32, end.y + 0.5f);
     ImageDrawLine(dst, x1, y1, x2, y2, color);
 }
+
 // Draw a line defining thickness within an image
 void ImageDrawLineEx(Image* dst, Vector2 start, Vector2 end, i32 thick, Color color) {
     var x1 = cast(i32, start.x + 0.5f);
@@ -18203,6 +18097,7 @@ void ImageDrawLineEx(Image* dst, Vector2 start, Vector2 end, i32 thick, Color co
         }
     }
 }
+
 // Draw circle within an image
 void ImageDrawCircle(Image* dst, i32 centerX, i32 centerY, i32 radius, Color color) {
     i32 x = 0;
@@ -18222,10 +18117,12 @@ void ImageDrawCircle(Image* dst, i32 centerX, i32 centerY, i32 radius, Color col
         }
     }
 }
+
 // Draw circle within an image (Vector version)
 void ImageDrawCircleV(Image* dst, Vector2 center, i32 radius, Color color) {
     ImageDrawCircle(dst, cast(i32, center.x), cast(i32, center.y), radius, color);
 }
+
 // Draw circle outline within an image
 void ImageDrawCircleLines(Image* dst, i32 centerX, i32 centerY, i32 radius, Color color) {
     i32 x = 0;
@@ -18249,18 +18146,24 @@ void ImageDrawCircleLines(Image* dst, i32 centerX, i32 centerY, i32 radius, Colo
         }
     }
 }
+
 // Draw circle outline within an image (Vector version)
 void ImageDrawCircleLinesV(Image* dst, Vector2 center, i32 radius, Color color) {
     ImageDrawCircleLines(dst, cast(i32, center.x), cast(i32, center.y), radius, color);
 }
+
 // Draw rectangle within an image
 void ImageDrawRectangle(Image* dst, i32 posX, i32 posY, i32 width, i32 height, Color color) {
-    ImageDrawRectangleRec(dst, Rectangle{cast(f32, posX), cast(f32, posY), cast(f32, width), cast(f32, height)}, color);
+    ImageDrawRectangleRec(dst, Rectangle{
+        cast(f32, posX), cast(f32, posY), cast(f32, width), cast(f32, height),
+    }, color);
 }
+
 // Draw rectangle within an image (Vector version)
 void ImageDrawRectangleV(Image* dst, Vector2 position, Vector2 size, Color color) {
     ImageDrawRectangle(dst, cast(i32, position.x), cast(i32, position.y), cast(i32, size.x), cast(i32, size.y), color);
 }
+
 // Draw rectangle within an image
 void ImageDrawRectangleRec(Image* dst, Rectangle rec, Color color) {
     if dst.data == null || dst.width == 0 || dst.height == 0 {
@@ -18307,11 +18210,13 @@ void ImageDrawRectangleRec(Image* dst, Rectangle rec, Color color) {
         memcpy(pSrcPixel + y * dst.width * bytesPerPixel, pSrcPixel, cast(u64, bytesPerRow));
     }
 }
+
 // Draw rectangle lines within an image
 void ImageDrawRectangleLines(Image* dst, i32 posX, i32 posY, i32 width, i32 height, Color color) {
     var rec = Rectangle{cast(f32, posX), cast(f32, posY), cast(f32, width), cast(f32, height)};
     ImageDrawRectangleLinesEx(dst, rec, 1, color);
 }
+
 // Draw rectangle lines within an image with extended parameters
 void ImageDrawRectangleLinesEx(Image* dst, Rectangle rec, i32 thick, Color color) {
     ImageDrawRectangle(dst, cast(i32, rec.x), cast(i32, rec.y), cast(i32, rec.width), thick, color);
@@ -18319,6 +18224,7 @@ void ImageDrawRectangleLinesEx(Image* dst, Rectangle rec, i32 thick, Color color
     ImageDrawRectangle(dst, cast(i32, rec.x + rec.width - cast(f32, thick)), cast(i32, rec.y + cast(f32, thick)), thick, cast(i32, rec.height - cast(f32, thick * 2)), color);
     ImageDrawRectangle(dst, cast(i32, rec.x), cast(i32, rec.y + rec.height - cast(f32, thick)), cast(i32, rec.width), thick, color);
 }
+
 // Draw triangle within an image
 void ImageDrawTriangle(Image* dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color) {
     var xMin = cast(i32, v1.x < v2.x ? v1.x < v3.x ? v1.x : v3.x : v2.x < v3.x ? v2.x : v3.x);
@@ -18373,6 +18279,7 @@ void ImageDrawTriangle(Image* dst, Vector2 v1, Vector2 v2, Vector2 v3, Color col
         w3Row += w3YStep;
     }
 }
+
 // Draw triangle with interpolated colors within an image
 void ImageDrawTriangleGradient(Image* dst, Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3) {
     var xMin = cast(i32, v1.x < v2.x ? v1.x < v3.x ? v1.x : v3.x : v2.x < v3.x ? v2.x : v3.x);
@@ -18436,12 +18343,14 @@ void ImageDrawTriangleGradient(Image* dst, Vector2 v1, Vector2 v2, Vector2 v3, C
         w3Row += w3YStep;
     }
 }
+
 // Draw triangle outline within an image
 void ImageDrawTriangleLines(Image* dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color) {
     ImageDrawLine(dst, cast(i32, v1.x), cast(i32, v1.y), cast(i32, v2.x), cast(i32, v2.y), color);
     ImageDrawLine(dst, cast(i32, v2.x), cast(i32, v2.y), cast(i32, v3.x), cast(i32, v3.y), color);
     ImageDrawLine(dst, cast(i32, v3.x), cast(i32, v3.y), cast(i32, v1.x), cast(i32, v1.y), color);
 }
+
 // Draw a triangle fan defined by points within an image (first vertex is the center)
 void ImageDrawTriangleFan(Image* dst, Vector2* points, i32 pointCount, Color color) {
     if pointCount >= 3 {
@@ -18450,6 +18359,7 @@ void ImageDrawTriangleFan(Image* dst, Vector2* points, i32 pointCount, Color col
         }
     }
 }
+
 // Draw a triangle strip defined by points within an image
 void ImageDrawTriangleStrip(Image* dst, Vector2* points, i32 pointCount, Color color) {
     if pointCount >= 3 {
@@ -18462,6 +18372,7 @@ void ImageDrawTriangleStrip(Image* dst, Vector2* points, i32 pointCount, Color c
         }
     }
 }
+
 // Draw an image (source) within an image (destination)
 // NOTE: Color tint is applied to source image
 void ImageDraw(Image* dst, Image src, Rectangle srcRec, Rectangle dstRec, Color tint) {
@@ -18577,6 +18488,7 @@ void ImageDraw(Image* dst, Image src, Rectangle srcRec, Rectangle dstRec, Color 
         }
     }
 }
+
 // Draw text (default font) within an image (destination)
 void ImageDrawText(Image* dst, u8* text, i32 posX, i32 posY, i32 fontSize, Color color) {
     if GetFontDefault().texture.id == 0 {
@@ -18585,14 +18497,18 @@ void ImageDrawText(Image* dst, u8* text, i32 posX, i32 posY, i32 fontSize, Color
     var position = Vector2{cast(f32, posX), cast(f32, posY)};
     ImageDrawTextEx(dst, GetFontDefault(), text, position, cast(f32, fontSize), 1.0f, color);
 }
+
 // Draw text (custom sprite font) within an image (destination)
 void ImageDrawTextEx(Image* dst, Font font, u8* text, Vector2 position, f32 fontSize, f32 spacing, Color tint) {
     Image imText = ImageTextEx(font, text, fontSize, spacing, tint);
     var srcRec = Rectangle{0.0f, 0.0f, cast(f32, imText.width), cast(f32, imText.height)};
-    var dstRec = Rectangle{position.x, position.y, cast(f32, imText.width), cast(f32, imText.height)};
+    var dstRec = Rectangle{
+        position.x, position.y, cast(f32, imText.width), cast(f32, imText.height),
+    };
     ImageDraw(dst, imText, srcRec, dstRec, Color{255, 255, 255, 255});
     UnloadImage(imText);
 }
+
 //------------------------------------------------------------------------------------
 // Texture loading functions
 //------------------------------------------------------------------------------------
@@ -18606,6 +18522,7 @@ Texture2D LoadTexture(u8* fileName) {
     }
     return texture;
 }
+
 // Load a texture from image data
 // NOTE: image is not unloaded, it must be done manually
 Texture2D LoadTextureFromImage(Image image) {
@@ -18620,6 +18537,7 @@ Texture2D LoadTextureFromImage(Image image) {
     texture.format = image.format;
     return texture;
 }
+
 // Load cubemap from image, multiple image cubemap layouts supported
 TextureCubemap LoadTextureCubemap(Image image, i32 layout) {
     TextureCubemap cubemap;
@@ -18705,7 +18623,9 @@ TextureCubemap LoadTextureCubemap(Image image, i32 layout) {
                 ImageMipmaps(&faces);
             }
             for i32 i = 0; i < 6; i++ {
-                ImageDraw(&faces, mipmapped, faceRecs[i], Rectangle{0.0f, cast(f32, size) * cast(f32, i), cast(f32, size), cast(f32, size)}, Color{255, 255, 255, 255});
+                ImageDraw(&faces, mipmapped, faceRecs[i], Rectangle{
+                    0.0f, cast(f32, size) * cast(f32, i), cast(f32, size), cast(f32, size),
+                }, Color{255, 255, 255, 255});
             }
             UnloadImage(mipmapped);
         }
@@ -18720,6 +18640,7 @@ TextureCubemap LoadTextureCubemap(Image image, i32 layout) {
     }
     return cubemap;
 }
+
 // Load texture for rendering (framebuffer)
 // NOTE: Render texture is loaded by default with RGBA color attachment and depth RenderBuffer
 RenderTexture2D LoadRenderTexture(i32 width, i32 height) {
@@ -18746,6 +18667,7 @@ RenderTexture2D LoadRenderTexture(i32 width, i32 height) {
     }
     return target;
 }
+
 // Check if a texture is valid (loaded in GPU)
 bool IsTextureValid(Texture2D texture) {
     bool result = false;
@@ -18754,12 +18676,14 @@ bool IsTextureValid(Texture2D texture) {
     }
     return result;
 }
+
 // Unload texture from GPU memory (VRAM)
 void UnloadTexture(Texture2D texture) {
     if texture.id > 0 {
         rlUnloadTexture(texture.id);
     }
 }
+
 // Check if a render texture is valid (loaded in GPU)
 bool IsRenderTextureValid(RenderTexture2D target) {
     bool result = false;
@@ -18768,6 +18692,7 @@ bool IsRenderTextureValid(RenderTexture2D target) {
     }
     return result;
 }
+
 // Unload render texture from GPU memory (VRAM)
 void UnloadRenderTexture(RenderTexture2D target) {
     if target.id > 0 {
@@ -18777,12 +18702,14 @@ void UnloadRenderTexture(RenderTexture2D target) {
         rlUnloadFramebuffer(target.id);
     }
 }
+
 // Update GPU texture with new data
 // NOTE 1: pixels data must match texture.format
 // NOTE 2: pixels data must contain at least as many pixels as texture
 void UpdateTexture(Texture2D texture, void* pixels) {
     rlUpdateTexture(texture.id, 0, 0, texture.width, texture.height, texture.format, pixels);
 }
+
 // Update GPU texture rectangle with new data
 // NOTE 1: pixels data must match texture.format
 // NOTE 2: pixels data must contain as many pixels as rec contains
@@ -18790,6 +18717,7 @@ void UpdateTexture(Texture2D texture, void* pixels) {
 void UpdateTextureRec(Texture2D texture, Rectangle rec, void* pixels) {
     rlUpdateTexture(texture.id, cast(i32, rec.x), cast(i32, rec.y), cast(i32, rec.width), cast(i32, rec.height), texture.format, pixels);
 }
+
 //------------------------------------------------------------------------------------
 // Texture configuration functions
 //------------------------------------------------------------------------------------
@@ -18797,86 +18725,89 @@ void UpdateTextureRec(Texture2D texture, Rectangle rec, void* pixels) {
 void GenTextureMipmaps(Texture2D* texture) {
     rlGenTextureMipmaps(texture.id, texture.width, texture.height, texture.format, &texture.mipmaps);
 }
+
 // Set texture scaling filter mode
 void SetTextureFilter(Texture2D texture, i32 filter) {
     switch filter {
         case TEXTURE_FILTER_POINT: {
             {
                 if texture.mipmaps > 1 {
-                    rlTextureParameters(texture.id, 10241, 9984);
-                    rlTextureParameters(texture.id, 10240, 9728);
+                    rlTextureParameters(texture.id, 0x2801, 0x2700);
+                    rlTextureParameters(texture.id, 0x2800, 0x2600);
                 } else {
-                    rlTextureParameters(texture.id, 10241, 9728);
-                    rlTextureParameters(texture.id, 10240, 9728);
+                    rlTextureParameters(texture.id, 0x2801, 0x2600);
+                    rlTextureParameters(texture.id, 0x2800, 0x2600);
                 }
             }
         }
         case TEXTURE_FILTER_BILINEAR: {
             {
                 if texture.mipmaps > 1 {
-                    rlTextureParameters(texture.id, 10241, 9985);
-                    rlTextureParameters(texture.id, 10240, 9729);
+                    rlTextureParameters(texture.id, 0x2801, 0x2701);
+                    rlTextureParameters(texture.id, 0x2800, 0x2601);
                 } else {
-                    rlTextureParameters(texture.id, 10241, 9729);
-                    rlTextureParameters(texture.id, 10240, 9729);
+                    rlTextureParameters(texture.id, 0x2801, 0x2601);
+                    rlTextureParameters(texture.id, 0x2800, 0x2601);
                 }
             }
         }
         case TEXTURE_FILTER_TRILINEAR: {
             {
                 if texture.mipmaps > 1 {
-                    rlTextureParameters(texture.id, 10241, 9987);
-                    rlTextureParameters(texture.id, 10240, 9729);
+                    rlTextureParameters(texture.id, 0x2801, 0x2703);
+                    rlTextureParameters(texture.id, 0x2800, 0x2601);
                 } else {
-                    rlTextureParameters(texture.id, 10241, 9729);
-                    rlTextureParameters(texture.id, 10240, 9729);
+                    rlTextureParameters(texture.id, 0x2801, 0x2601);
+                    rlTextureParameters(texture.id, 0x2800, 0x2601);
                 }
             }
         }
         case TEXTURE_FILTER_ANISOTROPIC_4X: {
-            rlTextureParameters(texture.id, 12288, 4);
+            rlTextureParameters(texture.id, 0x3000, 4);
         }
         case TEXTURE_FILTER_ANISOTROPIC_8X: {
-            rlTextureParameters(texture.id, 12288, 8);
+            rlTextureParameters(texture.id, 0x3000, 8);
         }
         case TEXTURE_FILTER_ANISOTROPIC_16X: {
-            rlTextureParameters(texture.id, 12288, 16);
+            rlTextureParameters(texture.id, 0x3000, 16);
         }
         default: {
         }
     }
 }
+
 // Set texture wrapping mode
 void SetTextureWrap(Texture2D texture, i32 wrap) {
     switch wrap {
         case TEXTURE_WRAP_REPEAT: {
             {
-                rlTextureParameters(texture.id, 10242, 10497);
-                rlTextureParameters(texture.id, 10243, 10497);
+                rlTextureParameters(texture.id, 0x2802, 0x2901);
+                rlTextureParameters(texture.id, 0x2803, 0x2901);
             }
         }
         case TEXTURE_WRAP_CLAMP: {
             {
-                rlTextureParameters(texture.id, 10242, 33071);
-                rlTextureParameters(texture.id, 10243, 33071);
+                rlTextureParameters(texture.id, 0x2802, 0x812F);
+                rlTextureParameters(texture.id, 0x2803, 0x812F);
             }
         }
         case TEXTURE_WRAP_MIRROR_REPEAT: {
             {
-                rlTextureParameters(texture.id, 10242, 33648);
-                rlTextureParameters(texture.id, 10243, 33648);
+                rlTextureParameters(texture.id, 0x2802, 0x8370);
+                rlTextureParameters(texture.id, 0x2803, 0x8370);
             }
         }
         case TEXTURE_WRAP_MIRROR_CLAMP: {
             {
-                rlTextureParameters(texture.id, 10242, 34626);
-                rlTextureParameters(texture.id, 10243, 34626);
+                rlTextureParameters(texture.id, 0x2802, 0x8742);
+                rlTextureParameters(texture.id, 0x2803, 0x8742);
             }
         }
         default: {
         }
     }
 }
+
 //------------------------------------------------------------------------------------
 // Texture drawing functions
 //------------------------------------------------------------------------------------
@@ -18884,23 +18815,29 @@ void SetTextureWrap(Texture2D texture, i32 wrap) {
 void DrawTexture(Texture2D texture, i32 posX, i32 posY, Color tint) {
     DrawTextureEx(texture, Vector2{cast(f32, posX), cast(f32, posY)}, 0.0f, 1.0f, tint);
 }
+
 // Draw a texture with position defined as Vector2
 void DrawTextureV(Texture2D texture, Vector2 position, Color tint) {
     DrawTextureEx(texture, position, 0.0f, 1.0f, tint);
 }
+
 // Draw a texture with extended parameters
 void DrawTextureEx(Texture2D texture, Vector2 position, f32 rotation, f32 scale, Color tint) {
     var source = Rectangle{0.0f, 0.0f, cast(f32, texture.width), cast(f32, texture.height)};
-    var dest = Rectangle{position.x, position.y, cast(f32, texture.width) * scale, cast(f32, texture.height) * scale};
+    var dest = Rectangle{
+        position.x, position.y, cast(f32, texture.width) * scale, cast(f32, texture.height) * scale,
+    };
     var origin = Vector2{0.0f, 0.0f};
     DrawTexturePro(texture, source, dest, origin, rotation, tint);
 }
+
 // Draw a part of a texture (defined by a rectangle)
 void DrawTextureRec(Texture2D texture, Rectangle source, Vector2 position, Color tint) {
     var dest = Rectangle{position.x, position.y, fabsf(source.width), fabsf(source.height)};
     var origin = Vector2{0.0f, 0.0f};
     DrawTexturePro(texture, source, dest, origin, 0.0f, tint);
 }
+
 // Draw a part of a texture (defined by a rectangle) with 'pro' parameters
 // NOTE: origin is relative to destination rectangle size
 void DrawTexturePro(Texture2D texture, Rectangle source, Rectangle dest, Vector2 origin, f32 rotation, Color tint) {
@@ -18949,7 +18886,7 @@ void DrawTexturePro(Texture2D texture, Rectangle source, Rectangle dest, Vector2
             bottomRight.y = y + (dx + dest.width) * sinRotation + (dy + dest.height) * cosRotation;
         }
         rlSetTexture(texture.id);
-        rlBegin(7);
+        rlBegin(0x0007);
         rlColor4ub(tint.r, tint.g, tint.b, tint.a);
         rlNormal3f(0.0f, 0.0f, 1.0f);
         if flipX != 0 {
@@ -18980,6 +18917,7 @@ void DrawTexturePro(Texture2D texture, Rectangle source, Rectangle dest, Vector2
         rlSetTexture(0);
     }
 }
+
 // Draw a texture (or part of it) that stretches or shrinks nicely using n-patch info
 void DrawTextureNPatch(Texture2D texture, NPatchInfo nPatchInfo, Rectangle dest, Vector2 origin, f32 rotation, Color tint) {
     if texture.id > 0 {
@@ -19044,7 +18982,7 @@ void DrawTextureNPatch(Texture2D texture, NPatchInfo nPatchInfo, Rectangle dest,
         rlTranslatef(dest.x, dest.y, 0.0f);
         rlRotatef(rotation, 0.0f, 0.0f, 1.0f);
         rlTranslatef(-origin.x, -origin.y, 0.0f);
-        rlBegin(7);
+        rlBegin(0x0007);
         rlColor4ub(tint.r, tint.g, tint.b, tint.a);
         rlNormal3f(0.0f, 0.0f, 1.0f);
         if nPatchInfo.layout == NPATCH_NINE_PATCH {
@@ -19188,6 +19126,7 @@ void DrawTextureNPatch(Texture2D texture, NPatchInfo nPatchInfo, Rectangle dest,
         rlSetTexture(0);
     }
 }
+
 // Check if two colors are equal
 bool ColorIsEqual(Color col1, Color col2) {
     bool result = false;
@@ -19196,6 +19135,7 @@ bool ColorIsEqual(Color col1, Color col2) {
     }
     return result;
 }
+
 // Get color with alpha applied, alpha goes from 0.0f to 1.0f
 Color Fade(Color color, f32 alpha) {
     Color result = color;
@@ -19207,12 +19147,14 @@ Color Fade(Color color, f32 alpha) {
     result.a = cast(u8, 255.0f * alpha);
     return result;
 }
+
 // Get hexadecimal value for a Color
 i32 ColorToInt(Color color) {
     i32 result = 0;
     result = cast(i32, cast(u32, color.r) << 24 | cast(u32, color.g) << 16 | cast(u32, color.b) << 8 | cast(u32, color.a));
     return result;
 }
+
 // Get color normalized as float [0..1]
 Vector4 ColorNormalize(Color color) {
     noinit Vector4 result;
@@ -19222,6 +19164,7 @@ Vector4 ColorNormalize(Color color) {
     result.w = cast(f32, color.a) / 255.0f;
     return result;
 }
+
 // Get color from normalized values [0..1]
 Color ColorFromNormalized(Vector4 normalized) {
     noinit Color result;
@@ -19231,11 +19174,14 @@ Color ColorFromNormalized(Vector4 normalized) {
     result.a = cast(u8, normalized.w * 255.0f);
     return result;
 }
+
 // Get HSV values for a Color
 // NOTE: Hue is returned as degrees [0..360]
 Vector3 ColorToHSV(Color color) {
     Vector3 hsv;
-    var rgb = Vector3{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f};
+    var rgb = Vector3{
+        cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f,
+    };
     f32 min = 0.0f;
     f32 max = 0.0f;
     f32 delta = 0.0f;
@@ -19272,6 +19218,7 @@ Vector3 ColorToHSV(Color color) {
     }
     return hsv;
 }
+
 // Get a Color from HSV values
 // Implementation reference: https://en.wikipedia.org/wiki/HSL_and_HSV#Alternative_HSV_conversion
 // NOTE: Color->HSV->Color conversion will not yield exactly the same color due to rounding errors
@@ -19299,6 +19246,7 @@ Color ColorFromHSV(f32 hue, f32 saturation, f32 value) {
     color.b = cast(u8, (value - value * saturation * k) * 255.0f);
     return color;
 }
+
 // Get color multiplied with another color
 Color ColorTint(Color color, Color tint) {
     Color result = color;
@@ -19312,6 +19260,7 @@ Color ColorTint(Color color, Color tint) {
     result.a = a;
     return result;
 }
+
 // Get color with brightness correction, brightness factor goes from -1.0f to 1.0f
 Color ColorBrightness(Color color, f32 factor) {
     Color result = color;
@@ -19338,6 +19287,7 @@ Color ColorBrightness(Color color, f32 factor) {
     result.b = cast(u8, blue);
     return result;
 }
+
 // Get color with contrast correction
 // NOTE: Contrast values between -1.0f and 1.0f
 Color ColorContrast(Color color, f32 contrast) {
@@ -19384,6 +19334,7 @@ Color ColorContrast(Color color, f32 contrast) {
     result.b = cast(u8, pB);
     return result;
 }
+
 // Get color with alpha applied, alpha goes from 0.0f to 1.0f
 Color ColorAlpha(Color color, f32 alpha) {
     Color result = color;
@@ -19395,6 +19346,7 @@ Color ColorAlpha(Color color, f32 alpha) {
     result.a = cast(u8, 255.0f * alpha);
     return result;
 }
+
 // Get src alpha-blended into dst color with tint
 Color ColorAlphaBlend(Color dst, Color src, Color tint) {
     var result = Color{255, 255, 255, 255};
@@ -19431,11 +19383,15 @@ Color ColorAlphaBlend(Color dst, Color src, Color tint) {
                 fout.y = (fsrc.y * fsrc.w + fdst.y * fdst.w * (1.0f - fsrc.w)) / fout.w;
                 fout.z = (fsrc.z * fsrc.w + fdst.z * fdst.w * (1.0f - fsrc.w)) / fout.w;
             }
-            result = Color{cast(u8, fout.x * 255.0f), cast(u8, fout.y * 255.0f), cast(u8, fout.z * 255.0f), cast(u8, fout.w * 255.0f)};
+            result = Color{
+                cast(u8, fout.x * 255.0f), cast(u8, fout.y * 255.0f), cast(u8, fout.z * 255.0f),
+                cast(u8, fout.w * 255.0f),
+            };
         }
     }
     return result;
 }
+
 // Get color lerp interpolation between two colors, factor [0.0f..1.0f]
 Color ColorLerp(Color color1, Color color2, f32 factor) {
     Color color;
@@ -19450,15 +19406,17 @@ Color ColorLerp(Color color1, Color color2, f32 factor) {
     color.a = cast(u8, (1.0f - factor) * cast(f32, color1.a) + factor * cast(f32, color2.a));
     return color;
 }
+
 // Get a Color struct from hexadecimal value
 Color GetColor(u32 hexValue) {
     noinit Color color;
-    color.r = cast(u8, hexValue >> 24) & 255;
-    color.g = cast(u8, hexValue >> 16) & 255;
-    color.b = cast(u8, hexValue >> 8) & 255;
-    color.a = cast(u8, hexValue) & 255;
+    color.r = cast(u8, hexValue >> 24) & 0xff;
+    color.g = cast(u8, hexValue >> 16) & 0xff;
+    color.b = cast(u8, hexValue >> 8) & 0xff;
+    color.a = cast(u8, hexValue) & 0xff;
     return color;
 }
+
 // Get color from a pixel from certain format
 Color GetPixelColor(void* srcPtr, i32 format_var) {
     Color color;
@@ -19467,7 +19425,10 @@ Color GetPixelColor(void* srcPtr, i32 format_var) {
             color = Color{cast(u8*, srcPtr)[0], cast(u8*, srcPtr)[0], cast(u8*, srcPtr)[0], 255};
         }
         case PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA: {
-            color = Color{cast(u8*, srcPtr)[0], cast(u8*, srcPtr)[0], cast(u8*, srcPtr)[0], cast(u8*, srcPtr)[1]};
+            color = Color{
+                cast(u8*, srcPtr)[0], cast(u8*, srcPtr)[0], cast(u8*, srcPtr)[0],
+                cast(u8*, srcPtr)[1],
+            };
         }
         case PIXELFORMAT_UNCOMPRESSED_R5G6B5: {
             {
@@ -19494,7 +19455,10 @@ Color GetPixelColor(void* srcPtr, i32 format_var) {
             }
         }
         case PIXELFORMAT_UNCOMPRESSED_R8G8B8A8: {
-            color = Color{cast(u8*, srcPtr)[0], cast(u8*, srcPtr)[1], cast(u8*, srcPtr)[2], cast(u8*, srcPtr)[3]};
+            color = Color{
+                cast(u8*, srcPtr)[0], cast(u8*, srcPtr)[1], cast(u8*, srcPtr)[2],
+                cast(u8*, srcPtr)[3],
+            };
         }
         case PIXELFORMAT_UNCOMPRESSED_R8G8B8: {
             color = Color{cast(u8*, srcPtr)[0], cast(u8*, srcPtr)[1], cast(u8*, srcPtr)[2], 255};
@@ -19552,19 +19516,26 @@ Color GetPixelColor(void* srcPtr, i32 format_var) {
     }
     return color;
 }
+
 // Set pixel color formatted into destination pointer
 void SetPixelColor(void* dstPtr, Color color, i32 format_var) {
     switch format_var {
         case PIXELFORMAT_UNCOMPRESSED_GRAYSCALE: {
             {
-                var coln = Vector3{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f};
+                var coln = Vector3{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f,
+                };
                 var gray = cast(u8, (coln.x * 0.299f + coln.y * 0.587f + coln.z * 0.114f) * 255.0f);
                 cast(u8*, dstPtr)[0] = gray;
             }
         }
         case PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA: {
             {
-                var coln = Vector3{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f};
+                var coln = Vector3{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f,
+                };
                 var gray = cast(u8, (coln.x * 0.299f + coln.y * 0.587f + coln.z * 0.114f) * 255.0f);
                 cast(u8*, dstPtr)[0] = gray;
                 cast(u8*, dstPtr)[1] = color.a;
@@ -19572,7 +19543,10 @@ void SetPixelColor(void* dstPtr, Color color, i32 format_var) {
         }
         case PIXELFORMAT_UNCOMPRESSED_R5G6B5: {
             {
-                var coln = Vector3{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f};
+                var coln = Vector3{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f,
+                };
                 var r = cast(u8, round(coln.x * 31.0f));
                 var g = cast(u8, round(coln.y * 63.0f));
                 var b = cast(u8, round(coln.z * 31.0f));
@@ -19581,7 +19555,10 @@ void SetPixelColor(void* dstPtr, Color color, i32 format_var) {
         }
         case PIXELFORMAT_UNCOMPRESSED_R5G5B5A1: {
             {
-                var coln = Vector4{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f, cast(f32, color.a) / 255.0f};
+                var coln = Vector4{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f, cast(f32, color.a) / 255.0f,
+                };
                 var r = cast(u8, round(coln.x * 31.0f));
                 var g = cast(u8, round(coln.y * 31.0f));
                 var b = cast(u8, round(coln.z * 31.0f));
@@ -19591,7 +19568,10 @@ void SetPixelColor(void* dstPtr, Color color, i32 format_var) {
         }
         case PIXELFORMAT_UNCOMPRESSED_R4G4B4A4: {
             {
-                var coln = Vector4{cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f, cast(f32, color.b) / 255.0f, cast(f32, color.a) / 255.0f};
+                var coln = Vector4{
+                    cast(f32, color.r) / 255.0f, cast(f32, color.g) / 255.0f,
+                    cast(f32, color.b) / 255.0f, cast(f32, color.a) / 255.0f,
+                };
                 var r = cast(u8, round(coln.x * 15.0f));
                 var g = cast(u8, round(coln.y * 15.0f));
                 var b = cast(u8, round(coln.z * 15.0f));
@@ -19618,6 +19598,7 @@ void SetPixelColor(void* dstPtr, Color color, i32 format_var) {
         }
     }
 }
+
 // Get pixel data size in bytes for certain format
 // NOTE: Size can be requested for Image or Texture data
 i32 GetPixelDataSize(i32 width, i32 height, i32 format_var) {
@@ -19677,6 +19658,7 @@ i32 GetPixelDataSize(i32 width, i32 height, i32 format_var) {
     }
     return dataSize;
 }
+
 //----------------------------------------------------------------------------------
 // Module Internal Functions Definition
 //----------------------------------------------------------------------------------
@@ -19685,26 +19667,28 @@ i32 GetPixelDataSize(i32 width, i32 height, i32 format_var) {
 private {
 f32 HalfToFloat(u16 x) {
     f32 result = 0.0f;
-    __anon_raylib_wasm_lib_struct_27 uni;
-    var e = cast(u32, cast(i32, x & 31744) >> 10);
-    var m = cast(u32, cast(i32, x & 1023) << 13);
+    uni_t uni;
+    var e = cast(u32, cast(i32, x & 0x7c00) >> 10);
+    var m = cast(u32, cast(i32, x & 0x03ff) << 13);
     uni.fm = cast(f32, m);
     u32 v = uni.ui >> 23;
-    uni.ui = cast(u32, cast(u32, cast(u32, cast(i32, x & 32768) << 16) | cast(u32, cast(i32, e != 0)) * (e + 112 << 23 | m)) | cast(u32, cast(i32, e == 0) & cast(i32, m != 0)) * (v - 37 << 23 | m << 150 - v & 8380416));
+    uni.ui = cast(u32, cast(u32, cast(u32, cast(i32, x & 0x8000) << 16) | cast(u32, cast(i32, e != 0)) * (e + 112 << 23 | m)) | cast(u32, cast(i32, e == 0) & cast(i32, m != 0)) * (v - 37 << 23 | m << 150 - v & 0x007fe000));
     result = uni.fm;
     return result;
 }
+
 // Convert float to half-float (stored as unsigned short)
 u16 FloatToHalf(f32 x) {
     u16 result = 0;
-    __anon_raylib_wasm_lib_struct_28 uni;
+    uni_t2 uni;
     uni.fm = x;
-    u32 b = uni.ui + 4096;
-    u32 e = (b & 2139095040) >> 23;
-    u32 m = b & 8388607;
-    result = cast(u16, (b & 2147483648) >> 16 | cast(u32, cast(i32, e > 112)) * (e - 112 << 10 & 31744 | m >> 13) | cast(u32, cast(i32, e < 113) & cast(i32, e > 101)) * ((8384512 + m >> 125 - e) + 1 >> 1) | cast(u32, cast(i32, e > 143) * 32767));
+    u32 b = uni.ui + 0x00001000;
+    u32 e = (b & 0x7f800000) >> 23;
+    u32 m = b & 0x007fffff;
+    result = cast(u16, (b & 0x80000000) >> 16 | cast(u32, cast(i32, e > 112)) * (e - 112 << 10 & 0x7c00 | m >> 13) | cast(u32, cast(i32, e < 113) & cast(i32, e > 101)) * ((0x007ff000 + m >> 125 - e) + 1 >> 1) | cast(u32, cast(i32, e > 143) * 0x7fff));
     return result;
 }
+
 // Get pixel data from image as Vector4 array (float normalized)
 Vector4* LoadImageDataNormalized(Image image) {
     var pixels = new(Vector4[image.width * image.height]);
@@ -19852,6 +19836,7 @@ when !(defined(STB_RECT_PACK_VERSION)) {
 //
 when !(defined(STBTT_vmove)) {
 }
+
 //////////////////////////////////////////////////////////////////////////
 //
 // stbtt__buf helpers to parse data from file
@@ -19863,19 +19848,23 @@ stbtt_uint8 stbtt__buf_get8(stbtt__buf* b) {
     }
     return b.data[b.cursor++];
 }
+
 stbtt_uint8 stbtt__buf_peek8(stbtt__buf* b) {
     if b.cursor >= b.size {
         return 0;
     }
     return b.data[b.cursor];
 }
+
 void stbtt__buf_seek(stbtt__buf* b, i32 o) {
     assert(cast(i64, !(o > b.size || o < 0)));
     b.cursor = o > b.size || o < 0 ? b.size : o;
 }
+
 void stbtt__buf_skip(stbtt__buf* b, i32 o) {
     stbtt__buf_seek(b, b.cursor + o);
 }
+
 stbtt_uint32 stbtt__buf_get(stbtt__buf* b, i32 n) {
     stbtt_uint32 v = 0;
     i32 i;
@@ -19885,14 +19874,16 @@ stbtt_uint32 stbtt__buf_get(stbtt__buf* b, i32 n) {
     }
     return v;
 }
+
 stbtt__buf stbtt__new_buf(void* p, u64 size) {
     noinit stbtt__buf r;
-    assert(size < 1073741824);
+    assert(size < 0x40000000);
     r.data = cast(stbtt_uint8*, p);
     r.size = cast(i32, size);
     r.cursor = 0;
     return r;
 }
+
 stbtt__buf stbtt__buf_range(stbtt__buf* b, i32 o, i32 s) {
     stbtt__buf r = stbtt__new_buf(null, 0);
     if o < 0 || s < 0 || o > b.size || s > b.size - o {
@@ -19902,6 +19893,7 @@ stbtt__buf stbtt__buf_range(stbtt__buf* b, i32 o, i32 s) {
     r.size = s;
     return r;
 }
+
 stbtt__buf stbtt__cff_get_index(stbtt__buf* b) {
     i32 count;
     i32 start;
@@ -19916,6 +19908,7 @@ stbtt__buf stbtt__cff_get_index(stbtt__buf* b) {
     }
     return stbtt__buf_range(b, start, b.cursor - start);
 }
+
 stbtt_uint32 stbtt__cff_int(stbtt__buf* b) {
     var b0 = cast(i32, stbtt__buf_get8(b));
     if b0 >= 32 && b0 <= 246 {
@@ -19932,6 +19925,7 @@ stbtt_uint32 stbtt__cff_int(stbtt__buf* b) {
     assert(0);
     return 0;
 }
+
 void stbtt__cff_skip_operand(stbtt__buf* b) {
     i32 v;
     var b0 = cast(i32, stbtt__buf_peek8(b));
@@ -19940,7 +19934,7 @@ void stbtt__cff_skip_operand(stbtt__buf* b) {
         stbtt__buf_skip(b, 1);
         while b.cursor < b.size {
             v = cast(i32, stbtt__buf_get8(b));
-            if (v & 15) == 15 || v >> 4 == 15 {
+            if (v & 0xF) == 0xF || v >> 4 == 0xF {
                 break;
             }
         }
@@ -19948,6 +19942,7 @@ void stbtt__cff_skip_operand(stbtt__buf* b) {
         stbtt__cff_int(b);
     }
 }
+
 stbtt__buf stbtt__dict_get(stbtt__buf* b, i32 key) {
     stbtt__buf_seek(b, 0);
     while b.cursor < b.size {
@@ -19960,7 +19955,7 @@ stbtt__buf stbtt__dict_get(stbtt__buf* b, i32 key) {
         end = b.cursor;
         op = cast(i32, stbtt__buf_get8(b));
         if op == 12 {
-            op = cast(i32, stbtt__buf_get8(b)) | 256;
+            op = cast(i32, stbtt__buf_get8(b)) | 0x100;
         }
         if op == key {
             return stbtt__buf_range(b, start, end - start);
@@ -19968,6 +19963,7 @@ stbtt__buf stbtt__dict_get(stbtt__buf* b, i32 key) {
     }
     return stbtt__buf_range(b, 0, 0);
 }
+
 void stbtt__dict_get_ints(stbtt__buf* b, i32 key, i32 outcount, stbtt_uint32* out) {
     i32 i;
     stbtt__buf operands = stbtt__dict_get(b, key);
@@ -19975,10 +19971,12 @@ void stbtt__dict_get_ints(stbtt__buf* b, i32 key, i32 outcount, stbtt_uint32* ou
         out[i] = stbtt__cff_int(&operands);
     }
 }
+
 i32 stbtt__cff_index_count(stbtt__buf* b) {
     stbtt__buf_seek(b, 0);
     return cast(i32, stbtt__buf_get(b, 2));
 }
+
 stbtt__buf stbtt__cff_index_get(stbtt__buf b, i32 i) {
     i32 count;
     i32 offsize;
@@ -19994,6 +19992,7 @@ stbtt__buf stbtt__cff_index_get(stbtt__buf b, i32 i) {
     end = cast(i32, stbtt__buf_get(&b, offsize));
     return stbtt__buf_range(&b, 2 + (count + 1) * offsize + start, end - start);
 }
+
 //////////////////////////////////////////////////////////////////////////
 //
 // accessors to parse data from file
@@ -20003,15 +20002,19 @@ stbtt__buf stbtt__cff_index_get(stbtt__buf b, i32 i) {
 stbtt_uint16 ttUSHORT(stbtt_uint8* p) {
     return cast(stbtt_uint16, cast(i32, p[0]) * 256 + p[1]);
 }
+
 stbtt_int16 ttSHORT(stbtt_uint8* p) {
     return cast(stbtt_int16, cast(i32, p[0]) * 256 + p[1]);
 }
+
 stbtt_uint32 ttULONG(stbtt_uint8* p) {
     return cast(stbtt_uint32, (cast(i32, p[0]) << 24) + (cast(i32, p[1]) << 16) + (cast(i32, p[2]) << 8) + p[3]);
 }
+
 stbtt_int32 ttLONG(stbtt_uint8* p) {
     return (cast(i32, p[0]) << 24) + (cast(i32, p[1]) << 16) + (cast(i32, p[2]) << 8) + p[3];
 }
+
 i32 stbtt__isfont(stbtt_uint8* font) {
     if font[0] == 49 && font[1] == 0 && font[2] == 0 && font[3] == 0 {
         return 1;
@@ -20030,6 +20033,7 @@ i32 stbtt__isfont(stbtt_uint8* font) {
     }
     return 0;
 }
+
 // @OPTIMIZE: binary search
 stbtt_uint32 stbtt__find_table(stbtt_uint8* data, stbtt_uint32 fontstart, u8* tag) {
     var num_tables = cast(stbtt_int32, ttUSHORT(data + fontstart + 4));
@@ -20043,12 +20047,13 @@ stbtt_uint32 stbtt__find_table(stbtt_uint8* data, stbtt_uint32 fontstart, u8* ta
     }
     return 0;
 }
+
 i32 stbtt_GetFontOffsetForIndex_internal(u8* font_collection, i32 index) {
     if stbtt__isfont(font_collection) != 0 {
         return index == 0 ? 0 : -1;
     }
     if font_collection[0] == cast(u8, "ttcf"[0]) && font_collection[1] == cast(u8, "ttcf"[1]) && font_collection[2] == cast(u8, "ttcf"[2]) && font_collection[3] == cast(u8, "ttcf"[3]) {
-        if ttULONG(font_collection + 4) == 65536 || ttULONG(font_collection + 4) == 131072 {
+        if ttULONG(font_collection + 4) == 0x00010000 || ttULONG(font_collection + 4) == 0x00020000 {
             stbtt_int32 n = ttLONG(font_collection + 8);
             if index >= n {
                 return -1;
@@ -20058,17 +20063,19 @@ i32 stbtt_GetFontOffsetForIndex_internal(u8* font_collection, i32 index) {
     }
     return -1;
 }
+
 i32 stbtt_GetNumberOfFonts_internal(u8* font_collection) {
     if stbtt__isfont(font_collection) != 0 {
         return 1;
     }
     if font_collection[0] == cast(u8, "ttcf"[0]) && font_collection[1] == cast(u8, "ttcf"[1]) && font_collection[2] == cast(u8, "ttcf"[2]) && font_collection[3] == cast(u8, "ttcf"[3]) {
-        if ttULONG(font_collection + 4) == 65536 || ttULONG(font_collection + 4) == 131072 {
+        if ttULONG(font_collection + 4) == 0x00010000 || ttULONG(font_collection + 4) == 0x00020000 {
             return ttLONG(font_collection + 8);
         }
     }
     return 0;
 }
+
 stbtt__buf stbtt__get_subrs(stbtt__buf cff, stbtt__buf fontdict) {
     stbtt_uint32 subrsoff = 0;
     stbtt_uint32[2] private_loc = {0, 0};
@@ -20085,6 +20092,7 @@ stbtt__buf stbtt__get_subrs(stbtt__buf cff, stbtt__buf fontdict) {
     stbtt__buf_seek(&cff, cast(i32, private_loc[1] + subrsoff));
     return stbtt__cff_get_index(&cff);
 }
+
 // since most people won't use this, find this table the first time it's needed
 i32 stbtt__get_svg(stbtt_fontinfo* info) {
     stbtt_uint32 t;
@@ -20099,6 +20107,7 @@ i32 stbtt__get_svg(stbtt_fontinfo* info) {
     }
     return info.svg;
 }
+
 i32 stbtt_InitFont_internal(stbtt_fontinfo* info, u8* data, i32 fontstart) {
     stbtt_uint32 cmap;
     stbtt_uint32 t;
@@ -20147,9 +20156,9 @@ i32 stbtt_InitFont_internal(stbtt_fontinfo* info, u8* data, i32 fontstart) {
         stbtt__cff_get_index(&b);
         info.gsubrs = stbtt__cff_get_index(&b);
         stbtt__dict_get_ints(&topdict, 17, 1, &charstrings);
-        stbtt__dict_get_ints(&topdict, 256 | 6, 1, &cstype);
-        stbtt__dict_get_ints(&topdict, 256 | 36, 1, &fdarrayoff);
-        stbtt__dict_get_ints(&topdict, 256 | 37, 1, &fdselectoff);
+        stbtt__dict_get_ints(&topdict, 0x100 | 6, 1, &cstype);
+        stbtt__dict_get_ints(&topdict, 0x100 | 36, 1, &fdarrayoff);
+        stbtt__dict_get_ints(&topdict, 0x100 | 37, 1, &fdselectoff);
         info.subrs = stbtt__get_subrs(b, topdict);
         if cstype != 2 {
             return 0;
@@ -20172,7 +20181,7 @@ i32 stbtt_InitFont_internal(stbtt_fontinfo* info, u8* data, i32 fontstart) {
     if t != 0 {
         info.numGlyphs = cast(i32, ttUSHORT(data + t + 4));
     } else {
-        info.numGlyphs = 65535;
+        info.numGlyphs = 0xffff;
     }
     info.svg = -1;
     numTables = cast(i32, ttUSHORT(data + cmap + 2));
@@ -20198,6 +20207,7 @@ i32 stbtt_InitFont_internal(stbtt_fontinfo* info, u8* data, i32 fontstart) {
     info.indexToLocFormat = cast(i32, ttUSHORT(data + info.head + 50));
     return 1;
 }
+
 i32 stbtt_FindGlyphIndex(stbtt_fontinfo* info, i32 unicode_codepoint) {
     stbtt_uint8* data = info.data;
     var index_map = cast(stbtt_uint32, info.index_map);
@@ -20225,7 +20235,7 @@ i32 stbtt_FindGlyphIndex(stbtt_fontinfo* info, i32 unicode_codepoint) {
         var rangeShift = cast(stbtt_uint16, cast(i32, ttUSHORT(data + index_map + 12)) >> 1);
         stbtt_uint32 endCount = index_map + 14;
         stbtt_uint32 search = endCount;
-        if unicode_codepoint > 65535 {
+        if unicode_codepoint > 0xffff {
             return 0;
         }
         if unicode_codepoint >= cast(i32, ttUSHORT(data + search + rangeShift * 2)) {
@@ -20286,9 +20296,11 @@ i32 stbtt_FindGlyphIndex(stbtt_fontinfo* info, i32 unicode_codepoint) {
     assert(0);
     return 0;
 }
+
 i32 stbtt_GetCodepointShape(stbtt_fontinfo* info, i32 unicode_codepoint, stbtt_vertex** vertices) {
     return stbtt_GetGlyphShape(info, stbtt_FindGlyphIndex(info, unicode_codepoint), vertices);
 }
+
 void stbtt_setvertex(stbtt_vertex* v, stbtt_uint8 type, stbtt_int32 x, stbtt_int32 y, stbtt_int32 cx, stbtt_int32 cy) {
     v.type = type;
     v.x = cast(stbtt_int16, x);
@@ -20296,6 +20308,7 @@ void stbtt_setvertex(stbtt_vertex* v, stbtt_uint8 type, stbtt_int32 x, stbtt_int
     v.cx = cast(stbtt_int16, cx);
     v.cy = cast(stbtt_int16, cy);
 }
+
 i32 stbtt__GetGlyfOffset(stbtt_fontinfo* info, i32 glyph_index) {
     i32 g1;
     i32 g2;
@@ -20316,6 +20329,7 @@ i32 stbtt__GetGlyfOffset(stbtt_fontinfo* info, i32 glyph_index) {
     return g1 == g2 ? -1 : g1;
 }
 }
+
 private {
 i32 stbtt_GetGlyphBox(stbtt_fontinfo* info, i32 glyph_index, i32* x0, i32* y0, i32* x1, i32* y1) {
     if info.cff.size != 0 {
@@ -20340,9 +20354,11 @@ i32 stbtt_GetGlyphBox(stbtt_fontinfo* info, i32 glyph_index, i32* x0, i32* y0, i
     }
     return 1;
 }
+
 i32 stbtt_GetCodepointBox(stbtt_fontinfo* info, i32 codepoint, i32* x0, i32* y0, i32* x1, i32* y1) {
     return stbtt_GetGlyphBox(info, stbtt_FindGlyphIndex(info, codepoint), x0, y0, x1, y1);
 }
+
 i32 stbtt_IsGlyphEmpty(stbtt_fontinfo* info, i32 glyph_index) {
     stbtt_int16 numberOfContours;
     i32 g;
@@ -20356,6 +20372,7 @@ i32 stbtt_IsGlyphEmpty(stbtt_fontinfo* info, i32 glyph_index) {
     numberOfContours = ttSHORT(info.data + g);
     return numberOfContours == 0;
 }
+
 i32 stbtt__close_shape(stbtt_vertex* vertices, i32 num_vertices, i32 was_off, i32 start_off, stbtt_int32 sx, stbtt_int32 sy, stbtt_int32 scx, stbtt_int32 scy, stbtt_int32 cx, stbtt_int32 cy) {
     if start_off != 0 {
         if was_off != 0 {
@@ -20371,6 +20388,7 @@ i32 stbtt__close_shape(stbtt_vertex* vertices, i32 num_vertices, i32 was_off, i3
     }
     return num_vertices;
 }
+
 i32 stbtt__GetGlyphShapeTT(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex** pvertices) {
     stbtt_int16 numberOfContours;
     stbtt_uint8* endPtsOfContours;
@@ -20522,7 +20540,7 @@ i32 stbtt__GetGlyphShapeTT(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex**
             i32 i;
             stbtt_vertex* comp_verts = null;
             stbtt_vertex* tmp = null;
-            f32[6] mtx = {1, 0, 0, 1, 0, 0};
+            f32[6] mtx = {1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f};
             f32 m;
             f32 n;
             flags = cast(u16, ttSHORT(comp));
@@ -20617,6 +20635,7 @@ i32 stbtt__GetGlyphShapeTT(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex**
     *pvertices = vertices;
     return num_vertices;
 }
+
 void stbtt__track_vertex(stbtt__csctx* c, stbtt_int32 x, stbtt_int32 y) {
     if x > c.max_x || !c.started {
         c.max_x = x;
@@ -20632,6 +20651,7 @@ void stbtt__track_vertex(stbtt__csctx* c, stbtt_int32 x, stbtt_int32 y) {
     }
     c.started = 1;
 }
+
 void stbtt__csctx_v(stbtt__csctx* c, stbtt_uint8 type, stbtt_int32 x, stbtt_int32 y, stbtt_int32 cx, stbtt_int32 cy, stbtt_int32 cx1, stbtt_int32 cy1) {
     if c.bounds != 0 {
         stbtt__track_vertex(c, x, y);
@@ -20646,11 +20666,13 @@ void stbtt__csctx_v(stbtt__csctx* c, stbtt_uint8 type, stbtt_int32 x, stbtt_int3
     }
     c.num_vertices++;
 }
+
 void stbtt__csctx_close_shape(stbtt__csctx* ctx) {
     if ctx.first_x != ctx.x || ctx.first_y != ctx.y {
         stbtt__csctx_v(ctx, cast(stbtt_uint8, STBTT_vline), cast(i32, ctx.first_x), cast(i32, ctx.first_y), 0, 0, 0, 0);
     }
 }
+
 void stbtt__csctx_rmove_to(stbtt__csctx* ctx, f32 dx, f32 dy) {
     stbtt__csctx_close_shape(ctx);
     ctx.x = ctx.x + dx;
@@ -20659,11 +20681,13 @@ void stbtt__csctx_rmove_to(stbtt__csctx* ctx, f32 dx, f32 dy) {
     ctx.first_y = ctx.y;
     stbtt__csctx_v(ctx, cast(stbtt_uint8, STBTT_vmove), cast(i32, ctx.x), cast(i32, ctx.y), 0, 0, 0, 0);
 }
+
 void stbtt__csctx_rline_to(stbtt__csctx* ctx, f32 dx, f32 dy) {
     ctx.x += dx;
     ctx.y += dy;
     stbtt__csctx_v(ctx, cast(stbtt_uint8, STBTT_vline), cast(i32, ctx.x), cast(i32, ctx.y), 0, 0, 0, 0);
 }
+
 void stbtt__csctx_rccurve_to(stbtt__csctx* ctx, f32 dx1, f32 dy1, f32 dx2, f32 dy2, f32 dx3, f32 dy3) {
     f32 cx1 = ctx.x + dx1;
     f32 cy1 = ctx.y + dy1;
@@ -20673,6 +20697,7 @@ void stbtt__csctx_rccurve_to(stbtt__csctx* ctx, f32 dx1, f32 dy1, f32 dx2, f32 d
     ctx.y = cy2 + dy3;
     stbtt__csctx_v(ctx, cast(stbtt_uint8, STBTT_vcubic), cast(i32, ctx.x), cast(i32, ctx.y), cast(i32, cx1), cast(i32, cy1), cast(i32, cx2), cast(i32, cy2));
 }
+
 stbtt__buf stbtt__get_subr(stbtt__buf idx, i32 n) {
     i32 count = stbtt__cff_index_count(&idx);
     i32 bias = 107;
@@ -20687,6 +20712,7 @@ stbtt__buf stbtt__get_subr(stbtt__buf idx, i32 n) {
     }
     return stbtt__cff_index_get(idx, n);
 }
+
 stbtt__buf stbtt__cid_get_glyph_subrs(stbtt_fontinfo* info, i32 glyph_index) {
     stbtt__buf fdselect = info.fdselect;
     i32 nranges;
@@ -20719,6 +20745,7 @@ stbtt__buf stbtt__cid_get_glyph_subrs(stbtt_fontinfo* info, i32 glyph_index) {
     }
     return stbtt__get_subrs(info.cff, stbtt__cff_index_get(info.fontdicts, fdselector));
 }
+
 i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c) {
     i32 in_header = 1;
     i32 maskbits = 0;
@@ -20740,38 +20767,38 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
         clear_stack = 1;
         b0 = cast(i32, stbtt__buf_get8(&b));
         switch b0 {
-            case 19, 20: {
+            case 0x13, 0x14: {
                 if in_header != 0 {
                     maskbits += sp / 2;
                 }
                 in_header = 0;
                 stbtt__buf_skip(&b, (maskbits + 7) / 8);
             }
-            case 1, 3, 18, 23: {
+            case 0x01, 0x03, 0x12, 0x17: {
                 maskbits += sp / 2;
             }
-            case 21: {
+            case 0x15: {
                 in_header = 0;
                 if sp < 2 {
                     return 0;
                 }
                 stbtt__csctx_rmove_to(c, s[sp - 2], s[sp - 1]);
             }
-            case 4: {
+            case 0x04: {
                 in_header = 0;
                 if sp < 1 {
                     return 0;
                 }
                 stbtt__csctx_rmove_to(c, 0.0f, s[sp - 1]);
             }
-            case 22: {
+            case 0x16: {
                 in_header = 0;
                 if sp < 1 {
                     return 0;
                 }
                 stbtt__csctx_rmove_to(c, s[sp - 1], 0.0f);
             }
-            case 5: {
+            case 0x05: {
                 if sp < 2 {
                     return 0;
                 }
@@ -20779,13 +20806,13 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
                     stbtt__csctx_rline_to(c, s[i], s[i + 1]);
                 }
             }
-            case 7: {
+            case 0x07: {
                 if sp < 1 {
                     return 0;
                 }
                 // TODO transminc: goto vlineto
             }
-            case 6: {
+            case 0x06: {
                 if sp < 1 {
                     return 0;
                 }
@@ -20803,13 +20830,13 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
                     i++;
                 }
             }
-            case 31: {
+            case 0x1F: {
                 if sp < 4 {
                     return 0;
                 }
                 // TODO transminc: goto hvcurveto
             }
-            case 30: {
+            case 0x1E: {
                 if sp < 4 {
                     return 0;
                 }
@@ -20827,7 +20854,7 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
                     i += 4;
                 }
             }
-            case 8: {
+            case 0x08: {
                 if sp < 6 {
                     return 0;
                 }
@@ -20835,7 +20862,7 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
                     stbtt__csctx_rccurve_to(c, s[i], s[i + 1], s[i + 2], s[i + 3], s[i + 4], s[i + 5]);
                 }
             }
-            case 24: {
+            case 0x18: {
                 if sp < 8 {
                     return 0;
                 }
@@ -20847,7 +20874,7 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
                 }
                 stbtt__csctx_rline_to(c, s[i], s[i + 1]);
             }
-            case 25: {
+            case 0x19: {
                 if sp < 8 {
                     return 0;
                 }
@@ -20859,7 +20886,7 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
                 }
                 stbtt__csctx_rccurve_to(c, s[i], s[i + 1], s[i + 2], s[i + 3], s[i + 4], s[i + 5]);
             }
-            case 26, 27: {
+            case 0x1A, 0x1B: {
                 if sp < 4 {
                     return 0;
                 }
@@ -20869,7 +20896,7 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
                     i++;
                 }
                 for ; i + 3 < sp; i += 4 {
-                    if b0 == 27 {
+                    if b0 == 0x1B {
                         stbtt__csctx_rccurve_to(c, s[i], f, s[i + 1], s[i + 2], s[i + 3], 0.0f);
                     } else {
                         stbtt__csctx_rccurve_to(c, f, s[i], s[i + 1], s[i + 2], 0.0f, s[i + 3]);
@@ -20877,7 +20904,7 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
                     f = cast(f32, 0.0);
                 }
             }
-            case 10: {
+            case 0x0A: {
                 if has_subrs == 0 {
                     if info.fdselect.size != 0 {
                         subrs = stbtt__cid_get_glyph_subrs(info, glyph_index);
@@ -20886,7 +20913,7 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
                 }
                 fallthrough;
             }
-            case 29: {
+            case 0x1D: {
                 if sp < 1 {
                     return 0;
                 }
@@ -20895,25 +20922,25 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
                     return 0;
                 }
                 subr_stack[subr_stack_height++] = b;
-                b = stbtt__get_subr(b0 == 10 ? subrs : info.gsubrs, v);
+                b = stbtt__get_subr(b0 == 0x0A ? subrs : info.gsubrs, v);
                 if b.size == 0 {
                     return 0;
                 }
                 b.cursor = 0;
                 clear_stack = 0;
             }
-            case 11: {
+            case 0x0B: {
                 if subr_stack_height <= 0 {
                     return 0;
                 }
                 b = subr_stack[--subr_stack_height];
                 clear_stack = 0;
             }
-            case 14: {
+            case 0x0E: {
                 stbtt__csctx_close_shape(c);
                 return 1;
             }
-            case 12: {
+            case 0x0C: {
                 {
                     f32 dx1;
                     f32 dx2;
@@ -20931,7 +20958,7 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
                     f32 dy;
                     var b1 = cast(i32, stbtt__buf_get8(&b));
                     switch b1 {
-                        case 34: {
+                        case 0x22: {
                             if sp < 7 {
                                 return 0;
                             }
@@ -20945,7 +20972,7 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
                             stbtt__csctx_rccurve_to(c, dx1, 0.0f, dx2, dy2, dx3, 0.0f);
                             stbtt__csctx_rccurve_to(c, dx4, 0.0f, dx5, -dy2, dx6, 0.0f);
                         }
-                        case 35: {
+                        case 0x23: {
                             if sp < 13 {
                                 return 0;
                             }
@@ -20964,7 +20991,7 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
                             stbtt__csctx_rccurve_to(c, dx1, dy1, dx2, dy2, dx3, dy3);
                             stbtt__csctx_rccurve_to(c, dx4, dy4, dx5, dy5, dx6, dy6);
                         }
-                        case 36: {
+                        case 0x24: {
                             if sp < 9 {
                                 return 0;
                             }
@@ -20980,7 +21007,7 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
                             stbtt__csctx_rccurve_to(c, dx1, dy1, dx2, dy2, dx3, 0.0f);
                             stbtt__csctx_rccurve_to(c, dx4, 0.0f, dx5, dy5, dx6, -(dy1 + dy2 + dy5));
                         }
-                        case 37: {
+                        case 0x25: {
                             if sp < 11 {
                                 return 0;
                             }
@@ -21035,6 +21062,7 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
     }
     return 0;
 }
+
 i32 stbtt__GetGlyphShapeT2(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex** pvertices) {
     var count_ctx = stbtt__csctx{1, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0, null, 0};
     var output_ctx = stbtt__csctx{0, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0, null, 0};
@@ -21050,6 +21078,7 @@ i32 stbtt__GetGlyphShapeT2(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex**
     *pvertices = null;
     return 0;
 }
+
 i32 stbtt__GetGlyphInfoT2(stbtt_fontinfo* info, i32 glyph_index, i32* x0, i32* y0, i32* x1, i32* y1) {
     var c = stbtt__csctx{1, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0, 0, 0, null, 0};
     i32 r = stbtt__run_charstring(info, glyph_index, &c);
@@ -21067,6 +21096,7 @@ i32 stbtt__GetGlyphInfoT2(stbtt_fontinfo* info, i32 glyph_index, i32* x0, i32* y
     }
     return r != 0 ? c.num_vertices : 0;
 }
+
 i32 stbtt_GetGlyphShape(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex** pvertices) {
     if info.cff.size == 0 {
         return stbtt__GetGlyphShapeTT(info, glyph_index, pvertices);
@@ -21074,6 +21104,7 @@ i32 stbtt_GetGlyphShape(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex** pv
         return stbtt__GetGlyphShapeT2(info, glyph_index, pvertices);
     }
 }
+
 void stbtt_GetGlyphHMetrics(stbtt_fontinfo* info, i32 glyph_index, i32* advanceWidth, i32* leftSideBearing) {
     stbtt_uint16 numOfLongHorMetrics = ttUSHORT(info.data + info.hhea + 34);
     if glyph_index < cast(i32, numOfLongHorMetrics) {
@@ -21092,6 +21123,7 @@ void stbtt_GetGlyphHMetrics(stbtt_fontinfo* info, i32 glyph_index, i32* advanceW
         }
     }
 }
+
 i32 stbtt_GetKerningTableLength(stbtt_fontinfo* info) {
     stbtt_uint8* data = info.data + info.kern;
     if info.kern == 0 {
@@ -21105,6 +21137,7 @@ i32 stbtt_GetKerningTableLength(stbtt_fontinfo* info) {
     }
     return cast(i32, ttUSHORT(data + 10));
 }
+
 i32 stbtt_GetKerningTable(stbtt_fontinfo* info, stbtt_kerningentry* table, i32 table_length) {
     stbtt_uint8* data = info.data + info.kern;
     i32 k;
@@ -21129,6 +21162,7 @@ i32 stbtt_GetKerningTable(stbtt_fontinfo* info, stbtt_kerningentry* table, i32 t
     }
     return length;
 }
+
 i32 stbtt__GetGlyphKernInfoAdvance(stbtt_fontinfo* info, i32 glyph1, i32 glyph2) {
     stbtt_uint8* data = info.data + info.kern;
     stbtt_uint32 needle;
@@ -21161,6 +21195,7 @@ i32 stbtt__GetGlyphKernInfoAdvance(stbtt_fontinfo* info, i32 glyph1, i32 glyph2)
     }
     return 0;
 }
+
 stbtt_int32 stbtt__GetCoverageIndex(stbtt_uint8* coverageTable, i32 glyph) {
     stbtt_uint16 coverageFormat = ttUSHORT(coverageTable);
     switch coverageFormat {
@@ -21223,6 +21258,7 @@ stbtt_int32 stbtt__GetCoverageIndex(stbtt_uint8* coverageTable, i32 glyph) {
     }
     return -1;
 }
+
 stbtt_int32 stbtt__GetGlyphClass(stbtt_uint8* classDefTable, i32 glyph) {
     stbtt_uint16 classDefFormat = ttUSHORT(classDefTable);
     switch classDefFormat {
@@ -21270,6 +21306,7 @@ stbtt_int32 stbtt__GetGlyphClass(stbtt_uint8* classDefTable, i32 glyph) {
     }
     return 0;
 }
+
 // Define to STBTT_assert(x) if you want to break on unimplemented formats.
 stbtt_int32 stbtt__GetGlyphGPOSInfoAdvance(stbtt_fontinfo* info, i32 glyph1, i32 glyph2) {
     stbtt_uint16 lookupListOffset;
@@ -21392,6 +21429,7 @@ stbtt_int32 stbtt__GetGlyphGPOSInfoAdvance(stbtt_fontinfo* info, i32 glyph1, i32
     }
     return 0;
 }
+
 i32 stbtt_GetGlyphKernAdvance(stbtt_fontinfo* info, i32 g1, i32 g2) {
     i32 xAdvance = 0;
     if info.gpos != 0 {
@@ -21401,15 +21439,18 @@ i32 stbtt_GetGlyphKernAdvance(stbtt_fontinfo* info, i32 g1, i32 g2) {
     }
     return xAdvance;
 }
+
 i32 stbtt_GetCodepointKernAdvance(stbtt_fontinfo* info, i32 ch1, i32 ch2) {
     if !info.kern && !info.gpos {
         return 0;
     }
     return stbtt_GetGlyphKernAdvance(info, stbtt_FindGlyphIndex(info, ch1), stbtt_FindGlyphIndex(info, ch2));
 }
+
 void stbtt_GetCodepointHMetrics(stbtt_fontinfo* info, i32 codepoint, i32* advanceWidth, i32* leftSideBearing) {
     stbtt_GetGlyphHMetrics(info, stbtt_FindGlyphIndex(info, codepoint), advanceWidth, leftSideBearing);
 }
+
 void stbtt_GetFontVMetrics(stbtt_fontinfo* info, i32* ascent, i32* descent, i32* lineGap) {
     if ascent != null {
         *ascent = ttSHORT(info.data + info.hhea + 4);
@@ -21421,6 +21462,7 @@ void stbtt_GetFontVMetrics(stbtt_fontinfo* info, i32* ascent, i32* descent, i32*
         *lineGap = ttSHORT(info.data + info.hhea + 8);
     }
 }
+
 i32 stbtt_GetFontVMetricsOS2(stbtt_fontinfo* info, i32* typoAscent, i32* typoDescent, i32* typoLineGap) {
     var tab = cast(i32, stbtt__find_table(info.data, cast(stbtt_uint32, info.fontstart), "OS/2"));
     if tab == 0 {
@@ -21437,24 +21479,29 @@ i32 stbtt_GetFontVMetricsOS2(stbtt_fontinfo* info, i32* typoAscent, i32* typoDes
     }
     return 1;
 }
+
 void stbtt_GetFontBoundingBox(stbtt_fontinfo* info, i32* x0, i32* y0, i32* x1, i32* y1) {
     *x0 = ttSHORT(info.data + info.head + 36);
     *y0 = ttSHORT(info.data + info.head + 38);
     *x1 = ttSHORT(info.data + info.head + 40);
     *y1 = ttSHORT(info.data + info.head + 42);
 }
+
 f32 stbtt_ScaleForPixelHeight(stbtt_fontinfo* info, f32 height) {
     i32 fheight = ttSHORT(info.data + info.hhea + 4) - ttSHORT(info.data + info.hhea + 6);
     return height / cast(f32, fheight);
 }
+
 f32 stbtt_ScaleForMappingEmToPixels(stbtt_fontinfo* info, f32 pixels) {
     var unitsPerEm = cast(i32, ttUSHORT(info.data + info.head + 18));
     return pixels / cast(f32, unitsPerEm);
 }
+
 void stbtt_FreeShape(stbtt_fontinfo* info, stbtt_vertex* v) {
     ignore info.userdata;
     free(v);
 }
+
 stbtt_uint8* stbtt_FindSVGDoc(stbtt_fontinfo* info, i32 gl) {
     i32 i;
     stbtt_uint8* data = info.data;
@@ -21469,6 +21516,7 @@ stbtt_uint8* stbtt_FindSVGDoc(stbtt_fontinfo* info, i32 gl) {
     }
     return null;
 }
+
 i32 stbtt_GetGlyphSVG(stbtt_fontinfo* info, i32 gl, u8** svg) {
     stbtt_uint8* data = info.data;
     stbtt_uint8* svg_doc;
@@ -21483,9 +21531,11 @@ i32 stbtt_GetGlyphSVG(stbtt_fontinfo* info, i32 gl, u8** svg) {
         return 0;
     }
 }
+
 i32 stbtt_GetCodepointSVG(stbtt_fontinfo* info, i32 unicode_codepoint, u8** svg) {
     return stbtt_GetGlyphSVG(info, stbtt_FindGlyphIndex(info, unicode_codepoint), svg);
 }
+
 //////////////////////////////////////////////////////////////////////////////
 //
 // antialiasing software rasterizer
@@ -21523,15 +21573,19 @@ void stbtt_GetGlyphBitmapBoxSubpixel(stbtt_fontinfo* font, i32 glyph, f32 scale_
         }
     }
 }
+
 void stbtt_GetGlyphBitmapBox(stbtt_fontinfo* font, i32 glyph, f32 scale_x, f32 scale_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
     stbtt_GetGlyphBitmapBoxSubpixel(font, glyph, scale_x, scale_y, 0.0f, 0.0f, ix0, iy0, ix1, iy1);
 }
+
 void stbtt_GetCodepointBitmapBoxSubpixel(stbtt_fontinfo* font, i32 codepoint, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
     stbtt_GetGlyphBitmapBoxSubpixel(font, stbtt_FindGlyphIndex(font, codepoint), scale_x, scale_y, shift_x, shift_y, ix0, iy0, ix1, iy1);
 }
+
 void stbtt_GetCodepointBitmapBox(stbtt_fontinfo* font, i32 codepoint, f32 scale_x, f32 scale_y, i32* ix0, i32* iy0, i32* ix1, i32* iy1) {
     stbtt_GetCodepointBitmapBoxSubpixel(font, codepoint, scale_x, scale_y, 0.0f, 0.0f, ix0, iy0, ix1, iy1);
 }
+
 void* stbtt__hheap_alloc(stbtt__hheap* hh, u64 size, void* userdata) {
     if hh.first_free != null {
         void* p = hh.first_free;
@@ -21553,10 +21607,12 @@ void* stbtt__hheap_alloc(stbtt__hheap* hh, u64 size, void* userdata) {
         return cast(u8*, hh.head) + sizeof(stbtt__hheap_chunk) + size * cast(u64, hh.num_remaining_in_head_chunk);
     }
 }
+
 void stbtt__hheap_free(stbtt__hheap* hh, void* p) {
     *cast(void**, p) = hh.first_free;
     hh.first_free = p;
 }
+
 void stbtt__hheap_cleanup(stbtt__hheap* hh, void* userdata) {
     stbtt__hheap_chunk* c = hh.head;
     while c != null {
@@ -21566,6 +21622,7 @@ void stbtt__hheap_cleanup(stbtt__hheap* hh, void* userdata) {
         c = n;
     }
 }
+
 stbtt__active_edge* stbtt__new_active(stbtt__hheap* hh, stbtt__edge* e, i32 off_x, f32 start_point, void* userdata) {
     var z = cast(stbtt__active_edge*, stbtt__hheap_alloc(hh, cast(u64, sizeof(stbtt__active_edge)), userdata));
     f32 dxdy = (e.x1 - e.x0) / (e.y1 - e.y0);
@@ -21583,6 +21640,7 @@ stbtt__active_edge* stbtt__new_active(stbtt__hheap* hh, stbtt__edge* e, i32 off_
     z.next = null;
     return z;
 }
+
 // the edge passed in here does not cross the vertical line at x or the vertical line at x+1
 // (i.e. it has already been clipped to those)
 void stbtt__handle_clipped_edge(f32* scanline, i32 x, stbtt__active_edge* e, f32 x0, f32 y0, f32 x1, f32 y1) {
@@ -21624,17 +21682,21 @@ void stbtt__handle_clipped_edge(f32* scanline, i32 x, stbtt__active_edge* e, f32
         scanline[x] += e.direction * (y1 - y0) * (1.0f - (x0 - cast(f32, x) + (x1 - cast(f32, x))) / 2.0f);
     }
 }
+
 f32 stbtt__sized_trapezoid_area(f32 height, f32 top_width, f32 bottom_width) {
     assert(top_width >= 0.0f);
     assert(bottom_width >= 0.0f);
     return (top_width + bottom_width) / 2.0f * height;
 }
+
 f32 stbtt__position_trapezoid_area(f32 height, f32 tx0, f32 tx1, f32 bx0, f32 bx1) {
     return stbtt__sized_trapezoid_area(height, tx1 - tx0, bx1 - bx0);
 }
+
 f32 stbtt__sized_triangle_area(f32 height, f32 width) {
     return height * width / 2.0f;
 }
+
 void stbtt__fill_active_edges_new(f32* scanline, f32* scanline_fill, i32 len, stbtt__active_edge* e, f32 y_top) {
     f32 y_bottom = y_top + 1.0f;
     while e != null {
@@ -21771,6 +21833,7 @@ void stbtt__fill_active_edges_new(f32* scanline, f32* scanline_fill, i32 len, st
         e = e.next;
     }
 }
+
 // directly AA rasterize edges w/o supersampling
 void stbtt__rasterize_sorted_edges(stbtt__bitmap* result, stbtt__edge* e, i32 n, i32 vsubsample, i32 off_x, i32 off_y, void* userdata) {
     stbtt__hheap hh;
@@ -21857,6 +21920,7 @@ void stbtt__rasterize_sorted_edges(stbtt__bitmap* result, stbtt__edge* e, i32 n,
         free(scanline);
     }
 }
+
 void stbtt__sort_edges_ins_sort(stbtt__edge* p, i32 n) {
     i32 i;
     i32 j;
@@ -21878,6 +21942,7 @@ void stbtt__sort_edges_ins_sort(stbtt__edge* p, i32 n) {
         }
     }
 }
+
 void stbtt__sort_edges_quicksort(stbtt__edge* p, i32 n) {
     while n > 12 {
         noinit stbtt__edge t;
@@ -21933,10 +21998,12 @@ void stbtt__sort_edges_quicksort(stbtt__edge* p, i32 n) {
         }
     }
 }
+
 void stbtt__sort_edges(stbtt__edge* p, i32 n) {
     stbtt__sort_edges_quicksort(p, n);
     stbtt__sort_edges_ins_sort(p, n);
 }
+
 void stbtt__rasterize(stbtt__bitmap* result, stbtt__point* pts, i32* wcount, i32 windings, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 off_x, i32 off_y, i32 invert, void* userdata) {
     f32 y_scale_inv = invert != 0 ? -scale_y : scale_y;
     stbtt__edge* e;
@@ -21985,6 +22052,7 @@ void stbtt__rasterize(stbtt__bitmap* result, stbtt__point* pts, i32* wcount, i32
     ignore userdata;
     free(e);
 }
+
 void stbtt__add_point(stbtt__point* points, i32 n, f32 x, f32 y) {
     if points == null {
         return;
@@ -21992,6 +22060,7 @@ void stbtt__add_point(stbtt__point* points, i32 n, f32 x, f32 y) {
     points[n].x = x;
     points[n].y = y;
 }
+
 // tessellate until threshold p is happy... @TODO warped to compensate for non-linear stretching
 i32 stbtt__tesselate_curve(stbtt__point* points, i32* num_points, f32 x0, f32 y0, f32 x1, f32 y1, f32 x2, f32 y2, f32 objspace_flatness_squared, i32 n) {
     f32 mx = (x0 + 2.0f * x1 + x2) / 4.0f;
@@ -22010,6 +22079,7 @@ i32 stbtt__tesselate_curve(stbtt__point* points, i32* num_points, f32 x0, f32 y0
     }
     return 1;
 }
+
 void stbtt__tesselate_cubic(stbtt__point* points, i32* num_points, f32 x0, f32 y0, f32 x1, f32 y1, f32 x2, f32 y2, f32 x3, f32 y3, f32 objspace_flatness_squared, i32 n) {
     f32 dx0 = x1 - x0;
     f32 dy0 = y1 - y0;
@@ -22045,6 +22115,7 @@ void stbtt__tesselate_cubic(stbtt__point* points, i32* num_points, f32 x0, f32 y
         *num_points = *num_points + 1;
     }
 }
+
 // returns number of contours
 stbtt__point* stbtt_FlattenCurves(stbtt_vertex* vertices, i32 num_verts, f32 objspace_flatness, i32** contour_lengths, i32* num_contours, void* userdata) {
     stbtt__point* points = null;
@@ -22120,6 +22191,7 @@ stbtt__point* stbtt_FlattenCurves(stbtt_vertex* vertices, i32 num_verts, f32 obj
     }
     return points;
 }
+
 void stbtt_Rasterize(stbtt__bitmap* result, f32 flatness_in_pixels, stbtt_vertex* vertices, i32 num_verts, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 x_off, i32 y_off, i32 invert, void* userdata) {
     f32 scale = scale_x > scale_y ? scale_y : scale_x;
     i32 winding_count = 0;
@@ -22133,10 +22205,12 @@ void stbtt_Rasterize(stbtt__bitmap* result, f32 flatness_in_pixels, stbtt_vertex
         free(windings);
     }
 }
+
 void stbtt_FreeBitmap(u8* bitmap, void* userdata) {
     ignore userdata;
     free(bitmap);
 }
+
 u8* stbtt_GetGlyphBitmapSubpixel(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 glyph, i32* width, i32* height, i32* xoff, i32* yoff) {
     i32 ix0;
     i32 iy0;
@@ -22177,16 +22251,18 @@ u8* stbtt_GetGlyphBitmapSubpixel(stbtt_fontinfo* info, f32 scale_x, f32 scale_y,
         gbm.pixels = cast(u8*, alloc(cast(i64, gbm.w * gbm.h)));
         if gbm.pixels != null {
             gbm.stride = gbm.w;
-            stbtt_Rasterize(&gbm, 0.35000000000000003f, vertices, num_verts, scale_x, scale_y, shift_x, shift_y, ix0, iy0, 1, info.userdata);
+            stbtt_Rasterize(&gbm, 0.35f, vertices, num_verts, scale_x, scale_y, shift_x, shift_y, ix0, iy0, 1, info.userdata);
         }
     }
     ignore info.userdata;
     free(vertices);
     return gbm.pixels;
 }
+
 u8* stbtt_GetGlyphBitmap(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, i32 glyph, i32* width, i32* height, i32* xoff, i32* yoff) {
     return stbtt_GetGlyphBitmapSubpixel(info, scale_x, scale_y, 0.0f, 0.0f, glyph, width, height, xoff, yoff);
 }
+
 void stbtt_MakeGlyphBitmapSubpixel(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 glyph) {
     i32 ix0;
     i32 iy0;
@@ -22199,29 +22275,36 @@ void stbtt_MakeGlyphBitmapSubpixel(stbtt_fontinfo* info, u8* output, i32 out_w, 
     gbm.h = out_h;
     gbm.stride = out_stride;
     if gbm.w && gbm.h {
-        stbtt_Rasterize(&gbm, 0.35000000000000003f, vertices, num_verts, scale_x, scale_y, shift_x, shift_y, ix0, iy0, 1, info.userdata);
+        stbtt_Rasterize(&gbm, 0.35f, vertices, num_verts, scale_x, scale_y, shift_x, shift_y, ix0, iy0, 1, info.userdata);
     }
     ignore info.userdata;
     free(vertices);
 }
+
 void stbtt_MakeGlyphBitmap(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, i32 glyph) {
     stbtt_MakeGlyphBitmapSubpixel(info, output, out_w, out_h, out_stride, scale_x, scale_y, 0.0f, 0.0f, glyph);
 }
+
 u8* stbtt_GetCodepointBitmapSubpixel(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 codepoint, i32* width, i32* height, i32* xoff, i32* yoff) {
     return stbtt_GetGlyphBitmapSubpixel(info, scale_x, scale_y, shift_x, shift_y, stbtt_FindGlyphIndex(info, codepoint), width, height, xoff, yoff);
 }
+
 void stbtt_MakeCodepointBitmapSubpixelPrefilter(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 oversample_x, i32 oversample_y, f32* sub_x, f32* sub_y, i32 codepoint) {
     stbtt_MakeGlyphBitmapSubpixelPrefilter(info, output, out_w, out_h, out_stride, scale_x, scale_y, shift_x, shift_y, oversample_x, oversample_y, sub_x, sub_y, stbtt_FindGlyphIndex(info, codepoint));
 }
+
 void stbtt_MakeCodepointBitmapSubpixel(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 codepoint) {
     stbtt_MakeGlyphBitmapSubpixel(info, output, out_w, out_h, out_stride, scale_x, scale_y, shift_x, shift_y, stbtt_FindGlyphIndex(info, codepoint));
 }
+
 u8* stbtt_GetCodepointBitmap(stbtt_fontinfo* info, f32 scale_x, f32 scale_y, i32 codepoint, i32* width, i32* height, i32* xoff, i32* yoff) {
     return stbtt_GetCodepointBitmapSubpixel(info, scale_x, scale_y, 0.0f, 0.0f, codepoint, width, height, xoff, yoff);
 }
+
 void stbtt_MakeCodepointBitmap(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, i32 codepoint) {
     stbtt_MakeCodepointBitmapSubpixel(info, output, out_w, out_h, out_stride, scale_x, scale_y, 0.0f, 0.0f, codepoint);
 }
+
 //////////////////////////////////////////////////////////////////////////////
 //
 // bitmap baking
@@ -22281,6 +22364,7 @@ i32 stbtt_BakeFontBitmap_internal(u8* data, i32 offset, f32 pixel_height, u8* pi
     }
     return bottom_y;
 }
+
 void stbtt_GetBakedQuad(stbtt_bakedchar* chardata, i32 pw, i32 ph, i32 char_index, f32* xpos, f32* ypos, stbtt_aligned_quad* q, i32 opengl_fillrule) {
     var d3d_bias = cast(f32, opengl_fillrule != 0 ? 0.0f : -0.5f);
     f32 ipw = 1.0f / cast(f32, pw);
@@ -22304,6 +22388,7 @@ void stbtt_GetBakedQuad(stbtt_bakedchar* chardata, i32 pw, i32 ph, i32 char_inde
 // rectangle packing replacement routines if you don't have stb_rect_pack.h
 //
 when !(defined(STB_RECT_PACK_VERSION)) {
+
 private {
 void stbrp_init_target(stbrp_context* con, i32 pw, i32 ph, stbrp_node* nodes, i32 num_nodes) {
     con.width = pw;
@@ -22314,6 +22399,7 @@ void stbrp_init_target(stbrp_context* con, i32 pw, i32 ph, stbrp_node* nodes, i3
     ignore sizeof(nodes);
     ignore sizeof(num_nodes);
 }
+
 void stbrp_pack_rects(stbrp_context* con, stbrp_rect* rects, i32 num_rects) {
     i32 i;
     for i = 0; i < num_rects; ++i {
@@ -22338,6 +22424,7 @@ void stbrp_pack_rects(stbrp_context* con, stbrp_rect* rects, i32 num_rects) {
 }
 }
 }
+
 //////////////////////////////////////////////////////////////////////////////
 //
 // bitmap baking
@@ -22379,12 +22466,14 @@ i32 stbtt_PackBegin(stbtt_pack_context* spc, u8* pixels, i32 pw, i32 ph, i32 str
     }
     return 1;
 }
+
 void stbtt_PackEnd(stbtt_pack_context* spc) {
     ignore spc.user_allocator_context;
     free(spc.nodes);
     ignore spc.user_allocator_context;
     free(spc.pack_info);
 }
+
 void stbtt_PackSetOversampling(stbtt_pack_context* spc, u32 h_oversample, u32 v_oversample) {
     assert(h_oversample <= 8);
     assert(v_oversample <= 8);
@@ -22395,9 +22484,11 @@ void stbtt_PackSetOversampling(stbtt_pack_context* spc, u32 h_oversample, u32 v_
         spc.v_oversample = v_oversample;
     }
 }
+
 void stbtt_PackSetSkipMissingCodepoints(stbtt_pack_context* spc, i32 skip) {
     spc.skip_missing = skip;
 }
+
 void stbtt__h_prefilter(u8* pixels, i32 w, i32 h, i32 stride_in_bytes, u32 kernel_width) {
     noinit u8[8] buffer;
     var safe_w = cast(i32, cast(u32, w) - kernel_width);
@@ -22453,6 +22544,7 @@ void stbtt__h_prefilter(u8* pixels, i32 w, i32 h, i32 stride_in_bytes, u32 kerne
         pixels += stride_in_bytes;
     }
 }
+
 void stbtt__v_prefilter(u8* pixels, i32 w, i32 h, i32 stride_in_bytes, u32 kernel_width) {
     noinit u8[8] buffer;
     var safe_h = cast(i32, cast(u32, h) - kernel_width);
@@ -22508,12 +22600,14 @@ void stbtt__v_prefilter(u8* pixels, i32 w, i32 h, i32 stride_in_bytes, u32 kerne
         pixels += 1;
     }
 }
+
 f32 stbtt__oversample_shift(i32 oversample) {
     if oversample == 0 {
         return 0.0f;
     }
     return cast(f32, -(oversample - 1)) / (2.0f * cast(f32, oversample));
 }
+
 // rects array must be big enough to accommodate all characters in the given ranges
 i32 stbtt_PackFontRangesGatherRects(stbtt_pack_context* spc, stbtt_fontinfo* info, stbtt_pack_range* ranges, i32 num_ranges, stbrp_rect* rects) {
     i32 i;
@@ -22549,6 +22643,7 @@ i32 stbtt_PackFontRangesGatherRects(stbtt_pack_context* spc, stbtt_fontinfo* inf
     }
     return k;
 }
+
 void stbtt_MakeGlyphBitmapSubpixelPrefilter(stbtt_fontinfo* info, u8* output, i32 out_w, i32 out_h, i32 out_stride, f32 scale_x, f32 scale_y, f32 shift_x, f32 shift_y, i32 prefilter_x, i32 prefilter_y, f32* sub_x, f32* sub_y, i32 glyph) {
     stbtt_MakeGlyphBitmapSubpixel(info, output, out_w - (prefilter_x - 1), out_h - (prefilter_y - 1), out_stride, scale_x, scale_y, shift_x, shift_y, glyph);
     if prefilter_x > 1 {
@@ -22560,6 +22655,7 @@ void stbtt_MakeGlyphBitmapSubpixelPrefilter(stbtt_fontinfo* info, u8* output, i3
     *sub_x = stbtt__oversample_shift(prefilter_x);
     *sub_y = stbtt__oversample_shift(prefilter_y);
 }
+
 // rects array must be big enough to accommodate all characters in the given ranges
 i32 stbtt_PackFontRangesRenderIntoRects(stbtt_pack_context* spc, stbtt_fontinfo* info, stbtt_pack_range* ranges, i32 num_ranges, stbrp_rect* rects) {
     i32 i;
@@ -22635,9 +22731,11 @@ i32 stbtt_PackFontRangesRenderIntoRects(stbtt_pack_context* spc, stbtt_fontinfo*
     spc.v_oversample = cast(u32, old_v_over);
     return return_value;
 }
+
 void stbtt_PackFontRangesPackRects(stbtt_pack_context* spc, stbrp_rect* rects, i32 num_rects) {
     stbrp_pack_rects(cast(stbrp_context*, spc.pack_info), rects, num_rects);
 }
+
 i32 stbtt_PackFontRanges(stbtt_pack_context* spc, u8* fontdata, i32 font_index, stbtt_pack_range* ranges, i32 num_ranges) {
     noinit stbtt_fontinfo info;
     i32 i;
@@ -22671,6 +22769,7 @@ i32 stbtt_PackFontRanges(stbtt_pack_context* spc, u8* fontdata, i32 font_index, 
     free(rects);
     return return_value;
 }
+
 i32 stbtt_PackFontRange(stbtt_pack_context* spc, u8* fontdata, i32 font_index, f32 font_size, i32 first_unicode_codepoint_in_range, i32 num_chars_in_range, stbtt_packedchar* chardata_for_range) {
     noinit stbtt_pack_range range;
     range.first_unicode_codepoint_in_range = first_unicode_codepoint_in_range;
@@ -22680,6 +22779,7 @@ i32 stbtt_PackFontRange(stbtt_pack_context* spc, u8* fontdata, i32 font_index, f
     range.font_size = font_size;
     return stbtt_PackFontRanges(spc, fontdata, font_index, &range, 1);
 }
+
 void stbtt_GetScaledFontVMetrics(u8* fontdata, i32 index, f32 size, f32* ascent, f32* descent, f32* lineGap) {
     i32 i_ascent;
     i32 i_descent;
@@ -22693,6 +22793,7 @@ void stbtt_GetScaledFontVMetrics(u8* fontdata, i32 index, f32 size, f32* ascent,
     *descent = cast(f32, i_descent) * scale;
     *lineGap = cast(f32, i_lineGap) * scale;
 }
+
 void stbtt_GetPackedQuad(stbtt_packedchar* chardata, i32 pw, i32 ph, i32 char_index, f32* xpos, f32* ypos, stbtt_aligned_quad* q, i32 align_to_integer) {
     f32 ipw = 1.0f / cast(f32, pw);
     f32 iph = 1.0f / cast(f32, ph);
@@ -22716,6 +22817,7 @@ void stbtt_GetPackedQuad(stbtt_packedchar* chardata, i32 pw, i32 ph, i32 char_in
     q.t1 = cast(f32, b.y1) * iph;
     *xpos += b.xadvance;
 }
+
 //////////////////////////////////////////////////////////////////////////////
 //
 // sdf computation
@@ -22782,13 +22884,15 @@ i32 stbtt__ray_intersect_bezier(f32* orig, f32* ray, f32* q0, f32* q1, f32* q2, 
         }
     }
 }
+
 i32 equal(f32* a, f32* b) {
     return a[0] == b[0] && a[1] == b[1];
 }
+
 i32 stbtt__compute_crossings_x(f32 x, f32 y, i32 nverts, stbtt_vertex* verts) {
     i32 i;
     noinit f32[2] orig;
-    f32[2] ray = {1, 0};
+    f32[2] ray = {1.0f, 0.0f};
     f32 y_frac;
     i32 winding = 0;
     y_frac = cast(f32, fmod(y, 1.0f));
@@ -22862,6 +22966,7 @@ i32 stbtt__compute_crossings_x(f32 x, f32 y, i32 nverts, stbtt_vertex* verts) {
     }
     return winding;
 }
+
 f32 stbtt__cuberoot(f32 x) {
     if x < 0.0f {
         return -cast(f32, pow(-x, 1.0f / 3.0f));
@@ -22869,6 +22974,7 @@ f32 stbtt__cuberoot(f32 x) {
         return cast(f32, pow(x, 1.0f / 3.0f));
     }
 }
+
 // x^3 + a*x^2 + b*x + c = 0
 i32 stbtt__solve_cubic(f32 a, f32 b, f32 c, f32* r) {
     f32 s = -a / 3.0f;
@@ -22888,13 +22994,14 @@ i32 stbtt__solve_cubic(f32 a, f32 b, f32 c, f32* r) {
         var u = cast(f32, sqrt(-p / 3.0f));
         f32 v = cast(f32, acos(-sqrt(-27.0f / p3) * q / 2.0)) / 3.0f;
         var m = cast(f32, cos(v));
-        f32 n = cast(f32, cos(v - 3.141592 / 2.0)) * 1.732050808f;
+        f32 n = cast(f32, cos(v - 3.141592 / 2.0)) * 1.7320508079999999f;
         r[0] = s + u * 2.0f * m;
         r[1] = s - u * (m + n);
         r[2] = s - u * (m - n);
         return 3;
     }
 }
+
 u8* stbtt_GetGlyphSDF(stbtt_fontinfo* info, f32 scale, i32 glyph, i32 padding, u8 onedge_value, f32 pixel_dist_scale, i32* width, i32* height, i32* xoff, i32* yoff) {
     f32 scale_x = scale;
     f32 scale_y = scale;
@@ -23112,13 +23219,16 @@ u8* stbtt_GetGlyphSDF(stbtt_fontinfo* info, f32 scale, i32 glyph, i32 padding, u
     }
     return data;
 }
+
 u8* stbtt_GetCodepointSDF(stbtt_fontinfo* info, f32 scale, i32 codepoint, i32 padding, u8 onedge_value, f32 pixel_dist_scale, i32* width, i32* height, i32* xoff, i32* yoff) {
     return stbtt_GetGlyphSDF(info, scale, stbtt_FindGlyphIndex(info, codepoint), padding, onedge_value, pixel_dist_scale, width, height, xoff, yoff);
 }
+
 void stbtt_FreeSDF(u8* bitmap, void* userdata) {
     ignore userdata;
     free(bitmap);
 }
+
 //////////////////////////////////////////////////////////////////////////////
 //
 // font name matching -- recommended not to use this
@@ -23128,57 +23238,57 @@ stbtt_int32 stbtt__CompareUTF8toUTF16_bigendian_prefix(stbtt_uint8* s1, stbtt_in
     stbtt_int32 i = 0;
     while len2 != 0 {
         var ch = cast(stbtt_uint16, cast(i32, s2[0]) * 256 + s2[1]);
-        if ch < 128 {
+        if ch < 0x80 {
             if i >= len1 {
                 return -1;
             }
             if s1[i++] != ch {
                 return -1;
             }
-        } else if ch < 2048 {
+        } else if ch < 0x800 {
             if i + 1 >= len1 {
                 return -1;
             }
-            if cast(i32, s1[i++]) != 192 + (cast(i32, ch) >> 6) {
+            if cast(i32, s1[i++]) != 0xc0 + (cast(i32, ch) >> 6) {
                 return -1;
             }
-            if s1[i++] != 128 + (ch & 63) {
+            if s1[i++] != 0x80 + (ch & 0x3f) {
                 return -1;
             }
-        } else if ch >= 55296 && ch < 56320 {
+        } else if ch >= 0xd800 && ch < 0xdc00 {
             stbtt_uint32 c;
             var ch2 = cast(stbtt_uint16, cast(i32, s2[2]) * 256 + s2[3]);
             if i + 3 >= len1 {
                 return -1;
             }
-            c = (ch - 55296 << 10) + (ch2 - 56320) + 65536;
-            if s1[i++] != 240 + (c >> 18) {
+            c = (ch - 0xd800 << 10) + (ch2 - 0xdc00) + 0x10000;
+            if s1[i++] != 0xf0 + (c >> 18) {
                 return -1;
             }
-            if s1[i++] != 128 + (c >> 12 & 63) {
+            if s1[i++] != 0x80 + (c >> 12 & 0x3f) {
                 return -1;
             }
-            if s1[i++] != 128 + (c >> 6 & 63) {
+            if s1[i++] != 0x80 + (c >> 6 & 0x3f) {
                 return -1;
             }
-            if s1[i++] != 128 + (c & 63) {
+            if s1[i++] != 0x80 + (c & 0x3f) {
                 return -1;
             }
             s2 += 2;
             len2 -= 2;
-        } else if ch >= 56320 && ch < 57344 {
+        } else if ch >= 0xdc00 && ch < 0xe000 {
             return -1;
         } else {
             if i + 2 >= len1 {
                 return -1;
             }
-            if cast(i32, s1[i++]) != 224 + (cast(i32, ch) >> 12) {
+            if cast(i32, s1[i++]) != 0xe0 + (cast(i32, ch) >> 12) {
                 return -1;
             }
-            if cast(i32, s1[i++]) != 128 + (cast(i32, ch) >> 6 & 63) {
+            if cast(i32, s1[i++]) != 0x80 + (cast(i32, ch) >> 6 & 0x3f) {
                 return -1;
             }
-            if s1[i++] != 128 + (ch & 63) {
+            if s1[i++] != 0x80 + (ch & 0x3f) {
                 return -1;
             }
         }
@@ -23187,9 +23297,11 @@ stbtt_int32 stbtt__CompareUTF8toUTF16_bigendian_prefix(stbtt_uint8* s1, stbtt_in
     }
     return i;
 }
+
 i32 stbtt_CompareUTF8toUTF16_bigendian_internal(u8* s1, i32 len1, u8* s2, i32 len2) {
     return len1 == stbtt__CompareUTF8toUTF16_bigendian_prefix(cast(stbtt_uint8*, s1), len1, cast(stbtt_uint8*, s2), len2);
 }
+
 // returns results in whatever encoding you request... but note that 2-byte encodings
 // will be BIG-ENDIAN... use stbtt_CompareUTF8toUTF16_bigendian() to compare
 u8* stbtt_GetFontNameString(stbtt_fontinfo* font, i32* length, i32 platformID, i32 encodingID, i32 languageID, i32 nameID) {
@@ -23213,6 +23325,7 @@ u8* stbtt_GetFontNameString(stbtt_fontinfo* font, i32* length, i32 platformID, i
     }
     return null;
 }
+
 i32 stbtt__matchpair(stbtt_uint8* fc, stbtt_uint32 nm, stbtt_uint8* name, stbtt_int32 nlen, stbtt_int32 target_id, stbtt_int32 next_id) {
     stbtt_int32 i;
     var count = cast(stbtt_int32, ttUSHORT(fc + nm + 2));
@@ -23253,6 +23366,7 @@ i32 stbtt__matchpair(stbtt_uint8* fc, stbtt_uint32 nm, stbtt_uint8* name, stbtt_
     }
     return 0;
 }
+
 i32 stbtt__matches(stbtt_uint8* fc, stbtt_uint32 offset, stbtt_uint8* name, stbtt_int32 flags) {
     var nlen = cast(stbtt_int32, strlen(cast(u8*, name)));
     stbtt_uint32 nm;
@@ -23293,6 +23407,7 @@ i32 stbtt__matches(stbtt_uint8* fc, stbtt_uint32 offset, stbtt_uint8* name, stbt
     }
     return 0;
 }
+
 i32 stbtt_FindMatchingFont_internal(u8* font_collection, u8* name_utf8, stbtt_int32 flags) {
     stbtt_int32 i;
     for i = 0; true; ++i {
@@ -23305,135 +23420,36 @@ i32 stbtt_FindMatchingFont_internal(u8* font_collection, u8* name_utf8, stbtt_in
         }
     }
 }
+
 i32 stbtt_BakeFontBitmap(u8* data, i32 offset, f32 pixel_height, u8* pixels, i32 pw, i32 ph, i32 first_char, i32 num_chars, stbtt_bakedchar* chardata) {
     return stbtt_BakeFontBitmap_internal(data, offset, pixel_height, pixels, pw, ph, first_char, num_chars, chardata);
 }
+
 i32 stbtt_GetFontOffsetForIndex(u8* data, i32 index) {
     return stbtt_GetFontOffsetForIndex_internal(data, index);
 }
+
 i32 stbtt_GetNumberOfFonts(u8* data) {
     return stbtt_GetNumberOfFonts_internal(data);
 }
+
 i32 stbtt_InitFont(stbtt_fontinfo* info, u8* data, i32 offset) {
     return stbtt_InitFont_internal(info, data, offset);
 }
+
 i32 stbtt_FindMatchingFont(u8* fontdata, u8* name, i32 flags) {
     return stbtt_FindMatchingFont_internal(fontdata, name, flags);
 }
+
 i32 stbtt_CompareUTF8toUTF16_bigendian(u8* s1, i32 len1, u8* s2, i32 len2) {
     return stbtt_CompareUTF8toUTF16_bigendian_internal(s1, len1, s2, len2);
 }
 }
-// FULL VERSION HISTORY
-//
-//   1.25 (2021-07-11) many fixes
-//   1.24 (2020-02-05) fix warning
-//   1.23 (2020-02-02) query SVG data for glyphs; query whole kerning table (but only kern not GPOS)
-//   1.22 (2019-08-11) minimize missing-glyph duplication; fix kerning if both 'GPOS' and 'kern' are defined
-//   1.21 (2019-02-25) fix warning
-//   1.20 (2019-02-07) PackFontRange skips missing codepoints; GetScaleFontVMetrics()
-//   1.19 (2018-02-11) OpenType GPOS kerning (horizontal only), STBTT_fmod
-//   1.18 (2018-01-29) add missing function
-//   1.17 (2017-07-23) make more arguments const; doc fix
-//   1.16 (2017-07-12) SDF support
-//   1.15 (2017-03-03) make more arguments const
-//   1.14 (2017-01-16) num-fonts-in-TTC function
-//   1.13 (2017-01-02) support OpenType fonts, certain Apple fonts
-//   1.12 (2016-10-25) suppress warnings about casting away const with -Wcast-qual
-//   1.11 (2016-04-02) fix unused-variable warning
-//   1.10 (2016-04-02) allow user-defined fabs() replacement
-//                     fix memory leak if fontsize=0.0
-//                     fix warning from duplicate typedef
-//   1.09 (2016-01-16) warning fix; avoid crash on outofmem; use alloc userdata for PackFontRanges
-//   1.08 (2015-09-13) document stbtt_Rasterize(); fixes for vertical & horizontal edges
-//   1.07 (2015-08-01) allow PackFontRanges to accept arrays of sparse codepoints;
-//                     allow PackFontRanges to pack and render in separate phases;
-//                     fix stbtt_GetFontOFfsetForIndex (never worked for non-0 input?);
-//                     fixed an assert() bug in the new rasterizer
-//                     replace assert() with STBTT_assert() in new rasterizer
-//   1.06 (2015-07-14) performance improvements (~35% faster on x86 and x64 on test machine)
-//                     also more precise AA rasterizer, except if shapes overlap
-//                     remove need for STBTT_sort
-//   1.05 (2015-04-15) fix misplaced definitions for STBTT_STATIC
-//   1.04 (2015-04-15) typo in example
-//   1.03 (2015-04-12) STBTT_STATIC, fix memory leak in new packing, various fixes
-//   1.02 (2014-12-10) fix various warnings & compile issues w/ stb_rect_pack, C++
-//   1.01 (2014-12-08) fix subpixel position when oversampling to exactly match
-//                        non-oversampled; STBTT_POINT_SIZE for packed case only
-//   1.00 (2014-12-06) add new PackBegin etc. API, w/ support for oversampling
-//   0.99 (2014-09-18) fix multiple bugs with subpixel rendering (ryg)
-//   0.9  (2014-08-07) support certain mac/iOS fonts without an MS platformID
-//   0.8b (2014-07-07) fix a warning
-//   0.8  (2014-05-25) fix a few more warnings
-//   0.7  (2013-09-25) bugfix: subpixel glyph bug fixed in 0.5 had come back
-//   0.6c (2012-07-24) improve documentation
-//   0.6b (2012-07-20) fix a few more warnings
-//   0.6  (2012-07-17) fix warnings; added stbtt_ScaleForMappingEmToPixels,
-//                        stbtt_GetFontBoundingBox, stbtt_IsGlyphEmpty
-//   0.5  (2011-12-09) bugfixes:
-//                        subpixel glyph renderer computed wrong bounding box
-//                        first vertex of shape can be off-curve (FreeSans)
-//   0.4b (2011-12-03) fixed an error in the font baking example
-//   0.4  (2011-12-01) kerning, subpixel rendering (tor)
-//                    bugfixes for:
-//                        codepoint-to-glyph conversion using table fmt=12
-//                        codepoint-to-glyph conversion using table fmt=4
-//                        stbtt_GetBakedQuad with non-square texture (Zer)
-//                    updated Hello World! sample to use kerning and subpixel
-//                    fixed some warnings
-//   0.3  (2009-06-24) cmap fmt=12, compound shapes (MM)
-//                    userdata, malloc-from-userdata, non-zero fill (stb)
-//   0.2  (2009-03-11) Fix unsigned/signed char warnings
-//   0.1  (2009-03-09) First public release
-//
-/*
-------------------------------------------------------------------------------
-This software is available under 2 licenses -- choose whichever you prefer.
-------------------------------------------------------------------------------
-ALTERNATIVE A - MIT License
-Copyright (c) 2017 Sean Barrett
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-------------------------------------------------------------------------------
-ALTERNATIVE B - Public Domain (www.unlicense.org)
-This is free and unencumbered software released into the public domain.
-Anyone is free to copy, modify, publish, use, compile, sell, or distribute this
-software, either in source code form or as a compiled binary, for any purpose,
-commercial or non-commercial, and by any means.
-In jurisdictions that recognize copyright laws, the author or authors of this
-software dedicate any and all copyright interest in the software to the public
-domain. We make this dedication for the benefit of the public at large and to
-the detriment of our heirs and successors. We intend this dedication to be an
-overt act of relinquishment in perpetuity of all present and future rights to
-this software under copyright law.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-------------------------------------------------------------------------------
-*/
 // Required for: ttf font data reading
 //----------------------------------------------------------------------------------
 // Defines and Macros
 //----------------------------------------------------------------------------------
 // TextFormat(), TextSubtext(), TextToUpper(), TextToLower(), TextToPascal(), TextSplit()
-when !(defined(FONT_ATLAS_CORNER_REC_SIZE)) {
-}
 //----------------------------------------------------------------------------------
 // Types and Structures Definition
 //----------------------------------------------------------------------------------
@@ -23443,9 +23459,12 @@ when !(defined(FONT_ATLAS_CORNER_REC_SIZE)) {
 //----------------------------------------------------------------------------------
 // Default font provided by raylib
 // NOTE: Default font is loaded on InitWindow() and disposed on CloseWindow() [module: core]
-private { Font defaultFont; }
+private {
+Font defaultFont;
 // Text vertical line spacing in pixels (between lines)
-private { i32 textLineSpacing = 2; }
+i32 textLineSpacing = 2;
+}
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition
 //----------------------------------------------------------------------------------
@@ -23456,21 +23475,111 @@ void LoadFontDefault() {
     }
     defaultFont.glyphCount = 224;
     defaultFont.glyphPadding = 0;
-    u32[512] defaultFontData = {0, 0, 0, 0, 2097184, 110592, 0, 0, 2398692640, 133632, 2109636608, 528348255, 1244394144, 139594014, 1092763648, 268702800, 774447136, 136448018, 1092755456, 268702800, 284762144, 1056573516, 2099384380, 276690910, 3902873632, 136448050, 86116352, 272958480, 2762207232, 139593778, 86115328, 272958480, 3807977504, 133214, 2101215873, 276689951, 2097152, 2147594240, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3221229502, 4227325967, 1606385277, 5291752, 1141377186, 169095144, 1350632069, 5283912, 1239689378, 169093160, 1082196612, 4759624, 268570558, 167242671, 3634314884, 4694095, 165972002, 169093793, 1350632068, 4759624, 67643426, 169095072, 1350632069, 5284424, 36798, 4227080225, 1602322045, 131112168, 32768, 4064, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 786816, 3753853570, 201062383, 1116013829, 4719807, 1352745670, 138417192, 1116022021, 11012256, 1352746666, 138417192, 1116022021, 528528, 1604405906, 138672104, 2121868549, 532616, 1084314242, 138543400, 1082467465, 540804, 1084318338, 138543658, 1082467409, 557186, 3233759874, 4165202991, 2122710049, 1040777407, 0, 4, 0, 786816, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 67109890, 1095245824, 0, 2048, 67109892, 1090527292, 0, 2048, 4158619120, 1363931013, 3204181950, 72432623, 339821824, 1229596805, 2726963370, 72419360, 4097918448, 1196042397, 2726963370, 72420320, 339821840, 1229596804, 2726963370, 43059712, 4158619120, 3511299973, 3204180138, 18840544, 0, 4196356, 537395200, 0, 0, 6295428, 537395200, 0, 0, 0, 0, 0, 2885681152, 3841, 0, 0, 603979776, 3841, 0, 100663296, 603979776, 3841, 0, 152076288, 620374178, 3841, 0, 20840448, 574760234, 3922, 0, 59408384, 606216746, 3881, 0, 17465344, 605168938, 3841, 0, 17465344, 620488894, 3841, 0, 247365632, 2885812224, 3841, 0, 294912, 253952, 3840, 0, 32768, 0, 0, 0, 0, 0, 56, 2219030542, 2112003, 46047360, 4026531872, 3293716618, 69217026, 4160917794, 133169211, 3830134926, 35666434, 136219164, 68282666, 4097969120, 19169794, 3893625876, 97584314, 3888363648, 8993290, 675024412, 72354050, 3292528768, 4489218, 3894445090, 72351746, 2151677952, 85983234, 138317312, 68157442, 2151678944, 117440578, 4160783360, 133169155, 2151677952, 67108898, 0, 0, 2151677952, 67108866, 0, 0, 0, 0, 8390402, 407412930, 2214658048, 43125025, 17049154, 20769, 1107443583, 2691074, 4022342690, 2130574327, 4024410377, 62634999, 675548946, 1116015124, 541098249, 17895440, 675546120, 1116015124, 541098367, 17895440, 4022829572, 2130574327, 3889135881, 17895923, 676374834, 1116015124, 541106441, 17895440, 676378688, 1116015124, 4024418169, 62634999, 2072608, 0, 4096, 0, 8304, 0, 0, 0, 0, 0, 0, 0, 134359040, 74371, 37947394, 16842753, 2214859900, 536871236, 2147779588, 8535816, 3753853572, 2114189295, 338186401, 8458, 1352746628, 1384780840, 338186401, 66036090, 1352747678, 1381110824, 338186401, 34086730, 1352749700, 1243747368, 4096282785, 66036043, 1352753796, 1246893096, 69750945, 36217210, 3753853564, 2123102191, 4159692735, 66043147, 0, 67108864, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 2098440, 8651776, 289767714, 82448, 5325460, 1363281920, 547498644, 5285128, 2097152, 0, 327680, 134217728, 4277923774, 4226793211, 4226519316, 16510910, 545392672, 2317918730, 2317914388, 1049241762, 4277923774, 4226792971, 2317914388, 9054370, 579479714, 136348168, 2317914388, 143272098, 4277923774, 4226793211, 4197421332, 16510910, 0, 64, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 2162944, 4, 0, 0, 340820480, 5122, 0, 0, 16, 32, 0, 0, 2726963390, 8744, 0, 0, 2726963370, 8936, 0, 0, 2726963370, 8872, 0, 0, 2726963370, 8936, 0, 0, 3204181950, 15919, 0, 0, 4, 8232, 0, 0, 2147483648, 15887, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    u32[512] defaultFontData = {
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00200020, 0x0001b000, 0x00000000,
+        0x00000000, 0x8ef92520, 0x00020a00, 0x7dbe8000, 0x1f7df45f, 0x4a2bf2a0, 0x0852091e,
+        0x41224000, 0x10041450, 0x2e292020, 0x08220812, 0x41222000, 0x10041450, 0x10f92020,
+        0x3efa084c, 0x7d22103c, 0x107df7de, 0xe8a12020, 0x08220832, 0x05220800, 0x10450410,
+        0xa4a3f000, 0x08520832, 0x05220400, 0x10450410, 0xe2f92020, 0x0002085e, 0x7d3e0281,
+        0x107df41f, 0x00200000, 0x8001b000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0xc0000fbe, 0xfbf7e00f, 0x5fbf7e7d, 0x0050bee8,
+        0x440808a2, 0x0a142fe8, 0x50810285, 0x0050a048, 0x49e428a2, 0x0a142828, 0x40810284,
+        0x0048a048, 0x10020fbe, 0x09f7ebaf, 0xd89f3e84, 0x0047a04f, 0x09e48822, 0x0a142aa1,
+        0x50810284, 0x0048a048, 0x04082822, 0x0a142fa0, 0x50810285, 0x0050a248, 0x00008fbe,
+        0xfbf42021, 0x5f817e7d, 0x07d09ce8, 0x00008000, 0x00000fe0, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000c0180, 0xdfbf4282, 0x0bfbf7ef,
+        0x42850505, 0x004804bf, 0x50a142c6, 0x08401428, 0x42852505, 0x00a808a0, 0x50a146aa,
+        0x08401428, 0x42852505, 0x00081090, 0x5fa14a92, 0x0843f7e8, 0x7e792505, 0x00082088,
+        0x40a15282, 0x08420128, 0x40852489, 0x00084084, 0x40a16282, 0x0842022a, 0x40852451,
+        0x00088082, 0xc0bf4282, 0xf843f42f, 0x7e85fc21, 0x3e0900bf, 0x00000000, 0x00000004,
+        0x00000000, 0x000c0180, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x04000402, 0x41482000, 0x00000000, 0x00000800, 0x04000404, 0x4100203c, 0x00000000,
+        0x00000800, 0xf7df7df0, 0x514bef85, 0xbefbefbe, 0x04513bef, 0x14414500, 0x494a2885,
+        0xa28a28aa, 0x04510820, 0xf44145f0, 0x474a289d, 0xa28a28aa, 0x04510be0, 0x14414510,
+        0x494a2884, 0xa28a28aa, 0x02910a00, 0xf7df7df0, 0xd14a2f85, 0xbefbe8aa, 0x011f7be0,
+        0x00000000, 0x00400804, 0x20080000, 0x00000000, 0x00000000, 0x00600f84, 0x20080000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0xac000000, 0x00000f01,
+        0x00000000, 0x00000000, 0x24000000, 0x00000f01, 0x00000000, 0x06000000, 0x24000000,
+        0x00000f01, 0x00000000, 0x09108000, 0x24fa28a2, 0x00000f01, 0x00000000, 0x013e0000,
+        0x2242252a, 0x00000f52, 0x00000000, 0x038a8000, 0x2422222a, 0x00000f29, 0x00000000,
+        0x010a8000, 0x2412252a, 0x00000f01, 0x00000000, 0x010a8000, 0x24fbe8be, 0x00000f01,
+        0x00000000, 0x0ebe8000, 0xac020000, 0x00000f01, 0x00000000, 0x00048000, 0x0003e000,
+        0x00000f00, 0x00000000, 0x00008000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000038, 0x8443b80e, 0x00203a03, 0x02bea080, 0xf0000020, 0xc452208a,
+        0x04202b02, 0xf8029122, 0x07f0003b, 0xe44b388e, 0x02203a02, 0x081e8a1c, 0x0411e92a,
+        0xf4420be0, 0x01248202, 0xe8140414, 0x05d104ba, 0xe7c3b880, 0x00893a0a, 0x283c0e1c,
+        0x04500902, 0xc4400080, 0x00448002, 0xe8208422, 0x04500002, 0x80400000, 0x05200002,
+        0x083e8e00, 0x04100002, 0x804003e0, 0x07000042, 0xf8008400, 0x07f00003, 0x80400000,
+        0x04000022, 0x00000000, 0x00000000, 0x80400000, 0x04000002, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00800702, 0x1848a0c2, 0x84010000, 0x02920921, 0x01042642,
+        0x00005121, 0x42023f7f, 0x00291002, 0xefc01422, 0x7efdfbf7, 0xefdfa109, 0x03bbbbf7,
+        0x28440f12, 0x42850a14, 0x20408109, 0x01111010, 0x28440408, 0x42850a14, 0x2040817f,
+        0x01111010, 0xefc78204, 0x7efdfbf7, 0xe7cf8109, 0x011111f3, 0x2850a932, 0x42850a14,
+        0x2040a109, 0x01111010, 0x2850b840, 0x42850a14, 0xefdfbf79, 0x03bbbbf7, 0x001fa020,
+        0x00000000, 0x00001000, 0x00000000, 0x00002070, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x08022800, 0x00012283, 0x02430802,
+        0x01010001, 0x8404147c, 0x20000144, 0x80048404, 0x00823f08, 0xdfbf4284, 0x7e03f7ef,
+        0x142850a1, 0x0000210a, 0x50a14684, 0x528a1428, 0x142850a1, 0x03efa17a, 0x50a14a9e,
+        0x52521428, 0x142850a1, 0x02081f4a, 0x50a15284, 0x4a221428, 0xf42850a1, 0x03efa14b,
+        0x50a16284, 0x4a521428, 0x042850a1, 0x0228a17a, 0xdfbf427c, 0x7e8bf7ef, 0xf7efdfbf,
+        0x03efbd0b, 0x00000000, 0x04000000, 0x00000000, 0x00000008, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00200508,
+        0x00840400, 0x11458122, 0x00014210, 0x00514294, 0x51420800, 0x20a22a94, 0x0050a508,
+        0x00200000, 0x00000000, 0x00050000, 0x08000000, 0xfefbefbe, 0xfbefbefb, 0xfbeb9114,
+        0x00fbefbe, 0x20820820, 0x8a28a20a, 0x8a289114, 0x3e8a28a2, 0xfefbefbe, 0xfbefbe0b,
+        0x8a289114, 0x008a28a2, 0x228a28a2, 0x08208208, 0x8a289114, 0x088a28a2, 0xfefbefbe,
+        0xfbefbefb, 0xfa2f9114, 0x00fbefbe, 0x00000000, 0x00000040, 0x00000000, 0x00000000,
+        0x00000000, 0x00000020, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00210100, 0x00000004, 0x00000000, 0x00000000, 0x14508200, 0x00001402,
+        0x00000000, 0x00000000, 0x00000010, 0x00000020, 0x00000000, 0x00000000, 0xa28a28be,
+        0x00002228, 0x00000000, 0x00000000, 0xa28a28aa, 0x000022e8, 0x00000000, 0x00000000,
+        0xa28a28aa, 0x000022a8, 0x00000000, 0x00000000, 0xa28a28aa, 0x000022e8, 0x00000000,
+        0x00000000, 0xbefbefbe, 0x00003e2f, 0x00000000, 0x00000000, 0x00000004, 0x00002028,
+        0x00000000, 0x00000000, 0x80000000, 0x00003e0f, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        0x00000000,
+    };
     i32 charsHeight = 10;
     i32 charsDivisor = 1;
-    i32[224] charsWidth = {3, 1, 4, 6, 5, 7, 6, 2, 3, 3, 5, 5, 2, 4, 1, 7, 5, 2, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 3, 4, 3, 6, 7, 6, 6, 6, 6, 6, 6, 6, 6, 3, 5, 6, 5, 7, 6, 6, 6, 6, 6, 6, 7, 6, 7, 7, 6, 6, 6, 2, 7, 2, 3, 5, 2, 5, 5, 5, 5, 5, 4, 5, 5, 1, 2, 5, 2, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 3, 1, 3, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5, 7, 1, 5, 3, 7, 3, 5, 4, 1, 7, 4, 3, 5, 3, 3, 2, 5, 6, 1, 2, 2, 3, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 6, 6, 6, 6, 6, 3, 3, 3, 3, 7, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 4, 6, 5, 5, 5, 5, 5, 5, 9, 5, 5, 5, 5, 5, 2, 2, 3, 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5};
-    var imFont = Image{.data = cast(void*, new(u8[128 * 128 * 2])), .width = 128, .height = 128, .mipmaps = 1, .format = PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA};
+    i32[224] charsWidth = {
+        3, 1, 4, 6, 5, 7, 6, 2, 3, 3, 5, 5, 2, 4, 1, 7, 5, 2, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 3, 4, 3,
+        6, 7, 6, 6, 6, 6, 6, 6, 6, 6, 3, 5, 6, 5, 7, 6, 6, 6, 6, 6, 6, 7, 6, 7, 7, 6, 6, 6, 2, 7, 2,
+        3, 5, 2, 5, 5, 5, 5, 5, 4, 5, 5, 1, 2, 5, 2, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 3, 1,
+        3, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 5, 5, 5, 7, 1, 5, 3, 7, 3, 5, 4, 1, 7, 4, 3, 5, 3, 3, 2, 5, 6, 1, 2, 2, 3,
+        5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 6, 6, 6, 6, 6, 3, 3, 3, 3, 7, 6, 6, 6, 6, 6, 6, 5, 6, 6,
+        6, 6, 6, 6, 4, 6, 5, 5, 5, 5, 5, 5, 9, 5, 5, 5, 5, 5, 2, 2, 3, 3, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+        5, 5, 5, 5, 5, 3, 5,
+    };
+    var imFont = Image{
+        .data = cast(void*, new(u8[128 * 128 * 2])),
+        .width = 128,
+        .height = 128,
+        .mipmaps = 1,
+        .format = PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA,
+    };
     {
         i32 i = 0;
         i32 counter = 0;
         for ; i < imFont.width * imFont.height; i += 32 {
             for i32 j = 31; j >= 0; j-- {
                 if (defaultFontData[counter] & cast(u32, 1 << j)) != 0 {
-                    cast(u16*, imFont.data)[i + j] = 65535;
+                    cast(u16*, imFont.data)[i + j] = 0xffff;
                 } else {
-                    cast(u8*, imFont.data)[(i + j) * sizeof(i16)] = 255;
-                    cast(u8*, imFont.data)[(i + j) * sizeof(i16) + 1] = 0;
+                    cast(u8*, imFont.data)[(i + j) * sizeof(i16)] = 0xff;
+                    cast(u8*, imFont.data)[(i + j) * sizeof(i16) + 1] = 0x00;
                 }
             }
             counter++;
@@ -23510,6 +23619,7 @@ void LoadFontDefault() {
     UnloadImage(imFont);
     defaultFont.baseSize = cast(i32, defaultFont.recs[0].height);
 }
+
 // Unload raylib default font
 void UnloadFontDefault() {
     for i32 i = 0; i < defaultFont.glyphCount; i++ {
@@ -23522,10 +23632,12 @@ void UnloadFontDefault() {
     defaultFont.glyphs = null;
     defaultFont.recs = null;
 }
+
 // Get the default font, useful to be used with extended parameters
 Font GetFontDefault() {
     return defaultFont;
 }
+
 // Load Font from file into GPU memory (VRAM)
 Font LoadFont(u8* fileName) {
     Font font;
@@ -23548,6 +23660,7 @@ Font LoadFont(u8* fileName) {
     }
     return font;
 }
+
 // Load Font from TTF or BDF font file with generation parameters
 // NOTE: You can pass an array with desired characters, those characters should be available in the font
 // if array is NULL, default char set is selected 32..126
@@ -23561,6 +23674,7 @@ Font LoadFontEx(u8* fileName, i32 fontSize, i32* codepoints, i32 codepointCount)
     }
     return font;
 }
+
 // Load an Image font file (XNA style)
 Font LoadFontFromImage(Image image, Color key, i32 firstChar) {
     Font font = GetFontDefault();
@@ -23617,7 +23731,13 @@ Font LoadFontFromImage(Image image, Color key, i32 firstChar) {
             pixels[i] = Color{};
         }
     }
-    var fontClear = Image{.data = pixels, .width = image.width, .height = image.height, .mipmaps = 1, .format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8};
+    var fontClear = Image{
+        .data = pixels,
+        .width = image.width,
+        .height = image.height,
+        .mipmaps = 1,
+        .format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
+    };
     font.texture = LoadTextureFromImage(fontClear);
     font.glyphCount = index;
     font.glyphPadding = 0;
@@ -23635,6 +23755,7 @@ Font LoadFontFromImage(Image image, Color key, i32 firstChar) {
     font.baseSize = cast(i32, font.recs[0].height);
     return font;
 }
+
 // Load font from memory buffer, fileType refers to extension: i.e. ".ttf"
 Font LoadFontFromMemory(u8* fileType, u8* fileData, i32 dataSize, i32 fontSize, i32* codepoints, i32 codepointCount) {
     Font font;
@@ -23661,11 +23782,13 @@ Font LoadFontFromMemory(u8* fileType, u8* fileData, i32 dataSize, i32 fontSize, 
     }
     return font;
 }
+
 // Check if a font is valid (font data loaded)
 // WARNING: GPU texture not checked
 bool IsFontValid(Font font) {
     return font.baseSize > 0 && font.glyphCount > 0 && font.recs != null && font.glyphs != null;
 }
+
 // Load font data for further use
 // NOTE: Requires TTF font memory data and can generate SDF data
 GlyphInfo* LoadFontData(u8* fileData, i32 dataSize, i32 fontSize, i32* codepoints, i32 codepointCount, i32 type, i32* glyphCount) {
@@ -23736,10 +23859,16 @@ GlyphInfo* LoadFontData(u8* fileData, i32 dataSize, i32 fontSize, i32* codepoint
                         glyphs[k].image.format = PIXELFORMAT_UNCOMPRESSED_GRAYSCALE;
                         glyphs[k].offsetY += cast(i32, cast(f32, ascent) * scaleFactor);
                     }
-                    if cp == 32 || cp == 12288 {
+                    if cp == 0x20 || cp == 0x3000 {
                         stbtt_GetCodepointHMetrics(&fontInfo, cp, &glyphs[k].advanceX, null);
                         glyphs[k].advanceX = cast(i32, cast(f32, glyphs[k].advanceX) * scaleFactor);
-                        var imSpace = Image{.data = null, .width = glyphs[k].advanceX, .height = fontSize, .mipmaps = 1, .format = PIXELFORMAT_UNCOMPRESSED_GRAYSCALE};
+                        var imSpace = Image{
+                            .data = null,
+                            .width = glyphs[k].advanceX,
+                            .height = fontSize,
+                            .mipmaps = 1,
+                            .format = PIXELFORMAT_UNCOMPRESSED_GRAYSCALE,
+                        };
                         if glyphs[k].advanceX > 0 {
                             imSpace.data = cast(void*, new(u8[glyphs[k].advanceX * fontSize]));
                         } else {
@@ -23772,6 +23901,7 @@ GlyphInfo* LoadFontData(u8* fileData, i32 dataSize, i32 fontSize, i32* codepoint
     *glyphCount = glyphCounter;
     return glyphs;
 }
+
 // Generate image font atlas using chars info
 // NOTE: Packing method: 0-Default, 1-Skyline
 Image GenImageFontAtlas(GlyphInfo* glyphs, Rectangle** glyphRecs, i32 glyphCount, i32 fontSize, i32 padding, i32 packMethod) {
@@ -23899,6 +24029,7 @@ Image GenImageFontAtlas(GlyphInfo* glyphs, Rectangle** glyphRecs, i32 glyphCount
     *glyphRecs = recs;
     return atlas;
 }
+
 // Unload font glyphs info data (RAM)
 void UnloadFontData(GlyphInfo* glyphs, i32 glyphCount) {
     if glyphs != null {
@@ -23908,6 +24039,7 @@ void UnloadFontData(GlyphInfo* glyphs, i32 glyphCount) {
         free(glyphs);
     }
 }
+
 // Unload Font from GPU memory (VRAM)
 void UnloadFont(Font font) {
     if font.texture.id != GetFontDefault().texture.id {
@@ -23916,6 +24048,7 @@ void UnloadFont(Font font) {
         free(font.recs);
     }
 }
+
 // Export font as code file, returns true on success
 bool ExportFontAsCode(Font font, u8* fileName) {
     bool result = false;
@@ -24009,6 +24142,7 @@ bool ExportFontAsCode(Font font, u8* fileName) {
     }
     return result;
 }
+
 // Draw current FPS
 // NOTE: Uses default font
 void DrawFPS(i32 posX, i32 posY) {
@@ -24021,6 +24155,7 @@ void DrawFPS(i32 posX, i32 posY) {
     }
     DrawText(TextFormat("%2i FPS", fps), posX, posY, 20, color);
 }
+
 // Draw text (using default font)
 // NOTE: fontSize work like in any drawing program but if fontSize is lower than font-base-size, then font-base-size is used
 // NOTE: chars spacing is proportional to fontSize
@@ -24035,6 +24170,7 @@ void DrawText(u8* text, i32 posX, i32 posY, i32 fontSize, Color color) {
         DrawTextEx(GetFontDefault(), text, position, cast(f32, fontSize), cast(f32, spacing), color);
     }
 }
+
 // Draw text using Font
 // NOTE: chars spacing is NOT proportional to fontSize
 void DrawTextEx(Font font, u8* text, Vector2 position, f32 fontSize, f32 spacing, Color tint) {
@@ -24066,6 +24202,7 @@ void DrawTextEx(Font font, u8* text, Vector2 position, f32 fontSize, f32 spacing
         i += codepointByteCount;
     }
 }
+
 // Draw text using Font and pro parameters (rotation)
 void DrawTextPro(Font font, u8* text, Vector2 position, Vector2 origin, f32 rotation, f32 fontSize, f32 spacing, Color tint) {
     rlPushMatrix();
@@ -24075,14 +24212,26 @@ void DrawTextPro(Font font, u8* text, Vector2 position, Vector2 origin, f32 rota
     DrawTextEx(font, text, Vector2{0.0f, 0.0f}, fontSize, spacing, tint);
     rlPopMatrix();
 }
+
 // Draw one character (codepoint)
 void DrawTextCodepoint(Font font, i32 codepoint, Vector2 position, f32 fontSize, Color tint) {
     i32 index = GetGlyphIndex(font, codepoint);
     f32 scaleFactor = fontSize / cast(f32, font.baseSize);
-    var dstRec = Rectangle{position.x + cast(f32, font.glyphs[index].offsetX) * scaleFactor - cast(f32, font.glyphPadding) * scaleFactor, position.y + cast(f32, font.glyphs[index].offsetY) * scaleFactor - cast(f32, font.glyphPadding) * scaleFactor, (font.recs[index].width + 2.0f * cast(f32, font.glyphPadding)) * scaleFactor, (font.recs[index].height + 2.0f * cast(f32, font.glyphPadding)) * scaleFactor};
-    var srcRec = Rectangle{font.recs[index].x - cast(f32, font.glyphPadding), font.recs[index].y - cast(f32, font.glyphPadding), font.recs[index].width + 2.0f * cast(f32, font.glyphPadding), font.recs[index].height + 2.0f * cast(f32, font.glyphPadding)};
+    var dstRec = Rectangle{
+        position.x + cast(f32, font.glyphs[index].offsetX) * scaleFactor - cast(f32, font.glyphPadding) * scaleFactor,
+        position.y + cast(f32, font.glyphs[index].offsetY) * scaleFactor - cast(f32, font.glyphPadding) * scaleFactor,
+        (font.recs[index].width + 2.0f * cast(f32, font.glyphPadding)) * scaleFactor,
+        (font.recs[index].height + 2.0f * cast(f32, font.glyphPadding)) * scaleFactor,
+    };
+    var srcRec = Rectangle{
+        font.recs[index].x - cast(f32, font.glyphPadding),
+        font.recs[index].y - cast(f32, font.glyphPadding),
+        font.recs[index].width + 2.0f * cast(f32, font.glyphPadding),
+        font.recs[index].height + 2.0f * cast(f32, font.glyphPadding),
+    };
     DrawTexturePro(font.texture, srcRec, dstRec, Vector2{0.0f, 0.0f}, 0.0f, tint);
 }
+
 // Draw multiple characters (codepoints)
 void DrawTextCodepoints(Font font, i32* codepoints, i32 codepointCount, Vector2 position, f32 fontSize, f32 spacing, Color tint) {
     f32 textOffsetY = 0.0f;
@@ -24105,10 +24254,12 @@ void DrawTextCodepoints(Font font, i32* codepoints, i32 codepointCount, Vector2 
         }
     }
 }
+
 // Set vertical line spacing when drawing with line-breaks
 void SetTextLineSpacing(i32 spacing) {
     textLineSpacing = spacing;
 }
+
 // Measure string width for default font
 i32 MeasureText(u8* text, i32 fontSize) {
     var textSize = Vector2{0.0f, 0.0f};
@@ -24122,6 +24273,7 @@ i32 MeasureText(u8* text, i32 fontSize) {
     }
     return cast(i32, textSize.x);
 }
+
 // Measure string size for Font
 Vector2 MeasureTextEx(Font font, u8* text, f32 fontSize, f32 spacing) {
     Vector2 textSize;
@@ -24169,6 +24321,7 @@ Vector2 MeasureTextEx(Font font, u8* text, f32 fontSize, f32 spacing) {
     textSize.y = textHeight;
     return textSize;
 }
+
 // Measure string size for an existing array of codepoints for Font
 Vector2 MeasureTextCodepoints(Font font, i32* codepoints, i32 length, f32 fontSize, f32 spacing) {
     Vector2 textSize;
@@ -24212,6 +24365,7 @@ Vector2 MeasureTextCodepoints(Font font, i32* codepoints, i32 length, f32 fontSi
     textSize.y = textHeight;
     return textSize;
 }
+
 // Get index position for a unicode character on font
 // NOTE: If codepoint is not found in the font it fallbacks to '?'
 i32 GetGlyphIndex(Font font, i32 codepoint) {
@@ -24234,6 +24388,7 @@ i32 GetGlyphIndex(Font font, i32 codepoint) {
     }
     return index;
 }
+
 // Get glyph font info data for a codepoint (unicode character)
 // NOTE: If codepoint is not found in the font it fallbacks to '?'
 GlyphInfo GetGlyphInfo(Font font, i32 codepoint) {
@@ -24241,6 +24396,7 @@ GlyphInfo GetGlyphInfo(Font font, i32 codepoint) {
     info = font.glyphs[GetGlyphIndex(font, codepoint)];
     return info;
 }
+
 // Get glyph rectangle in font atlas for a codepoint (unicode character)
 // NOTE: If codepoint is not found in the font it fallbacks to '?'
 Rectangle GetGlyphAtlasRec(Font font, i32 codepoint) {
@@ -24248,6 +24404,7 @@ Rectangle GetGlyphAtlasRec(Font font, i32 codepoint) {
     rec = font.recs[GetGlyphIndex(font, codepoint)];
     return rec;
 }
+
 //----------------------------------------------------------------------------------
 // Text strings management functions
 //----------------------------------------------------------------------------------
@@ -24284,6 +24441,7 @@ u8** LoadTextLines(u8* text, i32* count) {
     *count = lineCount;
     return lines;
 }
+
 // Unload text lines
 void UnloadTextLines(u8** lines, i32 lineCount) {
     for i32 i = 0; i < lineCount; i++ {
@@ -24291,6 +24449,7 @@ void UnloadTextLines(u8** lines, i32 lineCount) {
     }
     free(lines);
 }
+
 // Get text length in bytes, check for \0 character
 // NOTE: Alternative: use strlen(text)
 u32 TextLength(u8* text) {
@@ -24302,6 +24461,7 @@ u32 TextLength(u8* text) {
     }
     return length;
 }
+
 // Formatting of text with variables to 'embed'
 // WARNING: String returned will expire after this function is called MAX_TEXTFORMAT_BUFFERS times
 u8* TextFormat(u8* text, ...) {
@@ -24320,6 +24480,7 @@ u8* TextFormat(u8* text, ...) {
     }
     return currentBuffer;
 }
+
 // Get integer value from text
 // NOTE: This function replaces atoi() [stdlib.h]
 i32 TextToInteger(u8* text) {
@@ -24338,6 +24499,7 @@ i32 TextToInteger(u8* text) {
     }
     return value * sign;
 }
+
 // Get float value from text
 // NOTE: This function replaces atof() [stdlib.h]
 // WARNING: Only '.' character is understood as decimal point
@@ -24365,6 +24527,7 @@ f32 TextToFloat(u8* text) {
     }
     return value * sign;
 }
+
 // Copy one string to another, returns bytes copied
 // NOTE: Alternative implementation to strcpy(dst, src) from C standard library
 i32 TextCopy(u8* dst, u8* src) {
@@ -24380,6 +24543,7 @@ i32 TextCopy(u8* dst, u8* src) {
     }
     return bytes;
 }
+
 // Check if two text strings are equal
 // REQUIRES: strcmp()
 bool TextIsEqual(u8* text1, u8* text2) {
@@ -24391,6 +24555,7 @@ bool TextIsEqual(u8* text1, u8* text2) {
     }
     return result;
 }
+
 // Get a piece of a text string
 u8* TextSubtext(u8* text, i32 position, i32 length) {
     memset(TextSubtext__buffer, 0, cast(u64, 1024));
@@ -24412,6 +24577,7 @@ u8* TextSubtext(u8* text, i32 position, i32 length) {
     }
     return TextSubtext__buffer;
 }
+
 // Remove text spaces, concat words
 u8* TextRemoveSpaces(u8* text) {
     memset(TextRemoveSpaces__buffer, 0, cast(u64, 1024));
@@ -24429,6 +24595,7 @@ u8* TextRemoveSpaces(u8* text) {
     }
     return TextRemoveSpaces__buffer;
 }
+
 // Get text between two strings
 u8* GetTextBetween(u8* text, u8* begin, u8* end) {
     memset(GetTextBetween__buffer, 0, cast(u64, 1024));
@@ -24448,6 +24615,7 @@ u8* GetTextBetween(u8* text, u8* begin, u8* end) {
     }
     return GetTextBetween__buffer;
 }
+
 // Replace text string
 // REQUIRES: strstr(), strncpy()
 // NOTE: Limited text replace functionality, using static string
@@ -24495,6 +24663,7 @@ u8* TextReplace(u8* text, u8* search, u8* replacement) {
     }
     return TextReplace__buffer;
 }
+
 // Replace text string
 // REQUIRES: strstr(), strncpy()
 // WARNING: Allocated memory must be manually freed
@@ -24543,6 +24712,7 @@ u8* TextReplaceAlloc(u8* text, u8* search, u8* replacement) {
     }
     return result;
 }
+
 // Replace text between two specific strings
 // REQUIRES: strncpy()
 // NOTE: If (replacement == NULL) removes "begin"[ ]"end" text
@@ -24567,6 +24737,7 @@ u8* TextReplaceBetween(u8* text, u8* begin, u8* end, u8* replacement) {
     }
     return TextReplaceBetween__buffer;
 }
+
 // Replace text between two specific strings
 // REQUIRES: strncpy()
 // NOTE: If (replacement == NULL) remove "begin"[ ]"end" text
@@ -24594,6 +24765,7 @@ u8* TextReplaceBetweenAlloc(u8* text, u8* begin, u8* end, u8* replacement) {
     }
     return result;
 }
+
 // Insert text in a specific position, moves all text forward
 // WARNING: Allocated memory must be manually freed
 u8* TextInsert(u8* text, u8* insert, i32 position) {
@@ -24617,6 +24789,7 @@ u8* TextInsert(u8* text, u8* insert, i32 position) {
     }
     return TextInsert__buffer;
 }
+
 // Insert text in a specific position, moves all text forward
 // WARNING: Allocated memory must be manually freed
 u8* TextInsertAlloc(u8* text, u8* insert, i32 position) {
@@ -24638,6 +24811,7 @@ u8* TextInsertAlloc(u8* text, u8* insert, i32 position) {
     }
     return result;
 }
+
 // Join text strings with delimiter
 // REQUIRES: memset(), memcpy()
 u8* TextJoin(u8** textList, i32 count, u8* delimiter) {
@@ -24660,6 +24834,7 @@ u8* TextJoin(u8** textList, i32 count, u8* delimiter) {
     }
     return TextJoin__buffer;
 }
+
 // Split string into multiple strings
 // REQUIRES: memset()
 u8** TextSplit(u8* text, u8 delimiter, i32* count) {
@@ -24685,6 +24860,7 @@ u8** TextSplit(u8* text, u8 delimiter, i32* count) {
     *count = counter;
     return TextSplit__buffers;
 }
+
 // Append text at specific position and move cursor
 // WARNING: It's up to the user to make sure appended text does not overflow the buffer!
 void TextAppend(u8* text, u8* append, i32* position) {
@@ -24693,6 +24869,7 @@ void TextAppend(u8* text, u8* append, i32* position) {
         *position += cast(i32, TextLength(append));
     }
 }
+
 // Find first text occurrence within a string
 // REQUIRES: strstr()
 i32 TextFindIndex(u8* text, u8* search) {
@@ -24705,6 +24882,7 @@ i32 TextFindIndex(u8* text, u8* search) {
     }
     return position;
 }
+
 // Get upper case version of provided string
 // WARNING: Limited functionality, only basic characters set
 // TODO: Support UTF-8 diacritics to upper-case, check codepoints
@@ -24721,6 +24899,7 @@ u8* TextToUpper(u8* text) {
     }
     return TextToUpper__buffer;
 }
+
 // Get lower case version of provided string
 // WARNING: Limited functionality, only basic characters set
 u8* TextToLower(u8* text) {
@@ -24736,6 +24915,7 @@ u8* TextToLower(u8* text) {
     }
     return TextToLower__buffer;
 }
+
 // Get Pascal case notation version of provided string
 // WARNING: Limited functionality, only basic characters set
 u8* TextToPascal(u8* text) {
@@ -24766,6 +24946,7 @@ u8* TextToPascal(u8* text) {
     }
     return TextToPascal__buffer;
 }
+
 // Get snake case notation version of provided string
 // WARNING: Limited functionality, only basic characters set
 u8* TextToSnake(u8* text) {
@@ -24790,6 +24971,7 @@ u8* TextToSnake(u8* text) {
     }
     return TextToSnake__buffer;
 }
+
 // Get Camel case notation version of provided string
 // WARNING: Limited functionality, only basic characters set
 u8* TextToCamel(u8* text) {
@@ -24818,6 +25000,7 @@ u8* TextToCamel(u8* text) {
     }
     return TextToCamel__buffer;
 }
+
 // Encode text codepoint into UTF-8 text
 // REQUIRES: memcpy()
 // WARNING: Allocated memory must be manually freed
@@ -24843,10 +25026,12 @@ u8* LoadUTF8(i32* codepoints, i32 length) {
     }
     return text;
 }
+
 // Unload UTF-8 text encoded from codepoints array
 void UnloadUTF8(u8* text) {
     free(text);
 }
+
 // Load all codepoints from a UTF-8 text string, codepoints count returned by parameter
 i32* LoadCodepoints(u8* text, i32* count) {
     i32* codepoints = null;
@@ -24869,10 +25054,12 @@ i32* LoadCodepoints(u8* text, i32* count) {
     *count = codepointCount;
     return codepoints;
 }
+
 // Unload codepoints data from memory
 void UnloadCodepoints(i32* codepoints) {
     free(codepoints);
 }
+
 // Get total number of characters(codepoints) in a UTF-8 encoded text, until '\0' is found
 // NOTE: If an invalid UTF-8 sequence is encountered a '?'(0x3f) codepoint is counted instead
 i32 GetCodepointCount(u8* text) {
@@ -24888,58 +25075,60 @@ i32 GetCodepointCount(u8* text) {
     }
     return cast(i32, length);
 }
+
 // Encode codepoint into utf8 text (char array length returned as parameter)
 // NOTE: It uses a static array to store UTF-8 bytes
 u8* CodepointToUTF8(i32 codepoint, i32* utf8Size) {
     memset(CodepointToUTF8__utf8, 0, cast(u64, 6));
     i32 size = 0;
-    if codepoint <= 127 {
+    if codepoint <= 0x7f {
         CodepointToUTF8__utf8[0] = cast(u8, codepoint);
         size = 1;
-    } else if codepoint <= 2047 {
-        CodepointToUTF8__utf8[0] = cast(u8, codepoint >> 6 & 31 | 192);
-        CodepointToUTF8__utf8[1] = cast(u8, codepoint & 63 | 128);
+    } else if codepoint <= 0x7ff {
+        CodepointToUTF8__utf8[0] = cast(u8, codepoint >> 6 & 0x1f | 0xc0);
+        CodepointToUTF8__utf8[1] = cast(u8, codepoint & 0x3f | 0x80);
         size = 2;
-    } else if codepoint <= 65535 {
-        CodepointToUTF8__utf8[0] = cast(u8, codepoint >> 12 & 15 | 224);
-        CodepointToUTF8__utf8[1] = cast(u8, codepoint >> 6 & 63 | 128);
-        CodepointToUTF8__utf8[2] = cast(u8, codepoint & 63 | 128);
+    } else if codepoint <= 0xffff {
+        CodepointToUTF8__utf8[0] = cast(u8, codepoint >> 12 & 0x0f | 0xe0);
+        CodepointToUTF8__utf8[1] = cast(u8, codepoint >> 6 & 0x3f | 0x80);
+        CodepointToUTF8__utf8[2] = cast(u8, codepoint & 0x3f | 0x80);
         size = 3;
-    } else if codepoint <= 1114111 {
-        CodepointToUTF8__utf8[0] = cast(u8, codepoint >> 18 & 7 | 240);
-        CodepointToUTF8__utf8[1] = cast(u8, codepoint >> 12 & 63 | 128);
-        CodepointToUTF8__utf8[2] = cast(u8, codepoint >> 6 & 63 | 128);
-        CodepointToUTF8__utf8[3] = cast(u8, codepoint & 63 | 128);
+    } else if codepoint <= 0x10ffff {
+        CodepointToUTF8__utf8[0] = cast(u8, codepoint >> 18 & 0x07 | 0xf0);
+        CodepointToUTF8__utf8[1] = cast(u8, codepoint >> 12 & 0x3f | 0x80);
+        CodepointToUTF8__utf8[2] = cast(u8, codepoint >> 6 & 0x3f | 0x80);
+        CodepointToUTF8__utf8[3] = cast(u8, codepoint & 0x3f | 0x80);
         size = 4;
     }
     *utf8Size = size;
     return CodepointToUTF8__utf8;
 }
+
 // Get next codepoint in a UTF-8 encoded text, scanning until '\0' is found
 // When an invalid UTF-8 byte is encountered, exit as soon as possible and a '?'(0x3f) codepoint is returned
 // Total number of bytes processed are returned as a parameter
 // NOTE: The standard says U+FFFD should be returned in case of errors
 // but that character is not supported by the default font in raylib
 i32 GetCodepoint(u8* text, i32* codepointSize) {
-    i32 codepoint = 63;
+    i32 codepoint = 0x3f;
     *codepointSize = 1;
     if text == null {
         return codepoint;
     }
     var octet = cast(i32, cast(u8, text[0]));
-    if octet <= 127 {
+    if octet <= 0x7f {
         codepoint = text[0];
-    } else if (octet & 224) == 192 {
+    } else if (octet & 0xe0) == 0xc0 {
         var octet1 = cast(u8, text[1]);
         if octet1 == 0 || cast(i32, octet1) >> 6 != 2 {
             *codepointSize = 2;
             return codepoint;
         }
-        if octet >= 194 && octet <= 223 {
-            codepoint = (octet & 31) << 6 | octet1 & 63;
+        if octet >= 0xc2 && octet <= 0xdf {
+            codepoint = (octet & 0x1f) << 6 | octet1 & 0x3f;
             *codepointSize = 2;
         }
-    } else if (octet & 240) == 224 {
+    } else if (octet & 0xf0) == 0xe0 {
         var octet1 = cast(u8, text[1]);
         u8 octet2 = 0;
         if octet1 == 0 || cast(i32, octet1) >> 6 != 2 {
@@ -24951,16 +25140,16 @@ i32 GetCodepoint(u8* text, i32* codepointSize) {
             *codepointSize = 3;
             return codepoint;
         }
-        if octet == 224 && !(octet1 >= 160 && octet1 <= 191) || octet == 237 && !(octet1 >= 128 && octet1 <= 159) {
+        if octet == 0xe0 && !(octet1 >= 0xa0 && octet1 <= 0xbf) || octet == 0xed && !(octet1 >= 0x80 && octet1 <= 0x9f) {
             *codepointSize = 2;
             return codepoint;
         }
-        if octet >= 224 && octet <= 239 {
-            codepoint = (octet & 15) << 12 | cast(i32, octet1 & 63) << 6 | octet2 & 63;
+        if octet >= 0xe0 && octet <= 0xef {
+            codepoint = (octet & 0xf) << 12 | cast(i32, octet1 & 0x3f) << 6 | octet2 & 0x3f;
             *codepointSize = 3;
         }
-    } else if (octet & 248) == 240 {
-        if octet > 244 {
+    } else if (octet & 0xf8) == 0xf0 {
+        if octet > 0xf4 {
             return codepoint;
         }
         var octet1 = cast(u8, text[1]);
@@ -24980,63 +25169,65 @@ i32 GetCodepoint(u8* text, i32* codepointSize) {
             *codepointSize = 4;
             return codepoint;
         }
-        if octet == 240 && !(octet1 >= 144 && octet1 <= 191) || octet == 244 && !(octet1 >= 128 && octet1 <= 143) {
+        if octet == 0xf0 && !(octet1 >= 0x90 && octet1 <= 0xbf) || octet == 0xf4 && !(octet1 >= 0x80 && octet1 <= 0x8f) {
             *codepointSize = 2;
             return codepoint;
         }
-        if octet >= 240 {
-            codepoint = (octet & 7) << 18 | cast(i32, octet1 & 63) << 12 | cast(i32, octet2 & 63) << 6 | octet3 & 63;
+        if octet >= 0xf0 {
+            codepoint = (octet & 0x7) << 18 | cast(i32, octet1 & 0x3f) << 12 | cast(i32, octet2 & 0x3f) << 6 | octet3 & 0x3f;
             *codepointSize = 4;
         }
     }
-    if codepoint > 1114111 {
-        codepoint = 63;
+    if codepoint > 0x10ffff {
+        codepoint = 0x3f;
     }
     return codepoint;
 }
+
 // Get next codepoint in a byte sequence and bytes processed
 i32 GetCodepointNext(u8* text, i32* codepointSize) {
     u8* ptr = text;
-    i32 codepoint = 63;
+    i32 codepoint = 0x3f;
     *codepointSize = 1;
     if text == null {
         return codepoint;
     }
-    if 240 == (248 & cast(i32, ptr[0])) {
-        if cast(i32, ptr[1]) & 192 ^ 128 || cast(i32, ptr[2]) & 192 ^ 128 || cast(i32, ptr[3]) & 192 ^ 128 {
+    if 0xf0 == (0xf8 & cast(i32, ptr[0])) {
+        if cast(i32, ptr[1]) & 0xC0 ^ 0x80 || cast(i32, ptr[2]) & 0xC0 ^ 0x80 || cast(i32, ptr[3]) & 0xC0 ^ 0x80 {
             return codepoint;
         }
-        codepoint = cast(i32, 7 & ptr[0]) << 18 | cast(i32, 63 & ptr[1]) << 12 | cast(i32, 63 & ptr[2]) << 6 | 63 & ptr[3];
+        codepoint = cast(i32, 0x07 & ptr[0]) << 18 | cast(i32, 0x3f & ptr[1]) << 12 | cast(i32, 0x3f & ptr[2]) << 6 | 0x3f & ptr[3];
         *codepointSize = 4;
-    } else if 224 == (240 & cast(i32, ptr[0])) {
-        if cast(i32, ptr[1]) & 192 ^ 128 || cast(i32, ptr[2]) & 192 ^ 128 {
+    } else if 0xe0 == (0xf0 & cast(i32, ptr[0])) {
+        if cast(i32, ptr[1]) & 0xC0 ^ 0x80 || cast(i32, ptr[2]) & 0xC0 ^ 0x80 {
             return codepoint;
         }
-        codepoint = cast(i32, 15 & ptr[0]) << 12 | cast(i32, 63 & ptr[1]) << 6 | 63 & ptr[2];
+        codepoint = cast(i32, 0x0f & ptr[0]) << 12 | cast(i32, 0x3f & ptr[1]) << 6 | 0x3f & ptr[2];
         *codepointSize = 3;
-    } else if 192 == (224 & cast(i32, ptr[0])) {
-        if (cast(i32, ptr[1]) & 192 ^ 128) != 0 {
+    } else if 0xc0 == (0xe0 & cast(i32, ptr[0])) {
+        if (cast(i32, ptr[1]) & 0xC0 ^ 0x80) != 0 {
             return codepoint;
         }
-        codepoint = cast(i32, 31 & ptr[0]) << 6 | 63 & ptr[1];
+        codepoint = cast(i32, 0x1f & ptr[0]) << 6 | 0x3f & ptr[1];
         *codepointSize = 2;
-    } else if 0 == (128 & cast(i32, ptr[0])) {
+    } else if 0x00 == (0x80 & cast(i32, ptr[0])) {
         codepoint = ptr[0];
         *codepointSize = 1;
     }
     return codepoint;
 }
+
 // Get previous codepoint in a byte sequence and bytes processed
 i32 GetCodepointPrevious(u8* text, i32* codepointSize) {
     u8* ptr = text;
-    i32 codepoint = 63;
+    i32 codepoint = 0x3f;
     *codepointSize = 1;
     if text == null {
         return codepoint;
     }
     while true {
         ptr--;
-        if !((128 & cast(i32, ptr[0])) != 0 && (192 & cast(i32, ptr[0])) == 128) { break; }
+        if !((0x80 & cast(i32, ptr[0])) != 0 && (0xc0 & cast(i32, ptr[0])) == 0x80) { break; }
     }
     i32 cpSize = 0;
     codepoint = GetCodepointNext(ptr, &cpSize);
@@ -25045,6 +25236,7 @@ i32 GetCodepointPrevious(u8* text, i32* codepointSize) {
     }
     return codepoint;
 }
+
 //----------------------------------------------------------------------------------
 // Module Internal Functions Definition
 //----------------------------------------------------------------------------------
@@ -25063,6 +25255,7 @@ i32 GetLine(u8* origin, u8* buffer, i32 maxLength) {
     buffer[count] = 0;
     return count;
 }
+
 // Load a BMFont file (AngelCode font file)
 // REQUIRES: strstr(), sscanf(), strrchr(), memcpy()
 Font LoadBMFont(u8* fileName) {
@@ -25118,12 +25311,18 @@ Font LoadBMFont(u8* fileName) {
     for i32 i = 0; i < pageCount; i++ {
         imFonts[i] = LoadImage(TextFormat("%s/%s", GetDirectoryPath(fileName), imFileName[i]));
         if imFonts[i].format == PIXELFORMAT_UNCOMPRESSED_GRAYSCALE {
-            var imFontAlpha = Image{.data = cast(void*, new(u8[imFonts[i].width * imFonts[i].height * 2])), .width = imFonts[i].width, .height = imFonts[i].height, .mipmaps = 1, .format = PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA};
+            var imFontAlpha = Image{
+                .data = cast(void*, new(u8[imFonts[i].width * imFonts[i].height * 2])),
+                .width = imFonts[i].width,
+                .height = imFonts[i].height,
+                .mipmaps = 1,
+                .format = PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA,
+            };
             {
                 i32 p = 0;
                 i32 pi = 0;
                 for ; p < imFonts[i].width * imFonts[i].height * 2; p += 2 {
-                    cast(u8*, imFontAlpha.data)[p] = 255;
+                    cast(u8*, imFontAlpha.data)[p] = 0xff;
                     cast(u8*, imFontAlpha.data)[p + 1] = cast(u8*, imFonts[i].data)[pi];
                     pi++;
                 }
@@ -25140,7 +25339,9 @@ Font LoadBMFont(u8* fileName) {
         ImageResizeCanvas(&fullFont, imWidth, imHeight * pageCount, 0, 0, Color{0, 0, 0, 255});
         for i32 i = 1; i < pageCount; i++ {
             var srcRec = Rectangle{0.0f, 0.0f, cast(f32, imWidth), cast(f32, imHeight)};
-            var destRec = Rectangle{0.0f, cast(f32, imHeight) * cast(f32, i), cast(f32, imWidth), cast(f32, imHeight)};
+            var destRec = Rectangle{
+                0.0f, cast(f32, imHeight) * cast(f32, i), cast(f32, imWidth), cast(f32, imHeight),
+            };
             ImageDraw(&fullFont, imFonts[i], srcRec, destRec, Color{255, 255, 255, 255});
         }
     }
@@ -25165,7 +25366,10 @@ Font LoadBMFont(u8* fileName) {
         readVars = sscanf(buffer, "char id=%i x=%i y=%i width=%i height=%i xoffset=%i yoffset=%i xadvance=%i page=%i", &charId, &charX, &charY, &charWidth, &charHeight, &charOffsetX, &charOffsetY, &charAdvanceX, &pageID);
         fileTextPtr += readBytes + 1;
         if readVars == 9 {
-            font.recs[i] = Rectangle{cast(f32, charX), cast(f32, charY) + cast(f32, imHeight) * cast(f32, pageID), cast(f32, charWidth), cast(f32, charHeight)};
+            font.recs[i] = Rectangle{
+                cast(f32, charX), cast(f32, charY) + cast(f32, imHeight) * cast(f32, pageID),
+                cast(f32, charWidth), cast(f32, charHeight),
+            };
             font.glyphs[i].value = charId;
             font.glyphs[i].offsetX = charOffsetX;
             font.glyphs[i].offsetY = charOffsetY;
@@ -25185,363 +25389,42 @@ Font LoadBMFont(u8* fileName) {
     return font;
 }
 }
-/**********************************************************************************************
-*
-*   rmodels - Basic functions to draw 3d shapes and load and draw 3d models
-*
-*   CONFIGURATION:
-*       #define SUPPORT_MODULE_RMODELS      1
-*           rmodels module is included in the build
-*
-*       #define SUPPORT_FILEFORMAT_OBJ      1
-*       #define SUPPORT_FILEFORMAT_MTL      1
-*       #define SUPPORT_FILEFORMAT_IQM      1
-*       #define SUPPORT_FILEFORMAT_GLTF     1
-*       #define SUPPORT_FILEFORMAT_GLTF_WRITE   0
-*       #define SUPPORT_FILEFORMAT_VOX      1
-*       #define SUPPORT_FILEFORMAT_M3D      1
-*           Selected desired fileformats to be supported for model data loading
-*
-*       #define SUPPORT_MESH_GENERATION     1
-*           Support procedural mesh generation functions, uses external par_shapes.h library
-*           NOTE: Some generated meshes DO NOT include generated texture coordinates
-*
-*
-*   LICENSE: zlib/libpng
-*
-*   Copyright (c) 2013-2026 Ramon Santamaria (@raysan5)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*
-**********************************************************************************************/
-/**********************************************************************************************
-*
-*   raylib v6.1-dev - A simple and easy-to-use library to enjoy videogames programming (www.raylib.com)
-*
-*   FEATURES:
-*       - NO external dependencies, all required libraries included with raylib
-*       - Multiplatform: Windows, Linux, macOS, FreeBSD, Web, Android, Raspberry Pi, DRM native...
-*       - Written in plain C code (C99) in PascalCase/camelCase notation
-*       - Hardware accelerated with OpenGL (1.1, 2.1, 3.3, 4.3, ES2, ES3 - choose at compile)
-*       - Software renderer optional, for systems with no GPU: [rlsw]
-*       - Custom OpenGL abstraction layer (usable as standalone module): [rlgl]
-*       - Multiple Fonts formats supported (TTF, OTF, FNT, BDF, Sprite fonts)
-*       - Many texture formats supported, including compressed formats (DXT, ETC, ASTC)
-*       - Full 3d support for 3d Shapes, Models, Billboards, Heightmaps and more!
-*       - Flexible Materials system, supporting classic maps and PBR maps
-*       - Animated 3D models supported (skeletal bones animation) (IQM, M3D, GLTF)
-*       - Shaders support, including Model shaders and Postprocessing shaders
-*       - Powerful math module for Vector, Matrix and Quaternion operations: [raymath]
-*       - Audio loading and playing with streaming support (WAV, OGG, MP3, FLAC, QOA, XM, MOD)
-*       - VR stereo rendering with configurable HMD device parameters
-*       - Bindings to multiple programming languages available!
-*
-*   NOTES:
-*       - One default Font is loaded on InitWindow()->LoadFontDefault() [core, text]
-*       - One default Texture2D is loaded on rlglInit(), 1x1 white pixel R8G8B8A8 [rlgl] (OpenGL 3.3 or ES2)
-*       - One default Shader is loaded on rlglInit()->rlLoadShaderDefault() [rlgl] (OpenGL 3.3 or ES2)
-*       - One default RenderBatch is loaded on rlglInit()->rlLoadRenderBatch() [rlgl] (OpenGL 3.3 or ES2)
-*
-*   DEPENDENCIES:
-*       [rcore] Depends on the selected platform backend, check rcore.c header for details
-*       [rlgl] glad/glad_gles2 (David Herberth - github.com/Dav1dde/glad) for OpenGL extensions loading
-*       [raudio] miniaudio (David Reid - github.com/mackron/miniaudio) for audio device/context management
-*
-*   OPTIONAL DEPENDENCIES (included):
-*       [rcore] sinfl (Micha Mettke) for DEFLATE decompression algorithm
-*       [rcore] sdefl (Micha Mettke) for DEFLATE compression algorithm
-*       [rcore] rprand (Ramon Santamaria) for pseudo-random numbers generation
-*       [rtextures] qoi (Dominic Szablewski - https://phoboslab.org) for QOI image management
-*       [rtextures] stb_image (Sean Barrett) for images loading (BMP, TGA, PNG, JPEG, HDR...)
-*       [rtextures] stb_image_write (Sean Barrett) for image writing (BMP, TGA, PNG, JPG)
-*       [rtextures] stb_image_resize2 (Sean Barrett) for image resizing algorithms
-*       [rtextures] stb_perlin (Sean Barrett) for Perlin Noise image generation
-*       [rtextures] rltexgpu (Ramon Santamaria) for GPU-compressed texture formats
-*       [rtext] stb_truetype (Sean Barrett) for ttf fonts loading
-*       [rtext] stb_rect_pack (Sean Barrett) for rectangles packing
-*       [rmodels] par_shapes (Philip Rideout) for parametric 3d shapes generation
-*       [rmodels] tinyobj_loader_c (Syoyo Fujita) for models loading (OBJ, MTL)
-*       [rmodels] cgltf (Johannes Kuhlmann) for models loading (glTF)
-*       [rmodels] m3d (bzt) for models loading (M3D, https://bztsrc.gitlab.io/model3d)
-*       [rmodels] vox_loader (Johann Nadalutti) for models loading (VOX)
-*       [raudio] dr_wav (David Reid) for WAV audio file loading
-*       [raudio] dr_flac (David Reid) for FLAC audio file loading
-*       [raudio] dr_mp3 (David Reid) for MP3 audio file loading
-*       [raudio] stb_vorbis (Sean Barrett) for OGG audio loading
-*       [raudio] jar_xm (Joshua Reisenauer) for XM audio module loading
-*       [raudio] jar_mod (Joshua Reisenauer) for MOD audio module loading
-*       [raudio] qoa (Dominic Szablewski - https://phoboslab.org) for QOA audio management
-*
-*
-*   LICENSE: zlib/libpng
-*
-*   raylib is licensed under an unmodified zlib/libpng license, which is an OSI-certified,
-*   BSD-like license that allows static linking with closed source software:
-*
-*   Copyright (c) 2013-2026 Ramon Santamaria (@raysan5)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*
-**********************************************************************************************/
-// Declares module functions
-/**********************************************************************************************
-*
-*   raylib configuration flags
-*
-*   This file defines the configuration flags for different raylib features per-module
-*
-*   NOTE: Additional values are configured per-module and can be set on compile time
-*
-*   LICENSE: zlib/libpng
-*
-*   Copyright (c) 2018-2026 Ahmad Fatoum and Ramon Santamaria (@raysan5)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*
-**********************************************************************************************/
-// Defines module configuration flags
-/**********************************************************************************************
-*
-*   rlgl v6.0 - A multi-OpenGL abstraction layer with an immediate-mode style API
-*
-*   DESCRIPTION:
-*       An abstraction layer for multiple OpenGL versions (1.1, 2.1, 3.3 Core, 4.3 Core, ES 2.0, ES 3.0)
-*       that provides a pseudo-OpenGL 1.1 immediate-mode style API (rlVertex, rlTranslate, rlRotate...)
-*
-*   ADDITIONAL NOTES:
-*       When choosing an OpenGL backend different than OpenGL 1.1, some internal buffers are
-*       initialized on rlglInit() to accumulate vertex data
-*
-*       When an internal state change is required all the stored vertex data is rendered in a batch,
-*       additionally, rlDrawRenderBatchActive() could be called to force flushing of the batch
-*
-*       Some resources are also loaded for convenience, here the complete list:
-*          - Default batch (RLGL.defaultBatch): RenderBatch system to accumulate vertex data
-*          - Default texture (RLGL.defaultTextureId): 1x1 white pixel R8G8B8A8
-*          - Default shader (RLGL.State.defaultShaderId, RLGL.State.defaultShaderLocs)
-*
-*       Internal buffer (and resources) must be manually unloaded calling rlglClose()
-*
-*   CONFIGURATION:
-*       #define GRAPHICS_API_OPENGL_SOFTWARE
-*       #define GRAPHICS_API_OPENGL_11
-*       #define GRAPHICS_API_OPENGL_21
-*       #define GRAPHICS_API_OPENGL_33
-*       #define GRAPHICS_API_OPENGL_43
-*       #define GRAPHICS_API_OPENGL_ES2
-*       #define GRAPHICS_API_OPENGL_ES3
-*           Use selected OpenGL graphics backend, should be supported by platform
-*           Those preprocessor defines are only used on the rlgl module, if OpenGL version is
-*           required by any other module, use rlGetVersion() to check it
-*
-*       #define RLGL_IMPLEMENTATION
-*           Generates the implementation of the library into the included file
-*           If not defined, the library is in header only mode and can be included in other headers
-*           or source files without problems. But only ONE file should hold the implementation
-*
-*       #if RLGL_SHOW_GL_DETAILS_INFO
-*           Show OpenGL extensions and capabilities detailed logs on init
-*
-*       #if RLGL_ENABLE_OPENGL_DEBUG_CONTEXT
-*           Enable debug context (only available on OpenGL 4.3)
-*
-*       rlgl capabilities could be customized defining some internal
-*       values before library inclusion (default values listed):
-*
-*       #define RL_DEFAULT_BATCH_BUFFER_ELEMENTS   8192    // Default internal render batch elements limits
-*       #define RL_DEFAULT_BATCH_BUFFERS              1    // Default number of batch buffers (multi-buffering)
-*       #define RL_DEFAULT_BATCH_DRAWCALLS          256    // Default number of batch draw calls (by state changes: mode, texture)
-*       #define RL_DEFAULT_BATCH_MAX_TEXTURE_UNITS    4    // Maximum number of texture units that can be activated on batch drawing (SetShaderValueTexture())
-*
-*       #define RL_MAX_MATRIX_STACK_SIZE             32    // Maximum size of internal Matrix stack
-*       #define RL_MAX_SHADER_LOCATIONS              32    // Maximum number of shader locations supported
-*       #define RL_CULL_DISTANCE_NEAR              0.05    // Default projection matrix near cull distance
-*       #define RL_CULL_DISTANCE_FAR             4000.0    // Default projection matrix far cull distance
-*
-*       When loading a shader, the following vertex attributes and uniform
-*       location names are tried to be set automatically:
-*
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_POSITION     "vertexPosition"    // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_POSITION
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD     "vertexTexCoord"    // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_NORMAL       "vertexNormal"      // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_NORMAL
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_COLOR        "vertexColor"       // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_COLOR
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_TANGENT      "vertexTangent"     // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_TANGENT
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD2    "vertexTexCoord2"   // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD2
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_BONEINDICES  "vertexBoneIndices" // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEINDICES
-*       #define RL_DEFAULT_SHADER_ATTRIB_NAME_BONEWEIGHTS  "vertexBoneWeights" // Bound by default to shader location: RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEWEIGHTS
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_MVP         "mvp"               // model-view-projection matrix
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_VIEW        "matView"           // view matrix
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_PROJECTION  "matProjection"     // projection matrix
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_MODEL       "matModel"          // model matrix
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_NORMAL      "matNormal"         // normal matrix (transpose(inverse(matModelView)))
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_COLOR       "colDiffuse"        // color diffuse (base tint color, multiplied by texture color)
-*       #define RL_DEFAULT_SHADER_UNIFORM_NAME_BONEMATRICES "boneMatrices"     // bone matrices
-*       #define RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE0  "texture0"          // texture0 (texture slot active 0)
-*       #define RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE1  "texture1"          // texture1 (texture slot active 1)
-*       #define RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE2  "texture2"          // texture2 (texture slot active 2)
-*
-*   DEPENDENCIES:
-*      - OpenGL libraries (depending on platform and OpenGL version selected)
-*      - GLAD OpenGL extensions loading library (only for OpenGL 3.3 Core, 4.3 Core)
-*
-*
-*   LICENSE: zlib/libpng
-*
-*   Copyright (c) 2014-2026 Ramon Santamaria (@raysan5)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*
-**********************************************************************************************/
-/***********************************************************************************
-*
-*   RLGL IMPLEMENTATION
-*
-************************************************************************************/
-// OpenGL abstraction layer to OpenGL 1.1, 2.1, 3.3+ or ES2
-/**********************************************************************************************
-*
-*   raymath v2.0 - Math functions to work with Vector2, Vector3, Vector4, Matrix and Quaternions
-*
-*   CONVENTIONS:
-*     - Matrix structure is defined as row-major (memory layout) but parameters naming AND all
-*       math operations performed by the library consider the structure as it was column-major
-*       It is like transposed versions of the matrices are used for all the maths
-*       It benefits some functions making them cache-friendly and also avoids matrix
-*       transpositions sometimes required by OpenGL
-*       Example: In memory order, row0 is [m0 m4 m8 m12] but in semantic math row0 is [m0 m1 m2 m3]
-*     - Functions are always self-contained, no function use another raymath function inside,
-*       required code is directly re-implemented inside
-*     - Functions input parameters are always received by value (2 unavoidable exceptions)
-*     - Functions use always a "result" variable for return (except C++ operators)
-*     - Functions are always defined inline
-*     - Angles are always in radians (DEG2RAD/RAD2DEG macros provided for convenience)
-*     - No compound literals used to make sure the library is compatible with C++
-*
-*   CONFIGURATION:
-*       #define RAYMATH_IMPLEMENTATION
-*           Generates the implementation of the library into the included file
-*           If not defined, the library is in header only mode and can be included in other headers
-*           or source files without problems. But only ONE file should hold the implementation
-*
-*       #define RAYMATH_STATIC_INLINE
-*           Define static inline functions code, so #include header suffices for use
-*           This may use up lots of memory
-*
-*       #define RAYMATH_DISABLE_CPP_OPERATORS
-*           Disables C++ operator overloads for raymath types.
-*
-*       #define RAYMATH_USE_SIMD_INTRINSICS   1
-*           Try to enable SIMD intrinsics for MatrixMultiply()
-*           Note that users enabling it must be aware of the target platform where application will
-*           run to support the selected SIMD intrinsic, for now, only SSE is supported
-*
-*   LICENSE: zlib/libpng
-*
-*   Copyright (c) 2015-2026 Ramon Santamaria (@raysan5)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*
-**********************************************************************************************/
 // Required for: Vector3, Quaternion and Matrix functionality
 //----------------------------------------------------------------------------------
 // Defines and Macros
 //----------------------------------------------------------------------------------
-when !(defined(MAX_MESH_VERTEX_BUFFERS)) {
-}
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition
 //----------------------------------------------------------------------------------
 // Draw a line in 3D world space
 void DrawLine3D(Vector3 startPos, Vector3 endPos, Color color) {
-    rlBegin(1);
+    rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     rlVertex3f(startPos.x, startPos.y, startPos.z);
     rlVertex3f(endPos.x, endPos.y, endPos.z);
     rlEnd();
 }
+
 // Draw a point in 3D space, actually a small line
 // WARNING: OpenGL ES 2.0 does not support point mode drawing
 void DrawPoint3D(Vector3 position, Color color) {
     rlPushMatrix();
     rlTranslatef(position.x, position.y, position.z);
-    rlBegin(1);
+    rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     rlVertex3f(0.0f, 0.0f, 0.0f);
     rlVertex3f(0.0f, 0.0f, 0.1f);
     rlEnd();
     rlPopMatrix();
 }
+
 // Draw a circle in 3D world space
 void DrawCircle3D(Vector3 center, f32 radius, Vector3 rotationAxis, f32 rotationAngle, Color color) {
     rlPushMatrix();
     rlTranslatef(center.x, center.y, center.z);
     rlRotatef(rotationAngle, rotationAxis.x, rotationAxis.y, rotationAxis.z);
-    rlBegin(1);
+    rlBegin(0x0001);
     for i32 i = 0; i < 360; i += 10 {
         rlColor4ub(color.r, color.g, color.b, color.a);
         rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i)) * radius, cosf(3.141592653589793f / 180.0f * cast(f32, i)) * radius, 0.0f);
@@ -25550,21 +25433,23 @@ void DrawCircle3D(Vector3 center, f32 radius, Vector3 rotationAxis, f32 rotation
     rlEnd();
     rlPopMatrix();
 }
+
 // Draw a color-filled triangle (vertex in counter-clockwise order!)
 void DrawTriangle3D(Vector3 v1, Vector3 v2, Vector3 v3, Color color) {
-    rlBegin(4);
+    rlBegin(0x0004);
     rlColor4ub(color.r, color.g, color.b, color.a);
     rlVertex3f(v1.x, v1.y, v1.z);
     rlVertex3f(v2.x, v2.y, v2.z);
     rlVertex3f(v3.x, v3.y, v3.z);
     rlEnd();
 }
+
 // Draw a triangle strip defined by points
 void DrawTriangleStrip3D(Vector3* points, i32 pointCount, Color color) {
     if pointCount < 3 {
         return;
     }
-    rlBegin(4);
+    rlBegin(0x0004);
     rlColor4ub(color.r, color.g, color.b, color.a);
     for i32 i = 2; i < pointCount; i++ {
         if i % 2 == 0 {
@@ -25579,6 +25464,7 @@ void DrawTriangleStrip3D(Vector3* points, i32 pointCount, Color color) {
     }
     rlEnd();
 }
+
 // Draw cube
 // NOTE: Cube position is the center position
 void DrawCube(Vector3 position, f32 width, f32 height, f32 length, Color color) {
@@ -25587,7 +25473,7 @@ void DrawCube(Vector3 position, f32 width, f32 height, f32 length, Color color) 
     f32 z = 0.0f;
     rlPushMatrix();
     rlTranslatef(position.x, position.y, position.z);
-    rlBegin(4);
+    rlBegin(0x0004);
     rlColor4ub(color.r, color.g, color.b, color.a);
     rlNormal3f(0.0f, 0.0f, 1.0f);
     rlVertex3f(x - width / 2.0f, y - height / 2.0f, z + length / 2.0f);
@@ -25634,10 +25520,12 @@ void DrawCube(Vector3 position, f32 width, f32 height, f32 length, Color color) 
     rlEnd();
     rlPopMatrix();
 }
+
 // Draw cube (Vector version)
 void DrawCubeV(Vector3 position, Vector3 size, Color color) {
     DrawCube(position, size.x, size.y, size.z, color);
 }
+
 // Draw cube wires
 void DrawCubeWires(Vector3 position, f32 width, f32 height, f32 length, Color color) {
     f32 x = 0.0f;
@@ -25645,7 +25533,7 @@ void DrawCubeWires(Vector3 position, f32 width, f32 height, f32 length, Color co
     f32 z = 0.0f;
     rlPushMatrix();
     rlTranslatef(position.x, position.y, position.z);
-    rlBegin(1);
+    rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     rlVertex3f(x - width / 2.0f, y - height / 2.0f, z + length / 2.0f);
     rlVertex3f(x + width / 2.0f, y - height / 2.0f, z + length / 2.0f);
@@ -25674,20 +25562,23 @@ void DrawCubeWires(Vector3 position, f32 width, f32 height, f32 length, Color co
     rlEnd();
     rlPopMatrix();
 }
+
 // Draw cube wires (vector version)
 void DrawCubeWiresV(Vector3 position, Vector3 size, Color color) {
     DrawCubeWires(position, size.x, size.y, size.z, color);
 }
+
 // Draw sphere
 void DrawSphere(Vector3 centerPos, f32 radius, Color color) {
     DrawSphereEx(centerPos, radius, 16, 16, color);
 }
+
 // Draw sphere with extended parameters
 void DrawSphereEx(Vector3 centerPos, f32 radius, i32 rings, i32 slices, Color color) {
     rlPushMatrix();
     rlTranslatef(centerPos.x, centerPos.y, centerPos.z);
     rlScalef(radius, radius, radius);
-    rlBegin(4);
+    rlBegin(0x0004);
     rlColor4ub(color.r, color.g, color.b, color.a);
     f32 ringangle = 3.141592653589793f / 180.0f * (180.0f / cast(f32, rings + 1));
     f32 sliceangle = 3.141592653589793f / 180.0f * (360.0f / cast(f32, slices));
@@ -25702,8 +25593,14 @@ void DrawSphereEx(Vector3 centerPos, f32 radius, i32 rings, i32 slices, Color co
         for i32 j = 0; j < slices; j++ {
             vertices[0] = vertices[2];
             vertices[1] = vertices[3];
-            vertices[2] = Vector3{cosslice * vertices[2].x - sinslice * vertices[2].z, vertices[2].y, sinslice * vertices[2].x + cosslice * vertices[2].z};
-            vertices[3] = Vector3{cosslice * vertices[3].x - sinslice * vertices[3].z, vertices[3].y, sinslice * vertices[3].x + cosslice * vertices[3].z};
+            vertices[2] = Vector3{
+                cosslice * vertices[2].x - sinslice * vertices[2].z, vertices[2].y,
+                sinslice * vertices[2].x + cosslice * vertices[2].z,
+            };
+            vertices[3] = Vector3{
+                cosslice * vertices[3].x - sinslice * vertices[3].z, vertices[3].y,
+                sinslice * vertices[3].x + cosslice * vertices[3].z,
+            };
             rlNormal3f(vertices[0].x, vertices[0].y, vertices[0].z);
             rlVertex3f(vertices[0].x, vertices[0].y, vertices[0].z);
             rlNormal3f(vertices[3].x, vertices[3].y, vertices[3].z);
@@ -25718,17 +25615,21 @@ void DrawSphereEx(Vector3 centerPos, f32 radius, i32 rings, i32 slices, Color co
             rlVertex3f(vertices[3].x, vertices[3].y, vertices[3].z);
         }
         vertices[2] = vertices[3];
-        vertices[3] = Vector3{cosring * vertices[3].x + sinring * vertices[3].y, -sinring * vertices[3].x + cosring * vertices[3].y, vertices[3].z};
+        vertices[3] = Vector3{
+            cosring * vertices[3].x + sinring * vertices[3].y,
+            -sinring * vertices[3].x + cosring * vertices[3].y, vertices[3].z,
+        };
     }
     rlEnd();
     rlPopMatrix();
 }
+
 // Draw sphere wires
 void DrawSphereWires(Vector3 centerPos, f32 radius, i32 rings, i32 slices, Color color) {
     rlPushMatrix();
     rlTranslatef(centerPos.x, centerPos.y, centerPos.z);
     rlScalef(radius, radius, radius);
-    rlBegin(1);
+    rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     for i32 i = 0; i < rings + 2; i++ {
         for i32 j = 0; j < slices; j++ {
@@ -25743,6 +25644,7 @@ void DrawSphereWires(Vector3 centerPos, f32 radius, i32 rings, i32 slices, Color
     rlEnd();
     rlPopMatrix();
 }
+
 // Draw a cylinder
 // NOTE: It could be also used for pyramid and cone
 void DrawCylinder(Vector3 position, f32 radiusTop, f32 radiusBottom, f32 height, i32 sides, Color color) {
@@ -25752,7 +25654,7 @@ void DrawCylinder(Vector3 position, f32 radiusTop, f32 radiusBottom, f32 height,
     f32 angleStep = 360.0f / cast(f32, sides);
     rlPushMatrix();
     rlTranslatef(position.x, position.y, position.z);
-    rlBegin(4);
+    rlBegin(0x0004);
     rlColor4ub(color.r, color.g, color.b, color.a);
     if radiusTop > 0.0f {
         for i32 i = 0; i < sides; i++ {
@@ -25783,6 +25685,7 @@ void DrawCylinder(Vector3 position, f32 radiusTop, f32 radiusBottom, f32 height,
     rlEnd();
     rlPopMatrix();
 }
+
 // Draw a cylinder with base at startPos and top at endPos
 // NOTE: It could be also used for pyramid and cone
 void DrawCylinderEx(Vector3 startPos, Vector3 endPos, f32 startRadius, f32 endRadius, i32 sides, Color color) {
@@ -25796,21 +25699,33 @@ void DrawCylinderEx(Vector3 startPos, Vector3 endPos, f32 startRadius, f32 endRa
     Vector3 b1 = Vector3Normalize(Vector3Perpendicular(direction));
     Vector3 b2 = Vector3Normalize(Vector3CrossProduct(b1, direction));
     f32 baseAngle = 2.0f * 3.141592653589793f / cast(f32, sides);
-    rlBegin(4);
+    rlBegin(0x0004);
     rlColor4ub(color.r, color.g, color.b, color.a);
     for i32 i = 0; i < sides; i++ {
         f32 s1 = sinf(baseAngle * cast(f32, i + 0)) * startRadius;
         f32 c1 = cosf(baseAngle * cast(f32, i + 0)) * startRadius;
-        var w1 = Vector3{startPos.x + s1 * b1.x + c1 * b2.x, startPos.y + s1 * b1.y + c1 * b2.y, startPos.z + s1 * b1.z + c1 * b2.z};
+        var w1 = Vector3{
+            startPos.x + s1 * b1.x + c1 * b2.x, startPos.y + s1 * b1.y + c1 * b2.y,
+            startPos.z + s1 * b1.z + c1 * b2.z,
+        };
         f32 s2 = sinf(baseAngle * cast(f32, i + 1)) * startRadius;
         f32 c2 = cosf(baseAngle * cast(f32, i + 1)) * startRadius;
-        var w2 = Vector3{startPos.x + s2 * b1.x + c2 * b2.x, startPos.y + s2 * b1.y + c2 * b2.y, startPos.z + s2 * b1.z + c2 * b2.z};
+        var w2 = Vector3{
+            startPos.x + s2 * b1.x + c2 * b2.x, startPos.y + s2 * b1.y + c2 * b2.y,
+            startPos.z + s2 * b1.z + c2 * b2.z,
+        };
         f32 s3 = sinf(baseAngle * cast(f32, i + 0)) * endRadius;
         f32 c3 = cosf(baseAngle * cast(f32, i + 0)) * endRadius;
-        var w3 = Vector3{endPos.x + s3 * b1.x + c3 * b2.x, endPos.y + s3 * b1.y + c3 * b2.y, endPos.z + s3 * b1.z + c3 * b2.z};
+        var w3 = Vector3{
+            endPos.x + s3 * b1.x + c3 * b2.x, endPos.y + s3 * b1.y + c3 * b2.y,
+            endPos.z + s3 * b1.z + c3 * b2.z,
+        };
         f32 s4 = sinf(baseAngle * cast(f32, i + 1)) * endRadius;
         f32 c4 = cosf(baseAngle * cast(f32, i + 1)) * endRadius;
-        var w4 = Vector3{endPos.x + s4 * b1.x + c4 * b2.x, endPos.y + s4 * b1.y + c4 * b2.y, endPos.z + s4 * b1.z + c4 * b2.z};
+        var w4 = Vector3{
+            endPos.x + s4 * b1.x + c4 * b2.x, endPos.y + s4 * b1.y + c4 * b2.y,
+            endPos.z + s4 * b1.z + c4 * b2.z,
+        };
         if startRadius > 0.0f {
             rlVertex3f(startPos.x, startPos.y, startPos.z);
             rlVertex3f(w2.x, w2.y, w2.z);
@@ -25830,6 +25745,7 @@ void DrawCylinderEx(Vector3 startPos, Vector3 endPos, f32 startRadius, f32 endRa
     }
     rlEnd();
 }
+
 // Draw a wired cylinder
 // NOTE: It could be also used for pyramid and cone
 void DrawCylinderWires(Vector3 position, f32 radiusTop, f32 radiusBottom, f32 height, i32 sides, Color color) {
@@ -25839,7 +25755,7 @@ void DrawCylinderWires(Vector3 position, f32 radiusTop, f32 radiusBottom, f32 he
     f32 angleStep = 360.0f / cast(f32, sides);
     rlPushMatrix();
     rlTranslatef(position.x, position.y, position.z);
-    rlBegin(1);
+    rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     for i32 i = 0; i < sides; i++ {
         rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom, 0.0f, cosf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom);
@@ -25854,6 +25770,7 @@ void DrawCylinderWires(Vector3 position, f32 radiusTop, f32 radiusBottom, f32 he
     rlEnd();
     rlPopMatrix();
 }
+
 // Draw a wired cylinder with base at startPos and top at endPos
 // NOTE: It could be also used for pyramid and cone
 void DrawCylinderWiresEx(Vector3 startPos, Vector3 endPos, f32 startRadius, f32 endRadius, i32 slices, Color color) {
@@ -25867,21 +25784,33 @@ void DrawCylinderWiresEx(Vector3 startPos, Vector3 endPos, f32 startRadius, f32 
     Vector3 b1 = Vector3Normalize(Vector3Perpendicular(direction));
     Vector3 b2 = Vector3Normalize(Vector3CrossProduct(b1, direction));
     f32 baseAngle = 2.0f * 3.141592653589793f / cast(f32, slices);
-    rlBegin(1);
+    rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     for i32 i = 0; i < slices; i++ {
         f32 s1 = sinf(baseAngle * cast(f32, i + 0)) * startRadius;
         f32 c1 = cosf(baseAngle * cast(f32, i + 0)) * startRadius;
-        var w1 = Vector3{startPos.x + s1 * b1.x + c1 * b2.x, startPos.y + s1 * b1.y + c1 * b2.y, startPos.z + s1 * b1.z + c1 * b2.z};
+        var w1 = Vector3{
+            startPos.x + s1 * b1.x + c1 * b2.x, startPos.y + s1 * b1.y + c1 * b2.y,
+            startPos.z + s1 * b1.z + c1 * b2.z,
+        };
         f32 s2 = sinf(baseAngle * cast(f32, i + 1)) * startRadius;
         f32 c2 = cosf(baseAngle * cast(f32, i + 1)) * startRadius;
-        var w2 = Vector3{startPos.x + s2 * b1.x + c2 * b2.x, startPos.y + s2 * b1.y + c2 * b2.y, startPos.z + s2 * b1.z + c2 * b2.z};
+        var w2 = Vector3{
+            startPos.x + s2 * b1.x + c2 * b2.x, startPos.y + s2 * b1.y + c2 * b2.y,
+            startPos.z + s2 * b1.z + c2 * b2.z,
+        };
         f32 s3 = sinf(baseAngle * cast(f32, i + 0)) * endRadius;
         f32 c3 = cosf(baseAngle * cast(f32, i + 0)) * endRadius;
-        var w3 = Vector3{endPos.x + s3 * b1.x + c3 * b2.x, endPos.y + s3 * b1.y + c3 * b2.y, endPos.z + s3 * b1.z + c3 * b2.z};
+        var w3 = Vector3{
+            endPos.x + s3 * b1.x + c3 * b2.x, endPos.y + s3 * b1.y + c3 * b2.y,
+            endPos.z + s3 * b1.z + c3 * b2.z,
+        };
         f32 s4 = sinf(baseAngle * cast(f32, i + 1)) * endRadius;
         f32 c4 = cosf(baseAngle * cast(f32, i + 1)) * endRadius;
-        var w4 = Vector3{endPos.x + s4 * b1.x + c4 * b2.x, endPos.y + s4 * b1.y + c4 * b2.y, endPos.z + s4 * b1.z + c4 * b2.z};
+        var w4 = Vector3{
+            endPos.x + s4 * b1.x + c4 * b2.x, endPos.y + s4 * b1.y + c4 * b2.y,
+            endPos.z + s4 * b1.z + c4 * b2.z,
+        };
         rlVertex3f(w1.x, w1.y, w1.z);
         rlVertex3f(w2.x, w2.y, w2.z);
         rlVertex3f(w1.x, w1.y, w1.z);
@@ -25891,6 +25820,7 @@ void DrawCylinderWiresEx(Vector3 startPos, Vector3 endPos, f32 startRadius, f32 
     }
     rlEnd();
 }
+
 // Draw a capsule with the center of its sphere caps at startPos and endPos
 void DrawCapsule(Vector3 startPos, Vector3 endPos, f32 radius, i32 rings, i32 slices, Color color) {
     if slices < 3 {
@@ -25907,23 +25837,39 @@ void DrawCapsule(Vector3 startPos, Vector3 endPos, f32 radius, i32 rings, i32 sl
     Vector3 capCenter = endPos;
     f32 baseSliceAngle = 2.0f * 3.141592653589793f / cast(f32, slices);
     f32 baseRingAngle = 3.141592653589793f * 0.5f / cast(f32, rings);
-    rlBegin(4);
+    rlBegin(0x0004);
     rlColor4ub(color.r, color.g, color.b, color.a);
     for i32 c = 0; c < 2; c++ {
         for i32 i = 0; i < rings; i++ {
             for i32 j = 0; j < slices; j++ {
                 f32 ringSin1 = sinf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 0));
                 f32 ringCos1 = cosf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 0));
-                var w1 = Vector3{capCenter.x + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin1 * b1.x + ringCos1 * b2.x) * radius, capCenter.y + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin1 * b1.y + ringCos1 * b2.y) * radius, capCenter.z + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin1 * b1.z + ringCos1 * b2.z) * radius};
+                var w1 = Vector3{
+                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin1 * b1.x + ringCos1 * b2.x) * radius,
+                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin1 * b1.y + ringCos1 * b2.y) * radius,
+                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin1 * b1.z + ringCos1 * b2.z) * radius,
+                };
                 f32 ringSin2 = sinf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 0));
                 f32 ringCos2 = cosf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 0));
-                var w2 = Vector3{capCenter.x + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin2 * b1.x + ringCos2 * b2.x) * radius, capCenter.y + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin2 * b1.y + ringCos2 * b2.y) * radius, capCenter.z + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin2 * b1.z + ringCos2 * b2.z) * radius};
+                var w2 = Vector3{
+                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin2 * b1.x + ringCos2 * b2.x) * radius,
+                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin2 * b1.y + ringCos2 * b2.y) * radius,
+                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin2 * b1.z + ringCos2 * b2.z) * radius,
+                };
                 f32 ringSin3 = sinf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 1));
                 f32 ringCos3 = cosf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 1));
-                var w3 = Vector3{capCenter.x + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin3 * b1.x + ringCos3 * b2.x) * radius, capCenter.y + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin3 * b1.y + ringCos3 * b2.y) * radius, capCenter.z + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin3 * b1.z + ringCos3 * b2.z) * radius};
+                var w3 = Vector3{
+                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin3 * b1.x + ringCos3 * b2.x) * radius,
+                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin3 * b1.y + ringCos3 * b2.y) * radius,
+                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin3 * b1.z + ringCos3 * b2.z) * radius,
+                };
                 f32 ringSin4 = sinf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 1));
                 f32 ringCos4 = cosf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 1));
-                var w4 = Vector3{capCenter.x + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin4 * b1.x + ringCos4 * b2.x) * radius, capCenter.y + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin4 * b1.y + ringCos4 * b2.y) * radius, capCenter.z + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin4 * b1.z + ringCos4 * b2.z) * radius};
+                var w4 = Vector3{
+                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin4 * b1.x + ringCos4 * b2.x) * radius,
+                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin4 * b1.y + ringCos4 * b2.y) * radius,
+                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin4 * b1.z + ringCos4 * b2.z) * radius,
+                };
                 if c == 0 {
                     rlVertex3f(w1.x, w1.y, w1.z);
                     rlVertex3f(w2.x, w2.y, w2.z);
@@ -25948,16 +25894,32 @@ void DrawCapsule(Vector3 startPos, Vector3 endPos, f32 radius, i32 rings, i32 sl
         for i32 j = 0; j < slices; j++ {
             f32 ringSin1 = sinf(baseSliceAngle * cast(f32, j + 0)) * radius;
             f32 ringCos1 = cosf(baseSliceAngle * cast(f32, j + 0)) * radius;
-            var w1 = Vector3{startPos.x + ringSin1 * b1.x + ringCos1 * b2.x, startPos.y + ringSin1 * b1.y + ringCos1 * b2.y, startPos.z + ringSin1 * b1.z + ringCos1 * b2.z};
+            var w1 = Vector3{
+                startPos.x + ringSin1 * b1.x + ringCos1 * b2.x,
+                startPos.y + ringSin1 * b1.y + ringCos1 * b2.y,
+                startPos.z + ringSin1 * b1.z + ringCos1 * b2.z,
+            };
             f32 ringSin2 = sinf(baseSliceAngle * cast(f32, j + 1)) * radius;
             f32 ringCos2 = cosf(baseSliceAngle * cast(f32, j + 1)) * radius;
-            var w2 = Vector3{startPos.x + ringSin2 * b1.x + ringCos2 * b2.x, startPos.y + ringSin2 * b1.y + ringCos2 * b2.y, startPos.z + ringSin2 * b1.z + ringCos2 * b2.z};
+            var w2 = Vector3{
+                startPos.x + ringSin2 * b1.x + ringCos2 * b2.x,
+                startPos.y + ringSin2 * b1.y + ringCos2 * b2.y,
+                startPos.z + ringSin2 * b1.z + ringCos2 * b2.z,
+            };
             f32 ringSin3 = sinf(baseSliceAngle * cast(f32, j + 0)) * radius;
             f32 ringCos3 = cosf(baseSliceAngle * cast(f32, j + 0)) * radius;
-            var w3 = Vector3{endPos.x + ringSin3 * b1.x + ringCos3 * b2.x, endPos.y + ringSin3 * b1.y + ringCos3 * b2.y, endPos.z + ringSin3 * b1.z + ringCos3 * b2.z};
+            var w3 = Vector3{
+                endPos.x + ringSin3 * b1.x + ringCos3 * b2.x,
+                endPos.y + ringSin3 * b1.y + ringCos3 * b2.y,
+                endPos.z + ringSin3 * b1.z + ringCos3 * b2.z,
+            };
             f32 ringSin4 = sinf(baseSliceAngle * cast(f32, j + 1)) * radius;
             f32 ringCos4 = cosf(baseSliceAngle * cast(f32, j + 1)) * radius;
-            var w4 = Vector3{endPos.x + ringSin4 * b1.x + ringCos4 * b2.x, endPos.y + ringSin4 * b1.y + ringCos4 * b2.y, endPos.z + ringSin4 * b1.z + ringCos4 * b2.z};
+            var w4 = Vector3{
+                endPos.x + ringSin4 * b1.x + ringCos4 * b2.x,
+                endPos.y + ringSin4 * b1.y + ringCos4 * b2.y,
+                endPos.z + ringSin4 * b1.z + ringCos4 * b2.z,
+            };
             rlVertex3f(w1.x, w1.y, w1.z);
             rlVertex3f(w2.x, w2.y, w2.z);
             rlVertex3f(w3.x, w3.y, w3.z);
@@ -25968,6 +25930,7 @@ void DrawCapsule(Vector3 startPos, Vector3 endPos, f32 radius, i32 rings, i32 sl
     }
     rlEnd();
 }
+
 // Draw capsule wires with the center of its sphere caps at startPos and endPos
 void DrawCapsuleWires(Vector3 startPos, Vector3 endPos, f32 radius, i32 rings, i32 slices, Color color) {
     if slices < 3 {
@@ -25984,23 +25947,39 @@ void DrawCapsuleWires(Vector3 startPos, Vector3 endPos, f32 radius, i32 rings, i
     Vector3 capCenter = endPos;
     f32 baseSliceAngle = 2.0f * 3.141592653589793f / cast(f32, slices);
     f32 baseRingAngle = 3.141592653589793f * 0.5f / cast(f32, rings);
-    rlBegin(1);
+    rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     for i32 c = 0; c < 2; c++ {
         for i32 i = 0; i < rings; i++ {
             for i32 j = 0; j < slices; j++ {
                 f32 ringSin1 = sinf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 0));
                 f32 ringCos1 = cosf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 0));
-                var w1 = Vector3{capCenter.x + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin1 * b1.x + ringCos1 * b2.x) * radius, capCenter.y + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin1 * b1.y + ringCos1 * b2.y) * radius, capCenter.z + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin1 * b1.z + ringCos1 * b2.z) * radius};
+                var w1 = Vector3{
+                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin1 * b1.x + ringCos1 * b2.x) * radius,
+                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin1 * b1.y + ringCos1 * b2.y) * radius,
+                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin1 * b1.z + ringCos1 * b2.z) * radius,
+                };
                 f32 ringSin2 = sinf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 0));
                 f32 ringCos2 = cosf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 0));
-                var w2 = Vector3{capCenter.x + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin2 * b1.x + ringCos2 * b2.x) * radius, capCenter.y + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin2 * b1.y + ringCos2 * b2.y) * radius, capCenter.z + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin2 * b1.z + ringCos2 * b2.z) * radius};
+                var w2 = Vector3{
+                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin2 * b1.x + ringCos2 * b2.x) * radius,
+                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin2 * b1.y + ringCos2 * b2.y) * radius,
+                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin2 * b1.z + ringCos2 * b2.z) * radius,
+                };
                 f32 ringSin3 = sinf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 1));
                 f32 ringCos3 = cosf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 1));
-                var w3 = Vector3{capCenter.x + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin3 * b1.x + ringCos3 * b2.x) * radius, capCenter.y + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin3 * b1.y + ringCos3 * b2.y) * radius, capCenter.z + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin3 * b1.z + ringCos3 * b2.z) * radius};
+                var w3 = Vector3{
+                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin3 * b1.x + ringCos3 * b2.x) * radius,
+                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin3 * b1.y + ringCos3 * b2.y) * radius,
+                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin3 * b1.z + ringCos3 * b2.z) * radius,
+                };
                 f32 ringSin4 = sinf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 1));
                 f32 ringCos4 = cosf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 1));
-                var w4 = Vector3{capCenter.x + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin4 * b1.x + ringCos4 * b2.x) * radius, capCenter.y + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin4 * b1.y + ringCos4 * b2.y) * radius, capCenter.z + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin4 * b1.z + ringCos4 * b2.z) * radius};
+                var w4 = Vector3{
+                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin4 * b1.x + ringCos4 * b2.x) * radius,
+                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin4 * b1.y + ringCos4 * b2.y) * radius,
+                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin4 * b1.z + ringCos4 * b2.z) * radius,
+                };
                 rlVertex3f(w1.x, w1.y, w1.z);
                 rlVertex3f(w2.x, w2.y, w2.z);
                 rlVertex3f(w2.x, w2.y, w2.z);
@@ -26020,16 +25999,32 @@ void DrawCapsuleWires(Vector3 startPos, Vector3 endPos, f32 radius, i32 rings, i
         for i32 j = 0; j < slices; j++ {
             f32 ringSin1 = sinf(baseSliceAngle * cast(f32, j + 0)) * radius;
             f32 ringCos1 = cosf(baseSliceAngle * cast(f32, j + 0)) * radius;
-            var w1 = Vector3{startPos.x + ringSin1 * b1.x + ringCos1 * b2.x, startPos.y + ringSin1 * b1.y + ringCos1 * b2.y, startPos.z + ringSin1 * b1.z + ringCos1 * b2.z};
+            var w1 = Vector3{
+                startPos.x + ringSin1 * b1.x + ringCos1 * b2.x,
+                startPos.y + ringSin1 * b1.y + ringCos1 * b2.y,
+                startPos.z + ringSin1 * b1.z + ringCos1 * b2.z,
+            };
             f32 ringSin2 = sinf(baseSliceAngle * cast(f32, j + 1)) * radius;
             f32 ringCos2 = cosf(baseSliceAngle * cast(f32, j + 1)) * radius;
-            var w2 = Vector3{startPos.x + ringSin2 * b1.x + ringCos2 * b2.x, startPos.y + ringSin2 * b1.y + ringCos2 * b2.y, startPos.z + ringSin2 * b1.z + ringCos2 * b2.z};
+            var w2 = Vector3{
+                startPos.x + ringSin2 * b1.x + ringCos2 * b2.x,
+                startPos.y + ringSin2 * b1.y + ringCos2 * b2.y,
+                startPos.z + ringSin2 * b1.z + ringCos2 * b2.z,
+            };
             f32 ringSin3 = sinf(baseSliceAngle * cast(f32, j + 0)) * radius;
             f32 ringCos3 = cosf(baseSliceAngle * cast(f32, j + 0)) * radius;
-            var w3 = Vector3{endPos.x + ringSin3 * b1.x + ringCos3 * b2.x, endPos.y + ringSin3 * b1.y + ringCos3 * b2.y, endPos.z + ringSin3 * b1.z + ringCos3 * b2.z};
+            var w3 = Vector3{
+                endPos.x + ringSin3 * b1.x + ringCos3 * b2.x,
+                endPos.y + ringSin3 * b1.y + ringCos3 * b2.y,
+                endPos.z + ringSin3 * b1.z + ringCos3 * b2.z,
+            };
             f32 ringSin4 = sinf(baseSliceAngle * cast(f32, j + 1)) * radius;
             f32 ringCos4 = cosf(baseSliceAngle * cast(f32, j + 1)) * radius;
-            var w4 = Vector3{endPos.x + ringSin4 * b1.x + ringCos4 * b2.x, endPos.y + ringSin4 * b1.y + ringCos4 * b2.y, endPos.z + ringSin4 * b1.z + ringCos4 * b2.z};
+            var w4 = Vector3{
+                endPos.x + ringSin4 * b1.x + ringCos4 * b2.x,
+                endPos.y + ringSin4 * b1.y + ringCos4 * b2.y,
+                endPos.z + ringSin4 * b1.z + ringCos4 * b2.z,
+            };
             rlVertex3f(w1.x, w1.y, w1.z);
             rlVertex3f(w3.x, w3.y, w3.z);
             rlVertex3f(w2.x, w2.y, w2.z);
@@ -26040,12 +26035,13 @@ void DrawCapsuleWires(Vector3 startPos, Vector3 endPos, f32 radius, i32 rings, i
     }
     rlEnd();
 }
+
 // Draw a plane
 void DrawPlane(Vector3 centerPos, Vector2 size, Color color) {
     rlPushMatrix();
     rlTranslatef(centerPos.x, centerPos.y, centerPos.z);
     rlScalef(size.x, 1.0f, size.y);
-    rlBegin(7);
+    rlBegin(0x0007);
     rlColor4ub(color.r, color.g, color.b, color.a);
     rlNormal3f(0.0f, 1.0f, 0.0f);
     rlVertex3f(-0.5f, 0.0f, -0.5f);
@@ -26055,20 +26051,22 @@ void DrawPlane(Vector3 centerPos, Vector2 size, Color color) {
     rlEnd();
     rlPopMatrix();
 }
+
 // Draw a ray line
 void DrawRay(Ray ray, Color color) {
     f32 scale = 10000.0f;
-    rlBegin(1);
+    rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     rlColor4ub(color.r, color.g, color.b, color.a);
     rlVertex3f(ray.position.x, ray.position.y, ray.position.z);
     rlVertex3f(ray.position.x + ray.direction.x * scale, ray.position.y + ray.direction.y * scale, ray.position.z + ray.direction.z * scale);
     rlEnd();
 }
+
 // Draw a grid centered at (0, 0, 0)
 void DrawGrid(i32 slices, f32 spacing) {
     i32 halfSlices = slices / 2;
-    rlBegin(1);
+    rlBegin(0x0001);
     for i32 i = -halfSlices; i <= halfSlices; i++ {
         if i == 0 {
             rlColor3f(0.5f, 0.5f, 0.5f);
@@ -26082,6 +26080,7 @@ void DrawGrid(i32 slices, f32 spacing) {
     }
     rlEnd();
 }
+
 // Load model from files (mesh and material)
 Model LoadModel(u8* fileName) {
     Model model;
@@ -26102,6 +26101,7 @@ Model LoadModel(u8* fileName) {
     }
     return model;
 }
+
 // Load model from generated mesh
 // WARNING: A shallow copy of mesh is generated, passed by value,
 // as long as struct contains pointers to data and some values, get a copy
@@ -26119,6 +26119,7 @@ Model LoadModelFromMesh(Mesh mesh) {
     model.meshMaterial[0] = 0;
     return model;
 }
+
 // Check if a model is valid (loaded in GPU, VAO/VBOs)
 bool IsModelValid(Model model) {
     bool result = false;
@@ -26157,6 +26158,7 @@ bool IsModelValid(Model model) {
     }
     return result;
 }
+
 // Unload model (meshes/materials) from memory (RAM and/or VRAM)
 // NOTE: This function takes care of all model elements, for a detailed control
 // over them, use UnloadMesh() and UnloadMaterial()
@@ -26173,6 +26175,7 @@ void UnloadModel(Model model) {
     free(model.skeleton.bones);
     free(model.skeleton.bindPose);
 }
+
 // Compute model bounding box limits (considers all meshes)
 BoundingBox GetModelBoundingBox(Model model) {
     BoundingBox bounds;
@@ -26195,6 +26198,7 @@ BoundingBox GetModelBoundingBox(Model model) {
     bounds.max = Vector3Transform(bounds.max, model.transform);
     return bounds;
 }
+
 // Upload vertex data into a VAO (if supported) and VBO
 void UploadMesh(Mesh* mesh, bool dynamic) {
     if mesh.vaoId > 0 {
@@ -26213,11 +26217,11 @@ void UploadMesh(Mesh* mesh, bool dynamic) {
     rlEnableVertexArray(mesh.vaoId);
     void* vertices = mesh.animVertices != null ? mesh.animVertices : mesh.vertices;
     mesh.vboId[0] = rlLoadVertexBuffer(vertices, cast(i32, mesh.vertexCount * 3 * sizeof(f32)), dynamic);
-    rlSetVertexAttribute(0, 3, 5126, 0 != 0, 0, 0);
+    rlSetVertexAttribute(0, 3, 0x1406, 0 != 0, 0, 0);
     rlEnableVertexAttribute(0);
     if mesh.texcoords != null {
         mesh.vboId[1] = rlLoadVertexBuffer(mesh.texcoords, cast(i32, mesh.vertexCount * 2 * sizeof(f32)), dynamic);
-        rlSetVertexAttribute(1, 2, 5126, 0 != 0, 0, 0);
+        rlSetVertexAttribute(1, 2, 0x1406, 0 != 0, 0, 0);
         rlEnableVertexAttribute(1);
     } else {
         f32[2] value = {0.0f, 0.0f};
@@ -26227,7 +26231,7 @@ void UploadMesh(Mesh* mesh, bool dynamic) {
     if mesh.normals != null {
         void* normals = mesh.animNormals != null ? mesh.animNormals : mesh.normals;
         mesh.vboId[2] = rlLoadVertexBuffer(normals, cast(i32, mesh.vertexCount * 3 * sizeof(f32)), dynamic);
-        rlSetVertexAttribute(2, 3, 5126, 0 != 0, 0, 0);
+        rlSetVertexAttribute(2, 3, 0x1406, 0 != 0, 0, 0);
         rlEnableVertexAttribute(2);
     } else {
         f32[3] value = {0.0f, 0.0f, 1.0f};
@@ -26236,7 +26240,7 @@ void UploadMesh(Mesh* mesh, bool dynamic) {
     }
     if mesh.colors != null {
         mesh.vboId[3] = rlLoadVertexBuffer(mesh.colors, cast(i32, mesh.vertexCount * 4 * sizeof(u8)), dynamic);
-        rlSetVertexAttribute(3, 4, 5121, 1 != 0, 0, 0);
+        rlSetVertexAttribute(3, 4, 0x1401, 1 != 0, 0, 0);
         rlEnableVertexAttribute(3);
     } else {
         f32[4] value = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -26245,7 +26249,7 @@ void UploadMesh(Mesh* mesh, bool dynamic) {
     }
     if mesh.tangents != null {
         mesh.vboId[4] = rlLoadVertexBuffer(mesh.tangents, cast(i32, mesh.vertexCount * 4 * sizeof(f32)), dynamic);
-        rlSetVertexAttribute(4, 4, 5126, 0 != 0, 0, 0);
+        rlSetVertexAttribute(4, 4, 0x1406, 0 != 0, 0, 0);
         rlEnableVertexAttribute(4);
     } else {
         f32[4] value = {1.0f, 0.0f, 0.0f, 1.0f};
@@ -26254,7 +26258,7 @@ void UploadMesh(Mesh* mesh, bool dynamic) {
     }
     if mesh.texcoords2 != null {
         mesh.vboId[5] = rlLoadVertexBuffer(mesh.texcoords2, cast(i32, mesh.vertexCount * 2 * sizeof(f32)), dynamic);
-        rlSetVertexAttribute(5, 2, 5126, 0 != 0, 0, 0);
+        rlSetVertexAttribute(5, 2, 0x1406, 0 != 0, 0, 0);
         rlEnableVertexAttribute(5);
     } else {
         f32[2] value = {0.0f, 0.0f};
@@ -26269,10 +26273,12 @@ void UploadMesh(Mesh* mesh, bool dynamic) {
     }
     rlDisableVertexArray();
 }
+
 // Update mesh vertex data in GPU for a specific buffer index
 void UpdateMeshBuffer(Mesh mesh, i32 index, void* data, i32 dataSize, i32 offset) {
     rlUpdateVertexBuffer(mesh.vboId[index], data, dataSize, offset);
 }
+
 // Draw a 3d mesh with material and transform
 void DrawMesh(Mesh mesh, Material material, Matrix transform) {
     when defined(GRAPHICS_API_OPENGL_SOFTWARE) {
@@ -26315,11 +26321,21 @@ void DrawMesh(Mesh mesh, Material material, Matrix transform) {
         return;
     }
     if material.shader.locs[SHADER_LOC_COLOR_DIFFUSE] != -1 {
-        f32[4] values = {cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.r) / 255.0f, cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.g) / 255.0f, cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.b) / 255.0f, cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.a) / 255.0f};
+        f32[4] values = {
+            cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.r) / 255.0f,
+            cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.g) / 255.0f,
+            cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.b) / 255.0f,
+            cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.a) / 255.0f,
+        };
         rlSetUniform(material.shader.locs[SHADER_LOC_COLOR_DIFFUSE], values, SHADER_UNIFORM_VEC4, 1);
     }
     if material.shader.locs[SHADER_LOC_COLOR_SPECULAR] != -1 {
-        f32[4] values = {cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.r) / 255.0f, cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.g) / 255.0f, cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.b) / 255.0f, cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.a) / 255.0f};
+        f32[4] values = {
+            cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.r) / 255.0f,
+            cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.g) / 255.0f,
+            cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.b) / 255.0f,
+            cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.a) / 255.0f,
+        };
         rlSetUniform(material.shader.locs[SHADER_LOC_COLOR_SPECULAR], values, SHADER_UNIFORM_VEC4, 1);
     }
     Matrix matModel = MatrixIdentity();
@@ -26353,20 +26369,20 @@ void DrawMesh(Mesh mesh, Material material, Matrix transform) {
     }
     if rlEnableVertexArray(mesh.vaoId) == 0 {
         rlEnableVertexBuffer(mesh.vboId[0]);
-        rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_POSITION]), 3, 5126, 0 != 0, 0, 0);
+        rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_POSITION]), 3, 0x1406, 0 != 0, 0, 0);
         rlEnableVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_POSITION]));
         rlEnableVertexBuffer(mesh.vboId[1]);
-        rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TEXCOORD01]), 2, 5126, 0 != 0, 0, 0);
+        rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TEXCOORD01]), 2, 0x1406, 0 != 0, 0, 0);
         rlEnableVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TEXCOORD01]));
         if material.shader.locs[SHADER_LOC_VERTEX_NORMAL] != -1 {
             rlEnableVertexBuffer(mesh.vboId[2]);
-            rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_NORMAL]), 3, 5126, 0 != 0, 0, 0);
+            rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_NORMAL]), 3, 0x1406, 0 != 0, 0, 0);
             rlEnableVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_NORMAL]));
         }
         if material.shader.locs[SHADER_LOC_VERTEX_COLOR] != -1 {
             if mesh.vboId[3] != 0 {
                 rlEnableVertexBuffer(mesh.vboId[3]);
-                rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_COLOR]), 4, 5121, 1 != 0, 0, 0);
+                rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_COLOR]), 4, 0x1401, 1 != 0, 0, 0);
                 rlEnableVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_COLOR]));
             } else {
                 f32[4] value = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -26376,12 +26392,12 @@ void DrawMesh(Mesh mesh, Material material, Matrix transform) {
         }
         if material.shader.locs[SHADER_LOC_VERTEX_TANGENT] != -1 {
             rlEnableVertexBuffer(mesh.vboId[4]);
-            rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TANGENT]), 4, 5126, 0 != 0, 0, 0);
+            rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TANGENT]), 4, 0x1406, 0 != 0, 0, 0);
             rlEnableVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TANGENT]));
         }
         if material.shader.locs[SHADER_LOC_VERTEX_TEXCOORD02] != -1 {
             rlEnableVertexBuffer(mesh.vboId[5]);
-            rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TEXCOORD02]), 2, 5126, 0 != 0, 0, 0);
+            rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TEXCOORD02]), 2, 0x1406, 0 != 0, 0, 0);
             rlEnableVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TEXCOORD02]));
         }
         if mesh.indices != null {
@@ -26424,17 +26440,28 @@ void DrawMesh(Mesh mesh, Material material, Matrix transform) {
     rlSetMatrixModelview(matView);
     rlSetMatrixProjection(matProjection);
 }
+
 // Draw multiple mesh instances with material and different transforms
 void DrawMeshInstanced(Mesh mesh, Material material, Matrix* transforms, i32 instances) {
     c_float16* instanceTransform = null;
     u32 instancesVboId = 0;
     rlEnableShader(material.shader.id);
     if material.shader.locs[SHADER_LOC_COLOR_DIFFUSE] != -1 {
-        f32[4] values = {cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.r) / 255.0f, cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.g) / 255.0f, cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.b) / 255.0f, cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.a) / 255.0f};
+        f32[4] values = {
+            cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.r) / 255.0f,
+            cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.g) / 255.0f,
+            cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.b) / 255.0f,
+            cast(f32, material.maps[MATERIAL_MAP_ALBEDO].color.a) / 255.0f,
+        };
         rlSetUniform(material.shader.locs[SHADER_LOC_COLOR_DIFFUSE], values, SHADER_UNIFORM_VEC4, 1);
     }
     if material.shader.locs[SHADER_LOC_COLOR_SPECULAR] != -1 {
-        f32[4] values = {cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.r) / 255.0f, cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.g) / 255.0f, cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.b) / 255.0f, cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.a) / 255.0f};
+        f32[4] values = {
+            cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.r) / 255.0f,
+            cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.g) / 255.0f,
+            cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.b) / 255.0f,
+            cast(f32, material.maps[MATERIAL_MAP_METALNESS].color.a) / 255.0f,
+        };
         rlSetUniform(material.shader.locs[SHADER_LOC_COLOR_SPECULAR], values, SHADER_UNIFORM_VEC4, 1);
     }
     Matrix matModel = MatrixIdentity();
@@ -26456,7 +26483,7 @@ void DrawMeshInstanced(Mesh mesh, Material material, Matrix* transforms, i32 ins
     if material.shader.locs[SHADER_LOC_VERTEX_INSTANCETRANSFORM] != -1 {
         for u32 i = 0; i < 4; i++ {
             rlEnableVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_INSTANCETRANSFORM]) + i);
-            rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_INSTANCETRANSFORM]) + i, 4, 5126, 0 != 0, cast(i32, sizeof(Matrix)), cast(i32, i * sizeof(Vector4)));
+            rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_INSTANCETRANSFORM]) + i, 4, 0x1406, 0 != 0, cast(i32, sizeof(Matrix)), cast(i32, i * sizeof(Vector4)));
             rlSetVertexAttributeDivisor(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_INSTANCETRANSFORM]) + i, 1);
         }
     }
@@ -26479,20 +26506,20 @@ void DrawMeshInstanced(Mesh mesh, Material material, Matrix* transforms, i32 ins
     }
     if rlEnableVertexArray(mesh.vaoId) == 0 {
         rlEnableVertexBuffer(mesh.vboId[0]);
-        rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_POSITION]), 3, 5126, 0 != 0, 0, 0);
+        rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_POSITION]), 3, 0x1406, 0 != 0, 0, 0);
         rlEnableVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_POSITION]));
         rlEnableVertexBuffer(mesh.vboId[1]);
-        rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TEXCOORD01]), 2, 5126, 0 != 0, 0, 0);
+        rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TEXCOORD01]), 2, 0x1406, 0 != 0, 0, 0);
         rlEnableVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TEXCOORD01]));
         if material.shader.locs[SHADER_LOC_VERTEX_NORMAL] != -1 {
             rlEnableVertexBuffer(mesh.vboId[2]);
-            rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_NORMAL]), 3, 5126, 0 != 0, 0, 0);
+            rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_NORMAL]), 3, 0x1406, 0 != 0, 0, 0);
             rlEnableVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_NORMAL]));
         }
         if material.shader.locs[SHADER_LOC_VERTEX_COLOR] != -1 {
             if mesh.vboId[3] != 0 {
                 rlEnableVertexBuffer(mesh.vboId[3]);
-                rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_COLOR]), 4, 5121, 1 != 0, 0, 0);
+                rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_COLOR]), 4, 0x1401, 1 != 0, 0, 0);
                 rlEnableVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_COLOR]));
             } else {
                 f32[4] value = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -26502,12 +26529,12 @@ void DrawMeshInstanced(Mesh mesh, Material material, Matrix* transforms, i32 ins
         }
         if material.shader.locs[SHADER_LOC_VERTEX_TANGENT] != -1 {
             rlEnableVertexBuffer(mesh.vboId[4]);
-            rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TANGENT]), 4, 5126, 0 != 0, 0, 0);
+            rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TANGENT]), 4, 0x1406, 0 != 0, 0, 0);
             rlEnableVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TANGENT]));
         }
         if material.shader.locs[SHADER_LOC_VERTEX_TEXCOORD02] != -1 {
             rlEnableVertexBuffer(mesh.vboId[5]);
-            rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TEXCOORD02]), 2, 5126, 0 != 0, 0, 0);
+            rlSetVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TEXCOORD02]), 2, 0x1406, 0 != 0, 0, 0);
             rlEnableVertexAttribute(cast(u32, material.shader.locs[SHADER_LOC_VERTEX_TEXCOORD02]));
         }
         if mesh.indices != null {
@@ -26550,6 +26577,7 @@ void DrawMeshInstanced(Mesh mesh, Material material, Matrix* transforms, i32 ins
     rlUnloadVertexBuffer(instancesVboId);
     free(instanceTransform);
 }
+
 // Unload mesh from memory (RAM and VRAM)
 void UnloadMesh(Mesh mesh) {
     rlUnloadVertexArray(mesh.vaoId);
@@ -26571,6 +26599,7 @@ void UnloadMesh(Mesh mesh) {
     free(mesh.animVertices);
     free(mesh.animNormals);
 }
+
 // Export mesh data to file
 bool ExportMesh(Mesh mesh, u8* fileName) {
     bool result = false;
@@ -26642,6 +26671,7 @@ bool ExportMesh(Mesh mesh, u8* fileName) {
     }
     return result;
 }
+
 // Export mesh as code file (.h) defining multiple arrays of vertex attributes
 bool ExportMeshAsCode(Mesh mesh, u8* fileName) {
     bool result = false;
@@ -26720,6 +26750,7 @@ bool ExportMeshAsCode(Mesh mesh, u8* fileName) {
     free(txtData);
     return result;
 }
+
 // Load materials from model file
 Material* LoadMaterials(u8* fileName, i32* materialCount) {
     Material* materials = null;
@@ -26727,17 +26758,21 @@ Material* LoadMaterials(u8* fileName, i32* materialCount) {
     *materialCount = cast(i32, count);
     return materials;
 }
+
 // Load default material (Supports: DIFFUSE, SPECULAR, NORMAL maps)
 Material LoadMaterialDefault() {
     Material material;
     material.maps = new(MaterialMap[12]);
     material.shader.id = rlGetShaderIdDefault();
     material.shader.locs = rlGetShaderLocsDefault();
-    material.maps[MATERIAL_MAP_ALBEDO].texture = Texture2D{rlGetTextureIdDefault(), 1, 1, 1, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8};
+    material.maps[MATERIAL_MAP_ALBEDO].texture = Texture2D{
+        rlGetTextureIdDefault(), 1, 1, 1, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
+    };
     material.maps[MATERIAL_MAP_ALBEDO].color = Color{255, 255, 255, 255};
     material.maps[MATERIAL_MAP_METALNESS].color = Color{255, 255, 255, 255};
     return material;
 }
+
 // Check if a material is valid (map textures loaded in GPU)
 bool IsMaterialValid(Material material) {
     bool result = false;
@@ -26746,6 +26781,7 @@ bool IsMaterialValid(Material material) {
     }
     return result;
 }
+
 // Unload material from memory
 void UnloadMaterial(Material material) {
     if material.shader.id != rlGetShaderIdDefault() {
@@ -26760,11 +26796,13 @@ void UnloadMaterial(Material material) {
     }
     free(material.maps);
 }
+
 // Set texture for a material map type (MATERIAL_MAP_DIFFUSE, MATERIAL_MAP_SPECULAR...)
 // NOTE: Previous texture should be manually unloaded
 void SetMaterialTexture(Material* material, i32 mapType, Texture2D texture) {
     material.maps[mapType].texture = texture;
 }
+
 // Set the material for a mesh
 void SetModelMeshMaterial(Model* model, i32 meshId, i32 materialId) {
     if meshId >= model.meshCount {
@@ -26773,11 +26811,13 @@ void SetModelMeshMaterial(Model* model, i32 meshId, i32 materialId) {
         model.meshMaterial[meshId] = materialId;
     }
 }
+
 // Load model animations from file
 ModelAnimation* LoadModelAnimations(u8* fileName, i32* animCount) {
     ModelAnimation* animations = null;
     return animations;
 }
+
 // Update model animation data (vertex buffers / bone matrices) for a specific pose
 // NOTE 1: Request frame could be fractional, using a lerp interpolation between two frames
 // NOTE 2: Updated vertex animation data is uploaded to GPU in case of CPU skinning,
@@ -26812,6 +26852,7 @@ void UpdateModelAnimation(Model model, ModelAnimation anim, f32 frame) {
         UpdateModelAnimationVertexBuffers(model);
     }
 }
+
 // Update model animation data (vertex buffers / bone matrices) for a specific pose,
 // defined by two different animations at specific frames blended together
 // NOTE 1: Request frames could be fractional, using a lerp interpolation between two frames
@@ -26863,6 +26904,7 @@ void UpdateModelAnimationEx(Model model, ModelAnimation animA, f32 frameA, Model
         UpdateModelAnimationVertexBuffers(model);
     }
 }
+
 // Update model vertex animation buffers (positions and normals)
 // NOTE: Required for CPU skinning, uploads animated vertex buffers to GPU
 private {
@@ -26892,16 +26934,23 @@ void UpdateModelAnimationVertexBuffers(Model model) {
                 boneWeight = mesh.boneWeights[boneCounter];
                 boneIndex = cast(i32, mesh.boneIndices[boneCounter]);
                 if boneWeight == 0.0f {
+                    boneCounter++;
                     continue;
                 }
-                animVertex = Vector3{mesh.vertices[vCounter], mesh.vertices[vCounter + 1], mesh.vertices[vCounter + 2]};
+                animVertex = Vector3{
+                    mesh.vertices[vCounter], mesh.vertices[vCounter + 1],
+                    mesh.vertices[vCounter + 2],
+                };
                 animVertex = Vector3Transform(animVertex, model.boneMatrices[boneIndex]);
                 mesh.animVertices[vCounter] += animVertex.x * boneWeight;
                 mesh.animVertices[vCounter + 1] += animVertex.y * boneWeight;
                 mesh.animVertices[vCounter + 2] += animVertex.z * boneWeight;
                 bufferUpdateRequired = true;
                 if mesh.normals != null && mesh.animNormals != null {
-                    animNormal = Vector3{mesh.normals[vCounter], mesh.normals[vCounter + 1], mesh.normals[vCounter + 2]};
+                    animNormal = Vector3{
+                        mesh.normals[vCounter], mesh.normals[vCounter + 1],
+                        mesh.normals[vCounter + 2],
+                    };
                     animNormal = Vector3Transform(animNormal, MatrixTranspose(MatrixInvert(model.boneMatrices[boneIndex])));
                     mesh.animNormals[vCounter] += animNormal.x * boneWeight;
                     mesh.animNormals[vCounter + 1] += animNormal.y * boneWeight;
@@ -26919,6 +26968,7 @@ void UpdateModelAnimationVertexBuffers(Model model) {
     }
 }
 }
+
 // Unload animation array data
 void UnloadModelAnimations(ModelAnimation* animations, i32 animCount) {
     for i32 a = 0; a < animCount; a++ {
@@ -26929,6 +26979,7 @@ void UnloadModelAnimations(ModelAnimation* animations, i32 animCount) {
     }
     free(animations);
 }
+
 // Check model animation skeleton match
 // NOTE: Only number of bones and parent connections are checked
 bool IsModelAnimationValid(Model model, ModelAnimation anim) {
@@ -26938,6 +26989,7 @@ bool IsModelAnimationValid(Model model, ModelAnimation anim) {
     }
     return result != 0;
 }
+
 // Compute mesh bounding box limits
 // NOTE: minVertex and maxVertex should be transformed by model transform matrix
 BoundingBox GetMeshBoundingBox(Mesh mesh) {
@@ -26947,8 +26999,12 @@ BoundingBox GetMeshBoundingBox(Mesh mesh) {
         minVertex = Vector3{mesh.vertices[0], mesh.vertices[1], mesh.vertices[2]};
         maxVertex = Vector3{mesh.vertices[0], mesh.vertices[1], mesh.vertices[2]};
         for i32 i = 1; i < mesh.vertexCount; i++ {
-            minVertex = Vector3Min(minVertex, Vector3{mesh.vertices[i * 3], mesh.vertices[i * 3 + 1], mesh.vertices[i * 3 + 2]});
-            maxVertex = Vector3Max(maxVertex, Vector3{mesh.vertices[i * 3], mesh.vertices[i * 3 + 1], mesh.vertices[i * 3 + 2]});
+            minVertex = Vector3Min(minVertex, Vector3{
+                mesh.vertices[i * 3], mesh.vertices[i * 3 + 1], mesh.vertices[i * 3 + 2],
+            });
+            maxVertex = Vector3Max(maxVertex, Vector3{
+                mesh.vertices[i * 3], mesh.vertices[i * 3 + 1], mesh.vertices[i * 3 + 2],
+            });
         }
     }
     BoundingBox box;
@@ -26956,6 +27012,7 @@ BoundingBox GetMeshBoundingBox(Mesh mesh) {
     box.max = maxVertex;
     return box;
 }
+
 // Compute mesh tangents
 void GenMeshTangents(Mesh* mesh) {
     if mesh == null || mesh.vertices == null || mesh.texcoords == null || mesh.normals == null {
@@ -26991,9 +27048,15 @@ void GenMeshTangents(Mesh* mesh) {
             i1 = t * 3 + 1;
             i2 = t * 3 + 2;
         }
-        var v1 = Vector3{mesh.vertices[i0 * 3 + 0], mesh.vertices[i0 * 3 + 1], mesh.vertices[i0 * 3 + 2]};
-        var v2 = Vector3{mesh.vertices[i1 * 3 + 0], mesh.vertices[i1 * 3 + 1], mesh.vertices[i1 * 3 + 2]};
-        var v3 = Vector3{mesh.vertices[i2 * 3 + 0], mesh.vertices[i2 * 3 + 1], mesh.vertices[i2 * 3 + 2]};
+        var v1 = Vector3{
+            mesh.vertices[i0 * 3 + 0], mesh.vertices[i0 * 3 + 1], mesh.vertices[i0 * 3 + 2],
+        };
+        var v2 = Vector3{
+            mesh.vertices[i1 * 3 + 0], mesh.vertices[i1 * 3 + 1], mesh.vertices[i1 * 3 + 2],
+        };
+        var v3 = Vector3{
+            mesh.vertices[i2 * 3 + 0], mesh.vertices[i2 * 3 + 1], mesh.vertices[i2 * 3 + 2],
+        };
         var uv1 = Vector2{mesh.texcoords[i0 * 2 + 0], mesh.texcoords[i0 * 2 + 1]};
         var uv2 = Vector2{mesh.texcoords[i1 * 2 + 0], mesh.texcoords[i1 * 2 + 1]};
         var uv3 = Vector2{mesh.texcoords[i2 * 2 + 0], mesh.texcoords[i2 * 2 + 1]};
@@ -27009,8 +27072,12 @@ void GenMeshTangents(Mesh* mesh) {
         f32 t2 = uv3.y - uv1.y;
         f32 div = s1 * t2 - s2 * t1;
         f32 r = fabsf(div) < 0.0001f ? 0.0f : 1.0f / div;
-        var sdir = Vector3{(t2 * x1 - t1 * x2) * r, (t2 * y1 - t1 * y2) * r, (t2 * z1 - t1 * z2) * r};
-        var tdir = Vector3{(s1 * x2 - s2 * x1) * r, (s1 * y2 - s2 * y1) * r, (s1 * z2 - s2 * z1) * r};
+        var sdir = Vector3{
+            (t2 * x1 - t1 * x2) * r, (t2 * y1 - t1 * y2) * r, (t2 * z1 - t1 * z2) * r,
+        };
+        var tdir = Vector3{
+            (s1 * x2 - s2 * x1) * r, (s1 * y2 - s2 * y1) * r, (s1 * z2 - s2 * z1) * r,
+        };
         tan1[i0] = Vector3Add(tan1[i0], sdir);
         tan1[i1] = Vector3Add(tan1[i1], sdir);
         tan1[i2] = Vector3Add(tan1[i2], sdir);
@@ -27019,7 +27086,9 @@ void GenMeshTangents(Mesh* mesh) {
         tan2[i2] = Vector3Add(tan2[i2], tdir);
     }
     for i32 i = 0; i < mesh.vertexCount; i++ {
-        var normal = Vector3{mesh.normals[i * 3 + 0], mesh.normals[i * 3 + 1], mesh.normals[i * 3 + 2]};
+        var normal = Vector3{
+            mesh.normals[i * 3 + 0], mesh.normals[i * 3 + 1], mesh.normals[i * 3 + 2],
+        };
         Vector3 tangent = tan1[i];
         if Vector3Length(tangent) < 0.0001f {
             if fabsf(normal.z) > 0.707f {
@@ -27057,17 +27126,19 @@ void GenMeshTangents(Mesh* mesh) {
             mesh.vboId[SHADER_LOC_VERTEX_TANGENT] = rlLoadVertexBuffer(mesh.tangents, cast(i32, mesh.vertexCount * 4 * sizeof(f32)), false);
         }
         rlEnableVertexArray(mesh.vaoId);
-        rlSetVertexAttribute(4, 4, 5126, 0 != 0, 0, 0);
+        rlSetVertexAttribute(4, 4, 0x1406, 0 != 0, 0, 0);
         rlEnableVertexAttribute(4);
         rlDisableVertexArray();
     }
 }
+
 // Draw a model (with texture if set)
 void DrawModel(Model model, Vector3 position, f32 scale, Color tint) {
     var vScale = Vector3{scale, scale, scale};
     var rotationAxis = Vector3{0.0f, 1.0f, 0.0f};
     DrawModelEx(model, position, rotationAxis, 0.0f, vScale, tint);
 }
+
 // Draw a model with extended parameters
 void DrawModelEx(Model model, Vector3 position, Vector3 rotationAxis, f32 rotationAngle, Vector3 scale, Color tint) {
     Matrix matScale = MatrixScale(scale.x, scale.y, scale.z);
@@ -27092,28 +27163,33 @@ void DrawModelEx(Model model, Vector3 position, Vector3 rotationAxis, f32 rotati
         mat.maps[MATERIAL_MAP_ALBEDO].color = colDiffuse;
     }
 }
+
 // Draw a model wires (with texture if set)
 void DrawModelWires(Model model, Vector3 position, f32 scale, Color tint) {
     rlEnableWireMode();
     DrawModel(model, position, scale, tint);
     rlDisableWireMode();
 }
+
 // Draw a model wires (with texture if set) with extended parameters
 void DrawModelWiresEx(Model model, Vector3 position, Vector3 rotationAxis, f32 rotationAngle, Vector3 scale, Color tint) {
     rlEnableWireMode();
     DrawModelEx(model, position, rotationAxis, rotationAngle, scale, tint);
     rlDisableWireMode();
 }
+
 // Draw a billboard
 void DrawBillboard(Camera camera, Texture2D texture, Vector3 position, f32 scale, Color tint) {
     var source = Rectangle{0.0f, 0.0f, cast(f32, texture.width), cast(f32, texture.height)};
     DrawBillboardRec(camera, texture, source, position, Vector2{scale * fabsf(source.width / source.height), scale}, tint);
 }
+
 // Draw a billboard (part of a texture defined by a rectangle)
 void DrawBillboardRec(Camera camera, Texture2D texture, Rectangle source, Vector3 position, Vector2 size, Color tint) {
     var up = Vector3{0.0f, 1.0f, 0.0f};
     DrawBillboardPro(camera, texture, source, position, up, size, Vector2Scale(size, 0.5f), 0.0f, tint);
 }
+
 // Draw a billboard with additional parameters
 void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle source, Vector3 position, Vector3 up, Vector2 size, Vector2 origin, f32 rotation, Color tint) {
     Matrix matView = MatrixLookAt(camera.position, camera.target, camera.up);
@@ -27150,12 +27226,21 @@ void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle source, Vector
         points[i] = Vector3Add(points[i], position);
     }
     noinit Vector2[4] texcoords;
-    texcoords[0] = Vector2{source.x / cast(f32, texture.width), (source.y + source.height) / cast(f32, texture.height)};
-    texcoords[1] = Vector2{(source.x + source.width) / cast(f32, texture.width), (source.y + source.height) / cast(f32, texture.height)};
-    texcoords[2] = Vector2{(source.x + source.width) / cast(f32, texture.width), source.y / cast(f32, texture.height)};
-    texcoords[3] = Vector2{source.x / cast(f32, texture.width), source.y / cast(f32, texture.height)};
+    texcoords[0] = Vector2{
+        source.x / cast(f32, texture.width), (source.y + source.height) / cast(f32, texture.height),
+    };
+    texcoords[1] = Vector2{
+        (source.x + source.width) / cast(f32, texture.width),
+        (source.y + source.height) / cast(f32, texture.height),
+    };
+    texcoords[2] = Vector2{
+        (source.x + source.width) / cast(f32, texture.width), source.y / cast(f32, texture.height),
+    };
+    texcoords[3] = Vector2{
+        source.x / cast(f32, texture.width), source.y / cast(f32, texture.height),
+    };
     rlSetTexture(texture.id);
-    rlBegin(7);
+    rlBegin(0x0007);
     rlColor4ub(tint.r, tint.g, tint.b, tint.a);
     for i32 i = 0; i < 4; i++ {
         rlTexCoord2f(texcoords[i].x, texcoords[i].y);
@@ -27164,15 +27249,19 @@ void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle source, Vector
     rlEnd();
     rlSetTexture(0);
 }
+
 // Draw a bounding box with wires
 void DrawBoundingBox(BoundingBox box, Color color) {
     Vector3 size;
     size.x = fabsf(box.max.x - box.min.x);
     size.y = fabsf(box.max.y - box.min.y);
     size.z = fabsf(box.max.z - box.min.z);
-    var center = Vector3{box.min.x + size.x / 2.0f, box.min.y + size.y / 2.0f, box.min.z + size.z / 2.0f};
+    var center = Vector3{
+        box.min.x + size.x / 2.0f, box.min.y + size.y / 2.0f, box.min.z + size.z / 2.0f,
+    };
     DrawCubeWires(center, size.x, size.y, size.z, color);
 }
+
 // Check collision between two spheres
 bool CheckCollisionSpheres(Vector3 center1, f32 radius1, Vector3 center2, f32 radius2) {
     bool collision = false;
@@ -27182,6 +27271,7 @@ bool CheckCollisionSpheres(Vector3 center1, f32 radius1, Vector3 center2, f32 ra
     }
     return collision;
 }
+
 // Check collision between two boxes
 // NOTE: Boxes are defined by two points minimum and maximum
 bool CheckCollisionBoxes(BoundingBox box1, BoundingBox box2) {
@@ -27198,15 +27288,20 @@ bool CheckCollisionBoxes(BoundingBox box1, BoundingBox box2) {
     }
     return collision;
 }
+
 // Check collision between box and sphere
 bool CheckCollisionBoxSphere(BoundingBox box, Vector3 center, f32 radius) {
     bool collision = false;
-    var closestPoint = Vector3{Clamp(center.x, box.min.x, box.max.x), Clamp(center.y, box.min.y, box.max.y), Clamp(center.z, box.min.z, box.max.z)};
+    var closestPoint = Vector3{
+        Clamp(center.x, box.min.x, box.max.x), Clamp(center.y, box.min.y, box.max.y),
+        Clamp(center.z, box.min.z, box.max.z),
+    };
     if Vector3DistanceSqr(center, closestPoint) <= radius * radius {
         collision = true;
     }
     return collision;
 }
+
 // Get collision info between ray and sphere
 RayCollision GetRayCollisionSphere(Ray ray, Vector3 center, f32 radius) {
     RayCollision collision;
@@ -27226,6 +27321,7 @@ RayCollision GetRayCollisionSphere(Ray ray, Vector3 center, f32 radius) {
     }
     return collision;
 }
+
 // Get collision info between ray and box
 RayCollision GetRayCollisionBox(Ray ray, BoundingBox box) {
     RayCollision collision;
@@ -27263,6 +27359,7 @@ RayCollision GetRayCollisionBox(Ray ray, BoundingBox box) {
     }
     return collision;
 }
+
 // Get collision info between ray and mesh
 RayCollision GetRayCollisionMesh(Ray ray, Mesh mesh, Matrix transform) {
     RayCollision collision;
@@ -27295,6 +27392,7 @@ RayCollision GetRayCollisionMesh(Ray ray, Mesh mesh, Matrix transform) {
     }
     return collision;
 }
+
 // Get collision info between ray and triangle
 // NOTE: The points are expected to be in counter-clockwise winding
 // NOTE: Based on https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm
@@ -27314,7 +27412,7 @@ RayCollision GetRayCollisionTriangle(Ray ray, Vector3 p1, Vector3 p2, Vector3 p3
     edge2 = Vector3Subtract(p3, p1);
     p = Vector3CrossProduct(ray.direction, edge2);
     det = Vector3DotProduct(edge1, p);
-    if det > -1.0000000000000002e-6f && det < 1.0000000000000002e-6f {
+    if det > -1.0e-6f && det < 1.0e-6f {
         return collision;
     }
     invDet = 1.0f / det;
@@ -27329,7 +27427,7 @@ RayCollision GetRayCollisionTriangle(Ray ray, Vector3 p1, Vector3 p2, Vector3 p3
         return collision;
     }
     t = Vector3DotProduct(edge2, q) * invDet;
-    if t > 1.0000000000000002e-6f {
+    if t > 1.0e-6f {
         collision.hit = true;
         collision.distance = t;
         collision.normal = Vector3Normalize(Vector3CrossProduct(edge1, edge2));
@@ -27337,6 +27435,7 @@ RayCollision GetRayCollisionTriangle(Ray ray, Vector3 p1, Vector3 p2, Vector3 p3
     }
     return collision;
 }
+
 // Get collision info between ray and quad
 // NOTE: The points are expected to be in counter-clockwise winding
 RayCollision GetRayCollisionQuad(Ray ray, Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4) {
@@ -27347,54 +27446,148 @@ RayCollision GetRayCollisionQuad(Ray ray, Vector3 p1, Vector3 p2, Vector3 p3, Ve
     }
     return collision;
 }
-private { u8[19] sinfl_decompress__order = {16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15}; }
-private { i16[32] sinfl_decompress__dbase = {1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577, 0, 0}; }
-private { u8[32] sinfl_decompress__dbits = {0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 0, 0}; }
-private { i16[31] sinfl_decompress__lbase = {3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0}; }
-private { u8[31] sinfl_decompress__lbits = {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 0, 0}; }
-private { i16[14] sdefl_match_codes__dxmax = {0, 6, 12, 24, 48, 96, 192, 384, 768, 1536, 3072, 6144, 12288, 24576}; }
-private { u8[259] sdefl_match_codes__lslot = {0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 28}; }
-private { u8[19] sdefl_blk_type_v__x_pre_bits = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 7}; }
-private { u8[29] sdefl_blk_type_v__x_len_bits = {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0}; }
-private { u8[30] sdefl_blk_type_v__x_off_bits = {0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13}; }
-private { u8[29] sdefl_match_v__lxn = {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0}; }
-private { i16[29] sdefl_match_v__lmin = {3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258}; }
-private { i16[30] sdefl_match_v__dmin = {1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577}; }
-private { u8[19] sdefl_flush__perm = {16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15}; }
-private { u8[9] sdefl_compr__pref = {8, 10, 14, 24, 30, 48, 65, 96, 130}; }
-private { i32 GetFPS__index = 0; }
-private { f32[30] GetFPS__history; }
-private { f32 GetFPS__average = 0.0f; }
-private { f32 GetFPS__last = 0.0f; }
-private { u8[256] GetFileNameWithoutExt__fileName; }
-private { u8[4096] GetDirectoryPath__dirPath; }
-private { u8[4096] GetPrevDirectoryPath__prevDirPath; }
-private { u8[4096] GetWorkingDirectory__currentDir; }
-private { u8[4096] GetApplicationDirectory__appDir; }
-private { u8* EncodeDataBase64__base64EncodeTable = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"; }
-private { u8[256] DecodeDataBase64__base64DecodeTable = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 62, 0, 0, 0, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 0, 0, 0, 0, 0, 0, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; }
-private { u32[256] ComputeCRC32__crcTable = {0, 1996959894, 3993919788, 2567524794, 124634137, 1886057615, 3915621685, 2657392035, 249268274, 2044508324, 3772115230, 2547177864, 162941995, 2125561021, 3887607047, 2428444049, 498536548, 1789927666, 4089016648, 2227061214, 450548861, 1843258603, 4107580753, 2211677639, 325883990, 1684777152, 4251122042, 2321926636, 335633487, 1661365465, 4195302755, 2366115317, 997073096, 1281953886, 3579855332, 2724688242, 1006888145, 1258607687, 3524101629, 2768942443, 901097722, 1119000684, 3686517206, 2898065728, 853044451, 1172266101, 3705015759, 2882616665, 651767980, 1373503546, 3369554304, 3218104598, 565507253, 1454621731, 3485111705, 3099436303, 671266974, 1594198024, 3322730930, 2970347812, 795835527, 1483230225, 3244367275, 3060149565, 1994146192, 31158534, 2563907772, 4023717930, 1907459465, 112637215, 2680153253, 3904427059, 2013776290, 251722036, 2517215374, 3775830040, 2137656763, 141376813, 2439277719, 3865271297, 1802195444, 476864866, 2238001368, 4066508878, 1812370925, 453092731, 2181625025, 4111451223, 1706088902, 314042704, 2344532202, 4240017532, 1658658271, 366619977, 2362670323, 4224994405, 1303535960, 984961486, 2747007092, 3569037538, 1256170817, 1037604311, 2765210733, 3554079995, 1131014506, 879679996, 2909243462, 3663771856, 1141124467, 855842277, 2852801631, 3708648649, 1342533948, 654459306, 3188396048, 3373015174, 1466479909, 544179635, 3110523913, 3462522015, 1591671054, 702138776, 2966460450, 3352799412, 1504918807, 783551873, 3082640443, 3233442989, 3988292384, 2596254646, 62317068, 1957810842, 3939845945, 2647816111, 81470997, 1943803523, 3814918930, 2489596804, 225274430, 2053790376, 3826175755, 2466906013, 167816743, 2097651377, 4027552580, 2265490386, 503444072, 1762050814, 4150417245, 2154129355, 426522225, 1852507879, 4275313526, 2312317920, 282753626, 1742555852, 4189708143, 2394877945, 397917763, 1622183637, 3604390888, 2714866558, 953729732, 1340076626, 3518719985, 2797360999, 1068828381, 1219638859, 3624741850, 2936675148, 906185462, 1090812512, 3747672003, 2825379669, 829329135, 1181335161, 3412177804, 3160834842, 628085408, 1382605366, 3423369109, 3138078467, 570562233, 1426400815, 3317316542, 2998733608, 733239954, 1555261956, 3268935591, 3050360625, 752459403, 1541320221, 2607071920, 3965973030, 1969922972, 40735498, 2617837225, 3943577151, 1913087877, 83908371, 2512341634, 3803740692, 2075208622, 213261112, 2463272603, 3855990285, 2094854071, 198958881, 2262029012, 4057260610, 1759359992, 534414190, 2176718541, 4139329115, 1873836001, 414664567, 2282248934, 4279200368, 1711684554, 285281116, 2405801727, 4167216745, 1634467795, 376229701, 2685067896, 3608007406, 1308918612, 956543938, 2808555105, 3495958263, 1231636301, 1047427035, 2932959818, 3654703836, 1088359270, 936918000, 2847714899, 3736837829, 1202900863, 817233897, 3183342108, 3401237130, 1404277552, 615818150, 3134207493, 3453421203, 1423857449, 601450431, 3009837614, 3294710456, 1567103746, 711928724, 3020668471, 3272380065, 1510334235, 755167117}; }
-private { u32[4] ComputeMD5__hash; }
-private { u32[5] ComputeSHA1__hash; }
-private { u32[64] ComputeSHA256__k = {1116352408, 1899447441, 3049323471, 3921009573, 961987163, 1508970993, 2453635748, 2870763221, 3624381080, 310598401, 607225278, 1426881987, 1925078388, 2162078206, 2614888103, 3248222580, 3835390401, 4022224774, 264347078, 604807628, 770255983, 1249150122, 1555081692, 1996064986, 2554220882, 2821834349, 2952996808, 3210313671, 3336571891, 3584528711, 113926993, 338241895, 666307205, 773529912, 1294757372, 1396182291, 1695183700, 1986661051, 2177026350, 2456956037, 2730485921, 2820302411, 3259730800, 3345764771, 3516065817, 3600352804, 4094571909, 275423344, 430227734, 506948616, 659060556, 883997877, 958139571, 1322822218, 1537002063, 1747873779, 1955562222, 2024104815, 2227730452, 2361852424, 2428436474, 2756734187, 3204031479, 3329325298}; }
-private { u32[8] ComputeSHA256__hash; }
-private { stbi_uc[19] stbi__compute_huffman_codes__length_dezigzag = {16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15}; }
-private { stbi_uc[8] stbi__check_png_header__png_sig = {137, 80, 78, 71, 13, 10, 26, 10}; }
-private { u8* stbi__parse_png_file__invalid_chunk = "XXXX PNG chunk not known"; }
-private { __arr_u8_1024[4] TextFormat__buffers; }
-private { i32 TextFormat__index = 0; }
-private { u8[1024] TextSubtext__buffer; }
-private { u8[1024] TextRemoveSpaces__buffer; }
-private { u8[1024] GetTextBetween__buffer; }
-private { u8[1024] TextReplace__buffer; }
-private { u8[1024] TextReplaceBetween__buffer; }
-private { u8[1024] TextInsert__buffer; }
-private { u8[1024] TextJoin__buffer; }
-private { u8*[128] TextSplit__buffers; }
-private { u8[1024] TextSplit__buffer; }
-private { u8[1024] TextToUpper__buffer; }
-private { u8[1024] TextToLower__buffer; }
-private { u8[1024] TextToPascal__buffer; }
-private { u8[1024] TextToSnake__buffer; }
-private { u8[1024] TextToCamel__buffer; }
-private { u8[6] CodepointToUTF8__utf8; }
+private {
+u8[19] sinfl_decompress__order = {16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
+i16[32] sinfl_decompress__dbase = {
+    1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049,
+    3073, 4097, 6145, 8193, 12289, 16385, 24577, 0, 0,
+};
+u8[32] sinfl_decompress__dbits = {
+    0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13,
+    13, 0, 0,
+};
+i16[31] sinfl_decompress__lbase = {
+    3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131,
+    163, 195, 227, 258, 0, 0,
+};
+u8[31] sinfl_decompress__lbits = {
+    0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 0, 0,
+};
+i16[14] sdefl_match_codes__dxmax = {
+    0, 6, 12, 24, 48, 96, 192, 384, 768, 1536, 3072, 6144, 12288, 24576,
+};
+u8[259] sdefl_match_codes__lslot = {
+    0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 12, 12, 13, 13, 13, 13, 14,
+    14, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 17, 18,
+    18, 18, 18, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20, 20,
+    20, 20, 20, 20, 20, 20, 20, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 22,
+    22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+    23, 23, 23, 23, 23, 23, 23, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24,
+    24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 25, 25, 25, 25, 25, 25, 25, 25, 25,
+    25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26,
+    26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26,
+    26, 26, 26, 26, 26, 26, 26, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27,
+    27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 28,
+};
+u8[19] sdefl_blk_type_v__x_pre_bits = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 7};
+u8[29] sdefl_blk_type_v__x_len_bits = {
+    0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0,
+};
+u8[30] sdefl_blk_type_v__x_off_bits = {
+    0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13,
+    13,
+};
+u8[29] sdefl_match_v__lxn = {
+    0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0,
+};
+i16[29] sdefl_match_v__lmin = {
+    3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131,
+    163, 195, 227, 258,
+};
+i16[30] sdefl_match_v__dmin = {
+    1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049,
+    3073, 4097, 6145, 8193, 12289, 16385, 24577,
+};
+u8[19] sdefl_flush__perm = {16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
+u8[9] sdefl_compr__pref = {8, 10, 14, 24, 30, 48, 65, 96, 130};
+i32 GetFPS__index = 0;
+f32[30] GetFPS__history;
+f32 GetFPS__average = 0.0f;
+f32 GetFPS__last = 0.0f;
+u8[256] GetFileNameWithoutExt__fileName;
+u8[4096] GetDirectoryPath__dirPath;
+u8[4096] GetPrevDirectoryPath__prevDirPath;
+u8[4096] GetWorkingDirectory__currentDir;
+u8[4096] GetApplicationDirectory__appDir;
+u8* EncodeDataBase64__base64EncodeTable = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+u8[256] DecodeDataBase64__base64DecodeTable = {
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 62, 0, 0, 0, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 0, 0,
+    0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+    23, 24, 25, 0, 0, 0, 0, 0, 0, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
+    42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+};
+u32[256] ComputeCRC32__crcTable = {
+    0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f, 0xe963a535, 0x9e6495a3,
+    0x0edb8832, 0x79dcb8a4, 0xe0d5e91e, 0x97d2d988, 0x09b64c2b, 0x7eb17cbd, 0xe7b82d07, 0x90bf1d91,
+    0x1db71064, 0x6ab020f2, 0xf3b97148, 0x84be41de, 0x1adad47d, 0x6ddde4eb, 0xf4d4b551, 0x83d385c7,
+    0x136c9856, 0x646ba8c0, 0xfd62f97a, 0x8a65c9ec, 0x14015c4f, 0x63066cd9, 0xfa0f3d63, 0x8d080df5,
+    0x3b6e20c8, 0x4c69105e, 0xd56041e4, 0xa2677172, 0x3c03e4d1, 0x4b04d447, 0xd20d85fd, 0xa50ab56b,
+    0x35b5a8fa, 0x42b2986c, 0xdbbbc9d6, 0xacbcf940, 0x32d86ce3, 0x45df5c75, 0xdcd60dcf, 0xabd13d59,
+    0x26d930ac, 0x51de003a, 0xc8d75180, 0xbfd06116, 0x21b4f4b5, 0x56b3c423, 0xcfba9599, 0xb8bda50f,
+    0x2802b89e, 0x5f058808, 0xc60cd9b2, 0xb10be924, 0x2f6f7c87, 0x58684c11, 0xc1611dab, 0xb6662d3d,
+    0x76dc4190, 0x01db7106, 0x98d220bc, 0xefd5102a, 0x71b18589, 0x06b6b51f, 0x9fbfe4a5, 0xe8b8d433,
+    0x7807c9a2, 0x0f00f934, 0x9609a88e, 0xe10e9818, 0x7f6a0dbb, 0x086d3d2d, 0x91646c97, 0xe6635c01,
+    0x6b6b51f4, 0x1c6c6162, 0x856530d8, 0xf262004e, 0x6c0695ed, 0x1b01a57b, 0x8208f4c1, 0xf50fc457,
+    0x65b0d9c6, 0x12b7e950, 0x8bbeb8ea, 0xfcb9887c, 0x62dd1ddf, 0x15da2d49, 0x8cd37cf3, 0xfbd44c65,
+    0x4db26158, 0x3ab551ce, 0xa3bc0074, 0xd4bb30e2, 0x4adfa541, 0x3dd895d7, 0xa4d1c46d, 0xd3d6f4fb,
+    0x4369e96a, 0x346ed9fc, 0xad678846, 0xda60b8d0, 0x44042d73, 0x33031de5, 0xaa0a4c5f, 0xdd0d7cc9,
+    0x5005713c, 0x270241aa, 0xbe0b1010, 0xc90c2086, 0x5768b525, 0x206f85b3, 0xb966d409, 0xce61e49f,
+    0x5edef90e, 0x29d9c998, 0xb0d09822, 0xc7d7a8b4, 0x59b33d17, 0x2eb40d81, 0xb7bd5c3b, 0xc0ba6cad,
+    0xedb88320, 0x9abfb3b6, 0x03b6e20c, 0x74b1d29a, 0xead54739, 0x9dd277af, 0x04db2615, 0x73dc1683,
+    0xe3630b12, 0x94643b84, 0x0d6d6a3e, 0x7a6a5aa8, 0xe40ecf0b, 0x9309ff9d, 0x0a00ae27, 0x7d079eb1,
+    0xf00f9344, 0x8708a3d2, 0x1e01f268, 0x6906c2fe, 0xf762575d, 0x806567cb, 0x196c3671, 0x6e6b06e7,
+    0xfed41b76, 0x89d32be0, 0x10da7a5a, 0x67dd4acc, 0xf9b9df6f, 0x8ebeeff9, 0x17b7be43, 0x60b08ed5,
+    0xd6d6a3e8, 0xa1d1937e, 0x38d8c2c4, 0x4fdff252, 0xd1bb67f1, 0xa6bc5767, 0x3fb506dd, 0x48b2364b,
+    0xd80d2bda, 0xaf0a1b4c, 0x36034af6, 0x41047a60, 0xdf60efc3, 0xa867df55, 0x316e8eef, 0x4669be79,
+    0xcb61b38c, 0xbc66831a, 0x256fd2a0, 0x5268e236, 0xcc0c7795, 0xbb0b4703, 0x220216b9, 0x5505262f,
+    0xc5ba3bbe, 0xb2bd0b28, 0x2bb45a92, 0x5cb36a04, 0xc2d7ffa7, 0xb5d0cf31, 0x2cd99e8b, 0x5bdeae1d,
+    0x9b64c2b0, 0xec63f226, 0x756aa39c, 0x026d930a, 0x9c0906a9, 0xeb0e363f, 0x72076785, 0x05005713,
+    0x95bf4a82, 0xe2b87a14, 0x7bb12bae, 0x0cb61b38, 0x92d28e9b, 0xe5d5be0d, 0x7cdcefb7, 0x0bdbdf21,
+    0x86d3d2d4, 0xf1d4e242, 0x68ddb3f8, 0x1fda836e, 0x81be16cd, 0xf6b9265b, 0x6fb077e1, 0x18b74777,
+    0x88085ae6, 0xff0f6a70, 0x66063bca, 0x11010b5c, 0x8f659eff, 0xf862ae69, 0x616bffd3, 0x166ccf45,
+    0xa00ae278, 0xd70dd2ee, 0x4e048354, 0x3903b3c2, 0xa7672661, 0xd06016f7, 0x4969474d, 0x3e6e77db,
+    0xaed16a4a, 0xd9d65adc, 0x40df0b66, 0x37d83bf0, 0xa9bcae53, 0xdebb9ec5, 0x47b2cf7f, 0x30b5ffe9,
+    0xbdbdf21c, 0xcabac28a, 0x53b39330, 0x24b4a3a6, 0xbad03605, 0xcdd70693, 0x54de5729, 0x23d967bf,
+    0xb3667a2e, 0xc4614ab8, 0x5d681b02, 0x2a6f2b94, 0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d,
+};
+u32[4] ComputeMD5__hash;
+u32[5] ComputeSHA1__hash;
+u32[64] ComputeSHA256__k = {
+    0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+    0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+    0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+    0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+    0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+    0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+    0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+    0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2,
+};
+u32[8] ComputeSHA256__hash;
+stbi_uc[19] stbi__compute_huffman_codes__length_dezigzag = {
+    16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15,
+};
+stbi_uc[8] stbi__check_png_header__png_sig = {137, 80, 78, 71, 13, 10, 26, 10};
+u8* stbi__parse_png_file__invalid_chunk = "XXXX PNG chunk not known";
+__arr_u8_1024[4] TextFormat__buffers;
+i32 TextFormat__index = 0;
+u8[1024] TextSubtext__buffer;
+u8[1024] TextRemoveSpaces__buffer;
+u8[1024] GetTextBetween__buffer;
+u8[1024] TextReplace__buffer;
+u8[1024] TextReplaceBetween__buffer;
+u8[1024] TextInsert__buffer;
+u8[1024] TextJoin__buffer;
+u8*[128] TextSplit__buffers;
+u8[1024] TextSplit__buffer;
+u8[1024] TextToUpper__buffer;
+u8[1024] TextToLower__buffer;
+u8[1024] TextToPascal__buffer;
+u8[1024] TextToSnake__buffer;
+u8[1024] TextToCamel__buffer;
+u8[6] CodepointToUTF8__utf8;
+}
