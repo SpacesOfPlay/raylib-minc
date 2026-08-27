@@ -21,7 +21,12 @@ when os(windows) {
         u8* strcat(u8* dst, u8* src);
         i32 puts(u8* s);
         i32 abs(i32 x);
-        // fabs, sqrt: provided by the runtime.
+        void abort();
+        @must_use void* fopen(u8* path, u8* mode);
+        i32 fclose(void* file);
+        @must_use u8* fgets(u8* buf, i32 n, void* stream);
+    }
+    extern "ucrtbase.dll" {
         f64 floor(f64 x);
         f64 ceil(f64 x);
         f64 pow(f64 b, f64 e);
@@ -31,15 +36,7 @@ when os(windows) {
         f64 tan(f64 x);
         f64 log(f64 x);
         f64 exp(f64 x);
-        void abort();
-        @must_use void* fopen(u8* path, u8* mode);
-        i32 fclose(void* file);
-        @must_use u8* fgets(u8* buf, i32 n, void* stream);
-    }
-    // C99 math (round/log2/f32 variants) is in UCRT, not msvcrt.
-    extern "ucrtbase.dll" {
         f64 round(f64 x);
-        f64 log2(f64 x);
         f32 sinf(f32 x);
         f32 cosf(f32 x);
         f32 asinf(f32 x);
@@ -112,8 +109,7 @@ when os(linux) {
         i32 fclose(void* file);
         @must_use u8* fgets(u8* buf, i32 n, void* stream);
     }
-    // glibc keeps the math functions in libm.so.6, not libc.so.6; binding
-    // them here is what pulls libm into DT_NEEDED so they resolve at runtime.
+    // glibc math functions in libm.so.6
     extern "libm.so.6" {
         // fabs, sqrt, fabsf, sqrtf: provided by the runtime.
         f64 floor(f64 x);
@@ -125,7 +121,6 @@ when os(linux) {
         f64 tan(f64 x);
         f64 log(f64 x);
         f64 exp(f64 x);
-        f64 log2(f64 x);
         f64 round(f64 x);
         f64 fmin(f64 a, f64 b);
         f64 fmax(f64 a, f64 b);
@@ -183,7 +178,6 @@ when os(android) {
         f64 tan(f64 x);
         f64 log(f64 x);
         f64 exp(f64 x);
-        f64 log2(f64 x);
         f64 round(f64 x);
         f32 sinf(f32 x);
         f32 cosf(f32 x);
@@ -210,10 +204,6 @@ const i32 S_IFMT = 0xF000;
 const i32 S_IFREG = 0x8000;
 const i32 S_IFDIR = 0x4000;
 
-// __builtin_clz (32-bit) lives with the other builtin-over-intrinsic
-// wrappers further down; the bit-loop copy that used to sit here
-// silently lost to it by include order (minc's duplicate-definition
-// hard error now rejects the pair outright).
 // Count leading zeros (64-bit).
 i32 __builtin_clzl(u64 x) {
     if x == 0 { return 64; }
@@ -255,7 +245,6 @@ when os(macos) || os(ios) {
         f64 tan(f64 x);
         f64 log(f64 x);
         f64 exp(f64 x);
-        f64 log2(f64 x);
         f64 round(f64 x);
         // f32 math
         f32 sinf(f32 x);
@@ -325,9 +314,7 @@ struct stat {
 }
 i32 stat(u8* path, stat* st) { return 0 - 1; }
 
-// POSIX <time.h>: timespec + clock_gettime. The real libc fn on
-// linux/macos; on Windows (no libc clock_gettime) a monotonic
-// implementation backed by the high-resolution performance counter.
+// POSIX <time.h>: timespec + clock_gettime.
 struct timespec { i64 tv_sec; i64 tv_nsec; }
 when os(windows) {
     i32 clock_gettime(i32 clk_id, timespec* tp) {
@@ -346,7 +333,7 @@ when os(windows) {
     extern "libSystem.B.dylib" i32 clock_gettime(i32 clk_id, void* tp);
 }
 
-// <stdio.h> file I/O. SEEK_* are the standard ANSI values.
+// <stdio.h> file I/O. SEEK_* standard ANSI values.
 const i32 SEEK_SET = 0;
 const i32 SEEK_CUR = 1;
 const i32 SEEK_END = 2;
@@ -386,8 +373,7 @@ when os(macos) || os(ios) {
 
 
 // --- wasm target ---
-// On wasm there is no system libc, so the libc subset is provided here
-// (over the builtin allocator) or as host imports.
+// libc subset for wasm.
 when os(wasm) {
     // abort delegates to the JS host (which logs + stops).
     extern "env" void __wasm_abort();
@@ -395,15 +381,6 @@ when os(wasm) {
 
     // Math comes from the math module (it defines the wasm versions).
     import math;
-
-    // --- allocator ---
-    void* malloc(u64 size)            { return alloc(cast(i64, size)); }
-    void* calloc(u64 count, u64 size) {
-        i64 total = cast(i64, count) * cast(i64, size);
-        void* p = alloc(total);
-        if p != null { memset(p, 0, total); }
-        return p;
-    }
 
     // --- strings ---
     u64 strlen(u8* s) { u64 n = 0; while *(s + n) != 0 { n = n + 1; } return n; }

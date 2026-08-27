@@ -18,8 +18,7 @@ raylib's wasm target is single-threaded.
 
 ## Build and run it locally
 
-    ./run_examples.sh wasm         # Linux/macOS
-    ./run_examples.ps1 wasm        # Windows
+    minc wasm all
 
 That compiles every example into `build/web_all/`, stages these pages
 beside them, serves the directory and opens the gallery. A `file://` open

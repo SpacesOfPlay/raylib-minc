@@ -1214,11 +1214,6 @@ type stbtt__test_oversample_pow2 = i32[(8 & 8 - 1) == 0 ? 1 : -1];
 when !(defined(STB_RECT_PACK_VERSION)) {
     type stbrp_coord = i32;
 }
-type __arr_u8_128 = u8[128];
-type __arr_u8_32 = u8[32];
-type __arr_f32_8 = f32[8];
-type __arr_u8_1024 = u8[1024];
-type __arr_u8_129 = u8[129];
 struct _finddata_t {
     u32 attrib;
     u32 _pad0;
@@ -2034,10 +2029,10 @@ struct sdefl_seqt {
 struct sdefl {
     i32 bits;
     i32 bitcnt;
-    i32[32768] tbl;
-    i32[32768] prv;
+    i32[1 << 15] tbl;
+    i32[1 << 15] prv;
     i32 seq_cnt;
-    sdefl_seqt[87382] seq;
+    sdefl_seqt[(256 * 1024 + 2) / 3] seq;
     sdefl_freq freq;
     sdefl_codes cod;
 }
@@ -2145,10 +2140,10 @@ struct CoreData {
             i32 lastButtonPressed;
             i32[4] axisCount;
             bool[4] ready;
-            __arr_u8_128[4] name;
-            __arr_u8_32[4] currentButtonState;
-            __arr_u8_32[4] previousButtonState;
-            __arr_f32_8[4] axisState;
+            u8:[4][128] name;
+            u8:[4][32] currentButtonState;
+            u8:[4][32] previousButtonState;
+            f32:[4][8] axisState;
         } Gamepad;
     } Input;
     struct {
@@ -2266,7 +2261,7 @@ struct stbi__result_info {
 // zlib-style huffman encoding
 // (jpegs packs from left, zlib from right, so can't share code)
 struct stbi__zhuffman {
-    stbi__uint16[512] fast;
+    stbi__uint16[1 << 9] fast;
     stbi__uint16[16] firstcode;
     i32[17] maxcode;
     stbi__uint16[16] firstsymbol;
@@ -8318,7 +8313,7 @@ i32 sinfl_decompress(u8* out, i32 cap, u8* in, i32 size) {
             case fixed: {
                 {
                     i32 n;
-                    noinit u8[320] lens;
+                    noinit u8[288 + 32] lens;
                     for n = 0; n <= 143; n++ {
                         lens[n] = 8;
                     }
@@ -8345,7 +8340,7 @@ i32 sinfl_decompress(u8* out, i32 cap, u8* in, i32 size) {
                     i32 i;
                     noinit u32[128] hlens;
                     u8[19] nlens;
-                    noinit u8[320] lens;
+                    noinit u8[288 + 32] lens;
                     sinfl_refill(&s);
                     {
                         i32 nlit = 257 + sinfl__get(&s, 5);
@@ -8683,7 +8678,7 @@ void sdefl_gen_codes(u32* A, u8* lens, u32* len_cnt, u32 max_code_word_len, u32 
     u32 i;
     u32 sym;
     u32 len;
-    noinit u32[16] nxt;
+    noinit u32[15 + 1] nxt;
     {
         i = 0;
         for len = max_code_word_len; len >= 1; len-- {
@@ -8714,7 +8709,7 @@ u32 sdefl_rev(u32 c, u8 n) {
 void sdefl_huff(u8* lens, u32* codes, u32* freqs, u32 num_syms, u32 max_code_len) {
     u32 c;
     u32* A = codes;
-    noinit u32[16] len_cnt;
+    noinit u32[15 + 1] len_cnt;
     u32 used_syms = sdefl_sort_sym(num_syms, freqs, lens, A);
     if used_syms == 0 {
         return;
@@ -8740,7 +8735,7 @@ void sdefl_precode(sdefl_symcnt* cnt, u32* freqs, u32* items, u8* litlen, u8* of
     u32* at = items;
     u32 run_start = 0;
     u32 total = 0;
-    noinit u8[320] lens;
+    noinit u8[288 + 32] lens;
     for cnt.lit = 288; cnt.lit > 257; cnt.lit-- {
         if litlen[cnt.lit - 1] != 0 {
             break;
@@ -8856,7 +8851,7 @@ void sdefl_flush(u8** dst, sdefl* s, i32 is_last, u8* in, i32 blk_begin, i32 blk
     noinit u32[19] codes;
     noinit u8[19] lens;
     u32[19] freqs;
-    noinit u32[320] items;
+    noinit u32[288 + 32] items;
     s.freq.lit[256]++;
     sdefl_huff(s.cod.len.lit, s.cod.word.lit, s.freq.lit, 288, 14);
     sdefl_huff(s.cod.len.off, s.cod.word.off, s.freq.off, 32, 15);
@@ -12055,7 +12050,7 @@ void DrawLineStrip(Vector2* points, i32 pointCount, Color color) {
 void DrawLineBezier(Vector2 startPos, Vector2 endPos, f32 thick, Color color) {
     Vector2 previous = startPos;
     Vector2 current;
-    Vector2[50] points;
+    Vector2[2 * 24 + 2] points;
     for i32 i = 1; i <= 24; i++ {
         current.y = EaseCubicInOut(cast(f32, i), startPos.y, endPos.y - startPos.y, cast(f32, 24));
         current.x = previous.x + (endPos.x - startPos.x) / cast(f32, 24);
@@ -12977,7 +12972,7 @@ void DrawSplineBasis(Vector2* points, i32 pointCount, f32 thick, Color color) {
     f32 size = 0.0f;
     Vector2 currentPoint;
     Vector2 nextPoint;
-    Vector2[50] vertices;
+    Vector2[2 * 24 + 2] vertices;
     for i32 i = 0; i < pointCount - 3; i++ {
         f32 t = 0.0f;
         Vector2 p1 = points[i];
@@ -13037,7 +13032,7 @@ void DrawSplineCatmullRom(Vector2* points, i32 pointCount, f32 thick, Color colo
     f32 size = 0.0f;
     Vector2 currentPoint = points[1];
     Vector2 nextPoint;
-    Vector2[50] vertices;
+    Vector2[2 * 24 + 2] vertices;
     DrawCircleV(currentPoint, thick / 2.0f, color);
     for i32 i = 0; i < pointCount - 3; i++ {
         f32 t = 0.0f;
@@ -13120,7 +13115,7 @@ void DrawSplineSegmentBasis(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, f32 
     Vector2 currentPoint;
     Vector2 nextPoint;
     f32 t = 0.0f;
-    Vector2[50] points;
+    Vector2[2 * 24 + 2] points;
     f32[4] a;
     f32[4] b;
     a[0] = (-p1.x + 3.0f * p2.x - 3.0f * p3.x + p4.x) / 6.0f;
@@ -13161,7 +13156,7 @@ void DrawSplineSegmentCatmullRom(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4,
     Vector2 currentPoint = p1;
     Vector2 nextPoint;
     f32 t = 0.0f;
-    Vector2[50] points;
+    Vector2[2 * 24 + 2] points;
     for i32 i = 0; i <= 24; i++ {
         t = step * cast(f32, i);
         f32 q0 = -1.0f * t * t * t + 2.0f * t * t + -1.0f * t;
@@ -13194,7 +13189,7 @@ void DrawSplineSegmentBezierQuadratic(Vector2 p1, Vector2 c2, Vector2 p3, f32 th
     Vector2 previous = p1;
     Vector2 current;
     f32 t = 0.0f;
-    Vector2[50] points;
+    Vector2[2 * 24 + 2] points;
     for i32 i = 1; i <= 24; i++ {
         t = step * cast(f32, i);
         f32 a = powf(1.0f - t, 2.0f);
@@ -13226,7 +13221,7 @@ void DrawSplineSegmentBezierCubic(Vector2 p1, Vector2 c2, Vector2 c3, Vector2 p4
     Vector2 previous = p1;
     Vector2 current;
     f32 t = 0.0f;
-    Vector2[50] points;
+    Vector2[2 * 24 + 2] points;
     for i32 i = 1; i <= 24; i++ {
         t = step * cast(f32, i);
         f32 a = powf(1.0f - t, 3.0f);
@@ -14616,7 +14611,7 @@ i32 stbi__parse_huffman_block(stbi__zbuf* a) {
 
 i32 stbi__compute_huffman_codes(stbi__zbuf* a) {
     noinit stbi__zhuffman z_codelength;
-    noinit stbi_uc[455] lencodes;
+    noinit stbi_uc[286 + 32 + 137] lencodes;
     noinit stbi_uc[19] codelength_sizes;
     i32 i;
     i32 n;
@@ -25267,7 +25262,7 @@ Font LoadBMFont(u8* fileName) {
     i32 imWidth = 0;
     i32 imHeight = 0;
     i32 pageCount = 1;
-    __arr_u8_129[8] imFileName;
+    u8:[8][129] imFileName;
     i32 base = 0;
     i32 readBytes = 0;
     i32 readVars = 0;
@@ -27448,25 +27443,25 @@ RayCollision GetRayCollisionQuad(Ray ray, Vector3 p1, Vector3 p2, Vector3 p3, Ve
 }
 private {
 u8[19] sinfl_decompress__order = {16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
-i16[32] sinfl_decompress__dbase = {
+i16[30 + 2] sinfl_decompress__dbase = {
     1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049,
     3073, 4097, 6145, 8193, 12289, 16385, 24577, 0, 0,
 };
-u8[32] sinfl_decompress__dbits = {
+u8[30 + 2] sinfl_decompress__dbits = {
     0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13,
     13, 0, 0,
 };
-i16[31] sinfl_decompress__lbase = {
+i16[29 + 2] sinfl_decompress__lbase = {
     3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131,
     163, 195, 227, 258, 0, 0,
 };
-u8[31] sinfl_decompress__lbits = {
+u8[29 + 2] sinfl_decompress__lbits = {
     0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 0, 0,
 };
 i16[14] sdefl_match_codes__dxmax = {
     0, 6, 12, 24, 48, 96, 192, 384, 768, 1536, 3072, 6144, 12288, 24576,
 };
-u8[259] sdefl_match_codes__lslot = {
+u8[258 + 1] sdefl_match_codes__lslot = {
     0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 12, 12, 13, 13, 13, 13, 14,
     14, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 17, 18,
     18, 18, 18, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20, 20,
@@ -27573,7 +27568,7 @@ stbi_uc[19] stbi__compute_huffman_codes__length_dezigzag = {
 };
 stbi_uc[8] stbi__check_png_header__png_sig = {137, 80, 78, 71, 13, 10, 26, 10};
 u8* stbi__parse_png_file__invalid_chunk = "XXXX PNG chunk not known";
-__arr_u8_1024[4] TextFormat__buffers;
+u8:[4][1024] TextFormat__buffers;
 i32 TextFormat__index = 0;
 u8[1024] TextSubtext__buffer;
 u8[1024] TextRemoveSpaces__buffer;

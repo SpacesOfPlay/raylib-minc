@@ -877,7 +877,7 @@ struct GuiStyleProp {
 // guiIcons size is by default: 256*(16*16/32) = 2048*4 = 8192 bytes = 8 KB
 //----------------------------------------------------------------------------------
 private {
-u32[2048] guiIcons = {
+u32[256 * (16 * 16 / 32)] guiIcons = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x3ff80000, 0x2f082008, 0x2042207e, 0x40027fc2, 0x40024002, 0x40024002, 0x40024002, 0x00007ffe,
     0x3ffe0000, 0x44226422, 0x400247e2, 0x5ffa4002, 0x57ea500a, 0x500a500a, 0x40025ffa, 0x00007ffe,
@@ -1175,7 +1175,7 @@ i32 autoCursorCounter = 0;
 //
 // guiStyle size is by default: 16*(16 + 8) = 384*4 = 1536 bytes = 1.5 KB
 //----------------------------------------------------------------------------------
-u32[384] guiStyle;
+u32[16 * (16 + 8)] guiStyle;
 bool guiStyleLoaded = false;
 }
 
@@ -2358,7 +2358,7 @@ i32 GuiSpinner(Rectangle bounds, u8* text, i32* value, i32 minValue, i32 maxValu
 i32 GuiValueBox(Rectangle bounds, u8* text, i32* value, i32 minValue, i32 maxValue, bool editMode) {
     i32 result = 0;
     GuiState state = guiState;
-    u8[33] textValue;
+    u8[32 + 1] textValue;
     snprintf(textValue, 32 + 1, "%i", *value);
     Rectangle textBounds;
     if text != null {

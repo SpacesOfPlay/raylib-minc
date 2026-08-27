@@ -1,5 +1,5 @@
 # Publishes live-demo/ to GitHub Pages. The wasm is built here, not
-# committed — set Settings > Pages > Source to "GitHub Actions".
+# committed; set Settings > Pages > Source to "GitHub Actions".
 name: pages
 
 on:
@@ -22,8 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Downloaded, not piped to bash: a piped script shares stdin with
-      # its own source.
+      # Downloaded, not piped: a piped script shares stdin with its source.
       - name: install minc
         run: |
           curl -fsSL https://minc.dev/install -o "$RUNNER_TEMP/install.sh"
@@ -33,10 +32,9 @@ jobs:
       - run: minc --version
 
       # cwd is the repo root so `import raylib;` resolves against ./lib.
-      # No GLFW and no threads: the wasm arm is WebGL2 + the hand-written
-      # rcore backend, single-threaded, so the page needs no cross-origin
-      # isolation. A failed example fails the job — the gallery links are
-      # a fixed list, and a missing .wasm is a dead link.
+      # The wasm arm is WebGL2 and single-threaded, so the page needs no
+      # cross-origin isolation. A failed example fails the job: the
+      # gallery links are a fixed list, and a missing .wasm is a dead link.
       - name: build live-demo
         run: |
           cp lib/raylib_wasm_host.js live-demo/
@@ -47,8 +45,7 @@ jobs:
           done
 
       # Merge every category's resources/ into one dir + one manifest the
-      # runner preloads into the host VFS. Same-named files would collide;
-      # none do today.
+      # runner preloads. Same-named files would collide; none do today.
       - name: stage assets
         run: |
           for d in examples/*/resources; do
@@ -63,9 +60,8 @@ jobs:
             cat live-demo/assets.json
           fi
 
-      # index.html's list is hand-written (it carries the per-example
-      # descriptions and caveats). Fail the job rather than publish a dead
-      # link, or an example the gallery never links to.
+      # index.html's list is hand-written. Fail the job rather than publish
+      # a dead link, or an example nothing links to.
       - name: check the gallery lists exactly what was built
         run: |
           grep -o "id: '[^']*'" live-demo/index.html | sed "s/id: '\(.*\)'/\1/" \
