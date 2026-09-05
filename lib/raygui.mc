@@ -3044,11 +3044,11 @@ i32 GuiColorBarHue(Rectangle bounds, u8* text, f32* hue) {
         }
     }
     if state != STATE_DISABLED {
-        DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y), cast(i32, bounds.width), cast(i32, ceilf(bounds.height / 6.0f)), Fade(Color{255, 0, 0, 255}, guiAlpha), Fade(Color{255, 255, 0, 255}, guiAlpha));
-        DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y + bounds.height / 6.0f), cast(i32, bounds.width), cast(i32, ceilf(bounds.height / 6.0f)), Fade(Color{255, 255, 0, 255}, guiAlpha), Fade(Color{0, 255, 0, 255}, guiAlpha));
-        DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y + 2.0f * (bounds.height / 6.0f)), cast(i32, bounds.width), cast(i32, ceilf(bounds.height / 6.0f)), Fade(Color{0, 255, 0, 255}, guiAlpha), Fade(Color{0, 255, 255, 255}, guiAlpha));
-        DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y + 3.0f * (bounds.height / 6.0f)), cast(i32, bounds.width), cast(i32, ceilf(bounds.height / 6.0f)), Fade(Color{0, 255, 255, 255}, guiAlpha), Fade(Color{0, 0, 255, 255}, guiAlpha));
-        DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y + 4.0f * (bounds.height / 6.0f)), cast(i32, bounds.width), cast(i32, ceilf(bounds.height / 6.0f)), Fade(Color{0, 0, 255, 255}, guiAlpha), Fade(Color{255, 0, 255, 255}, guiAlpha));
+        DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y), cast(i32, bounds.width), cast(i32, ceil(bounds.height / 6.0f)), Fade(Color{255, 0, 0, 255}, guiAlpha), Fade(Color{255, 255, 0, 255}, guiAlpha));
+        DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y + bounds.height / 6.0f), cast(i32, bounds.width), cast(i32, ceil(bounds.height / 6.0f)), Fade(Color{255, 255, 0, 255}, guiAlpha), Fade(Color{0, 255, 0, 255}, guiAlpha));
+        DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y + 2.0f * (bounds.height / 6.0f)), cast(i32, bounds.width), cast(i32, ceil(bounds.height / 6.0f)), Fade(Color{0, 255, 0, 255}, guiAlpha), Fade(Color{0, 255, 255, 255}, guiAlpha));
+        DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y + 3.0f * (bounds.height / 6.0f)), cast(i32, bounds.width), cast(i32, ceil(bounds.height / 6.0f)), Fade(Color{0, 255, 255, 255}, guiAlpha), Fade(Color{0, 0, 255, 255}, guiAlpha));
+        DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y + 4.0f * (bounds.height / 6.0f)), cast(i32, bounds.width), cast(i32, ceil(bounds.height / 6.0f)), Fade(Color{0, 0, 255, 255}, guiAlpha), Fade(Color{255, 0, 255, 255}, guiAlpha));
         DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y + 5.0f * (bounds.height / 6.0f)), cast(i32, bounds.width), cast(i32, bounds.height / 6.0f), Fade(Color{255, 0, 255, 255}, guiAlpha), Fade(Color{255, 0, 0, 255}, guiAlpha));
     } else {
         DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y), cast(i32, bounds.width), cast(i32, bounds.height), Fade(Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BASE_COLOR_DISABLED))), 0.1f), guiAlpha), Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER_COLOR_DISABLED))), guiAlpha));
@@ -3083,8 +3083,8 @@ i32 GuiColorPicker(Rectangle bounds, u8* text, Color* color) {
     GuiColorBarHue(boundsHue, null, &hsv.x);
     Vector3 rgb = ConvertHSVtoRGB(hsv);
     *color = Color{
-        cast(u8, roundf(rgb.x * 255.0f)), cast(u8, roundf(rgb.y * 255.0f)),
-        cast(u8, roundf(rgb.z * 255.0f)), (*color).a,
+        cast(u8, round(rgb.x * 255.0f)), cast(u8, round(rgb.y * 255.0f)),
+        cast(u8, round(rgb.z * 255.0f)), (*color).a,
     };
     return result;
 }
@@ -3314,8 +3314,8 @@ i32 GuiGrid(Rectangle bounds, u8* text, f32 spacing, i32 subdivs, Vector2* mouse
     i32 color = GuiGetStyle(DEFAULT, LINE_COLOR);
     if state != STATE_DISABLED && !guiLocked && !guiControlExclusiveMode {
         if CheckCollisionPointRec(mousePoint, bounds) != 0 {
-            currentMouseCell.x = floorf((mousePoint.x - bounds.x) / spacing);
-            currentMouseCell.y = floorf((mousePoint.y - bounds.y) / spacing);
+            currentMouseCell.x = floor((mousePoint.x - bounds.x) / spacing);
+            currentMouseCell.y = floor((mousePoint.y - bounds.y) / spacing);
         }
     }
     if state == STATE_DISABLED {

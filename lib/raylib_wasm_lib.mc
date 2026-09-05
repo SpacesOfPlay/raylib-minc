@@ -3065,13 +3065,13 @@ void rlRotatef(f32 angle, f32 x, f32 y, f32 z) {
     Matrix matRotation = rlMatrixIdentity();
     f32 lengthSquared = x * x + y * y + z * z;
     if lengthSquared != 1.0f && lengthSquared != 0.0f {
-        f32 inverseLength = 1.0f / sqrtf(lengthSquared);
+        f32 inverseLength = 1.0f / sqrt(lengthSquared);
         x *= inverseLength;
         y *= inverseLength;
         z *= inverseLength;
     }
-    f32 sinres = sinf(3.141592653589793f / 180.0f * angle);
-    f32 cosres = cosf(3.141592653589793f / 180.0f * angle);
+    f32 sinres = sin(3.141592653589793f / 180.0f * angle);
+    f32 cosres = cos(3.141592653589793f / 180.0f * angle);
     f32 t = 1.0f - cosres;
     matRotation.m0 = x * x * t + cosres;
     matRotation.m1 = y * x * t + z * sinres;
@@ -4524,7 +4524,7 @@ void rlGenTextureMipmaps(u32 id, i32 width, i32 height, i32 format_var, i32* mip
     }
     if texIsPOT || RLGL.ExtSupported.texNPOT {
         glGenerateMipmap(GL_TEXTURE_2D);
-        *mipmaps = 1 + cast(i32, floor(log(cast(f64, width > height ? width : height)) / log(2.0)));
+        *mipmaps = 1 + cast(i32, floor(log(width > height ? width : height) / log(2.0)));
     } else {
     }
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -4855,7 +4855,7 @@ u32 rlLoadShader(u8* code, i32 type) {
         if maxLength > 0 {
             i32 length = 0;
             var log = new(u8[maxLength]);
-            glGetShaderInfoLog(shaderId, maxLength, &length, cast(u8*, log));
+            glGetShaderInfoLog(shaderId, maxLength, &length, log);
             free(log);
         }
         glDeleteShader(shaderId);
@@ -4942,7 +4942,7 @@ u32 rlLoadShaderProgramEx(u32 vsId, u32 fsId) {
         if maxLength > 0 {
             i32 length = 0;
             var log = new(u8[maxLength]);
-            glGetProgramInfoLog(programId, maxLength, &length, cast(u8*, log));
+            glGetProgramInfoLog(programId, maxLength, &length, log);
             free(log);
         }
         glDeleteProgram(programId);
@@ -5660,13 +5660,13 @@ f32 Remap(f32 value, f32 inputStart, f32 inputEnd, f32 outputStart, f32 outputEn
 
 // Wrap input value from min to max
 f32 Wrap(f32 value, f32 min, f32 max) {
-    f32 result = value - (max - min) * floorf((value - min) / (max - min));
+    f32 result = value - (max - min) * floor((value - min) / (max - min));
     return result;
 }
 
 // Check whether two given floats are almost equal
 i32 FloatEquals(f32 x, f32 y) {
-    i32 result = fabsf(x - y) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(x), fabsf(y)));
+    i32 result = fabs(x - y) <= 1.0e-6f * fmax(1.0f, fmax(fabs(x), fabs(y)));
     return result;
 }
 
@@ -5711,7 +5711,7 @@ Vector2 Vector2SubtractValue(Vector2 v, f32 sub) {
 
 // Calculate vector length
 f32 Vector2Length(Vector2 v) {
-    f32 result = sqrtf(v.x * v.x + v.y * v.y);
+    f32 result = sqrt(v.x * v.x + v.y * v.y);
     return result;
 }
 
@@ -5735,7 +5735,7 @@ f32 Vector2CrossProduct(Vector2 v1, Vector2 v2) {
 
 // Calculate distance between two vectors
 f32 Vector2Distance(Vector2 v1, Vector2 v2) {
-    f32 result = sqrtf((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y));
+    f32 result = sqrt((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y));
     return result;
 }
 
@@ -5752,7 +5752,7 @@ f32 Vector2Angle(Vector2 v1, Vector2 v2) {
     f32 result = 0.0f;
     f32 dot = v1.x * v2.x + v1.y * v2.y;
     f32 det = v1.x * v2.y - v1.y * v2.x;
-    result = atan2f(det, dot);
+    result = atan2(det, dot);
     return result;
 }
 
@@ -5761,7 +5761,7 @@ f32 Vector2Angle(Vector2 v1, Vector2 v2) {
 // Current implementation should be aligned with glm::angle
 f32 Vector2LineAngle(Vector2 start, Vector2 end) {
     f32 result = 0.0f;
-    result = -atan2f(end.y - start.y, end.x - start.x);
+    result = -atan2(end.y - start.y, end.x - start.x);
     return result;
 }
 
@@ -5792,7 +5792,7 @@ Vector2 Vector2Divide(Vector2 v1, Vector2 v2) {
 // Normalize provided vector
 Vector2 Vector2Normalize(Vector2 v) {
     Vector2 result;
-    f32 length = sqrtf(v.x * v.x + v.y * v.y);
+    f32 length = sqrt(v.x * v.x + v.y * v.y);
     if length > 0.0f {
         f32 ilength = 1.0f / length;
         result.x = v.x * ilength;
@@ -5832,24 +5832,24 @@ Vector2 Vector2Reflect(Vector2 v, Vector2 normal) {
 // Get min value for each pair of components
 Vector2 Vector2Min(Vector2 v1, Vector2 v2) {
     Vector2 result;
-    result.x = fminf(v1.x, v2.x);
-    result.y = fminf(v1.y, v2.y);
+    result.x = fmin(v1.x, v2.x);
+    result.y = fmin(v1.y, v2.y);
     return result;
 }
 
 // Get max value for each pair of components
 Vector2 Vector2Max(Vector2 v1, Vector2 v2) {
     Vector2 result;
-    result.x = fmaxf(v1.x, v2.x);
-    result.y = fmaxf(v1.y, v2.y);
+    result.x = fmax(v1.x, v2.x);
+    result.y = fmax(v1.y, v2.y);
     return result;
 }
 
 // Rotate vector by angle
 Vector2 Vector2Rotate(Vector2 v, f32 angle) {
     Vector2 result;
-    f32 cosres = cosf(angle);
-    f32 sinres = sinf(angle);
+    f32 cosres = cos(angle);
+    f32 sinres = sin(angle);
     result.x = v.x * cosres - v.y * sinres;
     result.y = v.x * sinres + v.y * cosres;
     return result;
@@ -5864,7 +5864,7 @@ Vector2 Vector2MoveTowards(Vector2 v, Vector2 target, f32 maxDistance) {
     if value == 0.0f || maxDistance >= 0.0f && value <= maxDistance * maxDistance {
         return target;
     }
-    f32 dist = sqrtf(value);
+    f32 dist = sqrt(value);
     result.x = v.x + dx / dist * maxDistance;
     result.y = v.y + dy / dist * maxDistance;
     return result;
@@ -5880,8 +5880,8 @@ Vector2 Vector2Invert(Vector2 v) {
 // min and max values specified by the given vectors
 Vector2 Vector2Clamp(Vector2 v, Vector2 min, Vector2 max) {
     Vector2 result;
-    result.x = fminf(max.x, fmaxf(min.x, v.x));
-    result.y = fminf(max.y, fmaxf(min.y, v.y));
+    result.x = fmin(max.x, fmax(min.x, v.x));
+    result.y = fmin(max.y, fmax(min.y, v.y));
     return result;
 }
 
@@ -5890,7 +5890,7 @@ Vector2 Vector2ClampValue(Vector2 v, f32 min, f32 max) {
     Vector2 result = v;
     f32 length = v.x * v.x + v.y * v.y;
     if length > 0.0f {
-        length = sqrtf(length);
+        length = sqrt(length);
         f32 scale = 1.0f;
         if length < min {
             scale = min / length;
@@ -5905,7 +5905,7 @@ Vector2 Vector2ClampValue(Vector2 v, f32 min, f32 max) {
 
 // Check whether two given vectors are almost equal
 i32 Vector2Equals(Vector2 p, Vector2 q) {
-    i32 result = fabsf(p.x - q.x) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))) && fabsf(p.y - q.y) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y)));
+    i32 result = fabs(p.x - q.x) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.x), fabs(q.x))) && fabs(p.y - q.y) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.y), fabs(q.y)));
     return result;
 }
 
@@ -5919,7 +5919,7 @@ Vector2 Vector2Refract(Vector2 v, Vector2 n, f32 r) {
     f32 dot = v.x * n.x + v.y * n.y;
     f32 d = 1.0f - r * r * (1.0f - dot * dot);
     if d >= 0.0f {
-        d = sqrtf(d);
+        d = sqrt(d);
         v.x = r * v.x - (r * dot + d) * n.x;
         v.y = r * v.y - (r * dot + d) * n.y;
         result = v;
@@ -5989,14 +5989,14 @@ Vector3 Vector3CrossProduct(Vector3 v1, Vector3 v2) {
 // Calculate one vector perpendicular vector
 Vector3 Vector3Perpendicular(Vector3 v) {
     Vector3 result;
-    f32 min = fabsf(v.x);
+    f32 min = fabs(v.x);
     var cardinalAxis = Vector3{1.0f, 0.0f, 0.0f};
-    if fabsf(v.y) < min {
-        min = fabsf(v.y);
+    if fabs(v.y) < min {
+        min = fabs(v.y);
         var tmp = Vector3{0.0f, 1.0f, 0.0f};
         cardinalAxis = tmp;
     }
-    if fabsf(v.z) < min {
+    if fabs(v.z) < min {
         var tmp = Vector3{0.0f, 0.0f, 1.0f};
         cardinalAxis = tmp;
     }
@@ -6008,7 +6008,7 @@ Vector3 Vector3Perpendicular(Vector3 v) {
 
 // Calculate vector length
 f32 Vector3Length(Vector3 v) {
-    f32 result = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+    f32 result = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
     return result;
 }
 
@@ -6030,7 +6030,7 @@ f32 Vector3Distance(Vector3 v1, Vector3 v2) {
     f32 dx = v2.x - v1.x;
     f32 dy = v2.y - v1.y;
     f32 dz = v2.z - v1.z;
-    result = sqrtf(dx * dx + dy * dy + dz * dz);
+    result = sqrt(dx * dx + dy * dy + dz * dz);
     return result;
 }
 
@@ -6050,9 +6050,9 @@ f32 Vector3Angle(Vector3 v1, Vector3 v2) {
     var cross = Vector3{
         v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x,
     };
-    f32 len = sqrtf(cross.x * cross.x + cross.y * cross.y + cross.z * cross.z);
+    f32 len = sqrt(cross.x * cross.x + cross.y * cross.y + cross.z * cross.z);
     f32 dot = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
-    result = atan2f(len, dot);
+    result = atan2(len, dot);
     return result;
 }
 
@@ -6071,7 +6071,7 @@ Vector3 Vector3Divide(Vector3 v1, Vector3 v2) {
 // Normalize provided vector
 Vector3 Vector3Normalize(Vector3 v) {
     Vector3 result = v;
-    f32 length = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+    f32 length = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
     if length != 0.0f {
         f32 ilength = 1.0f / length;
         result.x *= ilength;
@@ -6112,7 +6112,7 @@ void Vector3OrthoNormalize(Vector3* v1, Vector3* v2) {
     f32 length = 0.0f;
     f32 ilength = 0.0f;
     Vector3 v = *v1;
-    length = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+    length = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
     if length == 0.0f {
         length = 1.0f;
     }
@@ -6124,7 +6124,7 @@ void Vector3OrthoNormalize(Vector3* v1, Vector3* v2) {
         v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x,
     };
     v = vn1;
-    length = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+    length = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
     if length == 0.0f {
         length = 1.0f;
     }
@@ -6162,7 +6162,7 @@ Vector3 Vector3RotateByQuaternion(Vector3 v, Quaternion q) {
 // Rotates a vector around an axis
 Vector3 Vector3RotateByAxisAngle(Vector3 v, Vector3 axis, f32 angle) {
     Vector3 result = v;
-    f32 length = sqrtf(axis.x * axis.x + axis.y * axis.y + axis.z * axis.z);
+    f32 length = sqrt(axis.x * axis.x + axis.y * axis.y + axis.z * axis.z);
     if length == 0.0f {
         length = 1.0f;
     }
@@ -6171,11 +6171,11 @@ Vector3 Vector3RotateByAxisAngle(Vector3 v, Vector3 axis, f32 angle) {
     axis.y *= ilength;
     axis.z *= ilength;
     angle /= 2.0f;
-    f32 a = sinf(angle);
+    f32 a = sin(angle);
     f32 b = axis.x * a;
     f32 c = axis.y * a;
     f32 d = axis.z * a;
-    a = cosf(angle);
+    a = cos(angle);
     var w = Vector3{b, c, d};
     var wv = Vector3{w.y * v.z - w.z * v.y, w.z * v.x - w.x * v.z, w.x * v.y - w.y * v.x};
     var wwv = Vector3{w.y * wv.z - w.z * wv.y, w.z * wv.x - w.x * wv.z, w.x * wv.y - w.y * wv.x};
@@ -6205,7 +6205,7 @@ Vector3 Vector3MoveTowards(Vector3 v, Vector3 target, f32 maxDistance) {
     if value == 0.0f || maxDistance >= 0.0f && value <= maxDistance * maxDistance {
         return target;
     }
-    f32 dist = sqrtf(value);
+    f32 dist = sqrt(value);
     result.x = v.x + dx / dist * maxDistance;
     result.y = v.y + dy / dist * maxDistance;
     result.z = v.z + dz / dist * maxDistance;
@@ -6246,18 +6246,18 @@ Vector3 Vector3Reflect(Vector3 v, Vector3 normal) {
 // Get min value for each pair of components
 Vector3 Vector3Min(Vector3 v1, Vector3 v2) {
     Vector3 result;
-    result.x = fminf(v1.x, v2.x);
-    result.y = fminf(v1.y, v2.y);
-    result.z = fminf(v1.z, v2.z);
+    result.x = fmin(v1.x, v2.x);
+    result.y = fmin(v1.y, v2.y);
+    result.z = fmin(v1.z, v2.z);
     return result;
 }
 
 // Get max value for each pair of components
 Vector3 Vector3Max(Vector3 v1, Vector3 v2) {
     Vector3 result;
-    result.x = fmaxf(v1.x, v2.x);
-    result.y = fmaxf(v1.y, v2.y);
-    result.z = fmaxf(v1.z, v2.z);
+    result.x = fmax(v1.x, v2.x);
+    result.y = fmax(v1.y, v2.y);
+    result.z = fmax(v1.z, v2.z);
     return result;
 }
 
@@ -6373,9 +6373,9 @@ Vector3 Vector3Invert(Vector3 v) {
 // min and max values specified by the given vectors
 Vector3 Vector3Clamp(Vector3 v, Vector3 min, Vector3 max) {
     Vector3 result;
-    result.x = fminf(max.x, fmaxf(min.x, v.x));
-    result.y = fminf(max.y, fmaxf(min.y, v.y));
-    result.z = fminf(max.z, fmaxf(min.z, v.z));
+    result.x = fmin(max.x, fmax(min.x, v.x));
+    result.y = fmin(max.y, fmax(min.y, v.y));
+    result.z = fmin(max.z, fmax(min.z, v.z));
     return result;
 }
 
@@ -6384,7 +6384,7 @@ Vector3 Vector3ClampValue(Vector3 v, f32 min, f32 max) {
     Vector3 result = v;
     f32 length = v.x * v.x + v.y * v.y + v.z * v.z;
     if length > 0.0f {
-        length = sqrtf(length);
+        length = sqrt(length);
         f32 scale = 1.0f;
         if length < min {
             scale = min / length;
@@ -6400,7 +6400,7 @@ Vector3 Vector3ClampValue(Vector3 v, f32 min, f32 max) {
 
 // Check whether two given vectors are almost equal
 i32 Vector3Equals(Vector3 p, Vector3 q) {
-    i32 result = fabsf(p.x - q.x) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))) && fabsf(p.y - q.y) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))) && fabsf(p.z - q.z) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z)));
+    i32 result = fabs(p.x - q.x) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.x), fabs(q.x))) && fabs(p.y - q.y) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.y), fabs(q.y))) && fabs(p.z - q.z) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.z), fabs(q.z)));
     return result;
 }
 
@@ -6414,7 +6414,7 @@ Vector3 Vector3Refract(Vector3 v, Vector3 n, f32 r) {
     f32 dot = v.x * n.x + v.y * n.y + v.z * n.z;
     f32 d = 1.0f - r * r * (1.0f - dot * dot);
     if d >= 0.0f {
-        d = sqrtf(d);
+        d = sqrt(d);
         v.x = r * v.x - (r * dot + d) * n.x;
         v.y = r * v.y - (r * dot + d) * n.y;
         v.z = r * v.z - (r * dot + d) * n.z;
@@ -6464,7 +6464,7 @@ Vector4 Vector4SubtractValue(Vector4 v, f32 add) {
 
 // Vector length
 f32 Vector4Length(Vector4 v) {
-    f32 result = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w);
+    f32 result = sqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w);
     return result;
 }
 
@@ -6482,7 +6482,7 @@ f32 Vector4DotProduct(Vector4 v1, Vector4 v2) {
 
 // Calculate distance between two vectors
 f32 Vector4Distance(Vector4 v1, Vector4 v2) {
-    f32 result = sqrtf((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) + (v1.z - v2.z) * (v1.z - v2.z) + (v1.w - v2.w) * (v1.w - v2.w));
+    f32 result = sqrt((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) + (v1.z - v2.z) * (v1.z - v2.z) + (v1.w - v2.w) * (v1.w - v2.w));
     return result;
 }
 
@@ -6519,7 +6519,7 @@ Vector4 Vector4Divide(Vector4 v1, Vector4 v2) {
 // Normalize provided vector
 Vector4 Vector4Normalize(Vector4 v) {
     Vector4 result;
-    f32 length = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w);
+    f32 length = sqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w);
     if length > 0.0f {
         f32 ilength = 1.0f / length;
         result.x = v.x * ilength;
@@ -6533,20 +6533,20 @@ Vector4 Vector4Normalize(Vector4 v) {
 // Get min value for each pair of components
 Vector4 Vector4Min(Vector4 v1, Vector4 v2) {
     Vector4 result;
-    result.x = fminf(v1.x, v2.x);
-    result.y = fminf(v1.y, v2.y);
-    result.z = fminf(v1.z, v2.z);
-    result.w = fminf(v1.w, v2.w);
+    result.x = fmin(v1.x, v2.x);
+    result.y = fmin(v1.y, v2.y);
+    result.z = fmin(v1.z, v2.z);
+    result.w = fmin(v1.w, v2.w);
     return result;
 }
 
 // Get max value for each pair of components
 Vector4 Vector4Max(Vector4 v1, Vector4 v2) {
     Vector4 result;
-    result.x = fmaxf(v1.x, v2.x);
-    result.y = fmaxf(v1.y, v2.y);
-    result.z = fmaxf(v1.z, v2.z);
-    result.w = fmaxf(v1.w, v2.w);
+    result.x = fmax(v1.x, v2.x);
+    result.y = fmax(v1.y, v2.y);
+    result.z = fmax(v1.z, v2.z);
+    result.w = fmax(v1.w, v2.w);
     return result;
 }
 
@@ -6571,7 +6571,7 @@ Vector4 Vector4MoveTowards(Vector4 v, Vector4 target, f32 maxDistance) {
     if value == 0.0f || maxDistance >= 0.0f && value <= maxDistance * maxDistance {
         return target;
     }
-    f32 dist = sqrtf(value);
+    f32 dist = sqrt(value);
     result.x = v.x + dx / dist * maxDistance;
     result.y = v.y + dy / dist * maxDistance;
     result.z = v.z + dz / dist * maxDistance;
@@ -6587,7 +6587,7 @@ Vector4 Vector4Invert(Vector4 v) {
 
 // Check whether two given vectors are almost equal
 i32 Vector4Equals(Vector4 p, Vector4 q) {
-    i32 result = fabsf(p.x - q.x) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))) && fabsf(p.y - q.y) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))) && fabsf(p.z - q.z) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z))) && fabsf(p.w - q.w) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.w), fabsf(q.w)));
+    i32 result = fabs(p.x - q.x) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.x), fabs(q.x))) && fabs(p.y - q.y) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.y), fabs(q.y))) && fabs(p.z - q.z) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.z), fabs(q.z))) && fabs(p.w - q.w) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.w), fabs(q.w)));
     return result;
 }
 
@@ -6800,13 +6800,13 @@ Matrix MatrixRotate(Vector3 axis, f32 angle) {
     f32 z = axis.z;
     f32 lengthSquared = x * x + y * y + z * z;
     if lengthSquared != 1.0f && lengthSquared != 0.0f {
-        f32 ilength = 1.0f / sqrtf(lengthSquared);
+        f32 ilength = 1.0f / sqrt(lengthSquared);
         x *= ilength;
         y *= ilength;
         z *= ilength;
     }
-    f32 sinres = sinf(angle);
-    f32 cosres = cosf(angle);
+    f32 sinres = sin(angle);
+    f32 cosres = cos(angle);
     f32 t = 1.0f - cosres;
     result.m0 = x * x * t + cosres;
     result.m1 = y * x * t + z * sinres;
@@ -6834,8 +6834,8 @@ Matrix MatrixRotateX(f32 angle) {
         1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
         1.0f,
     };
-    f32 cosres = cosf(angle);
-    f32 sinres = sinf(angle);
+    f32 cosres = cos(angle);
+    f32 sinres = sin(angle);
     result.m5 = cosres;
     result.m6 = sinres;
     result.m9 = -sinres;
@@ -6850,8 +6850,8 @@ Matrix MatrixRotateY(f32 angle) {
         1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
         1.0f,
     };
-    f32 cosres = cosf(angle);
-    f32 sinres = sinf(angle);
+    f32 cosres = cos(angle);
+    f32 sinres = sin(angle);
     result.m0 = cosres;
     result.m2 = -sinres;
     result.m8 = sinres;
@@ -6866,8 +6866,8 @@ Matrix MatrixRotateZ(f32 angle) {
         1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
         1.0f,
     };
-    f32 cosres = cosf(angle);
-    f32 sinres = sinf(angle);
+    f32 cosres = cos(angle);
+    f32 sinres = sin(angle);
     result.m0 = cosres;
     result.m1 = sinres;
     result.m4 = -sinres;
@@ -6882,12 +6882,12 @@ Matrix MatrixRotateXYZ(Vector3 angle) {
         1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
         1.0f,
     };
-    f32 cosz = cosf(-angle.z);
-    f32 sinz = sinf(-angle.z);
-    f32 cosy = cosf(-angle.y);
-    f32 siny = sinf(-angle.y);
-    f32 cosx = cosf(-angle.x);
-    f32 sinx = sinf(-angle.x);
+    f32 cosz = cos(-angle.z);
+    f32 sinz = sin(-angle.z);
+    f32 cosy = cos(-angle.y);
+    f32 siny = sin(-angle.y);
+    f32 cosx = cos(-angle.x);
+    f32 sinx = sin(-angle.x);
     result.m0 = cosz * cosy;
     result.m1 = cosz * siny * sinx - sinz * cosx;
     result.m2 = cosz * siny * cosx + sinz * sinx;
@@ -6904,12 +6904,12 @@ Matrix MatrixRotateXYZ(Vector3 angle) {
 // NOTE: Angle must be provided in radians
 Matrix MatrixRotateZYX(Vector3 angle) {
     Matrix result;
-    f32 cz = cosf(angle.z);
-    f32 sz = sinf(angle.z);
-    f32 cy = cosf(angle.y);
-    f32 sy = sinf(angle.y);
-    f32 cx = cosf(angle.x);
-    f32 sx = sinf(angle.x);
+    f32 cz = cos(angle.z);
+    f32 sz = sin(angle.z);
+    f32 cy = cos(angle.y);
+    f32 sy = sin(angle.y);
+    f32 cx = cos(angle.x);
+    f32 sx = sin(angle.x);
     result.m0 = cz * cy;
     result.m4 = cz * sy * sx - cx * sz;
     result.m8 = sz * sx + cz * cx * sy;
@@ -7015,7 +7015,7 @@ Matrix MatrixLookAt(Vector3 eye, Vector3 target, Vector3 up) {
     f32 ilength = 0.0f;
     var vz = Vector3{eye.x - target.x, eye.y - target.y, eye.z - target.z};
     Vector3 v = vz;
-    length = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+    length = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
     if length == 0.0f {
         length = 1.0f;
     }
@@ -7027,7 +7027,7 @@ Matrix MatrixLookAt(Vector3 eye, Vector3 target, Vector3 up) {
         up.y * vz.z - up.z * vz.y, up.z * vz.x - up.x * vz.z, up.x * vz.y - up.y * vz.x,
     };
     v = vx;
-    length = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+    length = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
     if length == 0.0f {
         length = 1.0f;
     }
@@ -7114,14 +7114,14 @@ Quaternion QuaternionIdentity() {
 
 // Computes the length of a quaternion
 f32 QuaternionLength(Quaternion q) {
-    f32 result = sqrtf(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
+    f32 result = sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
     return result;
 }
 
 // Normalize provided quaternion
 Quaternion QuaternionNormalize(Quaternion q) {
     Quaternion result;
-    f32 length = sqrtf(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
+    f32 length = sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
     if length == 0.0f {
         length = 1.0f;
     }
@@ -7199,7 +7199,7 @@ Quaternion QuaternionNlerp(Quaternion q1, Quaternion q2, f32 amount) {
     result.z = q1.z + amount * (q2.z - q1.z);
     result.w = q1.w + amount * (q2.w - q1.w);
     Quaternion q = result;
-    f32 length = sqrtf(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
+    f32 length = sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
     if length == 0.0f {
         length = 1.0f;
     }
@@ -7222,21 +7222,21 @@ Quaternion QuaternionSlerp(Quaternion q1, Quaternion q2, f32 amount) {
         q2.w = -q2.w;
         cosHalfTheta = -cosHalfTheta;
     }
-    if fabsf(cosHalfTheta) >= 1.0f {
+    if fabs(cosHalfTheta) >= 1.0f {
         result = q1;
     } else if cosHalfTheta > 0.95f {
         result = QuaternionNlerp(q1, q2, amount);
     } else {
-        f32 halfTheta = acosf(cosHalfTheta);
-        f32 sinHalfTheta = sqrtf(1.0f - cosHalfTheta * cosHalfTheta);
-        if fabsf(sinHalfTheta) < 1.0e-6f {
+        f32 halfTheta = acos(cosHalfTheta);
+        f32 sinHalfTheta = sqrt(1.0f - cosHalfTheta * cosHalfTheta);
+        if fabs(sinHalfTheta) < 1.0e-6f {
             result.x = q1.x * 0.5f + q2.x * 0.5f;
             result.y = q1.y * 0.5f + q2.y * 0.5f;
             result.z = q1.z * 0.5f + q2.z * 0.5f;
             result.w = q1.w * 0.5f + q2.w * 0.5f;
         } else {
-            f32 ratioA = sinf((1.0f - amount) * halfTheta) / sinHalfTheta;
-            f32 ratioB = sinf(amount * halfTheta) / sinHalfTheta;
+            f32 ratioA = sin((1.0f - amount) * halfTheta) / sinHalfTheta;
+            f32 ratioB = sin(amount * halfTheta) / sinHalfTheta;
             result.x = q1.x * ratioA + q2.x * ratioB;
             result.y = q1.y * ratioA + q2.y * ratioB;
             result.z = q1.z * ratioA + q2.z * ratioB;
@@ -7278,9 +7278,9 @@ Quaternion QuaternionFromVector3ToVector3(Vector3 from_var, Vector3 to) {
     result.x = cross.x;
     result.y = cross.y;
     result.z = cross.z;
-    result.w = sqrtf(cross.x * cross.x + cross.y * cross.y + cross.z * cross.z + cos2Theta * cos2Theta) + cos2Theta;
+    result.w = sqrt(cross.x * cross.x + cross.y * cross.y + cross.z * cross.z + cos2Theta * cos2Theta) + cos2Theta;
     Quaternion q = result;
-    f32 length = sqrtf(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
+    f32 length = sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
     if length == 0.0f {
         length = 1.0f;
     }
@@ -7313,7 +7313,7 @@ Quaternion QuaternionFromMatrix(Matrix mat) {
         fourBiggestSquaredMinus1 = fourZSquaredMinus1;
         biggestIndex = 3;
     }
-    f32 biggestVal = sqrtf(fourBiggestSquaredMinus1 + 1.0f) * 0.5f;
+    f32 biggestVal = sqrt(fourBiggestSquaredMinus1 + 1.0f) * 0.5f;
     f32 mult = 0.25f / biggestVal;
     switch biggestIndex {
         case 0: {
@@ -7375,21 +7375,21 @@ Matrix QuaternionToMatrix(Quaternion q) {
 // NOTE: Angle must be provided in radians
 Quaternion QuaternionFromAxisAngle(Vector3 axis, f32 angle) {
     var result = Quaternion{0.0f, 0.0f, 0.0f, 1.0f};
-    f32 length = sqrtf(axis.x * axis.x + axis.y * axis.y + axis.z * axis.z);
+    f32 length = sqrt(axis.x * axis.x + axis.y * axis.y + axis.z * axis.z);
     if length != 0.0f {
         angle *= 0.5f;
         f32 ilength = 1.0f / length;
         axis.x *= ilength;
         axis.y *= ilength;
         axis.z *= ilength;
-        f32 sinres = sinf(angle);
-        f32 cosres = cosf(angle);
+        f32 sinres = sin(angle);
+        f32 cosres = cos(angle);
         result.x = axis.x * sinres;
         result.y = axis.y * sinres;
         result.z = axis.z * sinres;
         result.w = cosres;
         Quaternion q = result;
-        length = sqrtf(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
+        length = sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
         if length == 0.0f {
             length = 1.0f;
         }
@@ -7404,8 +7404,8 @@ Quaternion QuaternionFromAxisAngle(Vector3 axis, f32 angle) {
 
 // Get the rotation angle and axis for a given quaternion
 void QuaternionToAxisAngle(Quaternion q, Vector3* outAxis, f32* outAngle) {
-    if fabsf(q.w) > 1.0f {
-        f32 length = sqrtf(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
+    if fabs(q.w) > 1.0f {
+        f32 length = sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
         if length == 0.0f {
             length = 1.0f;
         }
@@ -7416,8 +7416,8 @@ void QuaternionToAxisAngle(Quaternion q, Vector3* outAxis, f32* outAngle) {
         q.w = q.w * ilength;
     }
     var resAxis = Vector3{0.0f, 0.0f, 0.0f};
-    f32 resAngle = 2.0f * acosf(q.w);
-    f32 den = sqrtf(1.0f - q.w * q.w);
+    f32 resAngle = 2.0f * acos(q.w);
+    f32 den = sqrt(1.0f - q.w * q.w);
     if den > 1.0e-6f {
         resAxis.x = q.x / den;
         resAxis.y = q.y / den;
@@ -7433,12 +7433,12 @@ void QuaternionToAxisAngle(Quaternion q, Vector3* outAxis, f32* outAngle) {
 // NOTE: Rotation order is ZYX
 Quaternion QuaternionFromEuler(f32 pitch, f32 yaw, f32 roll) {
     Quaternion result;
-    f32 x0 = cosf(pitch * 0.5f);
-    f32 x1 = sinf(pitch * 0.5f);
-    f32 y0 = cosf(yaw * 0.5f);
-    f32 y1 = sinf(yaw * 0.5f);
-    f32 z0 = cosf(roll * 0.5f);
-    f32 z1 = sinf(roll * 0.5f);
+    f32 x0 = cos(pitch * 0.5f);
+    f32 x1 = sin(pitch * 0.5f);
+    f32 y0 = cos(yaw * 0.5f);
+    f32 y1 = sin(yaw * 0.5f);
+    f32 z0 = cos(roll * 0.5f);
+    f32 z1 = sin(roll * 0.5f);
     result.x = x1 * y0 * z0 - x0 * y1 * z1;
     result.y = x0 * y1 * z0 + x1 * y0 * z1;
     result.z = x0 * y0 * z1 - x1 * y1 * z0;
@@ -7452,14 +7452,14 @@ Vector3 QuaternionToEuler(Quaternion q) {
     Vector3 result;
     f32 x0 = 2.0f * (q.w * q.x + q.y * q.z);
     f32 x1 = 1.0f - 2.0f * (q.x * q.x + q.y * q.y);
-    result.x = atan2f(x0, x1);
+    result.x = atan2(x0, x1);
     f32 y0 = 2.0f * (q.w * q.y - q.z * q.x);
     y0 = y0 > 1.0f ? 1.0f : y0;
     y0 = y0 < -1.0f ? -1.0f : y0;
-    result.y = asinf(y0);
+    result.y = asin(y0);
     f32 z0 = 2.0f * (q.w * q.z + q.x * q.y);
     f32 z1 = 1.0f - 2.0f * (q.y * q.y + q.z * q.z);
-    result.z = atan2f(z0, z1);
+    result.z = atan2(z0, z1);
     return result;
 }
 
@@ -7475,7 +7475,7 @@ Quaternion QuaternionTransform(Quaternion q, Matrix mat) {
 
 // Check whether two given quaternions are almost equal
 i32 QuaternionEquals(Quaternion p, Quaternion q) {
-    i32 result = fabsf(p.x - q.x) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))) && fabsf(p.y - q.y) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))) && fabsf(p.z - q.z) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z))) && fabsf(p.w - q.w) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.w), fabsf(q.w))) || fabsf(p.x + q.x) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))) && fabsf(p.y + q.y) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))) && fabsf(p.z + q.z) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z))) && fabsf(p.w + q.w) <= 1.0e-6f * fmaxf(1.0f, fmaxf(fabsf(p.w), fabsf(q.w)));
+    i32 result = fabs(p.x - q.x) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.x), fabs(q.x))) && fabs(p.y - q.y) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.y), fabs(q.y))) && fabs(p.z - q.z) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.z), fabs(q.z))) && fabs(p.w - q.w) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.w), fabs(q.w))) || fabs(p.x + q.x) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.x), fabs(q.x))) && fabs(p.y + q.y) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.y), fabs(q.y))) && fabs(p.z + q.z) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.z), fabs(q.z))) && fabs(p.w + q.w) <= 1.0e-6f * fmax(1.0f, fmax(fabs(p.w), fabs(q.w)));
     return result;
 }
 
@@ -7514,9 +7514,9 @@ void MatrixDecompose(Matrix mat, Vector3* translation, Quaternion* rotation, Vec
     Vector3 scl;
     f32 stabilizer = eps;
     for i32 i = 0; i < 3; i++ {
-        stabilizer = fmaxf(stabilizer, fabsf(matColumns[i].x));
-        stabilizer = fmaxf(stabilizer, fabsf(matColumns[i].y));
-        stabilizer = fmaxf(stabilizer, fabsf(matColumns[i].z));
+        stabilizer = fmax(stabilizer, fabs(matColumns[i].x));
+        stabilizer = fmax(stabilizer, fabs(matColumns[i].y));
+        stabilizer = fmax(stabilizer, fabs(matColumns[i].z));
     }
     matColumns[0] = Vector3Scale(matColumns[0], 1.0f / stabilizer);
     matColumns[1] = Vector3Scale(matColumns[1], 1.0f / stabilizer);
@@ -7736,7 +7736,7 @@ f32 GetGesturePinchAngle() {
 // Get angle from two-points vector with X-axis
 private {
 f32 rgVector2Angle(Vector2 v1, Vector2 v2) {
-    f32 angle = atan2f(v2.y - v1.y, v2.x - v1.x) * (180.0f / 3.141592653589793f);
+    f32 angle = atan2(v2.y - v1.y, v2.x - v1.x) * (180.0f / 3.141592653589793f);
     if angle < 0.0f {
         angle += 360.0f;
     }
@@ -7748,7 +7748,7 @@ f32 rgVector2Distance(Vector2 v1, Vector2 v2) {
     f32 result;
     f32 dx = v2.x - v1.x;
     f32 dy = v2.y - v1.y;
-    result = cast(f32, sqrt(dx * dx + dy * dy));
+    result = sqrt(dx * dx + dy * dy);
     return result;
 }
 
@@ -7822,9 +7822,9 @@ Vector3 GetCameraRight(Camera* camera) {
 void CameraMoveForward(Camera* camera, f32 distance, bool moveInWorldPlane) {
     Vector3 forward = GetCameraForward(camera);
     if moveInWorldPlane != 0 {
-        if fabsf(camera.up.z) > 0.7071f {
+        if fabs(camera.up.z) > 0.7071f {
             forward.z = 0.0f;
-        } else if fabsf(camera.up.x) > 0.7071f {
+        } else if fabs(camera.up.x) > 0.7071f {
             forward.x = 0.0f;
         } else {
             forward.y = 0.0f;
@@ -7848,9 +7848,9 @@ void CameraMoveUp(Camera* camera, f32 distance) {
 void CameraMoveRight(Camera* camera, f32 distance, bool moveInWorldPlane) {
     Vector3 right = GetCameraRight(camera);
     if moveInWorldPlane != 0 {
-        if fabsf(camera.up.z) > 0.7071f {
+        if fabs(camera.up.z) > 0.7071f {
             right.z = 0.0f;
-        } else if fabsf(camera.up.x) > 0.7071f {
+        } else if fabs(camera.up.x) > 0.7071f {
             right.x = 0.0f;
         } else {
             right.y = 0.0f;
@@ -9749,7 +9749,7 @@ VrStereoConfig LoadVrStereoConfig(VrDeviceInfo device) {
         config.leftScreenCenter[1] = 0.5f;
         config.rightScreenCenter[0] = 0.75f;
         config.rightScreenCenter[1] = 0.5f;
-        f32 lensRadius = fabsf(-1.0f - 4.0f * lensShift);
+        f32 lensRadius = fabs(-1.0f - 4.0f * lensShift);
         f32 lensRadiusSq = lensRadius * lensRadius;
         f32 distortionScale = device.lensDistortionValues[0] + device.lensDistortionValues[1] * lensRadiusSq + device.lensDistortionValues[2] * lensRadiusSq * lensRadiusSq + device.lensDistortionValues[3] * lensRadiusSq * lensRadiusSq * lensRadiusSq;
         f32 normScreenWidth = 0.5f;
@@ -9758,7 +9758,7 @@ VrStereoConfig LoadVrStereoConfig(VrDeviceInfo device) {
         config.scaleIn[1] = 2.0f / normScreenHeight / aspect;
         config.scale[0] = normScreenWidth * 0.5f / distortionScale;
         config.scale[1] = normScreenHeight * 0.5f * aspect / distortionScale;
-        f32 fovy = 2.0f * atan2f(device.vScreenSize * 0.5f * distortionScale, device.eyeToScreenDistance);
+        f32 fovy = 2.0f * atan2(device.vScreenSize * 0.5f * distortionScale, device.eyeToScreenDistance);
         f32 projOffset = 4.0f * lensShift;
         Matrix proj = MatrixPerspective(fovy, aspect, rlGetCullDistanceNear(), rlGetCullDistanceFar());
         config.projection[0] = MatrixMultiply(proj, MatrixTranslate(projOffset, 0.0f, 0.0f));
@@ -10021,7 +10021,7 @@ i32 GetFPS() {
             GetFPS__history[GetFPS__index] = fpsFrame / 30.0f;
             GetFPS__average += GetFPS__history[GetFPS__index];
         }
-        fps = cast(i32, roundf(1.0f / GetFPS__average));
+        fps = cast(i32, round(1.0f / GetFPS__average));
     } else {
         fps = 0;
     }
@@ -11528,7 +11528,7 @@ i32 GetGamepadAxisCount(i32 gamepad) {
 f32 GetGamepadAxisMovement(i32 gamepad, i32 axis) {
     f32 value = axis == GAMEPAD_AXIS_LEFT_TRIGGER || axis == GAMEPAD_AXIS_RIGHT_TRIGGER ? -1.0f : 0.0f;
     if gamepad < 4 && CORE.Input.Gamepad.ready[gamepad] && axis < 8 {
-        f32 movement = value < 0.0f ? CORE.Input.Gamepad.axisState[gamepad][axis] : fabsf(CORE.Input.Gamepad.axisState[gamepad][axis]);
+        f32 movement = value < 0.0f ? CORE.Input.Gamepad.axisState[gamepad][axis] : fabs(CORE.Input.Gamepad.axisState[gamepad][axis]);
         if movement > value {
             value = CORE.Input.Gamepad.axisState[gamepad][axis];
         }
@@ -11641,7 +11641,7 @@ void SetMouseScale(f32 scaleX, f32 scaleY) {
 // Get mouse wheel movement Y
 f32 GetMouseWheelMove() {
     f32 result = 0.0f;
-    if fabsf(CORE.Input.Mouse.currentWheelMove.x) > fabsf(CORE.Input.Mouse.currentWheelMove.y) {
+    if fabs(CORE.Input.Mouse.currentWheelMove.x) > fabs(CORE.Input.Mouse.currentWheelMove.y) {
         result = CORE.Input.Mouse.currentWheelMove.x;
     } else {
         result = CORE.Input.Mouse.currentWheelMove.y;
@@ -12009,7 +12009,7 @@ void DrawLine(i32 startPosX, i32 startPosY, i32 endPosX, i32 endPosY, Color colo
 // Draw a line defining thickness
 void DrawLineEx(Vector2 startPos, Vector2 endPos, f32 thick, Color color) {
     var delta = Vector2{endPos.x - startPos.x, endPos.y - startPos.y};
-    f32 length = sqrtf(delta.x * delta.x + delta.y * delta.y);
+    f32 length = sqrt(delta.x * delta.x + delta.y * delta.y);
     if length > 0.0f && thick > 0.0f {
         f32 scale = thick / (2.0f * length);
         var radius = Vector2{-scale * delta.y, scale * delta.x};
@@ -12056,7 +12056,7 @@ void DrawLineBezier(Vector2 startPos, Vector2 endPos, f32 thick, Color color) {
         current.x = previous.x + (endPos.x - startPos.x) / cast(f32, 24);
         f32 dy = current.y - previous.y;
         f32 dx = current.x - previous.x;
-        f32 size = 0.5f * thick / sqrtf(dx * dx + dy * dy);
+        f32 size = 0.5f * thick / sqrt(dx * dx + dy * dy);
         if i == 1 {
             points[0].x = previous.x + dy * size;
             points[0].y = previous.y - dx * size;
@@ -12076,7 +12076,7 @@ void DrawLineBezier(Vector2 startPos, Vector2 endPos, f32 thick, Color color) {
 void DrawLineDashed(Vector2 startPos, Vector2 endPos, i32 dashSize, i32 spaceSize, Color color) {
     f32 dx = endPos.x - startPos.x;
     f32 dy = endPos.y - startPos.y;
-    f32 lineLength = sqrtf(dx * dx + dy * dy);
+    f32 lineLength = sqrt(dx * dx + dy * dy);
     if lineLength < cast(f32, dashSize + spaceSize) || dashSize <= 0 {
         DrawLineV(startPos, endPos, color);
         return;
@@ -12121,9 +12121,9 @@ void DrawCircleGradient(Vector2 center, f32 radius, Color inner, Color outer) {
         rlColor4ub(inner.r, inner.g, inner.b, inner.a);
         rlVertex2f(center.x, center.y);
         rlColor4ub(outer.r, outer.g, outer.b, outer.a);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radius, center.y + sinf(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radius, center.y + sin(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radius);
         rlColor4ub(outer.r, outer.g, outer.b, outer.a);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * cast(f32, i)) * radius, center.y + sinf(3.141592653589793f / 180.0f * cast(f32, i)) * radius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * cast(f32, i)) * radius, center.y + sin(3.141592653589793f / 180.0f * cast(f32, i)) * radius);
     }
     rlEnd();
 }
@@ -12141,10 +12141,10 @@ void DrawCircleSector(Vector2 center, f32 radius, f32 startAngle, f32 endAngle, 
         startAngle = endAngle;
         endAngle = tmp;
     }
-    var minSegments = cast(i32, ceilf((endAngle - startAngle) / 90.0f));
+    var minSegments = cast(i32, ceil((endAngle - startAngle) / 90.0f));
     if segments < minSegments {
-        f32 th = acosf(2.0f * powf(1.0f - 0.5f / radius, 2.0f) - 1.0f);
-        segments = cast(i32, (endAngle - startAngle) * ceilf(2.0f * 3.141592653589793f / th) / 360.0f);
+        f32 th = acos(2.0f * pow(1.0f - 0.5f / radius, 2.0f) - 1.0f);
+        segments = cast(i32, (endAngle - startAngle) * ceil(2.0f * 3.141592653589793f / th) / 360.0f);
         if segments <= 0 {
             segments = minSegments;
         }
@@ -12159,11 +12159,11 @@ void DrawCircleSector(Vector2 center, f32 radius, f32 startAngle, f32 endAngle, 
         rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
         rlVertex2f(center.x, center.y);
         rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * (angle + stepLength * 2.0f)) * radius, center.y + sinf(3.141592653589793f / 180.0f * (angle + stepLength * 2.0f)) * radius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * (angle + stepLength * 2.0f)) * radius, center.y + sin(3.141592653589793f / 180.0f * (angle + stepLength * 2.0f)) * radius);
         rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * (angle + stepLength)) * radius, center.y + sinf(3.141592653589793f / 180.0f * (angle + stepLength)) * radius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * (angle + stepLength)) * radius, center.y + sin(3.141592653589793f / 180.0f * (angle + stepLength)) * radius);
         rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * radius, center.y + sinf(3.141592653589793f / 180.0f * angle) * radius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * radius, center.y + sin(3.141592653589793f / 180.0f * angle) * radius);
         angle += stepLength * 2.0f;
     }
     if cast(u32, segments) % 2 == 1 {
@@ -12171,9 +12171,9 @@ void DrawCircleSector(Vector2 center, f32 radius, f32 startAngle, f32 endAngle, 
         rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
         rlVertex2f(center.x, center.y);
         rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * (angle + stepLength)) * radius, center.y + sinf(3.141592653589793f / 180.0f * (angle + stepLength)) * radius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * (angle + stepLength)) * radius, center.y + sin(3.141592653589793f / 180.0f * (angle + stepLength)) * radius);
         rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * radius, center.y + sinf(3.141592653589793f / 180.0f * angle) * radius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * radius, center.y + sin(3.141592653589793f / 180.0f * angle) * radius);
         rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
         rlVertex2f(center.x, center.y);
     }
@@ -12194,10 +12194,10 @@ void DrawCircleSectorLines(Vector2 center, f32 radius, f32 startAngle, f32 endAn
         startAngle = endAngle;
         endAngle = tmp;
     }
-    var minSegments = cast(i32, ceilf((endAngle - startAngle) / 90.0f));
+    var minSegments = cast(i32, ceil((endAngle - startAngle) / 90.0f));
     if segments < minSegments {
-        f32 th = acosf(2.0f * powf(1.0f - 0.5f / radius, 2.0f) - 1.0f);
-        segments = cast(i32, (endAngle - startAngle) * ceilf(2.0f * 3.141592653589793f / th) / 360.0f);
+        f32 th = acos(2.0f * pow(1.0f - 0.5f / radius, 2.0f) - 1.0f);
+        segments = cast(i32, (endAngle - startAngle) * ceil(2.0f * 3.141592653589793f / th) / 360.0f);
         if segments <= 0 {
             segments = minSegments;
         }
@@ -12209,18 +12209,18 @@ void DrawCircleSectorLines(Vector2 center, f32 radius, f32 startAngle, f32 endAn
     if showCapLines != 0 {
         rlColor4ub(color.r, color.g, color.b, color.a);
         rlVertex2f(center.x, center.y);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * radius, center.y + sinf(3.141592653589793f / 180.0f * angle) * radius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * radius, center.y + sin(3.141592653589793f / 180.0f * angle) * radius);
     }
     for i32 i = 0; i < segments; i++ {
         rlColor4ub(color.r, color.g, color.b, color.a);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * radius, center.y + sinf(3.141592653589793f / 180.0f * angle) * radius);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * (angle + stepLength)) * radius, center.y + sinf(3.141592653589793f / 180.0f * (angle + stepLength)) * radius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * radius, center.y + sin(3.141592653589793f / 180.0f * angle) * radius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * (angle + stepLength)) * radius, center.y + sin(3.141592653589793f / 180.0f * (angle + stepLength)) * radius);
         angle += stepLength;
     }
     if showCapLines != 0 {
         rlColor4ub(color.r, color.g, color.b, color.a);
         rlVertex2f(center.x, center.y);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * radius, center.y + sinf(3.141592653589793f / 180.0f * angle) * radius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * radius, center.y + sin(3.141592653589793f / 180.0f * angle) * radius);
     }
     rlEnd();
 }
@@ -12235,8 +12235,8 @@ void DrawCircleLinesV(Vector2 center, f32 radius, Color color) {
     rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     for i32 i = 0; i < 360; i += 10 {
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * cast(f32, i)) * radius, center.y + sinf(3.141592653589793f / 180.0f * cast(f32, i)) * radius);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radius, center.y + sinf(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * cast(f32, i)) * radius, center.y + sin(3.141592653589793f / 180.0f * cast(f32, i)) * radius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radius, center.y + sin(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radius);
     }
     rlEnd();
 }
@@ -12252,8 +12252,8 @@ void DrawEllipseV(Vector2 center, f32 radiusH, f32 radiusV, Color color) {
     for i32 i = 0; i < 360; i += 10 {
         rlColor4ub(color.r, color.g, color.b, color.a);
         rlVertex2f(center.x, center.y);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radiusH, center.y + sinf(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radiusV);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * cast(f32, i)) * radiusH, center.y + sinf(3.141592653589793f / 180.0f * cast(f32, i)) * radiusV);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radiusH, center.y + sin(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radiusV);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * cast(f32, i)) * radiusH, center.y + sin(3.141592653589793f / 180.0f * cast(f32, i)) * radiusV);
     }
     rlEnd();
 }
@@ -12268,8 +12268,8 @@ void DrawEllipseLinesV(Vector2 center, f32 radiusH, f32 radiusV, Color color) {
     rlBegin(0x0001);
     for i32 i = 0; i < 360; i += 10 {
         rlColor4ub(color.r, color.g, color.b, color.a);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radiusH, center.y + sinf(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radiusV);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * cast(f32, i)) * radiusH, center.y + sinf(3.141592653589793f / 180.0f * cast(f32, i)) * radiusV);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radiusH, center.y + sin(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radiusV);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * cast(f32, i)) * radiusH, center.y + sin(3.141592653589793f / 180.0f * cast(f32, i)) * radiusV);
     }
     rlEnd();
 }
@@ -12292,10 +12292,10 @@ void DrawRing(Vector2 center, f32 innerRadius, f32 outerRadius, f32 startAngle, 
         startAngle = endAngle;
         endAngle = tmp;
     }
-    var minSegments = cast(i32, ceilf((endAngle - startAngle) / 90.0f));
+    var minSegments = cast(i32, ceil((endAngle - startAngle) / 90.0f));
     if segments < minSegments {
-        f32 th = acosf(2.0f * powf(1.0f - 0.5f / outerRadius, 2.0f) - 1.0f);
-        segments = cast(i32, (endAngle - startAngle) * ceilf(2.0f * 3.141592653589793f / th) / 360.0f);
+        f32 th = acos(2.0f * pow(1.0f - 0.5f / outerRadius, 2.0f) - 1.0f);
+        segments = cast(i32, (endAngle - startAngle) * ceil(2.0f * 3.141592653589793f / th) / 360.0f);
         if segments <= 0 {
             segments = minSegments;
         }
@@ -12312,13 +12312,13 @@ void DrawRing(Vector2 center, f32 innerRadius, f32 outerRadius, f32 startAngle, 
     for i32 i = 0; i < segments; i++ {
         rlColor4ub(color.r, color.g, color.b, color.a);
         rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * outerRadius, center.y + sinf(3.141592653589793f / 180.0f * angle) * outerRadius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * outerRadius, center.y + sin(3.141592653589793f / 180.0f * angle) * outerRadius);
         rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * innerRadius, center.y + sinf(3.141592653589793f / 180.0f * angle) * innerRadius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * innerRadius, center.y + sin(3.141592653589793f / 180.0f * angle) * innerRadius);
         rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * (angle + stepLength)) * innerRadius, center.y + sinf(3.141592653589793f / 180.0f * (angle + stepLength)) * innerRadius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * (angle + stepLength)) * innerRadius, center.y + sin(3.141592653589793f / 180.0f * (angle + stepLength)) * innerRadius);
         rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius, center.y + sinf(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius, center.y + sin(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius);
         angle += stepLength;
     }
     rlEnd();
@@ -12343,10 +12343,10 @@ void DrawRingLines(Vector2 center, f32 innerRadius, f32 outerRadius, f32 startAn
         startAngle = endAngle;
         endAngle = tmp;
     }
-    var minSegments = cast(i32, ceilf((endAngle - startAngle) / 90.0f));
+    var minSegments = cast(i32, ceil((endAngle - startAngle) / 90.0f));
     if segments < minSegments {
-        f32 th = acosf(2.0f * powf(1.0f - 0.5f / outerRadius, 2.0f) - 1.0f);
-        segments = cast(i32, (endAngle - startAngle) * ceilf(2.0f * 3.141592653589793f / th) / 360.0f);
+        f32 th = acos(2.0f * pow(1.0f - 0.5f / outerRadius, 2.0f) - 1.0f);
+        segments = cast(i32, (endAngle - startAngle) * ceil(2.0f * 3.141592653589793f / th) / 360.0f);
         if segments <= 0 {
             segments = minSegments;
         }
@@ -12361,21 +12361,21 @@ void DrawRingLines(Vector2 center, f32 innerRadius, f32 outerRadius, f32 startAn
     rlBegin(0x0001);
     if showCapLines != 0 {
         rlColor4ub(color.r, color.g, color.b, color.a);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * outerRadius, center.y + sinf(3.141592653589793f / 180.0f * angle) * outerRadius);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * innerRadius, center.y + sinf(3.141592653589793f / 180.0f * angle) * innerRadius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * outerRadius, center.y + sin(3.141592653589793f / 180.0f * angle) * outerRadius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * innerRadius, center.y + sin(3.141592653589793f / 180.0f * angle) * innerRadius);
     }
     for i32 i = 0; i < segments; i++ {
         rlColor4ub(color.r, color.g, color.b, color.a);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * outerRadius, center.y + sinf(3.141592653589793f / 180.0f * angle) * outerRadius);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius, center.y + sinf(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * innerRadius, center.y + sinf(3.141592653589793f / 180.0f * angle) * innerRadius);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * (angle + stepLength)) * innerRadius, center.y + sinf(3.141592653589793f / 180.0f * (angle + stepLength)) * innerRadius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * outerRadius, center.y + sin(3.141592653589793f / 180.0f * angle) * outerRadius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius, center.y + sin(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * innerRadius, center.y + sin(3.141592653589793f / 180.0f * angle) * innerRadius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * (angle + stepLength)) * innerRadius, center.y + sin(3.141592653589793f / 180.0f * (angle + stepLength)) * innerRadius);
         angle += stepLength;
     }
     if showCapLines != 0 {
         rlColor4ub(color.r, color.g, color.b, color.a);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * outerRadius, center.y + sinf(3.141592653589793f / 180.0f * angle) * outerRadius);
-        rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * innerRadius, center.y + sinf(3.141592653589793f / 180.0f * angle) * innerRadius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * outerRadius, center.y + sin(3.141592653589793f / 180.0f * angle) * outerRadius);
+        rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * innerRadius, center.y + sin(3.141592653589793f / 180.0f * angle) * innerRadius);
     }
     rlEnd();
 }
@@ -12410,8 +12410,8 @@ void DrawRectanglePro(Rectangle rec, Vector2 origin, f32 rotation, Color color) 
         bottomLeft = Vector2{x, y + rec.height};
         bottomRight = Vector2{x + rec.width, y + rec.height};
     } else {
-        f32 sinRotation = sinf(rotation * (3.141592653589793f / 180.0f));
-        f32 cosRotation = cosf(rotation * (3.141592653589793f / 180.0f));
+        f32 sinRotation = sin(rotation * (3.141592653589793f / 180.0f));
+        f32 cosRotation = cos(rotation * (3.141592653589793f / 180.0f));
         f32 x = rec.x;
         f32 y = rec.y;
         f32 dx = -origin.x;
@@ -12534,8 +12534,8 @@ void DrawRectangleRounded(Rectangle rec, f32 roundness, i32 segments, Color colo
         return;
     }
     if segments < 4 {
-        f32 th = acosf(2.0f * powf(1.0f - 0.5f / radius, 2.0f) - 1.0f);
-        segments = cast(i32, ceilf(2.0f * 3.141592653589793f / th) / 2.0f);
+        f32 th = acos(2.0f * pow(1.0f - 0.5f / radius, 2.0f) - 1.0f);
+        segments = cast(i32, ceil(2.0f * 3.141592653589793f / th) / 2.0f);
         if segments <= 0 {
             segments = 4;
         }
@@ -12568,11 +12568,11 @@ void DrawRectangleRounded(Rectangle rec, f32 roundness, i32 segments, Color colo
             rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
             rlVertex2f(center.x, center.y);
             rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
-            rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * (angle + stepLength * 2.0f)) * radius, center.y + sinf(3.141592653589793f / 180.0f * (angle + stepLength * 2.0f)) * radius);
+            rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * (angle + stepLength * 2.0f)) * radius, center.y + sin(3.141592653589793f / 180.0f * (angle + stepLength * 2.0f)) * radius);
             rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-            rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * (angle + stepLength)) * radius, center.y + sinf(3.141592653589793f / 180.0f * (angle + stepLength)) * radius);
+            rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * (angle + stepLength)) * radius, center.y + sin(3.141592653589793f / 180.0f * (angle + stepLength)) * radius);
             rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-            rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * radius, center.y + sinf(3.141592653589793f / 180.0f * angle) * radius);
+            rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * radius, center.y + sin(3.141592653589793f / 180.0f * angle) * radius);
             angle += stepLength * 2.0f;
         }
         if segments % 2 != 0 {
@@ -12580,9 +12580,9 @@ void DrawRectangleRounded(Rectangle rec, f32 roundness, i32 segments, Color colo
             rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
             rlVertex2f(center.x, center.y);
             rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-            rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * (angle + stepLength)) * radius, center.y + sinf(3.141592653589793f / 180.0f * (angle + stepLength)) * radius);
+            rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * (angle + stepLength)) * radius, center.y + sin(3.141592653589793f / 180.0f * (angle + stepLength)) * radius);
             rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-            rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * radius, center.y + sinf(3.141592653589793f / 180.0f * angle) * radius);
+            rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * radius, center.y + sin(3.141592653589793f / 180.0f * angle) * radius);
             rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
             rlVertex2f(center.x, center.y);
         }
@@ -12661,8 +12661,8 @@ void DrawRectangleRoundedLinesEx(Rectangle rec, f32 roundness, i32 segments, f32
         return;
     }
     if segments < 4 {
-        f32 th = acosf(2.0f * powf(1.0f - 0.5f / radius, 2.0f) - 1.0f);
-        segments = cast(i32, ceilf(2.0f * 3.141592653589793f / th) / 2.0f);
+        f32 th = acos(2.0f * pow(1.0f - 0.5f / radius, 2.0f) - 1.0f);
+        segments = cast(i32, ceil(2.0f * 3.141592653589793f / th) / 2.0f);
         if segments <= 0 {
             segments = 4;
         }
@@ -12705,13 +12705,13 @@ void DrawRectangleRoundedLinesEx(Rectangle rec, f32 roundness, i32 segments, f32
             for i32 i = 0; i < segments; i++ {
                 rlColor4ub(color.r, color.g, color.b, color.a);
                 rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
-                rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * innerRadius, center.y + sinf(3.141592653589793f / 180.0f * angle) * innerRadius);
+                rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * innerRadius, center.y + sin(3.141592653589793f / 180.0f * angle) * innerRadius);
                 rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
-                rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * (angle + stepLength)) * innerRadius, center.y + sinf(3.141592653589793f / 180.0f * (angle + stepLength)) * innerRadius);
+                rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * (angle + stepLength)) * innerRadius, center.y + sin(3.141592653589793f / 180.0f * (angle + stepLength)) * innerRadius);
                 rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-                rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius, center.y + sinf(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius);
+                rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius, center.y + sin(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius);
                 rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-                rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * outerRadius, center.y + sinf(3.141592653589793f / 180.0f * angle) * outerRadius);
+                rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * outerRadius, center.y + sin(3.141592653589793f / 180.0f * angle) * outerRadius);
                 angle += stepLength;
             }
         }
@@ -12760,8 +12760,8 @@ void DrawRectangleRoundedLinesEx(Rectangle rec, f32 roundness, i32 segments, f32
             Vector2 center = centers[k];
             for i32 i = 0; i < segments; i++ {
                 rlColor4ub(color.r, color.g, color.b, color.a);
-                rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * angle) * outerRadius, center.y + sinf(3.141592653589793f / 180.0f * angle) * outerRadius);
-                rlVertex2f(center.x + cosf(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius, center.y + sinf(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius);
+                rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * angle) * outerRadius, center.y + sin(3.141592653589793f / 180.0f * angle) * outerRadius);
+                rlVertex2f(center.x + cos(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius, center.y + sin(3.141592653589793f / 180.0f * (angle + stepLength)) * outerRadius);
                 angle += stepLength;
             }
         }
@@ -12877,11 +12877,11 @@ void DrawPoly(Vector2 center, i32 sides, f32 radius, f32 rotation, Color color) 
         rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
         rlVertex2f(center.x, center.y);
         rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(centralAngle) * radius, center.y + sinf(centralAngle) * radius);
+        rlVertex2f(center.x + cos(centralAngle) * radius, center.y + sin(centralAngle) * radius);
         rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(nextAngle) * radius, center.y + sinf(nextAngle) * radius);
+        rlVertex2f(center.x + cos(nextAngle) * radius, center.y + sin(nextAngle) * radius);
         rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(centralAngle) * radius, center.y + sinf(centralAngle) * radius);
+        rlVertex2f(center.x + cos(centralAngle) * radius, center.y + sin(centralAngle) * radius);
         centralAngle = nextAngle;
     }
     rlEnd();
@@ -12898,8 +12898,8 @@ void DrawPolyLines(Vector2 center, i32 sides, f32 radius, f32 rotation, Color co
     rlBegin(0x0001);
     for i32 i = 0; i < sides; i++ {
         rlColor4ub(color.r, color.g, color.b, color.a);
-        rlVertex2f(center.x + cosf(centralAngle) * radius, center.y + sinf(centralAngle) * radius);
-        rlVertex2f(center.x + cosf(centralAngle + angleStep) * radius, center.y + sinf(centralAngle + angleStep) * radius);
+        rlVertex2f(center.x + cos(centralAngle) * radius, center.y + sin(centralAngle) * radius);
+        rlVertex2f(center.x + cos(centralAngle + angleStep) * radius, center.y + sin(centralAngle + angleStep) * radius);
         centralAngle += angleStep;
     }
     rlEnd();
@@ -12911,7 +12911,7 @@ void DrawPolyLinesEx(Vector2 center, i32 sides, f32 radius, f32 rotation, f32 li
     }
     f32 centralAngle = rotation * (3.141592653589793f / 180.0f);
     f32 exteriorAngle = 360.0f / cast(f32, sides) * (3.141592653589793f / 180.0f);
-    f32 innerRadius = radius - lineThick * cosf(3.141592653589793f / 180.0f * exteriorAngle / 2.0f);
+    f32 innerRadius = radius - lineThick * cos(3.141592653589793f / 180.0f * exteriorAngle / 2.0f);
     rlSetTexture(GetShapesTexture().id);
     Rectangle shapeRect = GetShapesTextureRectangle();
     rlBegin(0x0007);
@@ -12919,13 +12919,13 @@ void DrawPolyLinesEx(Vector2 center, i32 sides, f32 radius, f32 rotation, f32 li
         rlColor4ub(color.r, color.g, color.b, color.a);
         f32 nextAngle = centralAngle + exteriorAngle;
         rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(centralAngle) * radius, center.y + sinf(centralAngle) * radius);
+        rlVertex2f(center.x + cos(centralAngle) * radius, center.y + sin(centralAngle) * radius);
         rlTexCoord2f(shapeRect.x / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(centralAngle) * innerRadius, center.y + sinf(centralAngle) * innerRadius);
+        rlVertex2f(center.x + cos(centralAngle) * innerRadius, center.y + sin(centralAngle) * innerRadius);
         rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), (shapeRect.y + shapeRect.height) / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(nextAngle) * innerRadius, center.y + sinf(nextAngle) * innerRadius);
+        rlVertex2f(center.x + cos(nextAngle) * innerRadius, center.y + sin(nextAngle) * innerRadius);
         rlTexCoord2f((shapeRect.x + shapeRect.width) / cast(f32, texShapes.width), shapeRect.y / cast(f32, texShapes.height));
-        rlVertex2f(center.x + cosf(nextAngle) * radius, center.y + sinf(nextAngle) * radius);
+        rlVertex2f(center.x + cos(nextAngle) * radius, center.y + sin(nextAngle) * radius);
         centralAngle = nextAngle;
     }
     rlEnd();
@@ -12945,7 +12945,7 @@ void DrawSplineLinear(Vector2* points, i32 pointCount, f32 thick, Color color) {
     f32 scale = 0.0f;
     for i32 i = 0; i < pointCount - 1; i++ {
         delta = Vector2{points[i + 1].x - points[i].x, points[i + 1].y - points[i].y};
-        length = sqrtf(delta.x * delta.x + delta.y * delta.y);
+        length = sqrt(delta.x * delta.x + delta.y * delta.y);
         if length > 0.0f {
             scale = thick / (2.0f * length);
         }
@@ -13004,7 +13004,7 @@ void DrawSplineBasis(Vector2* points, i32 pointCount, f32 thick, Color color) {
             nextPoint.y = b[3] + t * (b[2] + t * (b[1] + t * b[0]));
             dy = nextPoint.y - currentPoint.y;
             dx = nextPoint.x - currentPoint.x;
-            size = 0.5f * thick / sqrtf(dx * dx + dy * dy);
+            size = 0.5f * thick / sqrt(dx * dx + dy * dy);
             if i == 0 && j == 1 {
                 vertices[0].x = currentPoint.x + dy * size;
                 vertices[0].y = currentPoint.y - dx * size;
@@ -13056,7 +13056,7 @@ void DrawSplineCatmullRom(Vector2* points, i32 pointCount, f32 thick, Color colo
             nextPoint.y = 0.5f * (p1.y * q0 + p2.y * q1 + p3.y * q2 + p4.y * q3);
             dy = nextPoint.y - currentPoint.y;
             dx = nextPoint.x - currentPoint.x;
-            size = 0.5f * thick / sqrtf(dx * dx + dy * dy);
+            size = 0.5f * thick / sqrt(dx * dx + dy * dy);
             if i == 0 && j == 1 {
                 vertices[0].x = currentPoint.x + dy * size;
                 vertices[0].y = currentPoint.y - dx * size;
@@ -13095,7 +13095,7 @@ void DrawSplineBezierCubic(Vector2* points, i32 pointCount, f32 thick, Color col
 // Draw spline segment: Linear, 2 points
 void DrawSplineSegmentLinear(Vector2 p1, Vector2 p2, f32 thick, Color color) {
     var delta = Vector2{p2.x - p1.x, p2.y - p1.y};
-    f32 length = sqrtf(delta.x * delta.x + delta.y * delta.y);
+    f32 length = sqrt(delta.x * delta.x + delta.y * delta.y);
     if length > 0.0f && thick > 0.0f {
         f32 scale = thick / (2.0f * length);
         var radius = Vector2{-scale * delta.y, scale * delta.x};
@@ -13134,7 +13134,7 @@ void DrawSplineSegmentBasis(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, f32 
         nextPoint.y = b[3] + t * (b[2] + t * (b[1] + t * b[0]));
         f32 dy = nextPoint.y - currentPoint.y;
         f32 dx = nextPoint.x - currentPoint.x;
-        f32 size = 0.5f * thick / sqrtf(dx * dx + dy * dy);
+        f32 size = 0.5f * thick / sqrt(dx * dx + dy * dy);
         if i == 1 {
             points[0].x = currentPoint.x + dy * size;
             points[0].y = currentPoint.y - dx * size;
@@ -13167,7 +13167,7 @@ void DrawSplineSegmentCatmullRom(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4,
         nextPoint.y = 0.5f * (p1.y * q0 + p2.y * q1 + p3.y * q2 + p4.y * q3);
         f32 dy = nextPoint.y - currentPoint.y;
         f32 dx = nextPoint.x - currentPoint.x;
-        f32 size = 0.5f * thick / sqrtf(dx * dx + dy * dy);
+        f32 size = 0.5f * thick / sqrt(dx * dx + dy * dy);
         if i == 1 {
             points[0].x = currentPoint.x + dy * size;
             points[0].y = currentPoint.y - dx * size;
@@ -13192,14 +13192,14 @@ void DrawSplineSegmentBezierQuadratic(Vector2 p1, Vector2 c2, Vector2 p3, f32 th
     Vector2[2 * 24 + 2] points;
     for i32 i = 1; i <= 24; i++ {
         t = step * cast(f32, i);
-        f32 a = powf(1.0f - t, 2.0f);
+        f32 a = pow(1.0f - t, 2.0f);
         f32 b = 2.0f * (1.0f - t) * t;
-        f32 c = powf(t, 2.0f);
+        f32 c = pow(t, 2.0f);
         current.y = a * p1.y + b * c2.y + c * p3.y;
         current.x = a * p1.x + b * c2.x + c * p3.x;
         f32 dy = current.y - previous.y;
         f32 dx = current.x - previous.x;
-        f32 size = 0.5f * thick / sqrtf(dx * dx + dy * dy);
+        f32 size = 0.5f * thick / sqrt(dx * dx + dy * dy);
         if i == 1 {
             points[0].x = previous.x + dy * size;
             points[0].y = previous.y - dx * size;
@@ -13224,15 +13224,15 @@ void DrawSplineSegmentBezierCubic(Vector2 p1, Vector2 c2, Vector2 c3, Vector2 p4
     Vector2[2 * 24 + 2] points;
     for i32 i = 1; i <= 24; i++ {
         t = step * cast(f32, i);
-        f32 a = powf(1.0f - t, 3.0f);
-        f32 b = 3.0f * powf(1.0f - t, 2.0f) * t;
-        f32 c = 3.0f * (1.0f - t) * powf(t, 2.0f);
-        f32 d = powf(t, 3.0f);
+        f32 a = pow(1.0f - t, 3.0f);
+        f32 b = 3.0f * pow(1.0f - t, 2.0f) * t;
+        f32 c = 3.0f * (1.0f - t) * pow(t, 2.0f);
+        f32 d = pow(t, 3.0f);
         current.y = a * p1.y + b * c2.y + c * c3.y + d * p4.y;
         current.x = a * p1.x + b * c2.x + c * c3.x + d * p4.x;
         f32 dy = current.y - previous.y;
         f32 dx = current.x - previous.x;
-        f32 size = 0.5f * thick / sqrtf(dx * dx + dy * dy);
+        f32 size = 0.5f * thick / sqrt(dx * dx + dy * dy);
         if i == 1 {
             points[0].x = previous.x + dy * size;
             points[0].y = previous.y - dx * size;
@@ -13289,9 +13289,9 @@ Vector2 GetSplinePointCatmullRom(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4,
 // Get spline point for a given t [0.0f .. 1.0f], Quadratic Bezier
 Vector2 GetSplinePointBezierQuadratic(Vector2 startPos, Vector2 controlPos, Vector2 endPos, f32 t) {
     Vector2 point;
-    f32 a = powf(1.0f - t, 2.0f);
+    f32 a = pow(1.0f - t, 2.0f);
     f32 b = 2.0f * (1.0f - t) * t;
-    f32 c = powf(t, 2.0f);
+    f32 c = pow(t, 2.0f);
     point.y = a * startPos.y + b * controlPos.y + c * endPos.y;
     point.x = a * startPos.x + b * controlPos.x + c * endPos.x;
     return point;
@@ -13300,10 +13300,10 @@ Vector2 GetSplinePointBezierQuadratic(Vector2 startPos, Vector2 controlPos, Vect
 // Get spline point for a given t [0.0f .. 1.0f], Cubic Bezier
 Vector2 GetSplinePointBezierCubic(Vector2 startPos, Vector2 startControlPos, Vector2 endControlPos, Vector2 endPos, f32 t) {
     Vector2 point;
-    f32 a = powf(1.0f - t, 3.0f);
-    f32 b = 3.0f * powf(1.0f - t, 2.0f) * t;
-    f32 c = 3.0f * (1.0f - t) * powf(t, 2.0f);
-    f32 d = powf(t, 3.0f);
+    f32 a = pow(1.0f - t, 3.0f);
+    f32 b = 3.0f * pow(1.0f - t, 2.0f) * t;
+    f32 c = 3.0f * (1.0f - t) * pow(t, 2.0f);
+    f32 d = pow(t, 3.0f);
     point.y = a * startPos.y + b * startControlPos.y + c * endControlPos.y + d * endPos.y;
     point.x = a * startPos.x + b * startControlPos.x + c * endControlPos.x + d * endPos.x;
     return point;
@@ -13387,8 +13387,8 @@ bool CheckCollisionCircleRec(Vector2 center, f32 radius, Rectangle rec) {
     bool collision = false;
     f32 recCenterX = rec.x + rec.width / 2.0f;
     f32 recCenterY = rec.y + rec.height / 2.0f;
-    f32 dx = fabsf(center.x - recCenterX);
-    f32 dy = fabsf(center.y - recCenterY);
+    f32 dx = fabs(center.x - recCenterX);
+    f32 dy = fabs(center.y - recCenterY);
     if dx <= rec.width / 2.0f + radius && dy <= rec.height / 2.0f + radius {
         if dx <= rec.width / 2.0f {
             collision = true;
@@ -13411,7 +13411,7 @@ bool CheckCollisionLines(Vector2 startPos1, Vector2 endPos1, Vector2 startPos2, 
     f32 sx = endPos2.x - startPos2.x;
     f32 sy = endPos2.y - startPos2.y;
     f32 div = rx * sy - ry * sx;
-    if fabsf(div) >= FLT_EPSILON {
+    if fabs(div) >= FLT_EPSILON {
         f32 s12x = startPos2.x - startPos1.x;
         f32 s12y = startPos2.y - startPos1.y;
         f32 t = (s12x * sy - s12y * sx) / div;
@@ -13435,8 +13435,8 @@ bool CheckCollisionPointLine(Vector2 point, Vector2 p1, Vector2 p2, i32 threshol
     f32 dxl = p2.x - p1.x;
     f32 dyl = p2.y - p1.y;
     f32 cross = dxc * dyl - dyc * dxl;
-    if fabsf(cross) < cast(f32, threshold) * fmaxf(fabsf(dxl), fabsf(dyl)) {
-        if fabsf(dxl) >= fabsf(dyl) {
+    if fabs(cross) < cast(f32, threshold) * fmax(fabs(dxl), fabs(dyl)) {
+        if fabs(dxl) >= fabs(dyl) {
             collision = dxl > 0.0f ? p1.x <= point.x && point.x <= p2.x : p2.x <= point.x && point.x <= p1.x;
         } else {
             collision = dyl > 0.0f ? p1.y <= point.y && point.y <= p2.y : p2.y <= point.y && point.y <= p1.y;
@@ -13450,7 +13450,7 @@ bool CheckCollisionCircleLine(Vector2 center, f32 radius, Vector2 p1, Vector2 p2
     bool collision = false;
     f32 dx = p1.x - p2.x;
     f32 dy = p1.y - p2.y;
-    if fabsf(dx) + fabsf(dy) <= FLT_EPSILON {
+    if fabs(dx) + fabs(dy) <= FLT_EPSILON {
         collision = CheckCollisionCircles(p1, 0.0f, center, radius);
     } else {
         f32 lengthSQ = dx * dx + dy * dy;
@@ -13881,7 +13881,7 @@ void stbi_hdr_to_ldr_scale(f32 scale) {
 
 private {
 void stbi__refill_buffer(stbi__context* s) {
-    i32 n = s.io.read(s.io_user_data, cast(u8*, s.buffer_start), s.buflen);
+    i32 n = s.io.read(s.io_user_data, cast(u8*, &s.buffer_start[0]), s.buflen);
     s.callback_already_read += cast(i32, cast(i64, s.img_buffer - s.img_buffer_original));
     if n == 0 {
         s.read_from_callbacks = 0;
@@ -14301,7 +14301,7 @@ f32* stbi__ldr_to_hdr(stbi_uc* data, i32 x, i32 y, i32 comp) {
     }
     for i = 0; i < x * y; ++i {
         for k = 0; k < n; ++k {
-            output[i * comp + k] = cast(f32, pow(cast(f32, data[i * comp + k]) / 255.0f, stbi__l2h_gamma) * stbi__l2h_scale);
+            output[i * comp + k] = cast(f32, pow(cast(f64, cast(f32, data[i * comp + k]) / 255.0f), cast(f64, stbi__l2h_gamma)) * stbi__l2h_scale);
         }
     }
     if n < comp {
@@ -16645,8 +16645,8 @@ void ImageToPOT(Image* image, Color fill) {
     if image.data == null || image.width == 0 || image.height == 0 {
         return;
     }
-    var potWidth = cast(i32, powf(2.0f, ceilf(logf(cast(f32, image.width)) / logf(2.0f))));
-    var potHeight = cast(i32, powf(2.0f, ceilf(logf(cast(f32, image.height)) / logf(2.0f))));
+    var potWidth = cast(i32, pow(2.0f, ceil(log(cast(f32, image.width)) / log(2.0f))));
+    var potHeight = cast(i32, pow(2.0f, ceil(log(cast(f32, image.height)) / log(2.0f))));
     if potWidth != image.width || potHeight != image.height {
         ImageResizeCanvas(image, potWidth, potHeight, 0, 0, fill);
     }
@@ -16916,9 +16916,9 @@ void ImageBlurGaussian(Image* image, i32 blurSize) {
             pixels[i].a = 0;
         } else if pixelsCopy1[i].w <= 255.0f {
             f32 alpha = pixelsCopy1[i].w / 255.0f;
-            pixels[i].r = cast(u8, fminf(pixelsCopy1[i].x / alpha, 255.0f));
-            pixels[i].g = cast(u8, fminf(pixelsCopy1[i].y / alpha, 255.0f));
-            pixels[i].b = cast(u8, fminf(pixelsCopy1[i].z / alpha, 255.0f));
+            pixels[i].r = cast(u8, fmin(pixelsCopy1[i].x / alpha, 255.0f));
+            pixels[i].g = cast(u8, fmin(pixelsCopy1[i].y / alpha, 255.0f));
+            pixels[i].b = cast(u8, fmin(pixelsCopy1[i].z / alpha, 255.0f));
             pixels[i].a = cast(u8, pixelsCopy1[i].w);
         }
     }
@@ -16937,7 +16937,7 @@ void ImageKernelConvolution(Image* image, f32* kernel, i32 kernelSize) {
     if image.data == null || image.width == 0 || image.height == 0 || kernel == null {
         return;
     }
-    var kernelWidth = cast(i32, sqrtf(cast(f32, kernelSize)));
+    var kernelWidth = cast(i32, sqrt(cast(f32, kernelSize)));
     if kernelWidth * kernelWidth != kernelSize {
         return;
     }
@@ -17234,10 +17234,10 @@ void ImageRotate(Image* image, i32 degrees) {
     if image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB {
     } else {
         f32 rad = cast(f32, degrees) * 3.141592653589793f / 180.0f;
-        f32 sinRadius = sinf(rad);
-        f32 cosRadius = cosf(rad);
-        var width = cast(i32, fabsf(cast(f32, image.width) * cosRadius) + fabsf(cast(f32, image.height) * sinRadius));
-        var height = cast(i32, fabsf(cast(f32, image.height) * cosRadius) + fabsf(cast(f32, image.width) * sinRadius));
+        f32 sinRadius = sin(rad);
+        f32 cosRadius = cos(rad);
+        var width = cast(i32, fabs(cast(f32, image.width) * cosRadius) + fabs(cast(f32, image.height) * sinRadius));
+        var height = cast(i32, fabs(cast(f32, image.height) * cosRadius) + fabs(cast(f32, image.width) * sinRadius));
         i32 bytesPerPixel = GetPixelDataSize(1, 1, image.format);
         var rotatedData = cast(u8*, new(u8[width * height * bytesPerPixel]));
         for i32 y = 0; y < height; y++ {
@@ -17245,8 +17245,8 @@ void ImageRotate(Image* image, i32 degrees) {
                 f32 oldX = (cast(f32, x) - cast(f32, width) / 2.0f) * cosRadius + (cast(f32, y) - cast(f32, height) / 2.0f) * sinRadius + cast(f32, image.width) / 2.0f;
                 f32 oldY = (cast(f32, y) - cast(f32, height) / 2.0f) * cosRadius - (cast(f32, x) - cast(f32, width) / 2.0f) * sinRadius + cast(f32, image.height) / 2.0f;
                 if oldX >= 0.0f && oldX < cast(f32, image.width) && oldY >= 0.0f && oldY < cast(f32, image.height) {
-                    var x1 = cast(i32, floorf(oldX));
-                    var y1 = cast(i32, floorf(oldY));
+                    var x1 = cast(i32, floor(oldX));
+                    var y1 = cast(i32, floor(oldY));
                     i32 x2 = x1 + 1 < image.width - 1 ? x1 + 1 : image.width - 1;
                     i32 y2 = y1 + 1 < image.height - 1 ? y1 + 1 : image.height - 1;
                     f32 px = oldX - cast(f32, x1);
@@ -18828,7 +18828,7 @@ void DrawTextureEx(Texture2D texture, Vector2 position, f32 rotation, f32 scale,
 
 // Draw a part of a texture (defined by a rectangle)
 void DrawTextureRec(Texture2D texture, Rectangle source, Vector2 position, Color tint) {
-    var dest = Rectangle{position.x, position.y, fabsf(source.width), fabsf(source.height)};
+    var dest = Rectangle{position.x, position.y, fabs(source.width), fabs(source.height)};
     var origin = Vector2{0.0f, 0.0f};
     DrawTexturePro(texture, source, dest, origin, 0.0f, tint);
 }
@@ -18865,8 +18865,8 @@ void DrawTexturePro(Texture2D texture, Rectangle source, Rectangle dest, Vector2
             bottomLeft = Vector2{x, y + dest.height};
             bottomRight = Vector2{x + dest.width, y + dest.height};
         } else {
-            f32 sinRotation = sinf(rotation * (3.141592653589793f / 180.0f));
-            f32 cosRotation = cosf(rotation * (3.141592653589793f / 180.0f));
+            f32 sinRotation = sin(rotation * (3.141592653589793f / 180.0f));
+            f32 cosRotation = cos(rotation * (3.141592653589793f / 180.0f));
             f32 x = dest.x;
             f32 y = dest.y;
             f32 dx = -origin.x;
@@ -19221,19 +19221,19 @@ Vector3 ColorToHSV(Color color) {
 // Saturation/Value are provided normalized: [0.0f..1.0f]
 Color ColorFromHSV(f32 hue, f32 saturation, f32 value) {
     var color = Color{0, 0, 0, 255};
-    f32 k = fmodf(5.0f + hue / 60.0f, 6.0f);
+    f32 k = fmod(5.0f + hue / 60.0f, 6.0f);
     f32 t = 4.0f - k;
     k = t < k ? t : k;
     k = k < 1.0f ? k : 1.0f;
     k = k > 0.0f ? k : 0.0f;
     color.r = cast(u8, (value - value * saturation * k) * 255.0f);
-    k = fmodf(3.0f + hue / 60.0f, 6.0f);
+    k = fmod(3.0f + hue / 60.0f, 6.0f);
     t = 4.0f - k;
     k = t < k ? t : k;
     k = k < 1.0f ? k : 1.0f;
     k = k > 0.0f ? k : 0.0f;
     color.g = cast(u8, (value - value * saturation * k) * 255.0f);
-    k = fmodf(1.0f + hue / 60.0f, 6.0f);
+    k = fmod(1.0f + hue / 60.0f, 6.0f);
     t = 4.0f - k;
     k = t < k ? t : k;
     k = k < 1.0f ? k : 1.0f;
@@ -20580,8 +20580,8 @@ i32 stbtt__GetGlyphShapeTT(stbtt_fontinfo* info, i32 glyph_index, stbtt_vertex**
                 mtx[3] = cast(f32, ttSHORT(comp)) / 16384.0f;
                 comp += 2;
             }
-            m = cast(f32, sqrt(mtx[0] * mtx[0] + mtx[1] * mtx[1]));
-            n = cast(f32, sqrt(mtx[2] * mtx[2] + mtx[3] * mtx[3]));
+            m = sqrt(mtx[0] * mtx[0] + mtx[1] * mtx[1]);
+            n = sqrt(mtx[2] * mtx[2] + mtx[3] * mtx[3]);
             comp_num_verts = stbtt_GetGlyphShape(info, cast(i32, gidx), &comp_verts);
             if comp_num_verts > 0 {
                 for i = 0; i < comp_num_verts; ++i {
@@ -21020,7 +21020,7 @@ i32 stbtt__run_charstring(stbtt_fontinfo* info, i32 glyph_index, stbtt__csctx* c
                             dx6 = dy6;
                             dx = dx1 + dx2 + dx3 + dx4 + dx5;
                             dy = dy1 + dy2 + dy3 + dy4 + dy5;
-                            if fabs(dx) > fabs(dy) {
+                            if fabs(dx) > cast(f64, fabs(dy)) {
                                 dy6 = -dy;
                             } else {
                                 dx6 = -dx;
@@ -21892,7 +21892,7 @@ void stbtt__rasterize_sorted_edges(stbtt__bitmap* result, stbtt__edge* e, i32 n,
                 i32 m;
                 sum += scanline2[i];
                 k = scanline[i] + sum;
-                k = cast(f32, fabs(k)) * 255.0f + 0.5f;
+                k = fabs(k) * 255.0f + 0.5f;
                 m = cast(i32, k);
                 if m > 255 {
                     m = 255;
@@ -22084,8 +22084,8 @@ void stbtt__tesselate_cubic(stbtt__point* points, i32* num_points, f32 x0, f32 y
     f32 dy2 = y3 - y2;
     f32 dx = x3 - x0;
     f32 dy = y3 - y0;
-    var longlen = cast(f32, sqrt(dx0 * dx0 + dy0 * dy0) + sqrt(dx1 * dx1 + dy1 * dy1) + sqrt(dx2 * dx2 + dy2 * dy2));
-    var shortlen = cast(f32, sqrt(dx * dx + dy * dy));
+    var longlen = cast(f32, sqrt(dx0 * dx0 + dy0 * dy0) + cast(f64, sqrt(dx1 * dx1 + dy1 * dy1)) + cast(f64, sqrt(dx2 * dx2 + dy2 * dy2)));
+    var shortlen = sqrt(dx * dx + dy * dy);
     f32 flatness_squared = longlen * longlen - shortlen * shortlen;
     if n > 16 {
         return;
@@ -22836,7 +22836,7 @@ i32 stbtt__ray_intersect_bezier(f32* orig, f32* ray, f32* q0, f32* q1, f32* q2, 
         f32 discr = b * b - a * c;
         if discr > 0.0 {
             f32 rcpna = -1.0f / a;
-            var d = cast(f32, sqrt(discr));
+            var d = sqrt(discr);
             s0 = (b + d) * rcpna;
             s1 = (b - d) * rcpna;
             if s0 >= 0.0 && s0 <= 1.0 {
@@ -22890,7 +22890,7 @@ i32 stbtt__compute_crossings_x(f32 x, f32 y, i32 nverts, stbtt_vertex* verts) {
     f32[2] ray = {1.0f, 0.0f};
     f32 y_frac;
     i32 winding = 0;
-    y_frac = cast(f32, fmod(y, 1.0f));
+    y_frac = fmod(y, 1.0f);
     if y_frac < 0.01f {
         y += 0.01f;
     } else if y_frac > 0.99f {
@@ -22964,9 +22964,9 @@ i32 stbtt__compute_crossings_x(f32 x, f32 y, i32 nverts, stbtt_vertex* verts) {
 
 f32 stbtt__cuberoot(f32 x) {
     if x < 0.0f {
-        return -cast(f32, pow(-x, 1.0f / 3.0f));
+        return -cast(f32, pow(cast(f64, -x), cast(f64, 1.0f / 3.0f)));
     } else {
-        return cast(f32, pow(x, 1.0f / 3.0f));
+        return cast(f32, pow(cast(f64, x), cast(f64, 1.0f / 3.0f)));
     }
 }
 
@@ -22978,7 +22978,7 @@ i32 stbtt__solve_cubic(f32 a, f32 b, f32 c, f32* r) {
     f32 p3 = p * p * p;
     f32 d = q * q + 4.0f * p3 / 27.0f;
     if d >= 0.0f {
-        var z = cast(f32, sqrt(d));
+        var z = sqrt(d);
         f32 u = (-q + z) / 2.0f;
         f32 v = (-q - z) / 2.0f;
         u = stbtt__cuberoot(u);
@@ -22986,9 +22986,9 @@ i32 stbtt__solve_cubic(f32 a, f32 b, f32 c, f32* r) {
         r[0] = s + u + v;
         return 1;
     } else {
-        var u = cast(f32, sqrt(-p / 3.0f));
+        var u = sqrt(-p / 3.0f);
         f32 v = cast(f32, acos(-sqrt(-27.0f / p3) * q / 2.0)) / 3.0f;
-        var m = cast(f32, cos(v));
+        var m = cast(f32, cos(cast(f64, v)));
         f32 n = cast(f32, cos(v - 3.141592 / 2.0)) * 1.7320508079999999f;
         r[0] = s + u * 2.0f * m;
         r[1] = s - u * (m + n);
@@ -23055,7 +23055,7 @@ u8* stbtt_GetGlyphSDF(stbtt_fontinfo* info, f32 scale, i32 glyph, i32 padding, u
                     f32 y0 = cast(f32, verts[i].y) * scale_y;
                     f32 x1 = cast(f32, verts[j].x) * scale_x;
                     f32 y1 = cast(f32, verts[j].y) * scale_y;
-                    var dist = cast(f32, sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0)));
+                    var dist = sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
                     precompute[i] = dist < eps ? 0.0f : 1.0f / dist;
                 } else if cast(i32, verts[i].type) == STBTT_vcurve {
                     f32 x2 = cast(f32, verts[j].x) * scale_x;
@@ -23095,9 +23095,9 @@ u8* stbtt_GetGlyphSDF(stbtt_fontinfo* info, f32 scale, i32 glyph, i32 padding, u
                         f32 dist;
                         f32 dist2 = (x0 - sx) * (x0 - sx) + (y0 - sy) * (y0 - sy);
                         if dist2 < min_dist * min_dist {
-                            min_dist = cast(f32, sqrt(dist2));
+                            min_dist = sqrt(dist2);
                         }
-                        dist = cast(f32, fabs((x1 - x0) * (y0 - sy) - (y1 - y0) * (x0 - sx))) * precompute[i];
+                        dist = fabs((x1 - x0) * (y0 - sy) - (y1 - y0) * (x0 - sx)) * precompute[i];
                         assert(i != 0);
                         if dist < min_dist {
                             f32 dx = x1 - x0;
@@ -23146,7 +23146,7 @@ u8* stbtt_GetGlyphSDF(stbtt_fontinfo* info, f32 scale, i32 glyph, i32 padding, u
                                     if discriminant < 0.0f {
                                         num = 0;
                                     } else {
-                                        var root = cast(f32, sqrt(discriminant));
+                                        var root = sqrt(discriminant);
                                         res[0] = (-b - root) / (2.0f * a);
                                         res[1] = (-b + root) / (2.0f * a);
                                         num = 2;
@@ -23160,7 +23160,7 @@ u8* stbtt_GetGlyphSDF(stbtt_fontinfo* info, f32 scale, i32 glyph, i32 padding, u
                             }
                             dist2 = (x0 - sx) * (x0 - sx) + (y0 - sy) * (y0 - sy);
                             if dist2 < min_dist * min_dist {
-                                min_dist = cast(f32, sqrt(dist2));
+                                min_dist = sqrt(dist2);
                             }
                             if num >= 1 && res[0] >= 0.0f && res[0] <= 1.0f {
                                 t = res[0];
@@ -23169,7 +23169,7 @@ u8* stbtt_GetGlyphSDF(stbtt_fontinfo* info, f32 scale, i32 glyph, i32 padding, u
                                 py = it * it * y0 + 2.0f * t * it * y1 + t * t * y2;
                                 dist2 = (px - sx) * (px - sx) + (py - sy) * (py - sy);
                                 if dist2 < min_dist * min_dist {
-                                    min_dist = cast(f32, sqrt(dist2));
+                                    min_dist = sqrt(dist2);
                                 }
                             }
                             if num >= 2 && res[1] >= 0.0f && res[1] <= 1.0f {
@@ -23179,7 +23179,7 @@ u8* stbtt_GetGlyphSDF(stbtt_fontinfo* info, f32 scale, i32 glyph, i32 padding, u
                                 py = it * it * y0 + 2.0f * t * it * y1 + t * t * y2;
                                 dist2 = (px - sx) * (px - sx) + (py - sy) * (py - sy);
                                 if dist2 < min_dist * min_dist {
-                                    min_dist = cast(f32, sqrt(dist2));
+                                    min_dist = sqrt(dist2);
                                 }
                             }
                             if num >= 3 && res[2] >= 0.0f && res[2] <= 1.0f {
@@ -23189,7 +23189,7 @@ u8* stbtt_GetGlyphSDF(stbtt_fontinfo* info, f32 scale, i32 glyph, i32 padding, u
                                 py = it * it * y0 + 2.0f * t * it * y1 + t * t * y2;
                                 dist2 = (px - sx) * (px - sx) + (py - sy) * (py - sy);
                                 if dist2 < min_dist * min_dist {
-                                    min_dist = cast(f32, sqrt(dist2));
+                                    min_dist = sqrt(dist2);
                                 }
                             }
                         }
@@ -23917,8 +23917,8 @@ Image GenImageFontAtlas(GlyphInfo* glyphs, Rectangle** glyphRecs, i32 glyphCount
     }
     i32 paddedFontSize = fontSize + 2 * padding;
     f32 totalArea = cast(f32, totalWidth * paddedFontSize) * 1.2f;
-    f32 imageMinSize = sqrtf(totalArea);
-    var imageSize = cast(i32, powf(2.0f, ceilf(logf(imageMinSize) / logf(2.0f))));
+    f32 imageMinSize = sqrt(totalArea);
+    var imageSize = cast(i32, pow(2.0f, ceil(log(imageMinSize) / log(2.0f))));
     if totalArea < cast(f32, imageSize * imageSize / 2) {
         atlas.width = imageSize;
         atlas.height = imageSize / 2;
@@ -25422,8 +25422,8 @@ void DrawCircle3D(Vector3 center, f32 radius, Vector3 rotationAxis, f32 rotation
     rlBegin(0x0001);
     for i32 i = 0; i < 360; i += 10 {
         rlColor4ub(color.r, color.g, color.b, color.a);
-        rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i)) * radius, cosf(3.141592653589793f / 180.0f * cast(f32, i)) * radius, 0.0f);
-        rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radius, cosf(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radius, 0.0f);
+        rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i)) * radius, cos(3.141592653589793f / 180.0f * cast(f32, i)) * radius, 0.0f);
+        rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radius, cos(3.141592653589793f / 180.0f * cast(f32, i + 10)) * radius, 0.0f);
     }
     rlEnd();
     rlPopMatrix();
@@ -25577,10 +25577,10 @@ void DrawSphereEx(Vector3 centerPos, f32 radius, i32 rings, i32 slices, Color co
     rlColor4ub(color.r, color.g, color.b, color.a);
     f32 ringangle = 3.141592653589793f / 180.0f * (180.0f / cast(f32, rings + 1));
     f32 sliceangle = 3.141592653589793f / 180.0f * (360.0f / cast(f32, slices));
-    f32 cosring = cosf(ringangle);
-    f32 sinring = sinf(ringangle);
-    f32 cosslice = cosf(sliceangle);
-    f32 sinslice = sinf(sliceangle);
+    f32 cosring = cos(ringangle);
+    f32 sinring = sin(ringangle);
+    f32 cosslice = cos(sliceangle);
+    f32 sinslice = sin(sliceangle);
     Vector3[4] vertices;
     vertices[2] = Vector3{0.0f, 1.0f, 0.0f};
     vertices[3] = Vector3{sinring, cosring, 0.0f};
@@ -25628,12 +25628,12 @@ void DrawSphereWires(Vector3 centerPos, f32 radius, i32 rings, i32 slices, Color
     rlColor4ub(color.r, color.g, color.b, color.a);
     for i32 i = 0; i < rings + 2; i++ {
         for i32 j = 0; j < slices; j++ {
-            rlVertex3f(cosf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i))) * sinf(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))), sinf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i))), cosf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i))) * cosf(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))));
-            rlVertex3f(cosf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * sinf(3.141592653589793f / 180.0f * (360.0f * cast(f32, j + 1) / cast(f32, slices))), sinf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))), cosf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * cosf(3.141592653589793f / 180.0f * (360.0f * cast(f32, j + 1) / cast(f32, slices))));
-            rlVertex3f(cosf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * sinf(3.141592653589793f / 180.0f * (360.0f * cast(f32, j + 1) / cast(f32, slices))), sinf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))), cosf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * cosf(3.141592653589793f / 180.0f * (360.0f * cast(f32, j + 1) / cast(f32, slices))));
-            rlVertex3f(cosf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * sinf(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))), sinf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))), cosf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * cosf(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))));
-            rlVertex3f(cosf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * sinf(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))), sinf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))), cosf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * cosf(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))));
-            rlVertex3f(cosf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i))) * sinf(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))), sinf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i))), cosf(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i))) * cosf(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))));
+            rlVertex3f(cos(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i))) * sin(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))), sin(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i))), cos(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i))) * cos(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))));
+            rlVertex3f(cos(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * sin(3.141592653589793f / 180.0f * (360.0f * cast(f32, j + 1) / cast(f32, slices))), sin(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))), cos(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * cos(3.141592653589793f / 180.0f * (360.0f * cast(f32, j + 1) / cast(f32, slices))));
+            rlVertex3f(cos(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * sin(3.141592653589793f / 180.0f * (360.0f * cast(f32, j + 1) / cast(f32, slices))), sin(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))), cos(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * cos(3.141592653589793f / 180.0f * (360.0f * cast(f32, j + 1) / cast(f32, slices))));
+            rlVertex3f(cos(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * sin(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))), sin(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))), cos(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * cos(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))));
+            rlVertex3f(cos(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * sin(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))), sin(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))), cos(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i + 1))) * cos(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))));
+            rlVertex3f(cos(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i))) * sin(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))), sin(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i))), cos(3.141592653589793f / 180.0f * (270.0f + 180.0f / cast(f32, rings + 1) * cast(f32, i))) * cos(3.141592653589793f / 180.0f * (360.0f * cast(f32, j) / cast(f32, slices))));
         }
     }
     rlEnd();
@@ -25653,29 +25653,29 @@ void DrawCylinder(Vector3 position, f32 radiusTop, f32 radiusBottom, f32 height,
     rlColor4ub(color.r, color.g, color.b, color.a);
     if radiusTop > 0.0f {
         for i32 i = 0; i < sides; i++ {
-            rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom, 0.0f, cosf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom);
-            rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom, 0.0f, cosf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom);
-            rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop, height, cosf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop);
-            rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop, height, cosf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop);
-            rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom, 0.0f, cosf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom);
-            rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop, height, cosf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop);
+            rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom, 0.0f, cos(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom);
+            rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom, 0.0f, cos(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom);
+            rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop, height, cos(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop);
+            rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop, height, cos(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop);
+            rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom, 0.0f, cos(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom);
+            rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop, height, cos(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop);
         }
         for i32 i = 0; i < sides; i++ {
             rlVertex3f(0.0f, height, 0.0f);
-            rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop, height, cosf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop);
-            rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop, height, cosf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop);
+            rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop, height, cos(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop);
+            rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop, height, cos(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop);
         }
     } else {
         for i32 i = 0; i < sides; i++ {
             rlVertex3f(0.0f, height, 0.0f);
-            rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom, 0.0f, cosf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom);
-            rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom, 0.0f, cosf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom);
+            rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom, 0.0f, cos(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom);
+            rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom, 0.0f, cos(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom);
         }
     }
     for i32 i = 0; i < sides; i++ {
         rlVertex3f(0.0f, 0.0f, 0.0f);
-        rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom, 0.0f, cosf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom);
-        rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom, 0.0f, cosf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom);
+        rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom, 0.0f, cos(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom);
+        rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom, 0.0f, cos(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom);
     }
     rlEnd();
     rlPopMatrix();
@@ -25697,26 +25697,26 @@ void DrawCylinderEx(Vector3 startPos, Vector3 endPos, f32 startRadius, f32 endRa
     rlBegin(0x0004);
     rlColor4ub(color.r, color.g, color.b, color.a);
     for i32 i = 0; i < sides; i++ {
-        f32 s1 = sinf(baseAngle * cast(f32, i + 0)) * startRadius;
-        f32 c1 = cosf(baseAngle * cast(f32, i + 0)) * startRadius;
+        f32 s1 = sin(baseAngle * cast(f32, i + 0)) * startRadius;
+        f32 c1 = cos(baseAngle * cast(f32, i + 0)) * startRadius;
         var w1 = Vector3{
             startPos.x + s1 * b1.x + c1 * b2.x, startPos.y + s1 * b1.y + c1 * b2.y,
             startPos.z + s1 * b1.z + c1 * b2.z,
         };
-        f32 s2 = sinf(baseAngle * cast(f32, i + 1)) * startRadius;
-        f32 c2 = cosf(baseAngle * cast(f32, i + 1)) * startRadius;
+        f32 s2 = sin(baseAngle * cast(f32, i + 1)) * startRadius;
+        f32 c2 = cos(baseAngle * cast(f32, i + 1)) * startRadius;
         var w2 = Vector3{
             startPos.x + s2 * b1.x + c2 * b2.x, startPos.y + s2 * b1.y + c2 * b2.y,
             startPos.z + s2 * b1.z + c2 * b2.z,
         };
-        f32 s3 = sinf(baseAngle * cast(f32, i + 0)) * endRadius;
-        f32 c3 = cosf(baseAngle * cast(f32, i + 0)) * endRadius;
+        f32 s3 = sin(baseAngle * cast(f32, i + 0)) * endRadius;
+        f32 c3 = cos(baseAngle * cast(f32, i + 0)) * endRadius;
         var w3 = Vector3{
             endPos.x + s3 * b1.x + c3 * b2.x, endPos.y + s3 * b1.y + c3 * b2.y,
             endPos.z + s3 * b1.z + c3 * b2.z,
         };
-        f32 s4 = sinf(baseAngle * cast(f32, i + 1)) * endRadius;
-        f32 c4 = cosf(baseAngle * cast(f32, i + 1)) * endRadius;
+        f32 s4 = sin(baseAngle * cast(f32, i + 1)) * endRadius;
+        f32 c4 = cos(baseAngle * cast(f32, i + 1)) * endRadius;
         var w4 = Vector3{
             endPos.x + s4 * b1.x + c4 * b2.x, endPos.y + s4 * b1.y + c4 * b2.y,
             endPos.z + s4 * b1.z + c4 * b2.z,
@@ -25753,14 +25753,14 @@ void DrawCylinderWires(Vector3 position, f32 radiusTop, f32 radiusBottom, f32 he
     rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     for i32 i = 0; i < sides; i++ {
-        rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom, 0.0f, cosf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom);
-        rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom, 0.0f, cosf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom);
-        rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom, 0.0f, cosf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom);
-        rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop, height, cosf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop);
-        rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop, height, cosf(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop);
-        rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop, height, cosf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop);
-        rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop, height, cosf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop);
-        rlVertex3f(sinf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom, 0.0f, cosf(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom);
+        rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom, 0.0f, cos(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom);
+        rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom, 0.0f, cos(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom);
+        rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom, 0.0f, cos(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusBottom);
+        rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop, height, cos(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop);
+        rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop, height, cos(3.141592653589793f / 180.0f * cast(f32, i + 1) * angleStep) * radiusTop);
+        rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop, height, cos(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop);
+        rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop, height, cos(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusTop);
+        rlVertex3f(sin(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom, 0.0f, cos(3.141592653589793f / 180.0f * cast(f32, i) * angleStep) * radiusBottom);
     }
     rlEnd();
     rlPopMatrix();
@@ -25782,26 +25782,26 @@ void DrawCylinderWiresEx(Vector3 startPos, Vector3 endPos, f32 startRadius, f32 
     rlBegin(0x0001);
     rlColor4ub(color.r, color.g, color.b, color.a);
     for i32 i = 0; i < slices; i++ {
-        f32 s1 = sinf(baseAngle * cast(f32, i + 0)) * startRadius;
-        f32 c1 = cosf(baseAngle * cast(f32, i + 0)) * startRadius;
+        f32 s1 = sin(baseAngle * cast(f32, i + 0)) * startRadius;
+        f32 c1 = cos(baseAngle * cast(f32, i + 0)) * startRadius;
         var w1 = Vector3{
             startPos.x + s1 * b1.x + c1 * b2.x, startPos.y + s1 * b1.y + c1 * b2.y,
             startPos.z + s1 * b1.z + c1 * b2.z,
         };
-        f32 s2 = sinf(baseAngle * cast(f32, i + 1)) * startRadius;
-        f32 c2 = cosf(baseAngle * cast(f32, i + 1)) * startRadius;
+        f32 s2 = sin(baseAngle * cast(f32, i + 1)) * startRadius;
+        f32 c2 = cos(baseAngle * cast(f32, i + 1)) * startRadius;
         var w2 = Vector3{
             startPos.x + s2 * b1.x + c2 * b2.x, startPos.y + s2 * b1.y + c2 * b2.y,
             startPos.z + s2 * b1.z + c2 * b2.z,
         };
-        f32 s3 = sinf(baseAngle * cast(f32, i + 0)) * endRadius;
-        f32 c3 = cosf(baseAngle * cast(f32, i + 0)) * endRadius;
+        f32 s3 = sin(baseAngle * cast(f32, i + 0)) * endRadius;
+        f32 c3 = cos(baseAngle * cast(f32, i + 0)) * endRadius;
         var w3 = Vector3{
             endPos.x + s3 * b1.x + c3 * b2.x, endPos.y + s3 * b1.y + c3 * b2.y,
             endPos.z + s3 * b1.z + c3 * b2.z,
         };
-        f32 s4 = sinf(baseAngle * cast(f32, i + 1)) * endRadius;
-        f32 c4 = cosf(baseAngle * cast(f32, i + 1)) * endRadius;
+        f32 s4 = sin(baseAngle * cast(f32, i + 1)) * endRadius;
+        f32 c4 = cos(baseAngle * cast(f32, i + 1)) * endRadius;
         var w4 = Vector3{
             endPos.x + s4 * b1.x + c4 * b2.x, endPos.y + s4 * b1.y + c4 * b2.y,
             endPos.z + s4 * b1.z + c4 * b2.z,
@@ -25837,33 +25837,33 @@ void DrawCapsule(Vector3 startPos, Vector3 endPos, f32 radius, i32 rings, i32 sl
     for i32 c = 0; c < 2; c++ {
         for i32 i = 0; i < rings; i++ {
             for i32 j = 0; j < slices; j++ {
-                f32 ringSin1 = sinf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 0));
-                f32 ringCos1 = cosf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 0));
+                f32 ringSin1 = sin(baseSliceAngle * cast(f32, j + 0)) * cos(baseRingAngle * cast(f32, i + 0));
+                f32 ringCos1 = cos(baseSliceAngle * cast(f32, j + 0)) * cos(baseRingAngle * cast(f32, i + 0));
                 var w1 = Vector3{
-                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin1 * b1.x + ringCos1 * b2.x) * radius,
-                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin1 * b1.y + ringCos1 * b2.y) * radius,
-                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin1 * b1.z + ringCos1 * b2.z) * radius,
+                    capCenter.x + (sin(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin1 * b1.x + ringCos1 * b2.x) * radius,
+                    capCenter.y + (sin(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin1 * b1.y + ringCos1 * b2.y) * radius,
+                    capCenter.z + (sin(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin1 * b1.z + ringCos1 * b2.z) * radius,
                 };
-                f32 ringSin2 = sinf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 0));
-                f32 ringCos2 = cosf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 0));
+                f32 ringSin2 = sin(baseSliceAngle * cast(f32, j + 1)) * cos(baseRingAngle * cast(f32, i + 0));
+                f32 ringCos2 = cos(baseSliceAngle * cast(f32, j + 1)) * cos(baseRingAngle * cast(f32, i + 0));
                 var w2 = Vector3{
-                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin2 * b1.x + ringCos2 * b2.x) * radius,
-                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin2 * b1.y + ringCos2 * b2.y) * radius,
-                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin2 * b1.z + ringCos2 * b2.z) * radius,
+                    capCenter.x + (sin(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin2 * b1.x + ringCos2 * b2.x) * radius,
+                    capCenter.y + (sin(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin2 * b1.y + ringCos2 * b2.y) * radius,
+                    capCenter.z + (sin(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin2 * b1.z + ringCos2 * b2.z) * radius,
                 };
-                f32 ringSin3 = sinf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 1));
-                f32 ringCos3 = cosf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 1));
+                f32 ringSin3 = sin(baseSliceAngle * cast(f32, j + 0)) * cos(baseRingAngle * cast(f32, i + 1));
+                f32 ringCos3 = cos(baseSliceAngle * cast(f32, j + 0)) * cos(baseRingAngle * cast(f32, i + 1));
                 var w3 = Vector3{
-                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin3 * b1.x + ringCos3 * b2.x) * radius,
-                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin3 * b1.y + ringCos3 * b2.y) * radius,
-                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin3 * b1.z + ringCos3 * b2.z) * radius,
+                    capCenter.x + (sin(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin3 * b1.x + ringCos3 * b2.x) * radius,
+                    capCenter.y + (sin(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin3 * b1.y + ringCos3 * b2.y) * radius,
+                    capCenter.z + (sin(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin3 * b1.z + ringCos3 * b2.z) * radius,
                 };
-                f32 ringSin4 = sinf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 1));
-                f32 ringCos4 = cosf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 1));
+                f32 ringSin4 = sin(baseSliceAngle * cast(f32, j + 1)) * cos(baseRingAngle * cast(f32, i + 1));
+                f32 ringCos4 = cos(baseSliceAngle * cast(f32, j + 1)) * cos(baseRingAngle * cast(f32, i + 1));
                 var w4 = Vector3{
-                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin4 * b1.x + ringCos4 * b2.x) * radius,
-                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin4 * b1.y + ringCos4 * b2.y) * radius,
-                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin4 * b1.z + ringCos4 * b2.z) * radius,
+                    capCenter.x + (sin(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin4 * b1.x + ringCos4 * b2.x) * radius,
+                    capCenter.y + (sin(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin4 * b1.y + ringCos4 * b2.y) * radius,
+                    capCenter.z + (sin(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin4 * b1.z + ringCos4 * b2.z) * radius,
                 };
                 if c == 0 {
                     rlVertex3f(w1.x, w1.y, w1.z);
@@ -25887,29 +25887,29 @@ void DrawCapsule(Vector3 startPos, Vector3 endPos, f32 radius, i32 rings, i32 sl
     }
     if sphereCase == 0 {
         for i32 j = 0; j < slices; j++ {
-            f32 ringSin1 = sinf(baseSliceAngle * cast(f32, j + 0)) * radius;
-            f32 ringCos1 = cosf(baseSliceAngle * cast(f32, j + 0)) * radius;
+            f32 ringSin1 = sin(baseSliceAngle * cast(f32, j + 0)) * radius;
+            f32 ringCos1 = cos(baseSliceAngle * cast(f32, j + 0)) * radius;
             var w1 = Vector3{
                 startPos.x + ringSin1 * b1.x + ringCos1 * b2.x,
                 startPos.y + ringSin1 * b1.y + ringCos1 * b2.y,
                 startPos.z + ringSin1 * b1.z + ringCos1 * b2.z,
             };
-            f32 ringSin2 = sinf(baseSliceAngle * cast(f32, j + 1)) * radius;
-            f32 ringCos2 = cosf(baseSliceAngle * cast(f32, j + 1)) * radius;
+            f32 ringSin2 = sin(baseSliceAngle * cast(f32, j + 1)) * radius;
+            f32 ringCos2 = cos(baseSliceAngle * cast(f32, j + 1)) * radius;
             var w2 = Vector3{
                 startPos.x + ringSin2 * b1.x + ringCos2 * b2.x,
                 startPos.y + ringSin2 * b1.y + ringCos2 * b2.y,
                 startPos.z + ringSin2 * b1.z + ringCos2 * b2.z,
             };
-            f32 ringSin3 = sinf(baseSliceAngle * cast(f32, j + 0)) * radius;
-            f32 ringCos3 = cosf(baseSliceAngle * cast(f32, j + 0)) * radius;
+            f32 ringSin3 = sin(baseSliceAngle * cast(f32, j + 0)) * radius;
+            f32 ringCos3 = cos(baseSliceAngle * cast(f32, j + 0)) * radius;
             var w3 = Vector3{
                 endPos.x + ringSin3 * b1.x + ringCos3 * b2.x,
                 endPos.y + ringSin3 * b1.y + ringCos3 * b2.y,
                 endPos.z + ringSin3 * b1.z + ringCos3 * b2.z,
             };
-            f32 ringSin4 = sinf(baseSliceAngle * cast(f32, j + 1)) * radius;
-            f32 ringCos4 = cosf(baseSliceAngle * cast(f32, j + 1)) * radius;
+            f32 ringSin4 = sin(baseSliceAngle * cast(f32, j + 1)) * radius;
+            f32 ringCos4 = cos(baseSliceAngle * cast(f32, j + 1)) * radius;
             var w4 = Vector3{
                 endPos.x + ringSin4 * b1.x + ringCos4 * b2.x,
                 endPos.y + ringSin4 * b1.y + ringCos4 * b2.y,
@@ -25947,33 +25947,33 @@ void DrawCapsuleWires(Vector3 startPos, Vector3 endPos, f32 radius, i32 rings, i
     for i32 c = 0; c < 2; c++ {
         for i32 i = 0; i < rings; i++ {
             for i32 j = 0; j < slices; j++ {
-                f32 ringSin1 = sinf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 0));
-                f32 ringCos1 = cosf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 0));
+                f32 ringSin1 = sin(baseSliceAngle * cast(f32, j + 0)) * cos(baseRingAngle * cast(f32, i + 0));
+                f32 ringCos1 = cos(baseSliceAngle * cast(f32, j + 0)) * cos(baseRingAngle * cast(f32, i + 0));
                 var w1 = Vector3{
-                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin1 * b1.x + ringCos1 * b2.x) * radius,
-                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin1 * b1.y + ringCos1 * b2.y) * radius,
-                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin1 * b1.z + ringCos1 * b2.z) * radius,
+                    capCenter.x + (sin(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin1 * b1.x + ringCos1 * b2.x) * radius,
+                    capCenter.y + (sin(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin1 * b1.y + ringCos1 * b2.y) * radius,
+                    capCenter.z + (sin(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin1 * b1.z + ringCos1 * b2.z) * radius,
                 };
-                f32 ringSin2 = sinf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 0));
-                f32 ringCos2 = cosf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 0));
+                f32 ringSin2 = sin(baseSliceAngle * cast(f32, j + 1)) * cos(baseRingAngle * cast(f32, i + 0));
+                f32 ringCos2 = cos(baseSliceAngle * cast(f32, j + 1)) * cos(baseRingAngle * cast(f32, i + 0));
                 var w2 = Vector3{
-                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin2 * b1.x + ringCos2 * b2.x) * radius,
-                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin2 * b1.y + ringCos2 * b2.y) * radius,
-                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin2 * b1.z + ringCos2 * b2.z) * radius,
+                    capCenter.x + (sin(baseRingAngle * cast(f32, i + 0)) * b0.x + ringSin2 * b1.x + ringCos2 * b2.x) * radius,
+                    capCenter.y + (sin(baseRingAngle * cast(f32, i + 0)) * b0.y + ringSin2 * b1.y + ringCos2 * b2.y) * radius,
+                    capCenter.z + (sin(baseRingAngle * cast(f32, i + 0)) * b0.z + ringSin2 * b1.z + ringCos2 * b2.z) * radius,
                 };
-                f32 ringSin3 = sinf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 1));
-                f32 ringCos3 = cosf(baseSliceAngle * cast(f32, j + 0)) * cosf(baseRingAngle * cast(f32, i + 1));
+                f32 ringSin3 = sin(baseSliceAngle * cast(f32, j + 0)) * cos(baseRingAngle * cast(f32, i + 1));
+                f32 ringCos3 = cos(baseSliceAngle * cast(f32, j + 0)) * cos(baseRingAngle * cast(f32, i + 1));
                 var w3 = Vector3{
-                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin3 * b1.x + ringCos3 * b2.x) * radius,
-                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin3 * b1.y + ringCos3 * b2.y) * radius,
-                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin3 * b1.z + ringCos3 * b2.z) * radius,
+                    capCenter.x + (sin(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin3 * b1.x + ringCos3 * b2.x) * radius,
+                    capCenter.y + (sin(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin3 * b1.y + ringCos3 * b2.y) * radius,
+                    capCenter.z + (sin(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin3 * b1.z + ringCos3 * b2.z) * radius,
                 };
-                f32 ringSin4 = sinf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 1));
-                f32 ringCos4 = cosf(baseSliceAngle * cast(f32, j + 1)) * cosf(baseRingAngle * cast(f32, i + 1));
+                f32 ringSin4 = sin(baseSliceAngle * cast(f32, j + 1)) * cos(baseRingAngle * cast(f32, i + 1));
+                f32 ringCos4 = cos(baseSliceAngle * cast(f32, j + 1)) * cos(baseRingAngle * cast(f32, i + 1));
                 var w4 = Vector3{
-                    capCenter.x + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin4 * b1.x + ringCos4 * b2.x) * radius,
-                    capCenter.y + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin4 * b1.y + ringCos4 * b2.y) * radius,
-                    capCenter.z + (sinf(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin4 * b1.z + ringCos4 * b2.z) * radius,
+                    capCenter.x + (sin(baseRingAngle * cast(f32, i + 1)) * b0.x + ringSin4 * b1.x + ringCos4 * b2.x) * radius,
+                    capCenter.y + (sin(baseRingAngle * cast(f32, i + 1)) * b0.y + ringSin4 * b1.y + ringCos4 * b2.y) * radius,
+                    capCenter.z + (sin(baseRingAngle * cast(f32, i + 1)) * b0.z + ringSin4 * b1.z + ringCos4 * b2.z) * radius,
                 };
                 rlVertex3f(w1.x, w1.y, w1.z);
                 rlVertex3f(w2.x, w2.y, w2.z);
@@ -25992,29 +25992,29 @@ void DrawCapsuleWires(Vector3 startPos, Vector3 endPos, f32 radius, i32 rings, i
     }
     if sphereCase == 0 {
         for i32 j = 0; j < slices; j++ {
-            f32 ringSin1 = sinf(baseSliceAngle * cast(f32, j + 0)) * radius;
-            f32 ringCos1 = cosf(baseSliceAngle * cast(f32, j + 0)) * radius;
+            f32 ringSin1 = sin(baseSliceAngle * cast(f32, j + 0)) * radius;
+            f32 ringCos1 = cos(baseSliceAngle * cast(f32, j + 0)) * radius;
             var w1 = Vector3{
                 startPos.x + ringSin1 * b1.x + ringCos1 * b2.x,
                 startPos.y + ringSin1 * b1.y + ringCos1 * b2.y,
                 startPos.z + ringSin1 * b1.z + ringCos1 * b2.z,
             };
-            f32 ringSin2 = sinf(baseSliceAngle * cast(f32, j + 1)) * radius;
-            f32 ringCos2 = cosf(baseSliceAngle * cast(f32, j + 1)) * radius;
+            f32 ringSin2 = sin(baseSliceAngle * cast(f32, j + 1)) * radius;
+            f32 ringCos2 = cos(baseSliceAngle * cast(f32, j + 1)) * radius;
             var w2 = Vector3{
                 startPos.x + ringSin2 * b1.x + ringCos2 * b2.x,
                 startPos.y + ringSin2 * b1.y + ringCos2 * b2.y,
                 startPos.z + ringSin2 * b1.z + ringCos2 * b2.z,
             };
-            f32 ringSin3 = sinf(baseSliceAngle * cast(f32, j + 0)) * radius;
-            f32 ringCos3 = cosf(baseSliceAngle * cast(f32, j + 0)) * radius;
+            f32 ringSin3 = sin(baseSliceAngle * cast(f32, j + 0)) * radius;
+            f32 ringCos3 = cos(baseSliceAngle * cast(f32, j + 0)) * radius;
             var w3 = Vector3{
                 endPos.x + ringSin3 * b1.x + ringCos3 * b2.x,
                 endPos.y + ringSin3 * b1.y + ringCos3 * b2.y,
                 endPos.z + ringSin3 * b1.z + ringCos3 * b2.z,
             };
-            f32 ringSin4 = sinf(baseSliceAngle * cast(f32, j + 1)) * radius;
-            f32 ringCos4 = cosf(baseSliceAngle * cast(f32, j + 1)) * radius;
+            f32 ringSin4 = sin(baseSliceAngle * cast(f32, j + 1)) * radius;
+            f32 ringCos4 = cos(baseSliceAngle * cast(f32, j + 1)) * radius;
             var w4 = Vector3{
                 endPos.x + ringSin4 * b1.x + ringCos4 * b2.x,
                 endPos.y + ringSin4 * b1.y + ringCos4 * b2.y,
@@ -27066,7 +27066,7 @@ void GenMeshTangents(Mesh* mesh) {
         f32 s2 = uv3.x - uv1.x;
         f32 t2 = uv3.y - uv1.y;
         f32 div = s1 * t2 - s2 * t1;
-        f32 r = fabsf(div) < 0.0001f ? 0.0f : 1.0f / div;
+        f32 r = fabs(div) < 0.0001f ? 0.0f : 1.0f / div;
         var sdir = Vector3{
             (t2 * x1 - t1 * x2) * r, (t2 * y1 - t1 * y2) * r, (t2 * z1 - t1 * z2) * r,
         };
@@ -27086,7 +27086,7 @@ void GenMeshTangents(Mesh* mesh) {
         };
         Vector3 tangent = tan1[i];
         if Vector3Length(tangent) < 0.0001f {
-            if fabsf(normal.z) > 0.707f {
+            if fabs(normal.z) > 0.707f {
                 tangent = Vector3{1.0f, 0.0f, 0.0f};
             } else {
                 tangent = Vector3Normalize(Vector3{-normal.y, normal.x, 0.0f});
@@ -27099,7 +27099,7 @@ void GenMeshTangents(Mesh* mesh) {
         }
         Vector3 orthogonalized = Vector3Subtract(tangent, Vector3Scale(normal, Vector3DotProduct(normal, tangent)));
         if Vector3Length(orthogonalized) < 0.0001f {
-            if fabsf(normal.z) > 0.707f {
+            if fabs(normal.z) > 0.707f {
                 orthogonalized = Vector3{1.0f, 0.0f, 0.0f};
             } else {
                 orthogonalized = Vector3Normalize(Vector3{-normal.y, normal.x, 0.0f});
@@ -27176,7 +27176,7 @@ void DrawModelWiresEx(Model model, Vector3 position, Vector3 rotationAxis, f32 r
 // Draw a billboard
 void DrawBillboard(Camera camera, Texture2D texture, Vector3 position, f32 scale, Color tint) {
     var source = Rectangle{0.0f, 0.0f, cast(f32, texture.width), cast(f32, texture.height)};
-    DrawBillboardRec(camera, texture, source, position, Vector2{scale * fabsf(source.width / source.height), scale}, tint);
+    DrawBillboardRec(camera, texture, source, position, Vector2{scale * fabs(source.width / source.height), scale}, tint);
 }
 
 // Draw a billboard (part of a texture defined by a rectangle)
@@ -27248,9 +27248,9 @@ void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle source, Vector
 // Draw a bounding box with wires
 void DrawBoundingBox(BoundingBox box, Color color) {
     Vector3 size;
-    size.x = fabsf(box.max.x - box.min.x);
-    size.y = fabsf(box.max.y - box.min.y);
-    size.z = fabsf(box.max.z - box.min.z);
+    size.x = fabs(box.max.x - box.min.x);
+    size.y = fabs(box.max.y - box.min.y);
+    size.z = fabs(box.max.z - box.min.z);
     var center = Vector3{
         box.min.x + size.x / 2.0f, box.min.y + size.y / 2.0f, box.min.z + size.z / 2.0f,
     };
@@ -27306,11 +27306,11 @@ RayCollision GetRayCollisionSphere(Ray ray, Vector3 center, f32 radius) {
     f32 d = radius * radius - (distance * distance - vector * vector);
     collision.hit = d >= 0.0f;
     if distance < radius {
-        collision.distance = vector + sqrtf(d);
+        collision.distance = vector + sqrt(d);
         collision.point = Vector3Add(ray.position, Vector3Scale(ray.direction, collision.distance));
         collision.normal = Vector3Negate(Vector3Normalize(Vector3Subtract(collision.point, center)));
     } else {
-        collision.distance = vector - sqrtf(d);
+        collision.distance = vector - sqrt(d);
         collision.point = Vector3Add(ray.position, Vector3Scale(ray.direction, collision.distance));
         collision.normal = Vector3Normalize(Vector3Subtract(collision.point, center));
     }
@@ -27334,8 +27334,8 @@ RayCollision GetRayCollisionBox(Ray ray, BoundingBox box) {
     t[3] = (box.max.y - ray.position.y) * t[9];
     t[4] = (box.min.z - ray.position.z) * t[10];
     t[5] = (box.max.z - ray.position.z) * t[10];
-    t[6] = cast(f32, fmax(fmax(fmin(t[0], t[1]), fmin(t[2], t[3])), fmin(t[4], t[5])));
-    t[7] = cast(f32, fmin(fmin(fmax(t[0], t[1]), fmax(t[2], t[3])), fmax(t[4], t[5])));
+    t[6] = fmax(fmax(fmin(t[0], t[1]), fmin(t[2], t[3])), fmin(t[4], t[5]));
+    t[7] = fmin(fmin(fmax(t[0], t[1]), fmax(t[2], t[3])), fmax(t[4], t[5]));
     collision.hit = !(t[7] < 0.0f || t[6] > t[7]);
     collision.distance = t[6];
     collision.point = Vector3Add(ray.position, Vector3Scale(ray.direction, collision.distance));

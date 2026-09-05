@@ -28,11 +28,11 @@
 // The compiler is taken from MINC, then PATH, then this folder
 // (install: https://minc.dev).
 
-@minc_min_version "0.9.12"
+@minc_min_version "0.9.14"
 
 // Older minc ignores the tag above; this forces an error instead.
-when !defined(MINC_VERSION) || MINC_VERSION < 9012 {
-    minc_0_9_12_or_newer_required please_update_minc;
+when !defined(MINC_VERSION) || MINC_VERSION < 9014 {
+    minc_0_9_14_or_newer_required please_update_minc;
 }
 
 import process;
@@ -648,7 +648,11 @@ void handle_connection(Socket c) {
         return;
     }
     defer free(fd.data);
-    send_response(c, "200 OK", content_type_for(path), str_from(fd.data, fd.len));
+    if fd.len > 2147483647 {
+        send_response(c, "500 Internal Server Error", "text/plain; charset=utf-8", "File too large\n");
+        return;
+    }
+    send_response(c, "200 OK", content_type_for(path), str_from(fd.data, cast(i32, fd.len)));
     return;
 }
 
