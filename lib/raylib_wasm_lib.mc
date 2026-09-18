@@ -671,11 +671,6 @@ enum rlCullMode {
 //----------------------------------------------------------------------------------
 // Defines and Macros
 //----------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------
-// Types and Structures Definition
-// NOTE: Below types are required for standalone usage
-//----------------------------------------------------------------------------------
-// Boolean type
 enum TouchAction {
     TOUCH_ACTION_UP = 0,
     TOUCH_ACTION_DOWN = 1,
@@ -1250,10 +1245,6 @@ struct dirent {
 // this defines are useful for internal check and avoid type (re)definitions
 // Some Basic Colors
 // NOTE: Custom raylib color palette for amazing visuals on WHITE background
-//----------------------------------------------------------------------------------
-// Types and Structures Definition
-//----------------------------------------------------------------------------------
-// Boolean type
 // Vector2, 2 components
 struct Vector2 {
     f32 x;
@@ -1574,9 +1565,6 @@ struct AutomationEventList {
 // GL blending factors
 // GL blending functions/equations
 // Default shader vertex attribute locations
-//----------------------------------------------------------------------------------
-// Types and Structures Definition
-//----------------------------------------------------------------------------------
 // Dynamic vertex buffers (position + texcoords + colors + indices arrays)
 struct rlVertexBuffer {
     i32 elementCount;
@@ -2205,9 +2193,6 @@ struct CoreData {
 *     3. This notice may not be removed or altered from any source distribution.
 *
 **********************************************************************************************/
-// NOTE: Already provided by rlgl implementation (on glad.h)
-// NOTE: GLFW3 already includes gl.h (OpenGL) headers
-// Support retrieving native window handlers
 //----------------------------------------------------------------------------------
 // Types and Structures Definition
 //----------------------------------------------------------------------------------
@@ -2311,8 +2296,6 @@ private unsafe_union uni_t2 {
     u32 ui;
 }
 
-// e.g. #define your own STBTT_ifloor/STBTT_iceil() to avoid math.h
-// #define your own functions "STBTT_malloc" / "STBTT_free" to avoid malloc.h
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 ////
@@ -2864,7 +2847,6 @@ struct stbrp_rect {
 // Module: rmodels - Configuration Flags
 //------------------------------------------------------------------------------------
 // Selected desired model fileformats to be supported for loading
-// Defines module configuration flags
 /**********************************************************************************************
 *
 *   rlgl v6.0 - A multi-OpenGL abstraction layer with an immediate-mode style API
@@ -7760,26 +7742,6 @@ f64 rgGetCurrentTime() {
 }
 }
 
-// Required for vector maths:
-// Vector3Add()
-// Vector3Subtract()
-// Vector3Scale()
-// Vector3Normalize()
-// Vector3Distance()
-// Vector3CrossProduct()
-// Vector3RotateByAxisAngle()
-// Vector3Angle()
-// Vector3Negate()
-// MatrixLookAt()
-// MatrixPerspective()
-// MatrixOrtho()
-// MatrixIdentity()
-// raylib required functionality:
-// GetMouseDelta()
-// GetMouseWheelMove()
-// IsKeyDown()
-// IsKeyPressed()
-// GetFrameTime()
 //----------------------------------------------------------------------------------
 // Defines and Macros
 //----------------------------------------------------------------------------------
@@ -8104,7 +8066,7 @@ void sinfl_refill(sinfl* s) {
 }
 
 i32 sinfl_peek(sinfl* s, i32 cnt) {
-    return cast(i32, s.bitbuf & cast(u64, (1 << cnt) - 1));
+    return cast(i32, s.bitbuf & (1 << cast(u64, cnt)) - 1);
 }
 
 void sinfl_eat(sinfl* s, i32 cnt) {
@@ -9184,12 +9146,6 @@ i32 sdefl_bound(i32 len) {
 // Allow custom memory allocators
 // Simple log system to avoid log calls if required
 // NOTE: Avoiding those calls, also avoids const strings memory usage
-// Unload pseudo-random numbers sequence
-/***********************************************************************************
-*
-*   RPRAND IMPLEMENTATION
-*
-************************************************************************************/
 //----------------------------------------------------------------------------------
 // Types and Structures Definition
 //----------------------------------------------------------------------------------
@@ -11053,7 +11009,7 @@ u32* ComputeSHA1(u8* data, i32 dataSize) {
     var msg = cast(u8*, new(u8[newDataSize]));
     memcpy(msg, data, cast(u64, dataSize));
     msg[dataSize] = 128;
-    var bitsLen = cast(u64, 8 * dataSize);
+    u64 bitsLen = 8 * dataSize;
     msg[newDataSize - 1] = cast(u8, bitsLen);
     msg[newDataSize - 2] = cast(u8, bitsLen >> 8);
     msg[newDataSize - 3] = cast(u8, bitsLen >> 16);
@@ -11119,7 +11075,7 @@ u32* ComputeSHA256(u8* data, i32 dataSize) {
     ComputeSHA256__hash[5] = 0x9b05688c;
     ComputeSHA256__hash[6] = 0x1f83d9ab;
     ComputeSHA256__hash[7] = 0x5be0cd19;
-    var bitLen = cast(u64, 8 * dataSize);
+    u64 bitLen = 8 * dataSize;
     var paddedSize = cast(u64, dataSize + sizeof(dataSize));
     paddedSize += 64 - paddedSize % 64;
     var buffer = new(u8[paddedSize]);
@@ -11929,7 +11885,6 @@ void RecordAutomationEvent() {
     }
 }
 }
-// OpenGL abstraction layer to OpenGL 1.1, 2.1, 3.3+ or ES2
 //----------------------------------------------------------------------------------
 // Defines and Macros
 //----------------------------------------------------------------------------------
@@ -25384,7 +25339,6 @@ Font LoadBMFont(u8* fileName) {
     return font;
 }
 }
-// Required for: Vector3, Quaternion and Matrix functionality
 //----------------------------------------------------------------------------------
 // Defines and Macros
 //----------------------------------------------------------------------------------
