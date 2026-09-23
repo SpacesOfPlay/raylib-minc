@@ -689,11 +689,6 @@ enum rlCullMode {
 //----------------------------------------------------------------------------------
 // Defines and Macros
 //----------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------
-// Types and Structures Definition
-// NOTE: Below types are required for standalone usage
-//----------------------------------------------------------------------------------
-// Boolean type
 enum TouchAction {
     TOUCH_ACTION_UP = 0,
     TOUCH_ACTION_DOWN = 1,
@@ -2902,10 +2897,6 @@ struct dirent {
 // this defines are useful for internal check and avoid type (re)definitions
 // Some Basic Colors
 // NOTE: Custom raylib color palette for amazing visuals on WHITE background
-//----------------------------------------------------------------------------------
-// Types and Structures Definition
-//----------------------------------------------------------------------------------
-// Boolean type
 // Vector2, 2 components
 struct Vector2 {
     f32 x;
@@ -3226,9 +3217,6 @@ struct AutomationEventList {
 // GL blending factors
 // GL blending functions/equations
 // Default shader vertex attribute locations
-//----------------------------------------------------------------------------------
-// Types and Structures Definition
-//----------------------------------------------------------------------------------
 // Dynamic vertex buffers (position + texcoords + colors + indices arrays)
 struct rlVertexBuffer {
     i32 elementCount;
@@ -4566,7 +4554,6 @@ when os(macos) || os(ios) {
 // Module: rmodels - Configuration Flags
 //------------------------------------------------------------------------------------
 // Selected desired model fileformats to be supported for loading
-// Defines module configuration flags
 /**********************************************************************************************
 *
 *   rlgl v6.0 - A multi-OpenGL abstraction layer with an immediate-mode style API
@@ -9735,26 +9722,6 @@ f64 rgGetCurrentTime() {
 when os(windows) {
 }
 
-// Required for vector maths:
-// Vector3Add()
-// Vector3Subtract()
-// Vector3Scale()
-// Vector3Normalize()
-// Vector3Distance()
-// Vector3CrossProduct()
-// Vector3RotateByAxisAngle()
-// Vector3Angle()
-// Vector3Negate()
-// MatrixLookAt()
-// MatrixPerspective()
-// MatrixOrtho()
-// MatrixIdentity()
-// raylib required functionality:
-// GetMouseDelta()
-// GetMouseWheelMove()
-// IsKeyDown()
-// IsKeyPressed()
-// GetFrameTime()
 //----------------------------------------------------------------------------------
 // Defines and Macros
 //----------------------------------------------------------------------------------
@@ -10085,7 +10052,7 @@ void sinfl_refill(sinfl* s) {
 }
 
 i32 sinfl_peek(sinfl* s, i32 cnt) {
-    return cast(i32, s.bitbuf & cast(u64, (1 << cnt) - 1));
+    return cast(i32, s.bitbuf & (1 << cast(u64, cnt)) - 1);
 }
 
 void sinfl_eat(sinfl* s, i32 cnt) {
@@ -11167,12 +11134,6 @@ when os(windows) {
 // Allow custom memory allocators
 // Simple log system to avoid log calls if required
 // NOTE: Avoiding those calls, also avoids const strings memory usage
-// Unload pseudo-random numbers sequence
-/***********************************************************************************
-*
-*   RPRAND IMPLEMENTATION
-*
-************************************************************************************/
 //----------------------------------------------------------------------------------
 // Types and Structures Definition
 //----------------------------------------------------------------------------------
@@ -11513,13 +11474,6 @@ when os(windows) && !defined(PLATFORM_DESKTOP_RGFW) {
  * Compiler- and platform-specific preprocessor work
  *************************************************************************/
 /* If we are we on Windows, we want a single define for it.
- */
-/* Include because most Windows GLU headers need wchar_t and
- * the macOS OpenGL header blocks the definition of ptrdiff_t by glext.h.
- * Include it unconditionally to avoid surprising side-effects.
- */
-/* Include because it is needed by Vulkan and related functions.
- * Include it unconditionally to avoid surprising side-effects.
  */
 /* The Vulkan header may have indirectly included windows.h (because of
  * VK_USE_PLATFORM_WIN32_KHR) so we offer our replacement symbols after it.
@@ -14813,7 +14767,7 @@ u32* ComputeSHA1(u8* data, i32 dataSize) {
     var msg = cast(u8*, new(u8[newDataSize]));
     memcpy(msg, data, cast(u64, dataSize));
     msg[dataSize] = 128;
-    var bitsLen = cast(u64, 8 * dataSize);
+    u64 bitsLen = 8 * dataSize;
     msg[newDataSize - 1] = cast(u8, bitsLen);
     msg[newDataSize - 2] = cast(u8, bitsLen >> 8);
     msg[newDataSize - 3] = cast(u8, bitsLen >> 16);
@@ -14879,7 +14833,7 @@ u32* ComputeSHA256(u8* data, i32 dataSize) {
     ComputeSHA256__hash[5] = 0x9b05688c;
     ComputeSHA256__hash[6] = 0x1f83d9ab;
     ComputeSHA256__hash[7] = 0x5be0cd19;
-    var bitLen = cast(u64, 8 * dataSize);
+    u64 bitLen = 8 * dataSize;
     var paddedSize = cast(u64, dataSize + sizeof(dataSize));
     paddedSize += 64 - paddedSize % 64;
     var buffer = new(u8[paddedSize]);
@@ -15694,7 +15648,6 @@ void RecordAutomationEvent() {
     }
 }
 }
-// OpenGL abstraction layer to OpenGL 1.1, 2.1, 3.3+ or ES2
 //----------------------------------------------------------------------------------
 // Defines and Macros
 //----------------------------------------------------------------------------------
@@ -29160,7 +29113,6 @@ Font LoadBMFont(u8* fileName) {
     return font;
 }
 }
-// Required for: Vector3, Quaternion and Matrix functionality
 //----------------------------------------------------------------------------------
 // Defines and Macros
 //----------------------------------------------------------------------------------

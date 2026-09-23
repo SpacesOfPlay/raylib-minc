@@ -852,11 +852,6 @@ struct GuiStyleProp {
 **********************************************************************************************/
 // Function specifiers in case library is build/used as a shared library (Windows)
 // NOTE: Microsoft specifiers to tell compiler that symbols are imported/exported from a .dll
-/***********************************************************************************
-*
-*   RAYGUI IMPLEMENTATION
-*
-************************************************************************************/
 // Allow custom memory allocators
 // Check if two rectangles are equal, used to validate a slider bounds as an id
 // Embedded icons, no external file provided
