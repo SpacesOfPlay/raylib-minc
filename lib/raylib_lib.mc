@@ -6987,6 +6987,11 @@ void rlBindShaderBuffer(u32 id, u32 index) {
 
 // Copy SSBO buffer data
 void rlCopyShaderBuffer(u32 destId, u32 srcId, u32 destOffset, u32 srcOffset, u32 count) {
+    when defined(GRAPHICS_API_OPENGL_43) {
+        glBindBuffer(GL_COPY_READ_BUFFER, srcId);
+        glBindBuffer(GL_COPY_WRITE_BUFFER, destId);
+        glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER, srcOffset, destOffset, count);
+    }
 }
 
 // Bind image texture
