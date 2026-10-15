@@ -4667,8 +4667,6 @@ when os(macos) || os(ios) {
 // Allow custom memory allocators
 // Security check in case no GRAPHICS_API_OPENGL_* defined
 // Security check in case multiple GRAPHICS_API_OPENGL_* defined
-when defined(GRAPHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPENGL_SOFTWARE) {
-}
 // Software implementation uses OpenGL 1.1 functionality
 // OpenGL 2.1 uses most of OpenGL 3.3 Core functionality
 // WARNING: Specific parts are checked with #if defines
@@ -4678,10 +4676,6 @@ when defined(GRAPHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPENGL_SOFTWARE) {
 // Defines and Macros
 //----------------------------------------------------------------------------------
 // Default internal render batch elements limits
-when !(defined(RL_DEFAULT_BATCH_BUFFER_ELEMENTS)) {
-// This is the maximum amount of elements (quads) per batch
-// NOTE: Be careful with text, every letter maps to a quad
-}
 // Load and draw a quad
 /***********************************************************************************
 *
@@ -6987,6 +6981,11 @@ void rlBindShaderBuffer(u32 id, u32 index) {
 
 // Copy SSBO buffer data
 void rlCopyShaderBuffer(u32 destId, u32 srcId, u32 destOffset, u32 srcOffset, u32 count) {
+    when defined(GRAPHICS_API_OPENGL_43) {
+        glBindBuffer(GL_COPY_READ_BUFFER, srcId);
+        glBindBuffer(GL_COPY_WRITE_BUFFER, destId);
+        glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER, srcOffset, destOffset, count);
+    }
 }
 
 // Bind image texture
@@ -9719,8 +9718,6 @@ f64 rgGetCurrentTime() {
 // Function specifiers definition
 // Function specifiers in case library is build/used as a shared library (Windows)
 // NOTE: Microsoft specifiers to tell compiler that symbols are imported/exported from a .dll
-when os(windows) {
-}
 
 //----------------------------------------------------------------------------------
 // Defines and Macros
@@ -10019,7 +10016,7 @@ i32 sinfl_bsr(u32 n) {
 
 u64 sinfl_read64(void* p) {
     u64 n;
-    memcpy(&n, p, cast(u64, 8));
+    n = *cast(u64*, p);
     return n;
 }
 
@@ -10030,7 +10027,7 @@ void sinfl_copy64(u8** dst, u8** src) {
 }
 
 u8* sinfl_write64(u8* dst, u64 w) {
-    memcpy(dst, &w, cast(u64, 8));
+    *cast(u64*, dst) = w;
     return dst + 8;
 }
 
@@ -10483,7 +10480,7 @@ i32 sdefl_ilog2(i32 n) {
 
 u32 sdefl_uload32(void* p) {
     u32 n = 0;
-    memcpy(&n, p, cast(u64, sizeof(n)));
+    n = *cast(u32*, p);
     return n;
 }
 
@@ -11125,8 +11122,6 @@ i32 sdefl_bound(i32 len) {
 **********************************************************************************************/
 // Function specifiers in case library is build/used as a shared library (Windows)
 // NOTE: Microsoft specifiers to tell compiler that symbols are imported/exported from a .dll
-when os(windows) {
-}
 // Function specifiers definition
 //----------------------------------------------------------------------------------
 // Defines and Macros
@@ -11356,8 +11351,6 @@ void rewinddir(DIR* dir) {
 //----------------------------------------------------------------------------------
 // Defines and Macros
 //----------------------------------------------------------------------------------
-when !(defined(MAX_FILEPATH_LENGTH)) {
-}
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
@@ -11487,24 +11480,6 @@ when os(windows) && !defined(PLATFORM_DESKTOP_RGFW) {
  */
 /* Include the chosen OpenGL or OpenGL ES headers.
  */
-when defined(GLFW_INCLUDE_ES1) {
-} else when defined(GLFW_INCLUDE_ES2) {
-} else when defined(GLFW_INCLUDE_ES3) {
-} else when defined(GLFW_INCLUDE_ES31) {
-} else when defined(GLFW_INCLUDE_ES32) {
-} else when defined(GLFW_INCLUDE_GLCOREARB) {
-when os(macos) || os(ios) {
-} else {
-}
-} else when defined(GLFW_INCLUDE_GLU) {
-when os(macos) || os(ios) {
-} else {
-}
-} else {
-when os(macos) || os(ios) {
-} else {
-}
-}
 /*************************************************************************
  * Global definition cleanup
  *************************************************************************/
@@ -11593,24 +11568,6 @@ when os(windows) {
 /*************************************************************************
  * System headers and types
  *************************************************************************/
-when defined(GLFW_EXPOSE_NATIVE_WIN32) || defined(GLFW_EXPOSE_NATIVE_WGL) {
-/* This is a workaround for the fact that glfw3.h needs to export APIENTRY (for
-   * example to allow applications to correctly declare a GL_KHR_debug callback)
-   * but windows.h assumes no one will define APIENTRY before it does
-   */
-}
-when defined(GLFW_EXPOSE_NATIVE_GLX) {
-/* This is a workaround for the fact that glfw3.h defines GLAPIENTRY because by
-   * default it also acts as an OpenGL header
-   * However, glx.h will include gl.h, which will define it unconditionally
-   */
-}
-when defined(GLFW_EXPOSE_NATIVE_OSMESA) {
-/* This is a workaround for the fact that glfw3.h defines GLAPIENTRY because by
-   * default it also acts as an OpenGL header
-   * However, osmesa.h will include gl.h, which will define it unconditionally
-   */
-}
 /*************************************************************************
  * Functions
  *************************************************************************/
@@ -11703,24 +11660,6 @@ when os(macos) || os(ios) {
 /*************************************************************************
  * System headers and types
  *************************************************************************/
-when defined(GLFW_EXPOSE_NATIVE_WIN32) || defined(GLFW_EXPOSE_NATIVE_WGL) {
-/* This is a workaround for the fact that glfw3.h needs to export APIENTRY (for
-   * example to allow applications to correctly declare a GL_KHR_debug callback)
-   * but windows.h assumes no one will define APIENTRY before it does
-   */
-}
-when defined(GLFW_EXPOSE_NATIVE_GLX) {
-/* This is a workaround for the fact that glfw3.h defines GLAPIENTRY because by
-   * default it also acts as an OpenGL header
-   * However, glx.h will include gl.h, which will define it unconditionally
-   */
-}
-when defined(GLFW_EXPOSE_NATIVE_OSMESA) {
-/* This is a workaround for the fact that glfw3.h defines GLAPIENTRY because by
-   * default it also acts as an OpenGL header
-   * However, osmesa.h will include gl.h, which will define it unconditionally
-   */
-}
 /*************************************************************************
  * Functions
  *************************************************************************/
@@ -14717,7 +14656,7 @@ u32* ComputeMD5(u8* data, i32 dataSize) {
     memcpy(msg, data, cast(u64, dataSize));
     msg[dataSize] = 128;
     var bitsLen = cast(u32, 8 * dataSize);
-    memcpy(msg + newDataSize, &bitsLen, cast(u64, 4));
+    *cast(u32*, msg + newDataSize) = bitsLen;
     for i32 offset = 0; offset < newDataSize; offset += 512 / 8 {
         var w = cast(u32*, msg + offset);
         u32 a = ComputeMD5__hash[0];
@@ -17239,18 +17178,12 @@ when !(defined(STBI_NO_LINEAR)) {
 //
 //
 ////   end header file   /////////////////////////////////////////////////////
-when defined(STBI_ONLY_JPEG) || defined(STBI_ONLY_PNG) || defined(STBI_ONLY_BMP) || defined(STBI_ONLY_TGA) || defined(STBI_ONLY_GIF) || defined(STBI_ONLY_PSD) || defined(STBI_ONLY_HDR) || defined(STBI_ONLY_PIC) || defined(STBI_ONLY_PNM) || defined(STBI_ONLY_ZLIB) {
-}
 when os(windows) {
 } else {
 }
 // ok
 // x86/x64 detection
-when !defined(STBI_NO_SIMD) && (defined(STBI__X86_TARGET) || defined(STBI__X64_TARGET)) {
-}
 // ARM NEON
-when defined(STBI_NEON) {
-}
 
 // initialize a memory-decode context
 private {

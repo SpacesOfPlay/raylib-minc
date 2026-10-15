@@ -2960,8 +2960,6 @@ struct stbrp_rect {
 // Allow custom memory allocators
 // Security check in case no GRAPHICS_API_OPENGL_* defined
 // Security check in case multiple GRAPHICS_API_OPENGL_* defined
-when defined(GRAPHICS_API_OPENGL_SOFTWARE) {
-}
 // Software implementation uses OpenGL 1.1 functionality
 // OpenGL 2.1 uses most of OpenGL 3.3 Core functionality
 // WARNING: Specific parts are checked with #if defines
@@ -8033,7 +8031,7 @@ i32 sinfl_bsr(u32 n) {
 
 u64 sinfl_read64(void* p) {
     u64 n;
-    memcpy(&n, p, cast(u64, 8));
+    n = *cast(u64*, p);
     return n;
 }
 
@@ -8044,7 +8042,7 @@ void sinfl_copy64(u8** dst, u8** src) {
 }
 
 u8* sinfl_write64(u8* dst, u64 w) {
-    memcpy(dst, &w, cast(u64, 8));
+    *cast(u64*, dst) = w;
     return dst + 8;
 }
 
@@ -8497,7 +8495,7 @@ i32 sdefl_ilog2(i32 n) {
 
 u32 sdefl_uload32(void* p) {
     u32 n = 0;
-    memcpy(&n, p, cast(u64, sizeof(n)));
+    n = *cast(u32*, p);
     return n;
 }
 
@@ -9367,17 +9365,6 @@ extern { void ClosePlatform(); }
 //void DisableCursor(void)
 // Initialize window and OpenGL context
 void InitWindow(i32 width, i32 height, u8* title) {
-    when defined(PLATFORM_DESKTOP_GLFW) {
-    } else when defined(PLATFORM_DESKTOP_SDL) {
-    } else when defined(PLATFORM_DESKTOP_RGFW) {
-    } else when defined(PLATFORM_DESKTOP_WIN32) {
-    } else when defined(PLATFORM_WEB_RGFW) {
-    } else when defined(PLATFORM_WEB) {
-    } else when defined(PLATFORM_DRM) {
-    } else when defined(PLATFORM_ANDROID) {
-    } else when defined(PLATFORM_MEMORY) {
-    } else {
-    }
     CORE.Window.screen.width = cast(u32, width);
     CORE.Window.screen.height = cast(u32, height);
     CORE.Window.eventWaiting = false;
@@ -10959,7 +10946,7 @@ u32* ComputeMD5(u8* data, i32 dataSize) {
     memcpy(msg, data, cast(u64, dataSize));
     msg[dataSize] = 128;
     var bitsLen = cast(u32, 8 * dataSize);
-    memcpy(msg + newDataSize, &bitsLen, cast(u64, 4));
+    *cast(u32*, msg + newDataSize) = bitsLen;
     for i32 offset = 0; offset < newDataSize; offset += 512 / 8 {
         var w = cast(u32*, msg + offset);
         u32 a = ComputeMD5__hash[0];
@@ -13476,8 +13463,6 @@ when !(defined(STBI_NO_LINEAR)) {
 //
 //
 ////   end header file   /////////////////////////////////////////////////////
-when defined(STBI_ONLY_JPEG) || defined(STBI_ONLY_PNG) || defined(STBI_ONLY_BMP) || defined(STBI_ONLY_TGA) || defined(STBI_ONLY_GIF) || defined(STBI_ONLY_PSD) || defined(STBI_ONLY_HDR) || defined(STBI_ONLY_PIC) || defined(STBI_ONLY_PNM) || defined(STBI_ONLY_ZLIB) {
-}
 // ok
 // x86/x64 detection
 // ARM NEON

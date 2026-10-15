@@ -1568,9 +1568,9 @@ i32 GuiScrollPanel(Rectangle bounds, u8* text, Rectangle content, Vector2* scrol
             verticalScrollBar.y + verticalScrollBar.height + 2.0f,
             cast(f32, horizontalScrollBarWidth) - 4.0f, cast(f32, verticalScrollBarWidth) - 4.0f,
         };
-        GuiDrawRectangle(corner, 0, Color{}, GetColor(cast(u32, GuiGetStyle(LISTVIEW, TEXT + state * 3))));
+        GuiDrawRectangle(corner, 0, Color{}, GetColor(cast(u32, GuiGetStyle(LISTVIEW, TEXT + cast(i32, state * 3)))));
     }
-    GuiDrawRectangle(bounds, GuiGetStyle(LISTVIEW, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(LISTVIEW, BORDER + state * 3))), Color{});
+    GuiDrawRectangle(bounds, GuiGetStyle(LISTVIEW, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(LISTVIEW, BORDER + cast(i32, state * 3)))), Color{});
     GuiSetStyle(SCROLLBAR, SCROLL_SLIDER_SIZE, slider);
     if scroll != null {
         *scroll = scrollPos;
@@ -1582,7 +1582,7 @@ i32 GuiScrollPanel(Rectangle bounds, u8* text, Rectangle content, Vector2* scrol
 i32 GuiLabel(Rectangle bounds, u8* text) {
     i32 result = 0;
     GuiState state = guiState;
-    GuiDrawText(text, GetTextBounds(LABEL, bounds), GuiGetStyle(LABEL, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + state * 3))));
+    GuiDrawText(text, GetTextBounds(LABEL, bounds), GuiGetStyle(LABEL, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + cast(i32, state * 3)))));
     return result;
 }
 
@@ -1603,8 +1603,8 @@ i32 GuiButton(Rectangle bounds, u8* text) {
             }
         }
     }
-    GuiDrawRectangle(bounds, GuiGetStyle(BUTTON, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(BUTTON, BORDER + state * 3))), GetColor(cast(u32, GuiGetStyle(BUTTON, BASE + state * 3))));
-    GuiDrawText(text, GetTextBounds(BUTTON, bounds), GuiGetStyle(BUTTON, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(BUTTON, TEXT + state * 3))));
+    GuiDrawRectangle(bounds, GuiGetStyle(BUTTON, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(BUTTON, BORDER + cast(i32, state * 3)))), GetColor(cast(u32, GuiGetStyle(BUTTON, BASE + cast(i32, state * 3)))));
+    GuiDrawText(text, GetTextBounds(BUTTON, bounds), GuiGetStyle(BUTTON, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(BUTTON, TEXT + cast(i32, state * 3)))));
     if state == STATE_FOCUSED {
         GuiTooltip(bounds);
     }
@@ -1632,7 +1632,7 @@ i32 GuiLabelButton(Rectangle bounds, u8* text) {
             }
         }
     }
-    GuiDrawText(text, GetTextBounds(LABEL, bounds), GuiGetStyle(LABEL, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + state * 3))));
+    GuiDrawText(text, GetTextBounds(LABEL, bounds), GuiGetStyle(LABEL, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + cast(i32, state * 3)))));
     return pressed;
 }
 
@@ -1658,11 +1658,11 @@ i32 GuiToggle(Rectangle bounds, u8* text, bool* active) {
         }
     }
     if state == STATE_NORMAL {
-        GuiDrawRectangle(bounds, GuiGetStyle(TOGGLE, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(TOGGLE, *active != 0 ? BORDER_COLOR_PRESSED : BORDER + state * 3))), GetColor(cast(u32, GuiGetStyle(TOGGLE, *active != 0 ? BASE_COLOR_PRESSED : BASE + state * 3))));
-        GuiDrawText(text, GetTextBounds(TOGGLE, bounds), GuiGetStyle(TOGGLE, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(TOGGLE, *active != 0 ? TEXT_COLOR_PRESSED : TEXT + state * 3))));
+        GuiDrawRectangle(bounds, GuiGetStyle(TOGGLE, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(TOGGLE, *active != 0 ? BORDER_COLOR_PRESSED : BORDER + cast(i32, state * 3)))), GetColor(cast(u32, GuiGetStyle(TOGGLE, *active != 0 ? BASE_COLOR_PRESSED : BASE + cast(i32, state * 3)))));
+        GuiDrawText(text, GetTextBounds(TOGGLE, bounds), GuiGetStyle(TOGGLE, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(TOGGLE, *active != 0 ? TEXT_COLOR_PRESSED : TEXT + cast(i32, state * 3)))));
     } else {
-        GuiDrawRectangle(bounds, GuiGetStyle(TOGGLE, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(TOGGLE, BORDER + state * 3))), GetColor(cast(u32, GuiGetStyle(TOGGLE, BASE + state * 3))));
-        GuiDrawText(text, GetTextBounds(TOGGLE, bounds), GuiGetStyle(TOGGLE, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(TOGGLE, TEXT + state * 3))));
+        GuiDrawRectangle(bounds, GuiGetStyle(TOGGLE, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(TOGGLE, BORDER + cast(i32, state * 3)))), GetColor(cast(u32, GuiGetStyle(TOGGLE, BASE + cast(i32, state * 3)))));
+        GuiDrawText(text, GetTextBounds(TOGGLE, bounds), GuiGetStyle(TOGGLE, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(TOGGLE, TEXT + cast(i32, state * 3)))));
     }
     if state == STATE_FOCUSED {
         GuiTooltip(bounds);
@@ -1744,7 +1744,7 @@ i32 GuiToggleSlider(Rectangle bounds, u8* text, i32* active) {
         *active = 0;
     }
     slider.x = bounds.x + cast(f32, GuiGetStyle(SLIDER, BORDER_WIDTH)) + cast(f32, (*active + 1) * GuiGetStyle(SLIDER, SLIDER_PADDING)) + cast(f32, *active) * slider.width;
-    GuiDrawRectangle(bounds, GuiGetStyle(SLIDER, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(TOGGLE, BORDER + state * 3))), GetColor(cast(u32, GuiGetStyle(TOGGLE, BASE_COLOR_NORMAL))));
+    GuiDrawRectangle(bounds, GuiGetStyle(SLIDER, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(TOGGLE, BORDER + cast(i32, state * 3)))), GetColor(cast(u32, GuiGetStyle(TOGGLE, BASE_COLOR_NORMAL))));
     if state == STATE_NORMAL {
         GuiDrawRectangle(slider, 0, Color{}, GetColor(cast(u32, GuiGetStyle(SLIDER, BASE_COLOR_PRESSED))));
     } else if state == STATE_FOCUSED {
@@ -1758,7 +1758,7 @@ i32 GuiToggleSlider(Rectangle bounds, u8* text, i32* active) {
         textBounds.height = cast(f32, GuiGetStyle(DEFAULT, TEXT_SIZE));
         textBounds.x = slider.x + slider.width / 2.0f - textBounds.width / 2.0f;
         textBounds.y = bounds.y + bounds.height / 2.0f - cast(f32, GuiGetStyle(DEFAULT, TEXT_SIZE) / 2);
-        GuiDrawText(items[*active], textBounds, GuiGetStyle(TOGGLE, TEXT_ALIGNMENT), Fade(GetColor(cast(u32, GuiGetStyle(TOGGLE, TEXT + state * 3))), guiAlpha));
+        GuiDrawText(items[*active], textBounds, GuiGetStyle(TOGGLE, TEXT_ALIGNMENT), Fade(GetColor(cast(u32, GuiGetStyle(TOGGLE, TEXT + cast(i32, state * 3)))), guiAlpha));
     }
     return result;
 }
@@ -1801,7 +1801,7 @@ i32 GuiCheckBox(Rectangle bounds, u8* text, bool* checked) {
             }
         }
     }
-    GuiDrawRectangle(bounds, GuiGetStyle(CHECKBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(CHECKBOX, BORDER + state * 3))), Color{});
+    GuiDrawRectangle(bounds, GuiGetStyle(CHECKBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(CHECKBOX, BORDER + cast(i32, state * 3)))), Color{});
     if *checked != 0 {
         var check = Rectangle{
             bounds.x + cast(f32, GuiGetStyle(CHECKBOX, BORDER_WIDTH)) + cast(f32, GuiGetStyle(CHECKBOX, CHECK_PADDING)),
@@ -1809,9 +1809,9 @@ i32 GuiCheckBox(Rectangle bounds, u8* text, bool* checked) {
             bounds.width - cast(f32, 2 * (GuiGetStyle(CHECKBOX, BORDER_WIDTH) + GuiGetStyle(CHECKBOX, CHECK_PADDING))),
             bounds.height - cast(f32, 2 * (GuiGetStyle(CHECKBOX, BORDER_WIDTH) + GuiGetStyle(CHECKBOX, CHECK_PADDING))),
         };
-        GuiDrawRectangle(check, 0, Color{}, GetColor(cast(u32, GuiGetStyle(CHECKBOX, TEXT + state * 3))));
+        GuiDrawRectangle(check, 0, Color{}, GetColor(cast(u32, GuiGetStyle(CHECKBOX, TEXT + cast(i32, state * 3)))));
     }
-    GuiDrawText(text, textBounds, GuiGetStyle(CHECKBOX, TEXT_ALIGNMENT) == TEXT_ALIGN_RIGHT ? TEXT_ALIGN_LEFT : TEXT_ALIGN_RIGHT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + state * 3))));
+    GuiDrawText(text, textBounds, GuiGetStyle(CHECKBOX, TEXT_ALIGNMENT) == TEXT_ALIGN_RIGHT ? TEXT_ALIGN_LEFT : TEXT_ALIGN_RIGHT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + cast(i32, state * 3)))));
     return result;
 }
 
@@ -1851,8 +1851,8 @@ i32 GuiComboBox(Rectangle bounds, u8* text, i32* active) {
             }
         }
     }
-    GuiDrawRectangle(bounds, GuiGetStyle(COMBOBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(COMBOBOX, BORDER + state * 3))), GetColor(cast(u32, GuiGetStyle(COMBOBOX, BASE + state * 3))));
-    GuiDrawText(items[*active], GetTextBounds(COMBOBOX, bounds), GuiGetStyle(COMBOBOX, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(COMBOBOX, TEXT + state * 3))));
+    GuiDrawRectangle(bounds, GuiGetStyle(COMBOBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(COMBOBOX, BORDER + cast(i32, state * 3)))), GetColor(cast(u32, GuiGetStyle(COMBOBOX, BASE + cast(i32, state * 3)))));
+    GuiDrawText(items[*active], GetTextBounds(COMBOBOX, bounds), GuiGetStyle(COMBOBOX, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(COMBOBOX, TEXT + cast(i32, state * 3)))));
     i32 tempBorderWidth = GuiGetStyle(BUTTON, BORDER_WIDTH);
     i32 tempTextAlign = GuiGetStyle(BUTTON, TEXT_ALIGNMENT);
     GuiSetStyle(BUTTON, BORDER_WIDTH, 1);
@@ -1928,8 +1928,8 @@ i32 GuiDropdownBox(Rectangle bounds, u8* text, i32* active, bool editMode) {
     if editMode != 0 {
         GuiPanel(boundsOpen, null);
     }
-    GuiDrawRectangle(bounds, GuiGetStyle(DROPDOWNBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(DROPDOWNBOX, BORDER + state * 3))), GetColor(cast(u32, GuiGetStyle(DROPDOWNBOX, BASE + state * 3))));
-    GuiDrawText(items[itemSelected], GetTextBounds(DROPDOWNBOX, bounds), GuiGetStyle(DROPDOWNBOX, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(DROPDOWNBOX, TEXT + state * 3))));
+    GuiDrawRectangle(bounds, GuiGetStyle(DROPDOWNBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(DROPDOWNBOX, BORDER + cast(i32, state * 3)))), GetColor(cast(u32, GuiGetStyle(DROPDOWNBOX, BASE + cast(i32, state * 3)))));
+    GuiDrawText(items[itemSelected], GetTextBounds(DROPDOWNBOX, bounds), GuiGetStyle(DROPDOWNBOX, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(DROPDOWNBOX, TEXT + cast(i32, state * 3)))));
     if editMode != 0 {
         for i32 i = 0; i < itemCount; i++ {
             if direction == 0 {
@@ -1953,12 +1953,12 @@ i32 GuiDropdownBox(Rectangle bounds, u8* text, i32* active, bool editMode) {
             GuiDrawText("v", Rectangle{
                 bounds.x + bounds.width - cast(f32, GuiGetStyle(DROPDOWNBOX, ARROW_PADDING)),
                 bounds.y + bounds.height / 2.0f - 2.0f, 10.0f, 10.0f,
-            }, TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(DROPDOWNBOX, TEXT + state * 3))));
+            }, TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(DROPDOWNBOX, TEXT + cast(i32, state * 3)))));
         } else {
             GuiDrawText(direction != 0 ? GuiIconText(ICON_ARROW_UP_FILL, null) : GuiIconText(ICON_ARROW_DOWN_FILL, null), Rectangle{
                 bounds.x + bounds.width - cast(f32, GuiGetStyle(DROPDOWNBOX, ARROW_PADDING)),
                 bounds.y + bounds.height / 2.0f - 6.0f, 10.0f, 10.0f,
-            }, TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(DROPDOWNBOX, TEXT + state * 3))));
+            }, TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(DROPDOWNBOX, TEXT + cast(i32, state * 3)))));
         }
     }
     *active = itemSelected;
@@ -2236,13 +2236,13 @@ i32 GuiTextBox(Rectangle bounds, u8* text, i32 textSize, bool editMode) {
         }
     }
     if state == STATE_PRESSED {
-        GuiDrawRectangle(bounds, GuiGetStyle(TEXTBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(TEXTBOX, BORDER + state * 3))), GetColor(cast(u32, GuiGetStyle(TEXTBOX, BASE_COLOR_PRESSED))));
+        GuiDrawRectangle(bounds, GuiGetStyle(TEXTBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(TEXTBOX, BORDER + cast(i32, state * 3)))), GetColor(cast(u32, GuiGetStyle(TEXTBOX, BASE_COLOR_PRESSED))));
     } else if state == STATE_DISABLED {
-        GuiDrawRectangle(bounds, GuiGetStyle(TEXTBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(TEXTBOX, BORDER + state * 3))), GetColor(cast(u32, GuiGetStyle(TEXTBOX, BASE_COLOR_DISABLED))));
+        GuiDrawRectangle(bounds, GuiGetStyle(TEXTBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(TEXTBOX, BORDER + cast(i32, state * 3)))), GetColor(cast(u32, GuiGetStyle(TEXTBOX, BASE_COLOR_DISABLED))));
     } else {
-        GuiDrawRectangle(bounds, GuiGetStyle(TEXTBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(TEXTBOX, BORDER + state * 3))), Color{});
+        GuiDrawRectangle(bounds, GuiGetStyle(TEXTBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(TEXTBOX, BORDER + cast(i32, state * 3)))), Color{});
     }
-    GuiDrawText(text + textIndexOffset, textBounds, GuiGetStyle(TEXTBOX, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(TEXTBOX, TEXT + state * 3))));
+    GuiDrawText(text + textIndexOffset, textBounds, GuiGetStyle(TEXTBOX, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(TEXTBOX, TEXT + cast(i32, state * 3)))));
     if editMode && !GuiGetStyle(TEXTBOX, TEXT_READONLY) {
         GuiDrawRectangle(cursor, 0, Color{}, GetColor(cast(u32, GuiGetStyle(TEXTBOX, BORDER_COLOR_PRESSED))));
         if mouseCursor.x >= 0.0f {
@@ -2343,7 +2343,7 @@ i32 GuiSpinner(Rectangle bounds, u8* text, i32* value, i32 minValue, i32 maxValu
     GuiSetStyle(BUTTON, TEXT_ALIGNMENT, TEXT_ALIGN_CENTER);
     GuiSetStyle(BUTTON, TEXT_ALIGNMENT, tempTextAlign);
     GuiSetStyle(BUTTON, BORDER_WIDTH, tempBorderWidth);
-    GuiDrawText(text, textBounds, GuiGetStyle(VALUEBOX, TEXT_ALIGNMENT) == TEXT_ALIGN_RIGHT ? TEXT_ALIGN_LEFT : TEXT_ALIGN_RIGHT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + state * 3))));
+    GuiDrawText(text, textBounds, GuiGetStyle(VALUEBOX, TEXT_ALIGNMENT) == TEXT_ALIGN_RIGHT ? TEXT_ALIGN_LEFT : TEXT_ALIGN_RIGHT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + cast(i32, state * 3)))));
     *value = tempValue;
     return result;
 }
@@ -2436,8 +2436,8 @@ i32 GuiValueBox(Rectangle bounds, u8* text, i32* value, i32 minValue, i32 maxVal
     } else if state == STATE_DISABLED {
         baseColor = GetColor(cast(u32, GuiGetStyle(VALUEBOX, BASE_COLOR_DISABLED)));
     }
-    GuiDrawRectangle(bounds, GuiGetStyle(VALUEBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(VALUEBOX, BORDER + state * 3))), baseColor);
-    GuiDrawText(textValue, GetTextBounds(VALUEBOX, bounds), TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(VALUEBOX, TEXT + state * 3))));
+    GuiDrawRectangle(bounds, GuiGetStyle(VALUEBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(VALUEBOX, BORDER + cast(i32, state * 3)))), baseColor);
+    GuiDrawText(textValue, GetTextBounds(VALUEBOX, bounds), TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(VALUEBOX, TEXT + cast(i32, state * 3)))));
     if editMode != 0 {
         var cursor = Rectangle{
             bounds.x + cast(f32, GuiGetTextWidth(textValue) / 2) + bounds.width / 2.0f + 1.0f,
@@ -2449,7 +2449,7 @@ i32 GuiValueBox(Rectangle bounds, u8* text, i32* value, i32 minValue, i32 maxVal
         }
         GuiDrawRectangle(cursor, 0, Color{}, GetColor(cast(u32, GuiGetStyle(VALUEBOX, BORDER_COLOR_PRESSED))));
     }
-    GuiDrawText(text, textBounds, GuiGetStyle(VALUEBOX, TEXT_ALIGNMENT) == TEXT_ALIGN_RIGHT ? TEXT_ALIGN_LEFT : TEXT_ALIGN_RIGHT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + state * 3))));
+    GuiDrawText(text, textBounds, GuiGetStyle(VALUEBOX, TEXT_ALIGNMENT) == TEXT_ALIGN_RIGHT ? TEXT_ALIGN_LEFT : TEXT_ALIGN_RIGHT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + cast(i32, state * 3)))));
     return result;
 }
 
@@ -2533,8 +2533,8 @@ i32 GuiValueBoxFloat(Rectangle bounds, u8* text, u8* textValue, f32* value, bool
     } else if state == STATE_DISABLED {
         baseColor = GetColor(cast(u32, GuiGetStyle(VALUEBOX, BASE_COLOR_DISABLED)));
     }
-    GuiDrawRectangle(bounds, GuiGetStyle(VALUEBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(VALUEBOX, BORDER + state * 3))), baseColor);
-    GuiDrawText(textValue, GetTextBounds(VALUEBOX, bounds), TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(VALUEBOX, TEXT + state * 3))));
+    GuiDrawRectangle(bounds, GuiGetStyle(VALUEBOX, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(VALUEBOX, BORDER + cast(i32, state * 3)))), baseColor);
+    GuiDrawText(textValue, GetTextBounds(VALUEBOX, bounds), TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(VALUEBOX, TEXT + cast(i32, state * 3)))));
     if editMode != 0 {
         var cursor = Rectangle{
             bounds.x + cast(f32, GuiGetTextWidth(textValue) / 2) + bounds.width / 2.0f + 1.0f,
@@ -2543,7 +2543,7 @@ i32 GuiValueBoxFloat(Rectangle bounds, u8* text, u8* textValue, f32* value, bool
         };
         GuiDrawRectangle(cursor, 0, Color{}, GetColor(cast(u32, GuiGetStyle(VALUEBOX, BORDER_COLOR_PRESSED))));
     }
-    GuiDrawText(text, textBounds, GuiGetStyle(VALUEBOX, TEXT_ALIGNMENT) == TEXT_ALIGN_RIGHT ? TEXT_ALIGN_LEFT : TEXT_ALIGN_RIGHT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + state * 3))));
+    GuiDrawText(text, textBounds, GuiGetStyle(VALUEBOX, TEXT_ALIGNMENT) == TEXT_ALIGN_RIGHT ? TEXT_ALIGN_LEFT : TEXT_ALIGN_RIGHT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + cast(i32, state * 3)))));
     return result;
 }
 
@@ -2615,7 +2615,7 @@ i32 GuiSlider(Rectangle bounds, u8* textLeft, u8* textRight, f32* value, f32 min
             slider.width = bounds.width - cast(f32, 2 * GuiGetStyle(SLIDER, BORDER_WIDTH));
         }
     }
-    GuiDrawRectangle(bounds, GuiGetStyle(SLIDER, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(SLIDER, BORDER + state * 3))), GetColor(cast(u32, GuiGetStyle(SLIDER, state != STATE_DISABLED ? BASE_COLOR_NORMAL : BASE_COLOR_DISABLED))));
+    GuiDrawRectangle(bounds, GuiGetStyle(SLIDER, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(SLIDER, BORDER + cast(i32, state * 3)))), GetColor(cast(u32, GuiGetStyle(SLIDER, state != STATE_DISABLED ? BASE_COLOR_NORMAL : BASE_COLOR_DISABLED))));
     if state == STATE_NORMAL {
         GuiDrawRectangle(slider, 0, Color{}, GetColor(cast(u32, GuiGetStyle(SLIDER, BASE_COLOR_PRESSED))));
     } else if state == STATE_FOCUSED {
@@ -2631,7 +2631,7 @@ i32 GuiSlider(Rectangle bounds, u8* textLeft, u8* textRight, f32* value, f32 min
         textBounds.height = cast(f32, GuiGetStyle(DEFAULT, TEXT_SIZE));
         textBounds.x = bounds.x - textBounds.width - cast(f32, GuiGetStyle(SLIDER, TEXT_PADDING));
         textBounds.y = bounds.y + bounds.height / 2.0f - cast(f32, GuiGetStyle(DEFAULT, TEXT_SIZE) / 2);
-        GuiDrawText(textLeft, textBounds, TEXT_ALIGN_RIGHT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + state * 3))));
+        GuiDrawText(textLeft, textBounds, TEXT_ALIGN_RIGHT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + cast(i32, state * 3)))));
     }
     if textRight != null {
         Rectangle textBounds;
@@ -2639,7 +2639,7 @@ i32 GuiSlider(Rectangle bounds, u8* textLeft, u8* textRight, f32* value, f32 min
         textBounds.height = cast(f32, GuiGetStyle(DEFAULT, TEXT_SIZE));
         textBounds.x = bounds.x + bounds.width + cast(f32, GuiGetStyle(SLIDER, TEXT_PADDING));
         textBounds.y = bounds.y + bounds.height / 2.0f - cast(f32, GuiGetStyle(DEFAULT, TEXT_SIZE) / 2);
-        GuiDrawText(textRight, textBounds, TEXT_ALIGN_LEFT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + state * 3))));
+        GuiDrawText(textRight, textBounds, TEXT_ALIGN_LEFT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + cast(i32, state * 3)))));
     }
     return result;
 }
@@ -2675,7 +2675,7 @@ i32 GuiProgressBar(Rectangle bounds, u8* textLeft, u8* textRight, f32* value, f3
         progress.width = *value / (maxValue - minValue) * (bounds.width - cast(f32, 2 * GuiGetStyle(PROGRESSBAR, BORDER_WIDTH)));
     }
     if state == STATE_DISABLED {
-        GuiDrawRectangle(bounds, GuiGetStyle(PROGRESSBAR, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(PROGRESSBAR, BORDER + state * 3))), Color{});
+        GuiDrawRectangle(bounds, GuiGetStyle(PROGRESSBAR, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(PROGRESSBAR, BORDER + cast(i32, state * 3)))), Color{});
     } else {
         if *value > minValue {
             GuiDrawRectangle(Rectangle{
@@ -2736,7 +2736,7 @@ i32 GuiProgressBar(Rectangle bounds, u8* textLeft, u8* textRight, f32* value, f3
         textBounds.height = cast(f32, GuiGetStyle(DEFAULT, TEXT_SIZE));
         textBounds.x = bounds.x - textBounds.width - cast(f32, GuiGetStyle(PROGRESSBAR, TEXT_PADDING));
         textBounds.y = bounds.y + bounds.height / 2.0f - cast(f32, GuiGetStyle(DEFAULT, TEXT_SIZE) / 2);
-        GuiDrawText(textLeft, textBounds, TEXT_ALIGN_RIGHT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + state * 3))));
+        GuiDrawText(textLeft, textBounds, TEXT_ALIGN_RIGHT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + cast(i32, state * 3)))));
     }
     if textRight != null {
         Rectangle textBounds;
@@ -2744,7 +2744,7 @@ i32 GuiProgressBar(Rectangle bounds, u8* textLeft, u8* textRight, f32* value, f3
         textBounds.height = cast(f32, GuiGetStyle(DEFAULT, TEXT_SIZE));
         textBounds.x = bounds.x + bounds.width + cast(f32, GuiGetStyle(PROGRESSBAR, TEXT_PADDING));
         textBounds.y = bounds.y + bounds.height / 2.0f - cast(f32, GuiGetStyle(DEFAULT, TEXT_SIZE) / 2);
-        GuiDrawText(textRight, textBounds, TEXT_ALIGN_LEFT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + state * 3))));
+        GuiDrawText(textRight, textBounds, TEXT_ALIGN_LEFT, GetColor(cast(u32, GuiGetStyle(LABEL, TEXT + cast(i32, state * 3)))));
     }
     return result;
 }
@@ -2753,8 +2753,8 @@ i32 GuiProgressBar(Rectangle bounds, u8* textLeft, u8* textRight, f32* value, f3
 i32 GuiStatusBar(Rectangle bounds, u8* text) {
     i32 result = 0;
     GuiState state = guiState;
-    GuiDrawRectangle(bounds, GuiGetStyle(STATUSBAR, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(STATUSBAR, BORDER + state * 3))), GetColor(cast(u32, GuiGetStyle(STATUSBAR, BASE + state * 3))));
-    GuiDrawText(text, GetTextBounds(STATUSBAR, bounds), GuiGetStyle(STATUSBAR, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(STATUSBAR, TEXT + state * 3))));
+    GuiDrawRectangle(bounds, GuiGetStyle(STATUSBAR, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(STATUSBAR, BORDER + cast(i32, state * 3)))), GetColor(cast(u32, GuiGetStyle(STATUSBAR, BASE + cast(i32, state * 3)))));
+    GuiDrawText(text, GetTextBounds(STATUSBAR, bounds), GuiGetStyle(STATUSBAR, TEXT_ALIGNMENT), GetColor(cast(u32, GuiGetStyle(STATUSBAR, TEXT + cast(i32, state * 3)))));
     return result;
 }
 
@@ -2852,7 +2852,7 @@ i32 GuiListViewEx(Rectangle bounds, u8** text, i32 count, i32* scrollIndex, i32*
         }
         itemBounds.y = bounds.y + cast(f32, GuiGetStyle(LISTVIEW, LIST_ITEMS_SPACING)) + cast(f32, GuiGetStyle(DEFAULT, BORDER_WIDTH));
     }
-    GuiDrawRectangle(bounds, GuiGetStyle(LISTVIEW, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(LISTVIEW, BORDER + state * 3))), GetColor(cast(u32, GuiGetStyle(DEFAULT, BACKGROUND_COLOR))));
+    GuiDrawRectangle(bounds, GuiGetStyle(LISTVIEW, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(LISTVIEW, BORDER + cast(i32, state * 3)))), GetColor(cast(u32, GuiGetStyle(DEFAULT, BACKGROUND_COLOR))));
     for i32 i = 0; i < visibleItems && text != null; i++ {
         if GuiGetStyle(LISTVIEW, LIST_ITEMS_BORDER_NORMAL) != 0 {
             GuiDrawRectangle(itemBounds, GuiGetStyle(LISTVIEW, LIST_ITEMS_BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(LISTVIEW, BORDER_COLOR_NORMAL))), Color{});
@@ -2983,8 +2983,8 @@ i32 GuiColorBarAlpha(Rectangle bounds, u8* text, f32* alpha) {
     } else {
         DrawRectangleGradientEx(bounds, Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BASE_COLOR_DISABLED))), 0.1f), Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BASE_COLOR_DISABLED))), 0.1f), Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER_COLOR_DISABLED))), guiAlpha), Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER_COLOR_DISABLED))), guiAlpha));
     }
-    GuiDrawRectangle(bounds, GuiGetStyle(COLORPICKER, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER + state * 3))), Color{});
-    GuiDrawRectangle(selector, 0, Color{}, GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER + state * 3))));
+    GuiDrawRectangle(bounds, GuiGetStyle(COLORPICKER, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER + cast(i32, state * 3)))), Color{});
+    GuiDrawRectangle(selector, 0, Color{}, GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER + cast(i32, state * 3)))));
     return result;
 }
 
@@ -3048,8 +3048,8 @@ i32 GuiColorBarHue(Rectangle bounds, u8* text, f32* hue) {
     } else {
         DrawRectangleGradientV(cast(i32, bounds.x), cast(i32, bounds.y), cast(i32, bounds.width), cast(i32, bounds.height), Fade(Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BASE_COLOR_DISABLED))), 0.1f), guiAlpha), Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER_COLOR_DISABLED))), guiAlpha));
     }
-    GuiDrawRectangle(bounds, GuiGetStyle(COLORPICKER, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER + state * 3))), Color{});
-    GuiDrawRectangle(selector, 0, Color{}, GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER + state * 3))));
+    GuiDrawRectangle(bounds, GuiGetStyle(COLORPICKER, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER + cast(i32, state * 3)))), Color{});
+    GuiDrawRectangle(selector, 0, Color{}, GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER + cast(i32, state * 3)))));
     return result;
 }
 
@@ -3179,7 +3179,7 @@ i32 GuiColorPanelHSV(Rectangle bounds, u8* text, Vector3* colorHsv) {
     } else {
         DrawRectangleGradientEx(bounds, Fade(Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BASE_COLOR_DISABLED))), 0.1f), guiAlpha), Fade(Fade(colBlack, 0.6f), guiAlpha), Fade(Fade(colBlack, 0.6f), guiAlpha), Fade(Fade(GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER_COLOR_DISABLED))), 0.6f), guiAlpha));
     }
-    GuiDrawRectangle(bounds, GuiGetStyle(COLORPICKER, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER + state * 3))), Color{});
+    GuiDrawRectangle(bounds, GuiGetStyle(COLORPICKER, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(COLORPICKER, BORDER + cast(i32, state * 3)))), Color{});
     return result;
 }
 
@@ -3457,18 +3457,18 @@ void GuiLoadStyleFromMemory(u8* fileData, i32 dataSize) {
     i16 reserved = 0;
     i32 propertyCount = 0;
     memcpy(signature, fileDataPtr, cast(u64, 4));
-    memcpy(&version, fileDataPtr + 4, cast(u64, sizeof(i16)));
-    memcpy(&reserved, fileDataPtr + 4 + 2, cast(u64, sizeof(i16)));
-    memcpy(&propertyCount, fileDataPtr + 4 + 2 + 2, cast(u64, sizeof(i32)));
+    version = *cast(i16*, fileDataPtr + 4);
+    reserved = *cast(i16*, fileDataPtr + 4 + 2);
+    propertyCount = *cast(i32*, fileDataPtr + 4 + 2 + 2);
     fileDataPtr += 12;
     if signature[0] == 114 && signature[1] == 71 && signature[2] == 83 && signature[3] == 32 {
         i16 controlId = 0;
         i16 propertyId = 0;
         u32 propertyValue = 0;
         for i32 i = 0; i < propertyCount; i++ {
-            memcpy(&controlId, fileDataPtr, cast(u64, sizeof(i16)));
-            memcpy(&propertyId, fileDataPtr + 2, cast(u64, sizeof(i16)));
-            memcpy(&propertyValue, fileDataPtr + 2 + 2, cast(u64, sizeof(u32)));
+            controlId = *cast(i16*, fileDataPtr);
+            propertyId = *cast(i16*, fileDataPtr + 2);
+            propertyValue = *cast(u32*, fileDataPtr + 2 + 2);
             fileDataPtr += 8;
             if controlId == 0 {
                 GuiSetStyle(0, cast(i32, propertyId), cast(i32, propertyValue));
@@ -3482,22 +3482,22 @@ void GuiLoadStyleFromMemory(u8* fileData, i32 dataSize) {
             }
         }
         i32 fontDataSize = 0;
-        memcpy(&fontDataSize, fileDataPtr, cast(u64, sizeof(i32)));
+        fontDataSize = *cast(i32*, fileDataPtr);
         fileDataPtr += 4;
         if fontDataSize > 0 {
             Font font;
             i32 fontType = 0;
             memcpy(&font.baseSize, fileDataPtr, cast(u64, sizeof(i32)));
             memcpy(&font.glyphCount, fileDataPtr + 4, cast(u64, sizeof(i32)));
-            memcpy(&fontType, fileDataPtr + 4 + 4, cast(u64, sizeof(i32)));
+            fontType = *cast(i32*, fileDataPtr + 4 + 4);
             fileDataPtr += 12;
             Rectangle fontWhiteRec;
             memcpy(&fontWhiteRec, fileDataPtr, cast(u64, sizeof(Rectangle)));
             fileDataPtr += 16;
             i32 fontImageUncompSize = 0;
             i32 fontImageCompSize = 0;
-            memcpy(&fontImageUncompSize, fileDataPtr, cast(u64, sizeof(i32)));
-            memcpy(&fontImageCompSize, fileDataPtr + 4, cast(u64, sizeof(i32)));
+            fontImageUncompSize = *cast(i32*, fileDataPtr);
+            fontImageCompSize = *cast(i32*, fileDataPtr + 4);
             fileDataPtr += 8;
             Image imFont;
             imFont.mipmaps = 1;
@@ -3529,7 +3529,7 @@ void GuiLoadStyleFromMemory(u8* fileData, i32 dataSize) {
                 var recsDataSize = cast(i32, font.glyphCount * sizeof(Rectangle));
                 i32 recsDataCompressedSize = 0;
                 if version >= 400 {
-                    memcpy(&recsDataCompressedSize, fileDataPtr, cast(u64, sizeof(i32)));
+                    recsDataCompressedSize = *cast(i32*, fileDataPtr);
                     fileDataPtr += sizeof(i32);
                 }
                 if recsDataCompressedSize > 0 && recsDataCompressedSize != recsDataSize {
@@ -3552,7 +3552,7 @@ void GuiLoadStyleFromMemory(u8* fileData, i32 dataSize) {
                 i32 glyphsDataSize = font.glyphCount * 16;
                 i32 glyphsDataCompressedSize = 0;
                 if version >= 400 {
-                    memcpy(&glyphsDataCompressedSize, fileDataPtr, cast(u64, sizeof(i32)));
+                    glyphsDataCompressedSize = *cast(i32*, fileDataPtr);
                     fileDataPtr += sizeof(i32);
                 }
                 font.glyphs = new(GlyphInfo[font.glyphCount]);
@@ -3750,10 +3750,10 @@ u8** GuiLoadIconsFromMemory(u8* fileData, i32 dataSize, bool loadIconsName) {
     i16 iconCount = 0;
     i16 iconSize = 0;
     memcpy(signature, fileDataPtr, cast(u64, 4));
-    memcpy(&version, fileDataPtr + 4, cast(u64, sizeof(i16)));
-    memcpy(&reserved, fileDataPtr + 4 + 2, cast(u64, sizeof(i16)));
-    memcpy(&iconCount, fileDataPtr + 4 + 2 + 2, cast(u64, sizeof(i16)));
-    memcpy(&iconSize, fileDataPtr + 4 + 2 + 2 + 2, cast(u64, sizeof(i16)));
+    version = *cast(i16*, fileDataPtr + 4);
+    reserved = *cast(i16*, fileDataPtr + 4 + 2);
+    iconCount = *cast(i16*, fileDataPtr + 4 + 2 + 2);
+    iconSize = *cast(i16*, fileDataPtr + 4 + 2 + 2 + 2);
     fileDataPtr += 12;
     if signature[0] == 114 && signature[1] == 71 && signature[2] == 73 && signature[3] == 32 {
         if loadIconsName != 0 {
@@ -4417,28 +4417,28 @@ i32 GuiScrollBar(Rectangle bounds, i32 value, i32 minValue, i32 maxValue) {
             value = minValue;
         }
     }
-    GuiDrawRectangle(bounds, GuiGetStyle(SCROLLBAR, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(LISTVIEW, BORDER + state * 3))), GetColor(cast(u32, GuiGetStyle(DEFAULT, BORDER_COLOR_DISABLED))));
+    GuiDrawRectangle(bounds, GuiGetStyle(SCROLLBAR, BORDER_WIDTH), GetColor(cast(u32, GuiGetStyle(LISTVIEW, BORDER + cast(i32, state * 3)))), GetColor(cast(u32, GuiGetStyle(DEFAULT, BORDER_COLOR_DISABLED))));
     GuiDrawRectangle(scrollbar, 0, Color{}, GetColor(cast(u32, GuiGetStyle(BUTTON, BASE_COLOR_NORMAL))));
-    GuiDrawRectangle(slider, 0, Color{}, GetColor(cast(u32, GuiGetStyle(SLIDER, BORDER + state * 3))));
+    GuiDrawRectangle(slider, 0, Color{}, GetColor(cast(u32, GuiGetStyle(SLIDER, BORDER + cast(i32, state * 3)))));
     if GuiGetStyle(SCROLLBAR, ARROWS_VISIBLE) != 0 {
         when defined(RAYGUI_NO_ICONS) {
             GuiDrawText(isVertical != 0 ? "^" : "<", Rectangle{
                 arrowUpLeft.x, arrowUpLeft.y, isVertical != 0 ? bounds.width : bounds.height,
                 isVertical != 0 ? bounds.width : bounds.height,
-            }, TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(DROPDOWNBOX, TEXT + state * 3))));
+            }, TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(DROPDOWNBOX, TEXT + cast(i32, state * 3)))));
             GuiDrawText(isVertical != 0 ? "v" : ">", Rectangle{
                 arrowDownRight.x, arrowDownRight.y, isVertical != 0 ? bounds.width : bounds.height,
                 isVertical != 0 ? bounds.width : bounds.height,
-            }, TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(DROPDOWNBOX, TEXT + state * 3))));
+            }, TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(DROPDOWNBOX, TEXT + cast(i32, state * 3)))));
         } else {
             GuiDrawText(isVertical != 0 ? GuiIconText(ICON_ARROW_UP_FILL, null) : GuiIconText(ICON_ARROW_LEFT_FILL, null), Rectangle{
                 arrowUpLeft.x, arrowUpLeft.y, isVertical != 0 ? bounds.width : bounds.height,
                 isVertical != 0 ? bounds.width : bounds.height,
-            }, TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(SCROLLBAR, TEXT + state * 3))));
+            }, TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(SCROLLBAR, TEXT + cast(i32, state * 3)))));
             GuiDrawText(isVertical != 0 ? GuiIconText(ICON_ARROW_DOWN_FILL, null) : GuiIconText(ICON_ARROW_RIGHT_FILL, null), Rectangle{
                 arrowDownRight.x, arrowDownRight.y, isVertical != 0 ? bounds.width : bounds.height,
                 isVertical != 0 ? bounds.width : bounds.height,
-            }, TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(SCROLLBAR, TEXT + state * 3))));
+            }, TEXT_ALIGN_CENTER, GetColor(cast(u32, GuiGetStyle(SCROLLBAR, TEXT + cast(i32, state * 3)))));
         }
     }
     return value;

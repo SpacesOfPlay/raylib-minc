@@ -28,11 +28,11 @@
 // The compiler is taken from MINC, then PATH, then this folder
 // (install: https://minc.dev).
 
-@minc_min_version "0.9.14"
+@minc_min_version "0.9.17"
 
 // Older minc ignores the tag above; this forces an error instead.
-when !defined(MINC_VERSION) || MINC_VERSION < 9014 {
-    minc_0_9_14_or_newer_required please_update_minc;
+when !defined(MINC_VERSION) || MINC_VERSION < 9017 {
+    minc_0_9_17_or_newer_required please_update_minc;
 }
 
 import process;
@@ -298,22 +298,38 @@ when os(linux) {
 
 // GLFW comes from the system package. minc links by soname, so probe
 // the linker cache and the standard libdirs; pkg-config is a fallback.
+// ldconfig lives in /sbin, which is not on a regular user's PATH on
+// Debian, so try the absolute paths first.
+bool ldconfig_has_glfw() {
+    str[3] tools = { "/sbin/ldconfig", "/usr/sbin/ldconfig", "ldconfig" };
+    for i32 i = 0; i < 3; i++ {
+        ProcCmd c = { .capture = true };
+        c.args[0] = tools[i];
+        c.args[1] = "-p";
+        ProcResult r = proc_run(&c);
+        bool ran = r.spawned && r.exit_code == 0;
+        bool found = ran && str_find(r.out, "libglfw.so.3") >= 0;
+        proc_result_free(&r);
+        if ran { return found; }
+    }
+    return false;
+}
+
 bool ensure_glfw() {
-    ProcCmd c = { .args = { "ldconfig", "-p" }, .capture = true };
-    ProcResult r = proc_run(&c);
-    bool found = r.spawned && r.exit_code == 0
-              && str_find(r.out, "libglfw.so.3") >= 0;
-    proc_result_free(&r);
-    if found { return true; }
-    str[6] dirs = {
+    if ldconfig_has_glfw() { return true; }
+    str[10] dirs = {
         "/usr/lib/libglfw.so.3",
         "/usr/lib/x86_64-linux-gnu/libglfw.so.3",
+        "/usr/lib/aarch64-linux-gnu/libglfw.so.3",
+        "/usr/lib/arm-linux-gnueabihf/libglfw.so.3",
+        "/usr/lib/riscv64-linux-gnu/libglfw.so.3",
         "/usr/lib64/libglfw.so.3",
         "/lib/libglfw.so.3",
         "/lib/x86_64-linux-gnu/libglfw.so.3",
+        "/lib/aarch64-linux-gnu/libglfw.so.3",
         "/usr/local/lib/libglfw.so.3"
     };
-    for i32 i = 0; i < 6; i++ {
+    for i32 i = 0; i < 10; i++ {
         if path_exists(dirs[i]) { return true; }
     }
     ProcCmd pc = { .args = { "pkg-config", "--exists", "glfw3" }, .capture = true };
