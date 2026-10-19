@@ -1,5 +1,5 @@
 raylib-minc snapshot
   upstream: raylib 6.1-dev
-  built:    2026-10-14 18:24:25
-  build:    626b661a
+  built:    2026-10-19 16:56:26
+  build:    b2e4968c
   glfw:     3.4 (download pinned by build.mc)

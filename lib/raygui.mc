@@ -3457,18 +3457,18 @@ void GuiLoadStyleFromMemory(u8* fileData, i32 dataSize) {
     i16 reserved = 0;
     i32 propertyCount = 0;
     memcpy(signature, fileDataPtr, cast(u64, 4));
-    memcpy(&version, fileDataPtr + 4, cast(u64, sizeof(i16)));
-    memcpy(&reserved, fileDataPtr + 4 + 2, cast(u64, sizeof(i16)));
-    memcpy(&propertyCount, fileDataPtr + 4 + 2 + 2, cast(u64, sizeof(i32)));
+    version = *cast(i16*, fileDataPtr + 4);
+    reserved = *cast(i16*, fileDataPtr + 4 + 2);
+    propertyCount = *cast(i32*, fileDataPtr + 4 + 2 + 2);
     fileDataPtr += 12;
     if signature[0] == 114 && signature[1] == 71 && signature[2] == 83 && signature[3] == 32 {
         i16 controlId = 0;
         i16 propertyId = 0;
         u32 propertyValue = 0;
         for i32 i = 0; i < propertyCount; i++ {
-            memcpy(&controlId, fileDataPtr, cast(u64, sizeof(i16)));
-            memcpy(&propertyId, fileDataPtr + 2, cast(u64, sizeof(i16)));
-            memcpy(&propertyValue, fileDataPtr + 2 + 2, cast(u64, sizeof(u32)));
+            controlId = *cast(i16*, fileDataPtr);
+            propertyId = *cast(i16*, fileDataPtr + 2);
+            propertyValue = *cast(u32*, fileDataPtr + 2 + 2);
             fileDataPtr += 8;
             if controlId == 0 {
                 GuiSetStyle(0, cast(i32, propertyId), cast(i32, propertyValue));
@@ -3482,22 +3482,22 @@ void GuiLoadStyleFromMemory(u8* fileData, i32 dataSize) {
             }
         }
         i32 fontDataSize = 0;
-        memcpy(&fontDataSize, fileDataPtr, cast(u64, sizeof(i32)));
+        fontDataSize = *cast(i32*, fileDataPtr);
         fileDataPtr += 4;
         if fontDataSize > 0 {
             Font font;
             i32 fontType = 0;
             memcpy(&font.baseSize, fileDataPtr, cast(u64, sizeof(i32)));
             memcpy(&font.glyphCount, fileDataPtr + 4, cast(u64, sizeof(i32)));
-            memcpy(&fontType, fileDataPtr + 4 + 4, cast(u64, sizeof(i32)));
+            fontType = *cast(i32*, fileDataPtr + 4 + 4);
             fileDataPtr += 12;
             Rectangle fontWhiteRec;
             memcpy(&fontWhiteRec, fileDataPtr, cast(u64, sizeof(Rectangle)));
             fileDataPtr += 16;
             i32 fontImageUncompSize = 0;
             i32 fontImageCompSize = 0;
-            memcpy(&fontImageUncompSize, fileDataPtr, cast(u64, sizeof(i32)));
-            memcpy(&fontImageCompSize, fileDataPtr + 4, cast(u64, sizeof(i32)));
+            fontImageUncompSize = *cast(i32*, fileDataPtr);
+            fontImageCompSize = *cast(i32*, fileDataPtr + 4);
             fileDataPtr += 8;
             Image imFont;
             imFont.mipmaps = 1;
@@ -3529,7 +3529,7 @@ void GuiLoadStyleFromMemory(u8* fileData, i32 dataSize) {
                 var recsDataSize = cast(i32, font.glyphCount * sizeof(Rectangle));
                 i32 recsDataCompressedSize = 0;
                 if version >= 400 {
-                    memcpy(&recsDataCompressedSize, fileDataPtr, cast(u64, sizeof(i32)));
+                    recsDataCompressedSize = *cast(i32*, fileDataPtr);
                     fileDataPtr += sizeof(i32);
                 }
                 if recsDataCompressedSize > 0 && recsDataCompressedSize != recsDataSize {
@@ -3552,7 +3552,7 @@ void GuiLoadStyleFromMemory(u8* fileData, i32 dataSize) {
                 i32 glyphsDataSize = font.glyphCount * 16;
                 i32 glyphsDataCompressedSize = 0;
                 if version >= 400 {
-                    memcpy(&glyphsDataCompressedSize, fileDataPtr, cast(u64, sizeof(i32)));
+                    glyphsDataCompressedSize = *cast(i32*, fileDataPtr);
                     fileDataPtr += sizeof(i32);
                 }
                 font.glyphs = new(GlyphInfo[font.glyphCount]);
@@ -3750,10 +3750,10 @@ u8** GuiLoadIconsFromMemory(u8* fileData, i32 dataSize, bool loadIconsName) {
     i16 iconCount = 0;
     i16 iconSize = 0;
     memcpy(signature, fileDataPtr, cast(u64, 4));
-    memcpy(&version, fileDataPtr + 4, cast(u64, sizeof(i16)));
-    memcpy(&reserved, fileDataPtr + 4 + 2, cast(u64, sizeof(i16)));
-    memcpy(&iconCount, fileDataPtr + 4 + 2 + 2, cast(u64, sizeof(i16)));
-    memcpy(&iconSize, fileDataPtr + 4 + 2 + 2 + 2, cast(u64, sizeof(i16)));
+    version = *cast(i16*, fileDataPtr + 4);
+    reserved = *cast(i16*, fileDataPtr + 4 + 2);
+    iconCount = *cast(i16*, fileDataPtr + 4 + 2 + 2);
+    iconSize = *cast(i16*, fileDataPtr + 4 + 2 + 2 + 2);
     fileDataPtr += 12;
     if signature[0] == 114 && signature[1] == 71 && signature[2] == 73 && signature[3] == 32 {
         if loadIconsName != 0 {
